@@ -1,13 +1,16 @@
 // tb_mentha_file_driven.sv
 // File-Driven SystemVerilog Testbench for Mentha Weight-Stationary AI Accelerator IP.
 // Driven by Python Golden Model stimulus files (sim_data/stim_*.hex).
+// Configured with INT8 signed weights (A*), INT8 signed activations (B*), and INT32 signed accumulators (C*).
 
 `timescale 1ns/1ps
 
 module tb_mentha_file_driven;
 
     localparam int IDX_W    = 8;
-    localparam int VAL_W    = 32;
+    localparam int A_VAL_W  = 8;     // INT8 signed weight
+    localparam int B_VAL_W  = 8;     // INT8 signed activation
+    localparam int C_VAL_W  = 32;    // INT32 signed accumulator
     localparam int NUM_CBUF = 4;
     localparam int ROWS     = 4;
     localparam int COLS     = 4;
@@ -20,31 +23,36 @@ module tb_mentha_file_driven;
     logic [$clog2(ROWS)-1:0] a_load_row;
     logic [$clog2(COLS)-1:0] a_load_col;
     logic [IDX_W-1:0]        a_load_idx;
-    logic signed [VAL_W-1:0] a_load_val;
+    logic signed [A_VAL_W-1:0] a_load_val;
 
     // --- B* vertical edge inputs (top -> bottom) ---
     logic [COLS*IDX_W-1:0]   b_edge_idx_flat;
-    logic [COLS*VAL_W-1:0]   b_edge_val_flat;
+    logic signed [COLS*B_VAL_W-1:0] b_edge_val_flat;
     logic [COLS*IDX_W-1:0]   b_out_idx_flat;
-    logic [COLS*VAL_W-1:0]   b_out_val_flat;
+    logic signed [COLS*B_VAL_W-1:0] b_out_val_flat;
 
     // --- C* horizontal edge inputs (entering from West) ---
     logic [ROWS*NUM_CBUF*IDX_W-1:0]       c_edge_a_idx_flat;
     logic [ROWS*NUM_CBUF*IDX_W-1:0]       c_edge_b_idx_flat;
-    logic signed [ROWS*NUM_CBUF*VAL_W-1:0] c_edge_val_flat;
+    logic signed [ROWS*NUM_CBUF*C_VAL_W-1:0] c_edge_val_flat;
     logic [ROWS*NUM_CBUF-1:0]             c_edge_valid_flat;
 
     // --- C* horizontal edge outputs (exiting to East) ---
     logic [ROWS*NUM_CBUF*IDX_W-1:0]       c_out_a_idx_flat;
     logic [ROWS*NUM_CBUF*IDX_W-1:0]       c_out_b_idx_flat;
-    logic signed [ROWS*NUM_CBUF*VAL_W-1:0] c_out_val_flat;
+    logic signed [ROWS*NUM_CBUF*C_VAL_W-1:0] c_out_val_flat;
     logic [ROWS*NUM_CBUF-1:0]             c_out_valid_flat;
 
     logic [ROWS*COLS-1:0]                 overflow_flat;
 
     mentha_array_ws_4x4 #(
-        .IDX_W (IDX_W), .VAL_W (VAL_W),
-        .NUM_CBUF (NUM_CBUF), .ROWS (ROWS), .COLS (COLS)
+        .IDX_W (IDX_W),
+        .A_VAL_W (A_VAL_W),
+        .B_VAL_W (B_VAL_W),
+        .C_VAL_W (C_VAL_W),
+        .NUM_CBUF (NUM_CBUF),
+        .ROWS (ROWS),
+        .COLS (COLS)
     ) dut (.*);
 
     always #5 clk = ~clk;
@@ -53,21 +61,21 @@ module tb_mentha_file_driven;
     int status;
     int r_in, c_in;
     logic [IDX_W-1:0] a_idx_in;
-    logic signed [VAL_W-1:0] a_val_in;
+    logic signed [A_VAL_W-1:0] a_val_in;
 
     // Temporary scalar L-values for $fscanf
     logic [IDX_W-1:0]        b_tmp_idx [4];
-    logic signed [VAL_W-1:0] b_tmp_val [4];
+    logic signed [B_VAL_W-1:0] b_tmp_val [4];
 
     logic [IDX_W-1:0]        tmp_a_idx;
     logic [IDX_W-1:0]        tmp_b_idx;
-    logic signed [VAL_W-1:0] tmp_val;
+    logic signed [C_VAL_W-1:0] tmp_val;
     logic                    tmp_valid;
 
     // Output extraction variables
     logic [IDX_W-1:0]        out_a;
     logic [IDX_W-1:0]        out_b;
-    logic signed [VAL_W-1:0] out_val;
+    logic signed [C_VAL_W-1:0] out_val;
     logic                    out_valid;
 
     initial begin
@@ -132,8 +140,8 @@ module tb_mentha_file_driven;
 
             if (stat_b == 8) begin
                 for (int c = 0; c < 4; c++) begin
-                    b_edge_idx_flat[c*IDX_W +: IDX_W] = b_tmp_idx[c];
-                    b_edge_val_flat[c*VAL_W +: VAL_W] = b_tmp_val[c];
+                    b_edge_idx_flat[c*IDX_W +: IDX_W]     = b_tmp_idx[c];
+                    b_edge_val_flat[c*B_VAL_W +: B_VAL_W] = b_tmp_val[c];
                 end
             end
 
@@ -144,10 +152,10 @@ module tb_mentha_file_driven;
                     tmp_a_idx, tmp_b_idx, tmp_val, tmp_valid
                 );
                 if (stat_cw == 4) begin
-                    c_edge_a_idx_flat[slot*IDX_W +: IDX_W] = tmp_a_idx;
-                    c_edge_b_idx_flat[slot*IDX_W +: IDX_W] = tmp_b_idx;
-                    c_edge_val_flat[slot*VAL_W +: VAL_W]   = tmp_val;
-                    c_edge_valid_flat[slot]                = tmp_valid;
+                    c_edge_a_idx_flat[slot*IDX_W +: IDX_W]     = tmp_a_idx;
+                    c_edge_b_idx_flat[slot*IDX_W +: IDX_W]     = tmp_b_idx;
+                    c_edge_val_flat[slot*C_VAL_W +: C_VAL_W]   = tmp_val;
+                    c_edge_valid_flat[slot]                    = tmp_valid;
                     total_cw_items += 4;
                 end
             end
@@ -161,7 +169,7 @@ module tb_mentha_file_driven;
                     for (int s = 0; s < NUM_CBUF; s++) begin
                         out_a     = c_out_a_idx_flat[(r*NUM_CBUF + s)*IDX_W +: IDX_W];
                         out_b     = c_out_b_idx_flat[(r*NUM_CBUF + s)*IDX_W +: IDX_W];
-                        out_val   = c_out_val_flat[(r*NUM_CBUF + s)*VAL_W +: VAL_W];
+                        out_val   = c_out_val_flat[(r*NUM_CBUF + s)*C_VAL_W +: C_VAL_W];
                         out_valid = c_out_valid_flat[r*NUM_CBUF + s];
 
                         $fwrite(file_c_actual, "%02h %02h %08h %0d ", out_a, out_b, out_val, out_valid);

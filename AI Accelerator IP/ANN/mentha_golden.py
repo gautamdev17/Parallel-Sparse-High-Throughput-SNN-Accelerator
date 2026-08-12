@@ -4,8 +4,8 @@ mentha_golden.py
 Python Golden Model & Verification Driver for Mentha Weight-Stationary AI Accelerator IP.
 
 This script:
-1. Generates sparse matrices A and B with Mentha non-conflicting index packing.
-2. Computes the exact Golden Mathematical Reference for C = A x B.
+1. Generates sparse matrices A (INT8 signed weights) and B (INT8 signed activations) with Mentha index packing.
+2. Computes the exact Golden Mathematical Reference for C = A x B with INT32 signed accumulators.
 3. Formats SystemVerilog input stimulus files (stim_a.hex, stim_b.hex, stim_c_west.hex).
 4. Invokes Icarus Verilog to run the SystemVerilog file-driven testbench.
 5. Parses the RTL output (actual_c_east.hex) and performs bit-exact verification against the Golden Model.
@@ -18,7 +18,9 @@ import subprocess
 
 # --- Configuration Constants ---
 IDX_W = 8
-VAL_W = 32
+A_VAL_W = 8     # INT8 signed weights
+B_VAL_W = 8     # INT8 signed activations
+C_VAL_W = 32    # INT32 signed accumulators
 NUM_CBUF = 4
 ROWS = 4
 COLS = 4
@@ -49,9 +51,10 @@ class MenthaGoldenModel:
         for r in range(self.rows):
             for c in range(self.cols):
                 a_idx = idx_pool.pop()
-                a_val = random.randint(-15, 15)
+                # INT8 signed range: -128 to 127
+                a_val = random.randint(-128, 127)
                 if a_val == 0:
-                    a_val = 5
+                    a_val = 12
                 matrix_a[(r, c)] = (a_idx, a_val)
                     
         num_cycles = 10
@@ -62,7 +65,10 @@ class MenthaGoldenModel:
                 target_row = cycle % self.rows
                 a_idx, _ = matrix_a[(target_row, c)]
                 b_idx = a_idx
-                b_val = random.randint(1, 10)
+                # INT8 signed range: -128 to 127
+                b_val = random.randint(-128, 127)
+                if b_val == 0:
+                    b_val = -7
                 stream_b[c].append((b_idx, b_val))
                     
         stream_c_west = {r: [] for r in range(self.rows)}
@@ -150,15 +156,15 @@ class MenthaGoldenModel:
     def write_hex_stimulus(self, matrix_a, stream_b, stream_c_west, golden_east, total_cycles):
         ensure_dir(SIM_DIR)
         
-        # 1. Stationary A* (stim_a.hex): row col a_idx a_val
+        # 1. Stationary A* (stim_a.hex): row col a_idx a_val (2 hex digits for INT8)
         with open(os.path.join(SIM_DIR, "stim_a.hex"), "w") as f:
             for r in range(self.rows):
                 for c in range(self.cols):
                     a_idx, a_val = matrix_a.get((r, c), (0, 0))
-                    val_hex = f"{a_val & 0xFFFFFFFF:08x}"
+                    val_hex = f"{a_val & 0xFF:02x}"
                     f.write(f"{r} {c} {a_idx:02x} {val_hex}\n")
                     
-        # 2. B* Stream (stim_b.hex): space separated b_idx b_val for 4 cols = 8 hex numbers
+        # 2. B* Stream (stim_b.hex): space separated b_idx b_val (2 hex digits for INT8)
         with open(os.path.join(SIM_DIR, "stim_b.hex"), "w") as f:
             for cycle in range(total_cycles):
                 line_parts = []
@@ -167,11 +173,11 @@ class MenthaGoldenModel:
                         b_idx, b_val = stream_b[c][cycle]
                     else:
                         b_idx, b_val = 0, 0
-                    val_hex = f"{b_val & 0xFFFFFFFF:08x}"
+                    val_hex = f"{b_val & 0xFF:02x}"
                     line_parts.append(f"{b_idx:02x} {val_hex}")
                 f.write(" ".join(line_parts) + "\n")
                 
-        # 3. West C* Stream (stim_c_west.hex): space separated a_idx b_idx val valid for 4 rows x 4 slots = 64 numbers
+        # 3. West C* Stream (stim_c_west.hex): space separated a_idx b_idx val valid (8 hex digits for INT32)
         with open(os.path.join(SIM_DIR, "stim_c_west.hex"), "w") as f:
             for cycle in range(total_cycles):
                 line_parts = []
@@ -224,6 +230,7 @@ class MenthaGoldenModel:
 def main():
     print("===============================================================")
     print("   MENTHA AI ACCELERATOR IP - PYTHON GOLDEN VERIFIER FRAMEWORK  ")
+    print("   [INT8 Signed Weights (A*) x INT8 Signed Activations (B*)]   ")
     print("===============================================================")
     
     verifier = MenthaGoldenModel()
@@ -232,9 +239,9 @@ def main():
     print("[1/5] Generating Sparse Test Tile & Mentha Dataflow...")
     matrix_a, stream_b, stream_c_west, num_cycles = verifier.generate_random_test_case(seed=12345)
     
-    print("      Stationary A* Preload Entries:")
+    print("      Stationary INT8 Signed A* Preload Entries:")
     for (r, c), (a_idx, a_val) in sorted(matrix_a.items()):
-        print(f"        PE({r},{c}): a_idx={a_idx:3d}, a_val={a_val:3d}")
+        print(f"        PE({r},{c}): a_idx={a_idx:3d}, a_val={a_val:4d} (INT8)")
             
     # 2. Compute Golden Reference
     print("\n[2/5] Running Python Golden Systolic Reference Engine...")
@@ -287,18 +294,18 @@ def main():
                             found_val = a_val
                             if a_val == g_val:
                                 match_in_actual = True
-                                print(f"      {cycle:5d} |  {r}  | (a={g_a:3d}, b={g_b:3d}, val={g_val:5d})     | (a={a_a:3d}, b={a_b:3d}, val={a_val:5d})     |  PASS")
+                                print(f"      {cycle:5d} |  {r}  | (a={g_a:3d}, b={g_b:3d}, val={g_val:6d})    | (a={a_a:3d}, b={a_b:3d}, val={a_val:6d})    |  PASS")
                             else:
-                                print(f"      {cycle:5d} |  {r}  | (a={g_a:3d}, b={g_b:3d}, val={g_val:5d})     | (a={a_a:3d}, b={a_b:3d}, val={a_val:5d})     |  MISMATCH")
+                                print(f"      {cycle:5d} |  {r}  | (a={g_a:3d}, b={g_b:3d}, val={g_val:6d})    | (a={a_a:3d}, b={a_b:3d}, val={a_val:6d})    |  MISMATCH")
                                 mismatches += 1
                             break
                     if not match_in_actual and found_val is None:
-                        print(f"      {cycle:5d} |  {r}  | (a={g_a:3d}, b={g_b:3d}, val={g_val:5d})     | MISSING AT RTL OUTPUT             |  FAIL")
+                        print(f"      {cycle:5d} |  {r}  | (a={g_a:3d}, b={g_b:3d}, val={g_val:6d})    | MISSING AT RTL OUTPUT             |  FAIL")
                         mismatches += 1
                         
     print("---------------------------------------------------------------")
     if mismatches == 0 and total_checks > 0:
-        print(f"   SUCCESS! 100% BIT-EXACT VERIFICATION PASSED ({total_checks} non-zero partials verified)")
+        print(f"   SUCCESS! 100% BIT-EXACT VERIFICATION PASSED ({total_checks} INT8->INT32 non-zero partials verified)")
         print("   Python Golden Reference == SystemVerilog Hardware Accelerator IP")
     else:
         print(f"   RESULTS: {total_checks - mismatches} / {total_checks} matched. {mismatches} mismatches.")
