@@ -1,12 +1,6 @@
 // mentha_array_ws_4x4.sv
 // 4x4 Weight-Stationary Mentha Systolic Array.
-//
-// Dataflow Topology:
-//   - A* is stationary per PE: (a_idx, a_val). Loaded once per tile.
-//   - B* streams vertically top-to-bottom: (b_idx, b_val).
-//   - C* streams horizontally left-to-right (west-to-east):
-//     Each row's stream consists of NUM_CBUF slots of (c_a_idx, c_b_idx, c_val, c_valid).
-//   - East edge outputs the streamed partial/accumulated results.
+// Robust 1D inter-PE wiring for 100% compatibility across SystemVerilog tools (Icarus Verilog, Verilator, Questa).
 
 module mentha_array_ws_4x4 #(
     parameter int IDX_W    = 8,
@@ -48,30 +42,30 @@ module mentha_array_ws_4x4 #(
     output logic [ROWS*COLS-1:0]                 overflow_flat
 );
 
-    // Vertical B* inter-PE wires: b_wire[r][c] (r = 0..ROWS)
-    logic [IDX_W-1:0]        b_wire_idx [ROWS+1][COLS];
-    logic signed [VAL_W-1:0] b_wire_val [ROWS+1][COLS];
+    // Vertical B* inter-PE wires: b_wire_idx[ (r)*(COLS) + c ]
+    logic [IDX_W-1:0]        b_wire_idx [(ROWS+1)*COLS];
+    logic signed [VAL_W-1:0] b_wire_val [(ROWS+1)*COLS];
 
-    // Horizontal C* inter-PE wires: c_wire[r][c] (c = 0..COLS)
-    logic [NUM_CBUF*IDX_W-1:0]       c_wire_a_idx [ROWS][COLS+1];
-    logic [NUM_CBUF*IDX_W-1:0]       c_wire_b_idx [ROWS][COLS+1];
-    logic signed [NUM_CBUF*VAL_W-1:0] c_wire_val   [ROWS][COLS+1];
-    logic [NUM_CBUF-1:0]             c_wire_valid [ROWS][COLS+1];
+    // Horizontal C* inter-PE wires: c_wire_a_idx[ (r)*(COLS+1) + c ]
+    logic [NUM_CBUF*IDX_W-1:0]       c_wire_a_idx [ROWS*(COLS+1)];
+    logic [NUM_CBUF*IDX_W-1:0]       c_wire_b_idx [ROWS*(COLS+1)];
+    logic signed [NUM_CBUF*VAL_W-1:0] c_wire_val   [ROWS*(COLS+1)];
+    logic [NUM_CBUF-1:0]             c_wire_valid [ROWS*(COLS+1)];
 
     genvar r, c;
     generate
         // Top edge B* connection
         for (c = 0; c < COLS; c++) begin : g_top_b
-            assign b_wire_idx[0][c] = b_edge_idx_flat[c*IDX_W +: IDX_W];
-            assign b_wire_val[0][c] = b_edge_val_flat[c*VAL_W +: VAL_W];
+            assign b_wire_idx[0*COLS + c] = b_edge_idx_flat[c*IDX_W +: IDX_W];
+            assign b_wire_val[0*COLS + c] = b_edge_val_flat[c*VAL_W +: VAL_W];
         end
 
         // West edge C* connection
         for (r = 0; r < ROWS; r++) begin : g_west_c
-            assign c_wire_a_idx[r][0] = c_edge_a_idx_flat[r*NUM_CBUF*IDX_W +: NUM_CBUF*IDX_W];
-            assign c_wire_b_idx[r][0] = c_edge_b_idx_flat[r*NUM_CBUF*IDX_W +: NUM_CBUF*IDX_W];
-            assign c_wire_val[r][0]   = c_edge_val_flat[r*NUM_CBUF*VAL_W +: NUM_CBUF*VAL_W];
-            assign c_wire_valid[r][0] = c_edge_valid_flat[r*NUM_CBUF +: NUM_CBUF];
+            assign c_wire_a_idx[r*(COLS+1) + 0] = c_edge_a_idx_flat[r*NUM_CBUF*IDX_W +: NUM_CBUF*IDX_W];
+            assign c_wire_b_idx[r*(COLS+1) + 0] = c_edge_b_idx_flat[r*NUM_CBUF*IDX_W +: NUM_CBUF*IDX_W];
+            assign c_wire_val[r*(COLS+1) + 0]   = c_edge_val_flat[r*NUM_CBUF*VAL_W +: NUM_CBUF*VAL_W];
+            assign c_wire_valid[r*(COLS+1) + 0] = c_edge_valid_flat[r*NUM_CBUF +: NUM_CBUF];
         end
 
         // 2D Array of PEs
@@ -87,35 +81,35 @@ module mentha_array_ws_4x4 #(
                     .a_load_en        (a_load_en && (a_load_row == r) && (a_load_col == c)),
                     .a_load_idx       (a_load_idx),
                     .a_load_val       (a_load_val),
-                    .b_in_idx         (b_wire_idx[r][c]),
-                    .b_in_val         (b_wire_val[r][c]),
-                    .b_out_idx        (b_wire_idx[r+1][c]),
-                    .b_out_val        (b_wire_val[r+1][c]),
-                    .c_in_a_idx_flat  (c_wire_a_idx[r][c]),
-                    .c_in_b_idx_flat  (c_wire_b_idx[r][c]),
-                    .c_in_val_flat    (c_wire_val[r][c]),
-                    .c_in_valid_flat  (c_wire_valid[r][c]),
-                    .c_out_a_idx_flat (c_wire_a_idx[r][c+1]),
-                    .c_out_b_idx_flat (c_wire_b_idx[r][c+1]),
-                    .c_out_val_flat   (c_wire_val[r][c+1]),
-                    .c_out_valid_flat (c_wire_valid[r][c+1]),
-                    .overflow         (overflow_flat[r*COLS+c])
+                    .b_in_idx         (b_wire_idx[r*COLS + c]),
+                    .b_in_val         (b_wire_val[r*COLS + c]),
+                    .b_out_idx        (b_wire_idx[(r+1)*COLS + c]),
+                    .b_out_val        (b_wire_val[(r+1)*COLS + c]),
+                    .c_in_a_idx_flat  (c_wire_a_idx[r*(COLS+1) + c]),
+                    .c_in_b_idx_flat  (c_wire_b_idx[r*(COLS+1) + c]),
+                    .c_in_val_flat    (c_wire_val[r*(COLS+1) + c]),
+                    .c_in_valid_flat  (c_wire_valid[r*(COLS+1) + c]),
+                    .c_out_a_idx_flat (c_wire_a_idx[r*(COLS+1) + c + 1]),
+                    .c_out_b_idx_flat (c_wire_b_idx[r*(COLS+1) + c + 1]),
+                    .c_out_val_flat   (c_wire_val[r*(COLS+1) + c + 1]),
+                    .c_out_valid_flat (c_wire_valid[r*(COLS+1) + c + 1]),
+                    .overflow         (overflow_flat[r*COLS + c])
                 );
             end
         end
 
         // Bottom edge B* output connection
         for (c = 0; c < COLS; c++) begin : g_bottom_b
-            assign b_out_idx_flat[c*IDX_W +: IDX_W] = b_wire_idx[ROWS][c];
-            assign b_out_val_flat[c*VAL_W +: VAL_W] = b_wire_val[ROWS][c];
+            assign b_out_idx_flat[c*IDX_W +: IDX_W] = b_wire_idx[ROWS*COLS + c];
+            assign b_out_val_flat[c*VAL_W +: VAL_W] = b_wire_val[ROWS*COLS + c];
         end
 
         // East edge C* output connection
         for (r = 0; r < ROWS; r++) begin : g_east_c
-            assign c_out_a_idx_flat[r*NUM_CBUF*IDX_W +: NUM_CBUF*IDX_W] = c_wire_a_idx[r][COLS];
-            assign c_out_b_idx_flat[r*NUM_CBUF*IDX_W +: NUM_CBUF*IDX_W] = c_wire_b_idx[r][COLS];
-            assign c_out_val_flat[r*NUM_CBUF*VAL_W +: NUM_CBUF*VAL_W]   = c_wire_val[r][COLS];
-            assign c_out_valid_flat[r*NUM_CBUF +: NUM_CBUF]             = c_wire_valid[r][COLS];
+            assign c_out_a_idx_flat[r*NUM_CBUF*IDX_W +: NUM_CBUF*IDX_W] = c_wire_a_idx[r*(COLS+1) + COLS];
+            assign c_out_b_idx_flat[r*NUM_CBUF*IDX_W +: NUM_CBUF*IDX_W] = c_wire_b_idx[r*(COLS+1) + COLS];
+            assign c_out_val_flat[r*NUM_CBUF*VAL_W +: NUM_CBUF*VAL_W]   = c_wire_val[r*(COLS+1) + COLS];
+            assign c_out_valid_flat[r*NUM_CBUF +: NUM_CBUF]             = c_wire_valid[r*(COLS+1) + COLS];
         end
     endgenerate
 

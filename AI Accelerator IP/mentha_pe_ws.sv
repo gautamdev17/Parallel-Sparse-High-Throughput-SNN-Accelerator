@@ -64,9 +64,9 @@ module mentha_pe_ws #(
         end
     end
 
-    // Compute trigger
+    // Compute trigger: multiply-accumulate occurs ONLY when A* index matches B* index
     logic do_compute;
-    assign do_compute = (a_idx_q != '0) && (b_in_idx != '0);
+    assign do_compute = (a_idx_q != '0) && (b_in_idx != '0) && (a_idx_q == b_in_idx);
 
     logic signed [VAL_W-1:0] product;
     assign product = a_val_q * b_in_val;
