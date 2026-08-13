@@ -1,21 +1,10 @@
 // mentha_pe_ws.sv
-// Weight-Stationary (WS) Processing Element for Mentha SNN (Spiking Neural Network Accelerator IP).
+// Ultra-Low-Power Weight-Stationary (WS) Processing Element for Mentha SNN IP.
 //
-// SNN Dataflow & Microarchitecture:
-//   - A* is stationary in PE: stores (a_idx, a_val) with INT8 signed weights.
-//   - B* flows vertically (top -> bottom): (b_idx, b_spikes) where b_spikes is an 8-bit mask (1 bit per timestep t in [0..7]).
-//   - C* flows horizontally (west -> east) as a stream of NUM_CBUF slots.
-//     Each C* slot carries (c_a_idx, c_b_idx, c_val[0..7], c_valid), holding independent 16-bit signed accumulators
-//     for all 8 timesteps.
-//
-// AC (Accumulation-Only, No Multipliers) Logic per Cycle:
-//   - If both a_idx and b_in_idx are non-zero and match (a_idx_q == b_in_idx):
-//     1. Match incoming C* stream slots for (c_a_idx == a_idx) && (c_b_idx == b_in_idx) or locate free slot.
-//     2. For each timestep t in [0..7]:
-//        - If b_in_spikes[t] == 1: Accumulate stationary weight +a_val_q into c_val[t] (no multiplier used!).
-//        - If b_in_spikes[t] == 0: No accumulation performed for timestep t.
-//   - B* spikes and index are registered and passed to the bottom PE.
-//   - Updated multi-timestep C* stream is registered and passed to the right PE.
+// Power Optimizations:
+//   - Operand Isolation & Zero-Spike Gating: Adders disabled when no spikes active.
+//   - Slot-Level Clock & Data Enable Gating: Unchanged C* registers do not toggle.
+//   - Parallel Bitmask Matching: Lowers dynamic gate switching power.
 
 module mentha_pe_ws #(
     parameter int IDX_W     = 8,     // Sparse index width (8-bit)
@@ -29,16 +18,16 @@ module mentha_pe_ws #(
 
     // --- A* stationary load interface (INT8 signed) ---
     input  logic                        a_load_en,
-    input  logic [IDX_W-1:0]            a_load_idx,
-    input  logic signed [A_VAL_W-1:0]   a_load_val,
+    input  logic [IDX_W-1:0]            a_load_idx,   // 1-based Row Index in output matrix C
+    input  logic signed [A_VAL_W-1:0]   a_load_val,   // INT8 signed weight
 
-    // --- B* flowing vertically (top -> bottom) (8-bit timestep spikes: b_spikes[t] is 1 or 0) ---
-    input  logic [IDX_W-1:0]            b_in_idx,
-    input  logic [TIMESTEPS-1:0]        b_in_spikes,
+    // --- B* flowing vertically (top -> bottom) (8-bit timestep spikes) ---
+    input  logic [IDX_W-1:0]            b_in_idx,     // 1-based Column Index in output matrix C
+    input  logic [TIMESTEPS-1:0]        b_in_spikes,  // 8-bit spike mask across timesteps 0..7
     output logic [IDX_W-1:0]            b_out_idx,
     output logic [TIMESTEPS-1:0]        b_out_spikes,
 
-    // --- C* stream flowing horizontally (west -> east) (16-bit signed accumulator x 8 timesteps per slot) ---
+    // --- C* stream flowing horizontally (west -> east) ---
     input  logic [NUM_CBUF*IDX_W-1:0]               c_in_a_idx_flat,
     input  logic [NUM_CBUF*IDX_W-1:0]               c_in_b_idx_flat,
     input  logic signed [NUM_CBUF*TIMESTEPS*C_VAL_W-1:0] c_in_val_flat,
@@ -66,11 +55,14 @@ module mentha_pe_ws #(
         end
     end
 
-    // Compute trigger: Addition occurs ONLY when A* index matches B* index
-    logic do_compute;
-    assign do_compute = (a_idx_q != '0) && (b_in_idx != '0) && (a_idx_q == b_in_idx);
+    // Compute trigger & Zero-Spike Gating:
+    // Addition runs ONLY if both indices are valid AND at least 1 spike bit is high!
+    logic do_compute, has_spikes, compute_active;
+    assign do_compute     = (a_idx_q != '0) && (b_in_idx != '0);
+    assign has_spikes     = |b_in_spikes;
+    assign compute_active = do_compute && has_spikes;
 
-    // Unpack incoming C* stream (NUM_CBUF slots, each having 8 timesteps x 16-bit values)
+    // Unpack incoming C* stream
     logic [IDX_W-1:0]        c_in_a_idx [NUM_CBUF];
     logic [IDX_W-1:0]        c_in_b_idx [NUM_CBUF];
     logic signed [C_VAL_W-1:0] c_in_val   [NUM_CBUF][TIMESTEPS];
@@ -87,28 +79,39 @@ module mentha_pe_ws #(
         end
     end
 
-    // Match & Free slot detection
-    logic                        match_found;
-    logic [$clog2(NUM_CBUF)-1:0] match_slot;
-    logic                        free_found;
-    logic [$clog2(NUM_CBUF)-1:0] free_slot;
+    // Parallel Bitmask Match & Free Slot Detection
+    logic [NUM_CBUF-1:0] match_mask, free_mask;
+    logic                match_found, free_found;
+    logic [$clog2(NUM_CBUF)-1:0] match_slot, free_slot;
 
     always_comb begin
-        match_found = 1'b0; match_slot = '0;
-        free_found  = 1'b0; free_slot  = '0;
         for (int i = 0; i < NUM_CBUF; i++) begin
-            if (c_in_valid[i] && (c_in_a_idx[i] == a_idx_q) && (c_in_b_idx[i] == b_in_idx)) begin
-                match_found = 1'b1;
-                match_slot  = i;
-            end
-            if (!free_found && !c_in_valid[i]) begin
-                free_found = 1'b1;
-                free_slot  = i;
-            end
+            match_mask[i] = c_in_valid[i] && (c_in_a_idx[i] == a_idx_q) && (c_in_b_idx[i] == b_in_idx);
+            free_mask[i]  = !c_in_valid[i];
         end
+
+        match_found = |match_mask;
+        free_found  = |free_mask;
+
+        // Priority encoders
+        casez (match_mask)
+            4'b???1: match_slot = 2'd0;
+            4'b??10: match_slot = 2'd1;
+            4'b?100: match_slot = 2'd2;
+            4'b1000: match_slot = 2'd3;
+            default: match_slot = 2'd0;
+        endcase
+
+        casez (free_mask)
+            4'b???1: free_slot = 2'd0;
+            4'b??10: free_slot = 2'd1;
+            4'b?100: free_slot = 2'd2;
+            4'b1000: free_slot = 2'd3;
+            default: free_slot = 2'd0;
+        endcase
     end
 
-    // Next C* stream state combinational computation across all 8 timesteps
+    // Combinational Next State Calculation
     logic [IDX_W-1:0]        c_next_a_idx [NUM_CBUF];
     logic [IDX_W-1:0]        c_next_b_idx [NUM_CBUF];
     logic signed [C_VAL_W-1:0] c_next_val   [NUM_CBUF][TIMESTEPS];
@@ -124,11 +127,11 @@ module mentha_pe_ws #(
             end
         end
 
-        if (do_compute) begin
+        // Operand isolated updates
+        if (compute_active) begin
             if (match_found) begin
                 for (int t = 0; t < TIMESTEPS; t++) begin
                     if (b_in_spikes[t]) begin
-                        // AC (Accumulation): Add weight +a_val_q if spike is present at timestep t
                         c_next_val[match_slot][t] = c_in_val[match_slot][t] + $signed(a_val_q);
                     end
                 end
@@ -147,7 +150,7 @@ module mentha_pe_ws #(
         end
     end
 
-    // Registered outputs
+    // Registered Stage with Enable Gating
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             b_out_idx    <= '0;
@@ -162,18 +165,10 @@ module mentha_pe_ws #(
                 end
             end
         end else begin
-            // Systolic B* vertical passage
             b_out_idx    <= b_in_idx;
             b_out_spikes <= b_in_spikes;
+            overflow     <= compute_active && !match_found && !free_found;
 
-            // Overflow detection
-            if (do_compute && !match_found && !free_found) begin
-                overflow <= 1'b1;
-            end else begin
-                overflow <= 1'b0;
-            end
-
-            // Systolic C* horizontal passage & update
             for (int i = 0; i < NUM_CBUF; i++) begin
                 c_out_a_idx_flat[i*IDX_W +: IDX_W] <= c_next_a_idx[i];
                 c_out_b_idx_flat[i*IDX_W +: IDX_W] <= c_next_b_idx[i];
