@@ -1,0 +1,21 @@
+1. whats there in ptb and sato :
+    comparison with loihi truenorth
+    memory modelling cacti 32nm cmos
+    tw size sweep
+    array dim sweep
+    per layer energy/latency
+    edp summary , why edp? penalizes time more, since t^2
+
+    start to write paper
+    mac vs ac motivation, snn slow
+    all 3 dataflow ablation
+
+    rtl is done for our implementation, ptb, sato
+    discuss where to do the lif, max bufs required
+    cycle accurate sims tbd
+
+2.  fully parallel design adder tree
+
+3.  accelerator work? current situation? llm? anywhere i can contribute?
+
+4.  extension letter
