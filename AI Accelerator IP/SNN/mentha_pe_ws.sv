@@ -1,5 +1,4 @@
 // mentha_pe_ws.sv
-// Ultra-Low-Power Weight-Stationary (WS) Processing Element for Mentha SNN IP.
 //
 // Mentha Packed Dataflow (Algorithms 1 & 2):
 //   - A* is stationary in PE: stores (a_idx_row, a_val) with INT8 signed weights.
