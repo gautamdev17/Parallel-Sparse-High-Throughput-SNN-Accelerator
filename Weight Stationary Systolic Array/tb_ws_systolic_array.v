@@ -10,12 +10,12 @@ module tb_ws_systolic_array;
 
     reg clk = 0, rst_n = 0, load_w = 0;
     reg  [N*N*DW-1:0] w_flat = 0;      // w_flat[(k*N+j)*DW +: DW] = B[k][j]
-    reg  [N*DW-1:0]   a_left = 0;      // a_left[k*DW +: DW]       -> array row k
-    wire [N*AW-1:0]   y_bottom;        // y_bottom[j*AW +: AW]     <- array column j
+    reg  [N*DW-1:0]   a_top = 0;      // a_top[k*DW +: DW]       -> top of array column k
+    wire [N*AW-1:0]   y_right;        // y_right[n*AW +: AW]     <- right edge of array row n
 
     ws_systolic_array #(.N(N), .DW(DW), .AW(AW)) dut (
         .clk(clk), .rst_n(rst_n), .load_w(load_w),
-        .w_flat(w_flat), .a_left(a_left), .y_bottom(y_bottom));
+        .w_flat(w_flat), .a_top(a_top), .y_right(y_right));
 
     always #5 clk = ~clk;
 
@@ -38,23 +38,23 @@ module tb_ws_systolic_array;
         // 1) load weights once
         for (k = 0; k < N; k = k + 1) for (j = 0; j < N; j = j + 1)
             w_flat[(k*N+j)*DW +: DW] = B[k*N+j];
-        a_left = 0;
+        a_top = 0;
         load_w = 1; @(posedge clk); #1; load_w = 0;
 
-        // 2) stream A: row k of the array gets A[c-k][k]  (row k delayed k cycles)
-        //    and 3) collect: column j delivers row m = c-(N-1)-j
+        // 2) stream A: column k of the array gets A[c-k][k]  (column k delayed k cycles)
+        //    and 3) collect: row n delivers output row m = c-(N-1)-n
         for (c = 0; c <= 3*N - 3; c = c + 1) begin
             for (k = 0; k < N; k = k + 1) begin
                 m = c - k;
-                a_left[k*DW +: DW] = (m >= 0 && m < N) ? A[m*N+k] : 0;
+                a_top[k*DW +: DW] = (m >= 0 && m < N) ? A[m*N+k] : 0;
             end
             @(posedge clk); #1;
             for (j = 0; j < N; j = j + 1) begin
                 m = c - (N-1) - j;
-                if (m >= 0 && m < N) Chw[m*N+j] = $signed(y_bottom[j*AW +: AW]);
+                if (m >= 0 && m < N) Chw[m*N+j] = $signed(y_right[j*AW +: AW]);
             end
         end
-        a_left = 0;
+        a_top = 0;
         repeat (N) @(posedge clk);           // flush, so back-to-back runs are clean
 
         for (i = 0; i < N*N; i = i + 1) if (Chw[i] !== Cref[i]) errs = errs + 1;
