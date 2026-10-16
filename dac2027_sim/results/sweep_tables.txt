@@ -1,0 +1,92 @@
+0 layer runs (518 cached)
+### Workload `wd1.0`: weight density 1.0, non-silent 0.1, fire prob 0.3 (T=8, INT8, 800 MHz)
+
+| Network | Design | Cycles (b=1) | Latency (ms) | Ours speed-up (latency) | Throughput (img/s, b=16) | Ours gain (throughput) | img/s per adder |
+|---|---|---:|---:|---:|---:|---:|---:|
+| VGG16 | LoAS | 8,973,849 | 11.217 | 4.13x | 89 | 5.30x | 0.70 |
+| VGG16 | SpikeX (8x8) | 3,353,686 | 4.192 | 1.54x | 240 | 1.97x | 3.76 |
+| VGG16 | PTB (16x8) | 859,990 | 1.075 | 0.40x | 940 | 0.50x | 7.35 |
+| VGG16 | Ours (4x4, T=8) | 2,174,700 | 2.718 | 1.00x | 473 | 1.00x | 3.69 |
+| ResNet18 | LoAS | 15,076,980 | 18.846 | 4.79x | 53 | 5.19x | 0.41 |
+| ResNet18 | SpikeX (8x8) | 5,971,902 | 7.465 | 1.90x | 133 | 2.06x | 2.08 |
+| ResNet18 | PTB (16x8) | 1,532,249 | 1.915 | 0.49x | 520 | 0.53x | 4.06 |
+| ResNet18 | Ours (4x4, T=8) | 3,150,805 | 3.939 | 1.00x | 275 | 1.00x | 2.15 | 
+
+### Workload `wd0.5`: weight density 0.5, non-silent 0.1, fire prob 0.3 (T=8, INT8, 800 MHz)
+
+| Network | Design | Cycles (b=1) | Latency (ms) | Ours speed-up (latency) | Throughput (img/s, b=16) | Ours gain (throughput) | img/s per adder |
+|---|---|---:|---:|---:|---:|---:|---:|
+| VGG16 | LoAS | 8,973,849 | 11.217 | 6.80x | 89 | 8.79x | 0.70 |
+| VGG16 | SpikeX (8x8) | 3,312,818 | 4.141 | 2.51x | 240 | 3.26x | 3.75 |
+| VGG16 | PTB (16x8) | 848,215 | 1.060 | 0.64x | 939 | 0.83x | 7.34 |
+| VGG16 | Ours (4x4, T=8) | 1,319,781 | 1.650 | 1.00x | 784 | 1.00x | 6.12 |
+| ResNet18 | LoAS | 15,076,980 | 18.846 | 7.88x | 53 | 8.58x | 0.41 |
+| ResNet18 | SpikeX (8x8) | 6,024,194 | 7.530 | 3.15x | 133 | 3.43x | 2.07 |
+| ResNet18 | PTB (16x8) | 1,545,089 | 1.931 | 0.81x | 518 | 0.88x | 4.05 |
+| ResNet18 | Ours (4x4, T=8) | 1,913,487 | 2.392 | 1.00x | 455 | 1.00x | 3.56 | 
+
+### Workload `wd0.3`: weight density 0.3, non-silent 0.1, fire prob 0.3 (T=8, INT8, 800 MHz)
+
+| Network | Design | Cycles (b=1) | Latency (ms) | Ours speed-up (latency) | Throughput (img/s, b=16) | Ours gain (throughput) | img/s per adder |
+|---|---|---:|---:|---:|---:|---:|---:|
+| VGG16 | LoAS | 8,973,849 | 11.217 | 10.36x | 89 | 13.66x | 0.70 |
+| VGG16 | SpikeX (8x8) | 3,283,812 | 4.105 | 3.79x | 240 | 5.07x | 3.75 |
+| VGG16 | PTB (16x8) | 840,820 | 1.051 | 0.97x | 938 | 1.30x | 7.33 |
+| VGG16 | Ours (4x4, T=8) | 865,788 | 1.082 | 1.00x | 1,218 | 1.00x | 9.51 |
+| ResNet18 | LoAS | 15,076,980 | 18.846 | 12.20x | 53 | 13.23x | 0.41 |
+| ResNet18 | SpikeX (8x8) | 5,998,848 | 7.499 | 4.86x | 133 | 5.28x | 2.08 |
+| ResNet18 | PTB (16x8) | 1,537,384 | 1.922 | 1.24x | 519 | 1.35x | 4.05 |
+| ResNet18 | Ours (4x4, T=8) | 1,235,504 | 1.544 | 1.00x | 702 | 1.00x | 5.48 | 
+
+### Workload `wd0.2`: weight density 0.2, non-silent 0.1, fire prob 0.3 (T=8, INT8, 800 MHz)
+
+| Network | Design | Cycles (b=1) | Latency (ms) | Ours speed-up (latency) | Throughput (img/s, b=16) | Ours gain (throughput) | img/s per adder |
+|---|---|---:|---:|---:|---:|---:|---:|
+| VGG16 | LoAS | 8,973,849 | 11.217 | 13.97x | 89 | 18.72x | 0.70 |
+| VGG16 | SpikeX (8x8) | 3,326,780 | 4.158 | 5.18x | 241 | 6.93x | 3.76 |
+| VGG16 | PTB (16x8) | 850,778 | 1.063 | 1.32x | 941 | 1.77x | 7.35 |
+| VGG16 | Ours (4x4, T=8) | 642,187 | 0.803 | 1.00x | 1,669 | 1.00x | 13.04 |
+| ResNet18 | LoAS | 15,076,980 | 18.846 | 16.60x | 53 | 18.17x | 0.41 |
+| ResNet18 | SpikeX (8x8) | 6,027,064 | 7.534 | 6.63x | 133 | 7.27x | 2.07 |
+| ResNet18 | PTB (16x8) | 1,543,340 | 1.929 | 1.70x | 518 | 1.86x | 4.04 |
+| ResNet18 | Ours (4x4, T=8) | 908,473 | 1.136 | 1.00x | 964 | 1.00x | 7.53 | 
+
+### Workload `wd0.1`: weight density 0.1, non-silent 0.1, fire prob 0.3 (T=8, INT8, 800 MHz)
+
+| Network | Design | Cycles (b=1) | Latency (ms) | Ours speed-up (latency) | Throughput (img/s, b=16) | Ours gain (throughput) | img/s per adder |
+|---|---|---:|---:|---:|---:|---:|---:|
+| VGG16 | LoAS | 8,973,849 | 11.217 | 22.15x | 89 | 30.98x | 0.70 |
+| VGG16 | SpikeX (8x8) | 3,335,686 | 4.170 | 8.23x | 240 | 11.52x | 3.75 |
+| VGG16 | PTB (16x8) | 853,729 | 1.067 | 2.11x | 937 | 2.95x | 7.32 |
+| VGG16 | Ours (4x4, T=8) | 405,230 | 0.507 | 1.00x | 2,762 | 1.00x | 21.58 |
+| ResNet18 | LoAS | 15,076,980 | 18.846 | 27.38x | 53 | 30.08x | 0.41 |
+| ResNet18 | SpikeX (8x8) | 5,977,620 | 7.472 | 10.85x | 132 | 12.05x | 2.07 |
+| ResNet18 | PTB (16x8) | 1,532,172 | 1.915 | 2.78x | 517 | 3.09x | 4.04 |
+| ResNet18 | Ours (4x4, T=8) | 550,695 | 0.688 | 1.00x | 1,596 | 1.00x | 12.47 | 
+
+### Workload `wd0.05`: weight density 0.05, non-silent 0.1, fire prob 0.3 (T=8, INT8, 800 MHz)
+
+| Network | Design | Cycles (b=1) | Latency (ms) | Ours speed-up (latency) | Throughput (img/s, b=16) | Ours gain (throughput) | img/s per adder |
+|---|---|---:|---:|---:|---:|---:|---:|
+| VGG16 | LoAS | 8,973,849 | 11.217 | 30.52x | 89 | 42.23x | 0.70 |
+| VGG16 | SpikeX (8x8) | 3,328,808 | 4.161 | 11.32x | 240 | 15.69x | 3.75 |
+| VGG16 | PTB (16x8) | 851,117 | 1.064 | 2.89x | 937 | 4.02x | 7.32 |
+| VGG16 | Ours (4x4, T=8) | 294,059 | 0.368 | 1.00x | 3,765 | 1.00x | 29.42 |
+| ResNet18 | LoAS | 15,076,980 | 18.846 | 38.54x | 53 | 41.24x | 0.41 |
+| ResNet18 | SpikeX (8x8) | 6,049,796 | 7.562 | 15.47x | 133 | 16.49x | 2.07 |
+| ResNet18 | PTB (16x8) | 1,552,106 | 1.940 | 3.97x | 518 | 4.23x | 4.05 |
+| ResNet18 | Ours (4x4, T=8) | 391,164 | 0.489 | 1.00x | 2,188 | 1.00x | 17.09 | 
+
+### Workload `wd0.02`: weight density 0.02, non-silent 0.1, fire prob 0.3 (T=8, INT8, 800 MHz)
+
+| Network | Design | Cycles (b=1) | Latency (ms) | Ours speed-up (latency) | Throughput (img/s, b=16) | Ours gain (throughput) | img/s per adder |
+|---|---|---:|---:|---:|---:|---:|---:|
+| VGG16 | LoAS | 8,973,849 | 11.217 | 38.74x | 89 | 50.85x | 0.70 |
+| VGG16 | SpikeX (8x8) | 3,302,276 | 4.128 | 14.26x | 241 | 18.85x | 3.76 |
+| VGG16 | PTB (16x8) | 842,902 | 1.054 | 3.64x | 940 | 4.82x | 7.35 |
+| VGG16 | Ours (4x4, T=8) | 231,631 | 0.290 | 1.00x | 4,533 | 1.00x | 35.42 |
+| ResNet18 | LoAS | 15,076,980 | 18.846 | 49.13x | 53 | 50.60x | 0.41 |
+| ResNet18 | SpikeX (8x8) | 6,046,612 | 7.558 | 19.70x | 133 | 20.23x | 2.07 |
+| ResNet18 | PTB (16x8) | 1,547,738 | 1.935 | 5.04x | 518 | 5.18x | 4.05 |
+| ResNet18 | Ours (4x4, T=8) | 306,866 | 0.384 | 1.00x | 2,685 | 1.00x | 20.97 | 
+

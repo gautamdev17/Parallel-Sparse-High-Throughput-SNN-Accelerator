@@ -1,0 +1,408 @@
+{
+ "wd1.0": {
+  "VGG16|loas_zip": {
+   "cycles_b1": 8973848.807999998,
+   "cycles_b16": 143571128.59199998,
+   "latency_ms": 11.217311009999998,
+   "throughput": 89.15441513575479,
+   "thr_per_adder": 0.6965188682480843
+  },
+  "VGG16|spikex": {
+   "cycles_b1": 3353686,
+   "cycles_b16": 53231640,
+   "latency_ms": 4.1921075000000005,
+   "throughput": 240.45849423388046,
+   "thr_per_adder": 3.757163972404382
+  },
+  "VGG16|ptb": {
+   "cycles_b1": 859990,
+   "cycles_b16": 13614119,
+   "latency_ms": 1.0749875,
+   "throughput": 940.2003904916653,
+   "thr_per_adder": 7.345315550716135
+  },
+  "VGG16|ours": {
+   "cycles_b1": 2174700,
+   "cycles_b16": 27082219,
+   "latency_ms": 2.718375,
+   "throughput": 472.6348309937232,
+   "thr_per_adder": 3.6924596171384625
+  },
+  "ResNet18|loas_zip": {
+   "cycles_b1": 15076980.231999999,
+   "cycles_b16": 241230371.92,
+   "latency_ms": 18.846225289999996,
+   "throughput": 53.061311882588754,
+   "thr_per_adder": 0.41454149908272464
+  },
+  "ResNet18|spikex": {
+   "cycles_b1": 5971902,
+   "cycles_b16": 96002156,
+   "latency_ms": 7.4648775,
+   "throughput": 133.3303389561376,
+   "thr_per_adder": 2.08328654618965
+  },
+  "ResNet18|ptb": {
+   "cycles_b1": 1532249,
+   "cycles_b16": 24602917,
+   "latency_ms": 1.91531125,
+   "throughput": 520.2635118429249,
+   "thr_per_adder": 4.064558686272851
+  },
+  "ResNet18|ours": {
+   "cycles_b1": 3150805,
+   "cycles_b16": 46518259,
+   "latency_ms": 3.9385062500000005,
+   "throughput": 275.1607707416565,
+   "thr_per_adder": 2.1496935214191915
+  }
+ },
+ "wd0.5": {
+  "VGG16|loas_zip": {
+   "cycles_b1": 8973848.807999998,
+   "cycles_b16": 143571128.59199998,
+   "latency_ms": 11.217311009999998,
+   "throughput": 89.15441513575479,
+   "thr_per_adder": 0.6965188682480843
+  },
+  "VGG16|spikex": {
+   "cycles_b1": 3312818,
+   "cycles_b16": 53269602,
+   "latency_ms": 4.1410225,
+   "throughput": 240.2871341144993,
+   "thr_per_adder": 3.7544864705390517
+  },
+  "VGG16|ptb": {
+   "cycles_b1": 848215,
+   "cycles_b16": 13628312,
+   "latency_ms": 1.06026875,
+   "throughput": 939.2212329744139,
+   "thr_per_adder": 7.337665882612608
+  },
+  "VGG16|ours": {
+   "cycles_b1": 1319781,
+   "cycles_b16": 16333775,
+   "latency_ms": 1.64972625,
+   "throughput": 783.6522787904205,
+   "thr_per_adder": 6.12228342805016
+  },
+  "ResNet18|loas_zip": {
+   "cycles_b1": 15076980.231999999,
+   "cycles_b16": 241230371.92,
+   "latency_ms": 18.846225289999996,
+   "throughput": 53.061311882588754,
+   "thr_per_adder": 0.41454149908272464
+  },
+  "ResNet18|spikex": {
+   "cycles_b1": 6024194,
+   "cycles_b16": 96452810,
+   "latency_ms": 7.5302425,
+   "throughput": 132.70738301973785,
+   "thr_per_adder": 2.073552859683404
+  },
+  "ResNet18|ptb": {
+   "cycles_b1": 1545089,
+   "cycles_b16": 24718272,
+   "latency_ms": 1.93136125,
+   "throughput": 517.8355509640803,
+   "thr_per_adder": 4.045590241906877
+  },
+  "ResNet18|ours": {
+   "cycles_b1": 1913487,
+   "cycles_b16": 28107039,
+   "latency_ms": 2.39185875,
+   "throughput": 455.4019368600157,
+   "thr_per_adder": 3.557827631718873
+  }
+ },
+ "wd0.3": {
+  "VGG16|loas_zip": {
+   "cycles_b1": 8973848.807999998,
+   "cycles_b16": 143571128.59199998,
+   "latency_ms": 11.217311009999998,
+   "throughput": 89.15441513575479,
+   "thr_per_adder": 0.6965188682480843
+  },
+  "VGG16|spikex": {
+   "cycles_b1": 3283812,
+   "cycles_b16": 53324374,
+   "latency_ms": 4.1047649999999996,
+   "throughput": 240.04032377388998,
+   "thr_per_adder": 3.750630058967031
+  },
+  "VGG16|ptb": {
+   "cycles_b1": 840820,
+   "cycles_b16": 13647961,
+   "latency_ms": 1.0510249999999999,
+   "throughput": 937.8690340630369,
+   "thr_per_adder": 7.327101828617476
+  },
+  "VGG16|ours": {
+   "cycles_b1": 865788,
+   "cycles_b16": 10510618,
+   "latency_ms": 1.082235,
+   "throughput": 1217.8161169971165,
+   "thr_per_adder": 9.514188414039973
+  },
+  "ResNet18|loas_zip": {
+   "cycles_b1": 15076980.231999999,
+   "cycles_b16": 241230371.92,
+   "latency_ms": 18.846225289999996,
+   "throughput": 53.061311882588754,
+   "thr_per_adder": 0.41454149908272464
+  },
+  "ResNet18|spikex": {
+   "cycles_b1": 5998848,
+   "cycles_b16": 96304548,
+   "latency_ms": 7.4985599999999994,
+   "throughput": 132.91168761832515,
+   "thr_per_adder": 2.0767451190363304
+  },
+  "ResNet18|ptb": {
+   "cycles_b1": 1537384,
+   "cycles_b16": 24678274,
+   "latency_ms": 1.92173,
+   "throughput": 518.6748473576394,
+   "thr_per_adder": 4.052147244981557
+  },
+  "ResNet18|ours": {
+   "cycles_b1": 1235504,
+   "cycles_b16": 18235758,
+   "latency_ms": 1.5443799999999999,
+   "throughput": 701.9176279922118,
+   "thr_per_adder": 5.483731468689155
+  }
+ },
+ "wd0.2": {
+  "VGG16|loas_zip": {
+   "cycles_b1": 8973848.807999998,
+   "cycles_b16": 143571128.59199998,
+   "latency_ms": 11.217311009999998,
+   "throughput": 89.15441513575479,
+   "thr_per_adder": 0.6965188682480843
+  },
+  "VGG16|spikex": {
+   "cycles_b1": 3326780,
+   "cycles_b16": 53194812,
+   "latency_ms": 4.158475,
+   "throughput": 240.6249692169229,
+   "thr_per_adder": 3.75976514401442
+  },
+  "VGG16|ptb": {
+   "cycles_b1": 850778,
+   "cycles_b16": 13596977,
+   "latency_ms": 1.0634725,
+   "throughput": 941.3857212525991,
+   "thr_per_adder": 7.35457594728593
+  },
+  "VGG16|ours": {
+   "cycles_b1": 642187,
+   "cycles_b16": 7670902,
+   "latency_ms": 0.8027337499999999,
+   "throughput": 1668.643400736967,
+   "thr_per_adder": 13.036276568257554
+  },
+  "ResNet18|loas_zip": {
+   "cycles_b1": 15076980.231999999,
+   "cycles_b16": 241230371.92,
+   "latency_ms": 18.846225289999996,
+   "throughput": 53.061311882588754,
+   "thr_per_adder": 0.41454149908272464
+  },
+  "ResNet18|spikex": {
+   "cycles_b1": 6027064,
+   "cycles_b16": 96486918,
+   "latency_ms": 7.53383,
+   "throughput": 132.66047113247,
+   "thr_per_adder": 2.072819861444844
+  },
+  "ResNet18|ptb": {
+   "cycles_b1": 1543340,
+   "cycles_b16": 24730793,
+   "latency_ms": 1.929175,
+   "throughput": 517.5733750227904,
+   "thr_per_adder": 4.04354199236555
+  },
+  "ResNet18|ours": {
+   "cycles_b1": 908473,
+   "cycles_b16": 13279140,
+   "latency_ms": 1.1355912499999998,
+   "throughput": 963.917844077252,
+   "thr_per_adder": 7.530608156853531
+  }
+ },
+ "wd0.1": {
+  "VGG16|loas_zip": {
+   "cycles_b1": 8973848.807999998,
+   "cycles_b16": 143571128.59199998,
+   "latency_ms": 11.217311009999998,
+   "throughput": 89.15441513575479,
+   "thr_per_adder": 0.6965188682480843
+  },
+  "VGG16|spikex": {
+   "cycles_b1": 3335686,
+   "cycles_b16": 53393900,
+   "latency_ms": 4.169607500000001,
+   "throughput": 239.72775916349994,
+   "thr_per_adder": 3.7457462369296866
+  },
+  "VGG16|ptb": {
+   "cycles_b1": 853729,
+   "cycles_b16": 13665766,
+   "latency_ms": 1.0671612499999998,
+   "throughput": 936.6470931816043,
+   "thr_per_adder": 7.317555415481284
+  },
+  "VGG16|ours": {
+   "cycles_b1": 405230,
+   "cycles_b16": 4634555,
+   "latency_ms": 0.5065375,
+   "throughput": 2761.8617105633657,
+   "thr_per_adder": 21.577044613776295
+  },
+  "ResNet18|loas_zip": {
+   "cycles_b1": 15076980.231999999,
+   "cycles_b16": 241230371.92,
+   "latency_ms": 18.846225289999996,
+   "throughput": 53.061311882588754,
+   "thr_per_adder": 0.41454149908272464
+  },
+  "ResNet18|spikex": {
+   "cycles_b1": 5977620,
+   "cycles_b16": 96613736,
+   "latency_ms": 7.472025,
+   "throughput": 132.4863371394726,
+   "thr_per_adder": 2.0700990178042593
+  },
+  "ResNet18|ptb": {
+   "cycles_b1": 1532172,
+   "cycles_b16": 24763323,
+   "latency_ms": 1.9152150000000001,
+   "throughput": 516.8934718494768,
+   "thr_per_adder": 4.038230248824037
+  },
+  "ResNet18|ours": {
+   "cycles_b1": 550695,
+   "cycles_b16": 8019857,
+   "latency_ms": 0.68836875,
+   "throughput": 1596.0384331042312,
+   "thr_per_adder": 12.469050258626806
+  }
+ },
+ "wd0.05": {
+  "VGG16|loas_zip": {
+   "cycles_b1": 8973848.807999998,
+   "cycles_b16": 143571128.59199998,
+   "latency_ms": 11.217311009999998,
+   "throughput": 89.15441513575479,
+   "thr_per_adder": 0.6965188682480843
+  },
+  "VGG16|spikex": {
+   "cycles_b1": 3328808,
+   "cycles_b16": 53355736,
+   "latency_ms": 4.16101,
+   "throughput": 239.8992303283006,
+   "thr_per_adder": 3.748425473879697
+  },
+  "VGG16|ptb": {
+   "cycles_b1": 851117,
+   "cycles_b16": 13655575,
+   "latency_ms": 1.06389625,
+   "throughput": 937.3461022329708,
+   "thr_per_adder": 7.323016423695084
+  },
+  "VGG16|ours": {
+   "cycles_b1": 294059,
+   "cycles_b16": 3399578,
+   "latency_ms": 0.36757375,
+   "throughput": 3765.173206792137,
+   "thr_per_adder": 29.41541567806357
+  },
+  "ResNet18|loas_zip": {
+   "cycles_b1": 15076980.231999999,
+   "cycles_b16": 241230371.92,
+   "latency_ms": 18.846225289999996,
+   "throughput": 53.061311882588754,
+   "thr_per_adder": 0.41454149908272464
+  },
+  "ResNet18|spikex": {
+   "cycles_b1": 6049796,
+   "cycles_b16": 96440446,
+   "latency_ms": 7.562245000000001,
+   "throughput": 132.72439656697566,
+   "thr_per_adder": 2.0738186963589946
+  },
+  "ResNet18|ptb": {
+   "cycles_b1": 1552106,
+   "cycles_b16": 24715926,
+   "latency_ms": 1.9401325,
+   "throughput": 517.884703166695,
+   "thr_per_adder": 4.0459742434898045
+  },
+  "ResNet18|ours": {
+   "cycles_b1": 391164,
+   "cycles_b16": 5849809,
+   "latency_ms": 0.48895500000000003,
+   "throughput": 2188.1056287478787,
+   "thr_per_adder": 17.094575224592802
+  }
+ },
+ "wd0.02": {
+  "VGG16|loas_zip": {
+   "cycles_b1": 8973848.807999998,
+   "cycles_b16": 143571128.59199998,
+   "latency_ms": 11.217311009999998,
+   "throughput": 89.15441513575479,
+   "thr_per_adder": 0.6965188682480843
+  },
+  "VGG16|spikex": {
+   "cycles_b1": 3302276,
+   "cycles_b16": 53207944,
+   "latency_ms": 4.127845,
+   "throughput": 240.56558171088136,
+   "thr_per_adder": 3.7588372142325213
+  },
+  "VGG16|ptb": {
+   "cycles_b1": 842902,
+   "cycles_b16": 13611376,
+   "latency_ms": 1.0536275000000002,
+   "throughput": 940.3898621270913,
+   "thr_per_adder": 7.346795797867901
+  },
+  "VGG16|ours": {
+   "cycles_b1": 231631,
+   "cycles_b16": 2823450,
+   "latency_ms": 0.28953874999999996,
+   "throughput": 4533.460836919372,
+   "thr_per_adder": 35.417662788432594
+  },
+  "ResNet18|loas_zip": {
+   "cycles_b1": 15076980.231999999,
+   "cycles_b16": 241230371.92,
+   "latency_ms": 18.846225289999996,
+   "throughput": 53.061311882588754,
+   "thr_per_adder": 0.41454149908272464
+  },
+  "ResNet18|spikex": {
+   "cycles_b1": 6046612,
+   "cycles_b16": 96451576,
+   "latency_ms": 7.558265,
+   "throughput": 132.70908087598278,
+   "thr_per_adder": 2.073579388687231
+  },
+  "ResNet18|ptb": {
+   "cycles_b1": 1547738,
+   "cycles_b16": 24720187,
+   "latency_ms": 1.9346725,
+   "throughput": 517.7954357707731,
+   "thr_per_adder": 4.045276841959165
+  },
+  "ResNet18|ours": {
+   "cycles_b1": 306866,
+   "cycles_b16": 4767719,
+   "latency_ms": 0.3835825,
+   "throughput": 2684.721981308043,
+   "thr_per_adder": 20.974390478969084
+  }
+ }
+}
