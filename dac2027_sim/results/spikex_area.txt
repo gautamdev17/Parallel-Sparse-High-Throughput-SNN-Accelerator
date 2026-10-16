@@ -1,0 +1,4 @@
+      931 1.49E+03   XOR2_X1
+
+   Chip area for module '\spikex_core': 37418.486000
+     of which used for sequential elements: 15417.360000 (41.20%)

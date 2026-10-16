@@ -1,0 +1,4 @@
+     1603 2.56E+03   XOR2_X1
+
+   Chip area for module '\ptb_core': 92949.178000
+     of which used for sequential elements: 44038.960000 (47.38%)

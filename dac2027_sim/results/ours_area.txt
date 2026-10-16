@@ -1,0 +1,4 @@
+     3880  6192.48   XOR2_X1
+
+   Chip area for module '\ours_core': 730554.636000
+     of which used for sequential elements: 259254.240000 (35.49%)

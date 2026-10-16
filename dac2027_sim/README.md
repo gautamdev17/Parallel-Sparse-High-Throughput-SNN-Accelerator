@@ -112,3 +112,60 @@ Timing rules (full list in the `ours.py` docstring):
 5. **Every model is compute-bound.** DRAM and SRAM bandwidth are not modelled for any design, matching the zip's LoAS model.
 6. **Residual additions and pooling are not counted for any design.** The ResNet18 1×1 downsample convs are counted for all designs.
 7. **The double-output-buffer row is approximate.** It overlaps tiles without modelling edge contention between them. It is not used in the headline.
+
+## Hardware: area, power, energy, EDP (Nangate45, 800 MHz)
+
+All four designs were synthesized with the same flow and library:
+- **Synthesis:** Yosys 0.66 + ABC to the Nangate45 typical library (from the OpenSTA install).
+- **Power:** OpenSTA `report_power` at 800 MHz, using switching activity from **gate-level** simulation of each netlist. Every pin is annotated from the VCD (0 unannotated).
+- **Exclusions, the same for every design:** on-chip SRAM and the clock tree. No design has clock gating.
+- **Energy and EDP:** energy = power × batch-1 latency, and EDP = energy × latency. Latency comes from the cycle model above.
+
+| Network | Design | Area (mm²) | Power (mW) | Latency (ms) | Energy (mJ) | EDP (mJ·ms) |
+|---|---|---:|---:|---:|---:|---:|
+| VGG16 | LoAS (16 TPPE) | 0.370 | 90.2 | 11.217 | 1.012 | 11.356 |
+| VGG16 | SpikeX (8x8) | 0.037 | 14.0 | 4.170 | 0.058 | 0.244 |
+| VGG16 | PTB (16x8) | 0.093 | 46.1 | 1.067 | **0.049** | **0.053** |
+| VGG16 | Ours (4x4) | 0.731 | 382.8 | **0.507** | 0.194 | 0.098 |
+| ResNet18 | LoAS (16 TPPE) | 0.370 | 90.2 | 18.846 | 1.701 | 32.054 |
+| ResNet18 | SpikeX (8x8) | 0.037 | 14.0 | 7.472 | 0.105 | 0.782 |
+| ResNet18 | PTB (16x8) | 0.093 | 46.1 | 1.915 | **0.088** | **0.169** |
+| ResNet18 | Ours (4x4) | 0.731 | 382.8 | **0.688** | 0.264 | 0.181 |
+
+![power area energy edp](results/power_area_energy_edp.png)
+
+**Result: our power is higher, as the prof expected, but we do not win on energy against PTB or SpikeX.**
+
+| Comparison | Energy | EDP |
+|---|---|---|
+| vs LoAS | Ours 5–6x lower | Ours 116–177x lower |
+| vs SpikeX | SpikeX 2.5–3.3x lower | Ours 2.5–4.3x lower |
+| vs PTB | PTB 3–4x lower | PTB 1.9x lower on VGG16; about equal on ResNet18 (PTB 7% lower) |
+
+Where our power goes:
+- Sequential logic is 70% of our 383 mW.
+- Each PE carries a running-sum bundle of 4 filters × 4 pixels × 8 timesteps × 10 bits = 1,280 flops. There are 16 of them, plus 4 edge FIFOs of 80 entries.
+- None of it is clock-gated, so it burns clock power every cycle even when most of it is zero.
+- These are the levers that would change the result: clock gating, F=G=2 (a 4× smaller bundle), and a smaller FIFO.
+
+**Checks against the papers**
+- **PTB and SpikeX** report no synthesized area or power. They estimate energy analytically, using CACTI at 32 nm for memories plus an energy per operation, and give only normalized numbers. There is nothing absolute to match. The RTL follows their specs: PTB has 128 PEs with an 8-bit adder and comparator each, at TWS=1 (only the one psum this needs is built, not the 96×8-bit scratchpad). SpikeX has 8×8 PEs with one accumulator each.
+- **LoAS:** the zip's own synthesis gives 32,841 µm² and 4.965 mW per TPPE (INT8, T=8, depth-8 FIFO). The zip doesn't state the clock for that figure; it is probably 560 MHz, the clock used elsewhere in the zip. Ours is 23,126 µm² and 5.64 mW at 800 MHz, which is about 7.1 mW scaled to the same clock. That is within 20–30% and slightly in LoAS's favour.
+
+**RTL verification:** every RTL is checked against the dense reference by `hw/check_rtl.py`.
+- **SpikeX:** 80 iterations, exact.
+- **PTB:** 144 iterations, exact.
+- **Ours:** a full 64×128 output tile, exact at both RTL and gate level. The packer's 3,135 groups are identical to the Python model's. The RTL takes 8,651 cycles against the cycle model's 8,653.
+- **LoAS:** the provided RTL needed two marked fixes: a doubly driven ready net, and a loop bound Yosys could not synthesize. It still drops matches when its 8-deep FIFO fills (110 of 240 at 26.1% density) and takes about 200 cycles per 128-chunk, against 54 in the zip's closed form. Its latency is still taken from the zip formula.
+
+**Workload behind each power number:**
+- **Ours, PTB, SpikeX:** stimulus from the same cycle-model schedules on VGG16 b2c2 (90/90 sparse). Our power is averaged over a 940-cycle steady-state window, so the LIF sweep (6% of cycles) is not included.
+- **LoAS:** random chunks with the zip's statistics (26.1% non-silent, dense weights).
+
+To regenerate:
+
+```bash
+cd hw && python3 gen_stim.py && python3 energy.py
+```
+
+The synthesis, simulation and STA scripts are in `hw/build/` ; copies of `synth_one.sh`, `power_one.sh` and the TCL files are in `hw/scripts/`, along with the testbenches.

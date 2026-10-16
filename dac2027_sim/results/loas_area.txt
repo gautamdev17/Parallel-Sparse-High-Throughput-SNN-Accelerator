@@ -1,0 +1,4 @@
+     1666 2.66E+03   XOR2_X1
+
+   Chip area for module '\tppe': 23126.040000
+     of which used for sequential elements: 4702.880000 (20.34%)
