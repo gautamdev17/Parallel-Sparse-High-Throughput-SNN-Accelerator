@@ -1,0 +1,4 @@
+vgg16_cifar10      Prosperity   21.504 ms (paper ref   21.504)   PTB  145.917 ms (paper ref  145.917)
+vgg16_cifar100     Prosperity   33.608 ms (paper ref   33.577)   PTB  316.902 ms (paper ref  316.902)
+resnet18_cifar10   Prosperity   11.825 ms (paper ref   11.764)   PTB   80.507 ms (paper ref   80.507)
+resnet18_cifar100  Prosperity   11.720 ms (paper ref   11.631)   PTB   96.489 ms (paper ref   96.489)

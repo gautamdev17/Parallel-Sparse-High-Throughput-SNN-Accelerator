@@ -21,12 +21,12 @@ This is the workload the author specified in `current_arch/REPORT.md` section 15
 | VGG16 | LoAS | 11.217 | 22.1x | 89 | 31.0x |
 | VGG16 | SpikeX (8x8) | 4.170 | 8.2x | 240 | 11.5x |
 | VGG16 | PTB (16x8) | 1.067 | 2.1x | 937 | 2.9x |
-| VGG16 | Prosperity (128 PE) | 1.931 | 3.8x | 537 | 5.1x |
+| VGG16 | Prosperity (official simulator) | 0.833 | 1.6x | 1,642 | 1.7x |
 | VGG16 | **Ours (4x4 PE x 8 adders)** | **0.507** | – | **2,762** | – |
 | ResNet18 | LoAS | 18.846 | 27.4x | 53 | 30.1x |
 | ResNet18 | SpikeX (8x8) | 7.472 | 10.9x | 132 | 12.0x |
 | ResNet18 | PTB (16x8) | 1.915 | 2.8x | 517 | 3.1x |
-| ResNet18 | Prosperity (128 PE) | 3.554 | 5.2x | 283 | 5.6x |
+| ResNet18 | Prosperity (official simulator) | 1.282 | 1.9x | 804 | 2.0x |
 | ResNet18 | **Ours** | **0.688** | – | **1,596** | – |
 
 ![latency and throughput](results/latency_throughput_sparse90.png)
@@ -35,15 +35,21 @@ The full tables, with cycles and img/s per adder, are in `results/main_tables.md
 
 * **LoAS** uses the zip's closed form and statistics unchanged: 16 TPPEs, `matches + 21` per 128-chunk, and p = 0.261. `verify.py` reproduces the zip exactly: VGG16 = 8,973,849 cycles = 11.2173 ms. The zip has no ResNet18 entry, so the same formula was applied to the standard CIFAR ResNet18. The zip's p does not depend on weight sparsity, so LoAS is the same on every workload below.
 
-* **Prosperity** (`prosperity.pdf`, HPCA'25) uses its Tbl. III configuration: 256 × 16 × 128 tiles and 128 8-bit-add PEs that accumulate one weight row of 128 per cycle.
-  * The spike matrix is (T × L) × d_in, time-major.
-  * In each 256-row × 16-column tile, every row reuses one Prefix: the largest-subset row, or an exact match with a smaller index. The row then costs popcount(row XOR prefix) cycles, with a minimum of 1 ("≥ m + 4" per tile, Sec. VI-A).
-  * Detection overlaps with the previous tile's computation (only the first tile's m + 4 cycles are added), and the computation repeats for each 128-channel output tile.
-  * Weights are dense, as in the paper.
-  * If rows with no spike in a tile were free (an optimistic upper bound for Prosperity), it would reach 0.712 ms / 1,555 img/s on VGG16 and 1.312 ms / 764 img/s on ResNet18. Ours is still faster.
-  * With the zip's statistics (dense weights, 26.1% non-silent), Prosperity is the fastest design: 2.01 ms on VGG16 and 3.69 ms on ResNet18.
-  * Prosperity's paper reports 7.4× over PTB on real spike traces. Here it is slower than PTB on the 90/90 workload, for two reasons: random independent spikes have little of the subset structure that product sparsity needs, and at 90% sparsity most rows are empty yet still cost a cycle. Real spike dumps should be used before quoting this comparison.
-  * Hand checks of the row-cost rule (subset prefix, exact match) are in the commit that adds `prosperity_layer_cycles`.
+* **Prosperity** numbers come from the **official Prosperity simulator** (github Prosperity-main, MIT, vendored unmodified in `third_party/prosperity`), run by `prosperity_official.py`.
+  * **Configuration:** Tbl. III, i.e. tiles m=256, k=16, n=128 and 128 PEs. The simulator includes its DRAM stalls and LIF latency.
+  * **Inputs:** our layers and tensors, with T=8 and the same seeds as above.
+  * **The one replacement:** the official per-row Python prefix search (the authors use a CUDA kernel for speed) is swapped for a vectorized version. `prosperity_official.py verify` checks that it gives identical output on random tiles and on tiles of the authors' real spikes.
+  * **Reproduction of the paper's reference results** (`reference/time_reference.xlsx`, 500 MHz), on the authors' real spike data:
+
+    | Benchmark | Prosperity, run here | Paper reference | PTB, run here | Paper reference |
+    |---|---:|---:|---:|---:|
+    | VGG16 CIFAR10 | 21.504 ms | 21.504 ms | 145.917 ms | 145.917 ms |
+    | VGG16 CIFAR100 | 33.608 ms | 33.577 ms | 316.902 ms | 316.902 ms |
+    | ResNet18 CIFAR10 | 11.825 ms | 11.764 ms | 80.507 ms | 80.507 ms |
+    | ResNet18 CIFAR100 | 11.720 ms | 11.631 ms | 96.489 ms | 96.489 ms |
+
+  * **On the zip's statistics** (dense weights, 26.1% non-silent), Prosperity is the fastest design: 1.40 ms on VGG16 and 2.54 ms on ResNet18.
+  * **My earlier approximate model** (`baselines.prosperity_layer_cycles`) charged one cycle to rows that are empty in a tile. The official simulator charges them nothing, so the official numbers are lower.
 
 ## Where the advantage comes from, and where it is lost
 
@@ -187,3 +193,46 @@ cd hw && python3 gen_stim.py && python3 energy.py
 ```
 
 The synthesis, simulation and STA scripts are in `hw/build/` ; copies of `synth_one.sh`, `power_one.sh` and the TCL files are in `hw/scripts/`, along with the testbenches.
+
+## Validation of the baseline cycle models against the papers (`paper_checks.py`)
+
+**PTB vs the official Prosperity simulator.** The Prosperity repo (HPCA'25, MIT, vendored in `third_party/prosperity`) contains its own PTB model.
+
+| Setting | Value |
+|---|---|
+| Data | The authors' real spike data: VGG16/ResNet18 on CIFAR10/100 |
+| Array | 16×8 |
+| Time-window size (TWS) | 4 |
+| Packing | StSAP |
+
+Our PTB cycle model, run at the same settings, agrees with theirs within 0–7%:
+
+| Benchmark | Their PTB (cycles) | Our PTB (cycles) | Ours / theirs |
+|---|---:|---:|---:|
+| VGG16 CIFAR10 | 70,648,544 | 65,932,692 | 0.93 |
+| VGG16 CIFAR100 | 156,140,896 | 155,430,580 | 1.00 |
+| ResNet18 CIFAR10 | 38,729,856 | 38,040,528 | 0.98 |
+| ResNet18 CIFAR100 | 46,720,944 | 46,060,256 | 0.99 |
+
+**SpikeX paper, Fig. 10.** This experiment uses:
+
+| Setting | Value |
+|---|---|
+| Layer | CONV2 of DVS-Gesture Medium |
+| Input → output | 32×32×8 → 8×8×16 |
+| Kernel | 5×5 |
+| Timesteps | 300 |
+| Input spikes | Random, at the firing rates listed below |
+| Comparison | SpikeX agile dispatch vs a PTB baseline on the same 8×8 array |
+
+| Firing rate | 0.01% | 0.02% | 0.05% | 0.1% | 0.2% | 0.3% | 0.5% | 1% | 2% | 5% |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Paper: SpikeX speedup | 7.11× | 7.03× | 6.51× | 5.43× | 3.96× | 3.07× | 2.09× | 1.46× | 1.41× | 1.30× |
+| Our models | 4.40× | 5.07× | 4.36× | 4.10× | 3.89× | 3.79× | 3.64× | 3.12× | 2.48× | 1.45× |
+
+- **What matches:** same direction, same order of magnitude, and close at 0.2% and 5%.
+- **Why the curves differ:** we re-pick PTB's best TWS at every firing rate, whereas the paper fixes it per layer. That helps PTB, so our speedups at the lowest rates come out lower.
+- **A fix this test forced:** PTB trims an input only if it is silent over the whole time stride (PTB Sec. 4.4.1), and the rest stream through every time block. The first version of the long-T model trimmed per block, which was too generous to PTB, and gave SpikeX at 0.5–0.96× PTB.
+- **Effect on the main results:** none. At T=8 the stride is a single block, so both rules give identical cycles.
+
+**PTB paper's own experiments** use DVS-Gesture and CIFAR10-DVS spike traces from trained models, which are not available. Its baseline, the time-serial array, is also not specified closely enough to rebuild. We therefore validate PTB through the third-party implementation above.

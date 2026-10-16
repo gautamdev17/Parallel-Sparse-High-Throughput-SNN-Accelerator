@@ -1,0 +1,26 @@
+{
+ "vgg16_cifar10": {
+  "prosperity_s": 0.021503906,
+  "prosperity_ref_s": 0.021503906,
+  "ptb_s": 0.145917404,
+  "ptb_ref_s": 0.145917404
+ },
+ "vgg16_cifar100": {
+  "prosperity_s": 0.033607768,
+  "prosperity_ref_s": 0.033576808,
+  "ptb_s": 0.316902108,
+  "ptb_ref_s": 0.316902108
+ },
+ "resnet18_cifar10": {
+  "prosperity_s": 0.011824802,
+  "prosperity_ref_s": 0.01176426,
+  "ptb_s": 0.080507168,
+  "ptb_ref_s": 0.080507168
+ },
+ "resnet18_cifar100": {
+  "prosperity_s": 0.01171954,
+  "prosperity_ref_s": 0.011631254,
+  "ptb_s": 0.096489344,
+  "ptb_ref_s": 0.096489344
+ }
+}

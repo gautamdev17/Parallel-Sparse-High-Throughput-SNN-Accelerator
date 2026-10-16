@@ -70,17 +70,21 @@ def run(tasks, cache_file):
 
 
 DESIGNS = [("loas_zip", "LoAS"), ("spikex", "SpikeX (8x8)"), ("ptb", "PTB (16x8)"),
-           ("prosperity", "Prosperity (128 PE)"), ("ours", "Ours (4x4, T=8)")]
+           ("prosperity", "Prosperity (official sim)"), ("ours", "Ours (4x4, T=8)")]
 ADDERS = {"ours": 128, "loas_zip": 128, "ptb": 128, "spikex": 64, "prosperity": 128}
 
 
 def summarize(cache, wname, nets=("VGG16", "ResNet18")):
     rows = {}
+    off = os.path.join(OUT, "prosperity_official.json")      # official Prosperity simulator, if run
+    official = json.load(open(off)) if os.path.exists(off) else {}
     for net in nets:
         nl = len(wl.NETWORKS[net]())
         for d, _ in DESIGNS:
             c1 = sum(cache[f"{net}|{li}|1|{wname}"][d] for li in range(nl))
             c16 = sum(cache[f"{net}|{li}|16|{wname}"][d] for li in range(nl))
+            if d == "prosperity" and f"{net}|1|{wname}" in official:
+                c1, c16 = official[f"{net}|1|{wname}"], official[f"{net}|16|{wname}"]
             rows[net, d] = dict(cycles_b1=c1, cycles_b16=c16, latency_ms=c1 / F_HZ * 1e3,
                                 throughput=16 * F_HZ / c16, thr_per_adder=16 * F_HZ / c16 / ADDERS[d])
     return rows

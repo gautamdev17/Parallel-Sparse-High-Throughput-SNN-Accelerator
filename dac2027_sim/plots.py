@@ -11,7 +11,7 @@ R = os.path.join(HERE, "results")
 # fixed categorical order (reference palette slots 1-5); identity also carried by legend + direct labels
 ORDER = ["loas_zip", "spikex", "ptb", "prosperity", "ours"]
 COL = {"loas_zip": "#2a78d6", "spikex": "#eb6834", "ptb": "#1baf7a", "ours": "#eda100", "prosperity": "#e87ba4"}
-LAB = {"loas_zip": "LoAS", "spikex": "SpikeX (8x8)", "ptb": "PTB (16x8)", "prosperity": "Prosperity (128 PE)",
+LAB = {"loas_zip": "LoAS", "spikex": "SpikeX (8x8)", "ptb": "PTB (16x8)", "prosperity": "Prosperity (official sim)",
        "ours": "Ours (4x4 PE, T=8)"}
 INK, INK2, GRID = "#0b0b0b", "#52514e", "#e4e3df"
 plt.rcParams.update({"font.family": "serif", "font.size": 9, "axes.edgecolor": INK2, "axes.labelcolor": INK,

@@ -58,10 +58,15 @@ def _popc(x):
 def ptb_slots(S, tws, T=8):
     """packed input slots per pixel (silent trimmed, StSAP pairs of non-bursting inputs)."""
     tag, nw = _tags(S, tws, T)
+    return ptb_pairs_count(tag, nw)
+
+
+def ptb_pairs_count(tag, nw):
+    """tag: (K, N) nw-bit TB-tags -> packed slots per pixel (greedy StSAP: 1's complement first, then nearest)."""
     full = (1 << nw) - 1
     K, N = tag.shape
     H = np.zeros((N, 1 << nw), dtype=np.int64)
-    np.add.at(H, (np.broadcast_to(np.arange(N), (K, N)).ravel(), tag.ravel()), 1)
+    np.add.at(H, (np.broadcast_to(np.arange(N), (K, N)).ravel(), np.asarray(tag).astype(np.int64).ravel()), 1)
     bursting = H[:, full].copy()
     H[:, 0] = 0
     H[:, full] = 0
@@ -69,7 +74,6 @@ def ptb_slots(S, tws, T=8):
     vals = np.arange(1 << nw)
     pc = _popc(vals).astype(np.int64)
     for a in sorted(range(1, full), key=lambda v: -pc[v]):
-        # candidates: exact complement first, then the non-overlapping tag with most bits ("nearest")
         cands = [b for b in vals[1:full] if (b & a) == 0]
         cands.sort(key=lambda b: (b != (full ^ a), -pc[b]))
         for b in cands:

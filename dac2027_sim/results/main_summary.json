@@ -22,11 +22,11 @@
    "thr_per_adder": 7.317555415481284
   },
   "VGG16|prosperity": {
-   "cycles_b1": 1544723,
-   "cycles_b16": 23819031,
-   "latency_ms": 1.93090375,
-   "throughput": 537.3854209266532,
-   "thr_per_adder": 4.198323600989478
+   "cycles_b1": 666778,
+   "cycles_b16": 7797229,
+   "latency_ms": 0.8334725,
+   "throughput": 1641.6088330867287,
+   "thr_per_adder": 12.825069008490068
   },
   "VGG16|ours": {
    "cycles_b1": 405230,
@@ -57,11 +57,11 @@
    "thr_per_adder": 4.038230248824037
   },
   "ResNet18|prosperity": {
-   "cycles_b1": 2843164,
-   "cycles_b16": 45305887,
-   "latency_ms": 3.553955,
-   "throughput": 282.523990756433,
-   "thr_per_adder": 2.207218677784633
+   "cycles_b1": 1025513,
+   "cycles_b16": 15926377,
+   "latency_ms": 1.28189125,
+   "throughput": 803.6981668837802,
+   "thr_per_adder": 6.278891928779533
   },
   "ResNet18|ours": {
    "cycles_b1": 550695,
@@ -94,11 +94,11 @@
    "thr_per_adder": 2.8232155499098774
   },
   "VGG16|prosperity": {
-   "cycles_b1": 1604305,
-   "cycles_b16": 24642452,
-   "latency_ms": 2.00538125,
-   "throughput": 519.4288295661487,
-   "thr_per_adder": 4.058037730985537
+   "cycles_b1": 1117161,
+   "cycles_b16": 15861061,
+   "latency_ms": 1.39645125,
+   "throughput": 807.0078035763181,
+   "thr_per_adder": 6.304748465439985
   },
   "VGG16|ours": {
    "cycles_b1": 4623242,
@@ -129,11 +129,11 @@
    "thr_per_adder": 1.559792444034725
   },
   "ResNet18|prosperity": {
-   "cycles_b1": 2952260,
-   "cycles_b16": 47099177,
-   "latency_ms": 3.690325,
-   "throughput": 271.7669567771853,
-   "thr_per_adder": 2.1231793498217604
+   "cycles_b1": 2034105,
+   "cycles_b16": 31899743,
+   "latency_ms": 2.54263125,
+   "throughput": 401.2571511939767,
+   "thr_per_adder": 3.134821493702943
   },
   "ResNet18|ours": {
    "cycles_b1": 6794337,
