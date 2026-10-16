@@ -44,6 +44,36 @@ def bars():
     fig.savefig(os.path.join(R, "latency_throughput_sparse90.png"), dpi=300)
 
 
+def bars_normalized():
+    """same data as bars(), normalized to LoAS = 1x: speed-up = LoAS latency / latency, throughput / LoAS."""
+    s = json.load(open(os.path.join(R, "main_summary.json")))["sparse90"]
+    nets, ds = ["VGG16", "ResNet18"], ORDER
+    fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.3))
+    specs = [(lambda n, d: s[f"{n}|loas_zip"]["latency_ms"] / s[f"{n}|{d}"]["latency_ms"],
+              "Speed-up over LoAS, batch 1 (x)"),
+             (lambda n, d: s[f"{n}|{d}"]["throughput"] / s[f"{n}|loas_zip"]["throughput"],
+              "Throughput over LoAS, batch 16 (x)")]
+    for ax, (f, ylab) in zip(axes, specs):
+        w = 0.11
+        for i, d in enumerate(ds):
+            x = np.arange(len(nets)) + (i - (len(ds) - 1) / 2) * (w + 0.012)
+            v = [f(n, d) for n in nets]
+            ax.bar(x, v, w, color=COL[d], label=LAB[d], zorder=3)
+            for xi, vi in zip(x, v):
+                ax.text(xi, vi, f"{vi:.1f}x", ha="center", va="bottom", fontsize=5.5, color=INK, rotation=90)
+        ax.axhline(1, color=INK2, lw=0.8, ls="--", zorder=2)
+        ax.set_xticks(range(len(nets)), nets)
+        ax.set_ylabel(ylab)
+        ax.yaxis.grid(True, color=GRID, lw=0.6, zorder=0)
+        ax.set_ylim(0, ax.get_ylim()[1] * 1.15)
+    h, l = axes[0].get_legend_handles_labels()
+    fig.legend(h, l, fontsize=6.5, frameon=False, loc="lower center", ncol=4)
+    fig.suptitle("Normalized to LoAS = 1x. Weights & activations 90% sparse, INT8, T=8, 800 MHz",
+                 fontsize=8, color=INK2)
+    fig.tight_layout(rect=(0, 0.11, 1, 1))
+    fig.savefig(os.path.join(R, "latency_throughput_normalized.png"), dpi=300)
+
+
 def sweep():
     s = json.load(open(os.path.join(R, "sweep_summary.json")))
     wds = sorted({float(k[2:]) for k in s}, reverse=True)
@@ -74,4 +104,5 @@ def sweep():
 
 if __name__ == "__main__":
     bars()
+    bars_normalized()
     sweep()
