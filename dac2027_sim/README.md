@@ -21,10 +21,12 @@ This is the workload the author specified in `current_arch/REPORT.md` section 15
 | VGG16 | LoAS | 11.217 | 22.1x | 89 | 31.0x |
 | VGG16 | SpikeX (8x8) | 4.170 | 8.2x | 240 | 11.5x |
 | VGG16 | PTB (16x8) | 1.067 | 2.1x | 937 | 2.9x |
+| VGG16 | Prosperity (128 PE) | 1.931 | 3.8x | 537 | 5.1x |
 | VGG16 | **Ours (4x4 PE x 8 adders)** | **0.507** | – | **2,762** | – |
 | ResNet18 | LoAS | 18.846 | 27.4x | 53 | 30.1x |
 | ResNet18 | SpikeX (8x8) | 7.472 | 10.9x | 132 | 12.0x |
 | ResNet18 | PTB (16x8) | 1.915 | 2.8x | 517 | 3.1x |
+| ResNet18 | Prosperity (128 PE) | 3.554 | 5.2x | 283 | 5.6x |
 | ResNet18 | **Ours** | **0.688** | – | **1,596** | – |
 
 ![latency and throughput](results/latency_throughput_sparse90.png)
@@ -32,6 +34,16 @@ This is the workload the author specified in `current_arch/REPORT.md` section 15
 The full tables, with cycles and img/s per adder, are in `results/main_tables.md`.
 
 * **LoAS** uses the zip's closed form and statistics unchanged: 16 TPPEs, `matches + 21` per 128-chunk, and p = 0.261. `verify.py` reproduces the zip exactly: VGG16 = 8,973,849 cycles = 11.2173 ms. The zip has no ResNet18 entry, so the same formula was applied to the standard CIFAR ResNet18. The zip's p does not depend on weight sparsity, so LoAS is the same on every workload below.
+
+* **Prosperity** (`prosperity.pdf`, HPCA'25) uses its Tbl. III configuration: 256 × 16 × 128 tiles and 128 8-bit-add PEs that accumulate one weight row of 128 per cycle.
+  * The spike matrix is (T × L) × d_in, time-major.
+  * In each 256-row × 16-column tile, every row reuses one Prefix: the largest-subset row, or an exact match with a smaller index. The row then costs popcount(row XOR prefix) cycles, with a minimum of 1 ("≥ m + 4" per tile, Sec. VI-A).
+  * Detection overlaps with the previous tile's computation (only the first tile's m + 4 cycles are added), and the computation repeats for each 128-channel output tile.
+  * Weights are dense, as in the paper.
+  * If rows with no spike in a tile were free (an optimistic upper bound for Prosperity), it would reach 0.712 ms / 1,555 img/s on VGG16 and 1.312 ms / 764 img/s on ResNet18. Ours is still faster.
+  * With the zip's statistics (dense weights, 26.1% non-silent), Prosperity is the fastest design: 2.01 ms on VGG16 and 3.69 ms on ResNet18.
+  * Prosperity's paper reports 7.4× over PTB on real spike traces. Here it is slower than PTB on the 90/90 workload, for two reasons: random independent spikes have little of the subset structure that product sparsity needs, and at 90% sparsity most rows are empty yet still cost a cycle. Real spike dumps should be used before quoting this comparison.
+  * Hand checks of the row-cost rule (subset prefix, exact match) are in the commit that adds `prosperity_layer_cycles`.
 
 ## Where the advantage comes from, and where it is lost
 
@@ -114,6 +126,12 @@ Timing rules (full list in the `ours.py` docstring):
 7. **The double-output-buffer row is approximate.** It overlaps tiles without modelling edge contention between them. It is not used in the headline.
 
 ## Hardware: area, power, energy, EDP (Nangate45, 800 MHz)
+
+> **Note:** the PTB and SpikeX RTL now include the per-PE 96×8-bit scratchpad from PTB's Table 4. SpikeX's PE has "a small scratchpad memory" with no size given; the same 96 bytes is assumed. Both are still bit-exact against the dense reference.
+>
+> With the scratchpads, PTB synthesizes to 0.953 mm² and SpikeX to 0.468 mm².
+>
+> The power, energy and EDP numbers below are from the version **without** scratchpads (PTB 0.093 mm², SpikeX 0.037 mm²) and must be re-measured. Prosperity has no RTL here, so it appears only in the latency and throughput results.
 
 All four designs were synthesized with the same flow and library:
 - **Synthesis:** Yosys 0.66 + ABC to the Nangate45 typical library (from the OpenSTA install).

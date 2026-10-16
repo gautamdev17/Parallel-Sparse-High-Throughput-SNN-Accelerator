@@ -221,23 +221,23 @@ def gen_array(W, S, kind):
             for i, (a, b) in enumerate(slots):
                 wa = [int(W[m, a]) if m < M else 0 for m in range(mb * rows_n, (mb + 1) * rows_n)]
                 wb = [int(W[m, b]) if (b is not None and m < M) else 0 for m in range(mb * rows_n, (mb + 1) * rows_n)]
-                stim.append((1, int(i == 0), wa, wb, int(S[a, n]), int(S[b, n]) if b is not None else 0))
+                stim.append((1, int(i == 0), len(checks) % 48, wa, wb, int(S[a, n]), int(S[b, n]) if b is not None else 0))
             checks.append((n, ch))
             t += len(slots)
         if t >= NCYC:
             break
-    stim.append((1, 1, [0] * rows_n, [0] * rows_n, 0, 0))     # flush the last iteration
+    stim.append((1, 1, len(checks) % 48, [0] * rows_n, [0] * rows_n, 0, 0))     # flush the last iteration
     d = os.path.join(OUT, kind)
     os.makedirs(d, exist_ok=True)
     if kind == "ptb":
-        width = 2 + 2 * rows_n * 8 + 16
-        rows = [pack_fields([(v, 1), (f, 1)] + [(x & 0xff, 8) for x in reversed(wa)] +
+        width = 2 + 6 + 2 * rows_n * 8 + 16
+        rows = [pack_fields([(v, 1), (f, 1), (a, 6)] + [(x & 0xff, 8) for x in reversed(wa)] +
                             [(x & 0xff, 8) for x in reversed(wb)] + [(sa, 8), (sb, 8)])
-                for v, f, wa, wb, sa, sb in stim]
+                for v, f, a, wa, wb, sa, sb in stim]
     else:
-        width = 2 + rows_n * 8 + 8
-        rows = [pack_fields([(v, 1), (f, 1)] + [(x & 0xff, 8) for x in reversed(wa)] + [(sa, 8)])
-                for v, f, wa, wb, sa, sb in stim]
+        width = 2 + 6 + rows_n * 8 + 8
+        rows = [pack_fields([(v, 1), (f, 1), (a, 6)] + [(x & 0xff, 8) for x in reversed(wa)] + [(sa, 8)])
+                for v, f, a, wa, wb, sa, sb in stim]
     hexrows(os.path.join(d, "in.hex"), rows, width)
     ref = wl.dense_sums(W, S)
     exp = np.array([[ref[m, n] if m < M else np.zeros(8, dtype=np.int64) for m in range(ch[0], ch[0] + rows_n)]

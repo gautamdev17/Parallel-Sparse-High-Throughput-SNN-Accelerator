@@ -16,7 +16,7 @@ import numpy as np
 
 import workload as wl
 from ours import Cfg, run_layer_fast
-from baselines import loas_layer_cycles, ptb_layer_cycles, spikex_layer_cycles, LOAS_P_ZIP
+from baselines import loas_layer_cycles, ptb_layer_cycles, spikex_layer_cycles, prosperity_layer_cycles, LOAS_P_ZIP
 
 F_HZ = 800e6
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -40,10 +40,13 @@ def run_layer(task):
     o = run_layer_fast(W, S, cfg)
     ptb = ptb_layer_cycles(S, M)
     spx = spikex_layer_cycles(S, M)
+    pro = prosperity_layer_cycles(S, M)
+    pro_opt = prosperity_layer_cycles(S, M, skip_empty=True)
     return dict(net=net, li=li, name=layer[0], batch=batch, workload=wname, M=M, K=K, N=N,
                 ours=o["cycles"], ours_stats={k: v for k, v in o.items() if k != "cycles"},
                 loas_zip=loas_layer_cycles(M, K, N, LOAS_P_ZIP),
                 ptb=ptb[0], ptb_tws=ptb[1], spikex=spx[0], spikex_mode=spx[1],
+                prosperity=pro, prosperity_opt=pro_opt,
                 nonsilent=float((S != 0).mean()), secs=time.time() - t0)
 
 
@@ -51,7 +54,7 @@ def run(tasks, cache_file):
     path = os.path.join(OUT, cache_file)
     cache = json.load(open(path)) if os.path.exists(path) else {}
     key = lambda t: f"{t[0]}|{t[1]}|{t[2]}|{t[3]}"
-    todo = [t for t in tasks if key(t) not in cache]
+    todo = [t for t in tasks if key(t) not in cache or "prosperity" not in cache[key(t)]]
     todo.sort(key=lambda t: -np.prod(wl.gemm_shape(wl.NETWORKS[t[0]]()[t[1]], t[2])))
     print(f"{len(todo)} layer runs ({len(tasks) - len(todo)} cached)", flush=True)
     t0 = time.time()
@@ -66,8 +69,9 @@ def run(tasks, cache_file):
     return cache
 
 
-DESIGNS = [("loas_zip", "LoAS"), ("spikex", "SpikeX (8x8)"), ("ptb", "PTB (16x8)"), ("ours", "Ours (4x4, T=8)")]
-ADDERS = {"ours": 128, "loas_zip": 128, "ptb": 128, "spikex": 64}
+DESIGNS = [("loas_zip", "LoAS"), ("spikex", "SpikeX (8x8)"), ("ptb", "PTB (16x8)"),
+           ("prosperity", "Prosperity (128 PE)"), ("ours", "Ours (4x4, T=8)")]
+ADDERS = {"ours": 128, "loas_zip": 128, "ptb": 128, "spikex": 64, "prosperity": 128}
 
 
 def summarize(cache, wname, nets=("VGG16", "ResNet18")):

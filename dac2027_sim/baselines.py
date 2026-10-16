@@ -119,3 +119,56 @@ def spikex_layer_cycles(S, M, T=8, rows=8, cols=8, tws_list=(1, 2, 4, 8)):
             if best is None or tot < best[0]:
                 best = (tot, f"{mode},TWS={tws}")
     return best
+
+
+# ----------------------------------------------------------------------------- Prosperity
+def prosperity_layer_cycles(S, M, T=8, m=256, k=16, n=128, pipe=4, skip_empty=False):
+    """Prosperity (HPCA'25, prosperity.pdf), product sparsity, Tbl. III config: tile m=256 spike rows x k=16
+    input columns x n=128 output channels, 128 8-bit-add PEs (one weight row of n per cycle).
+    Spike matrix = (T x L) x d_in, time-major rows (Sec. II). Per (m,k) tile every row takes one Prefix: the row
+    in the tile whose spikes are the largest subset of its own (proper subset, or an exact match with a smaller
+    index); it then costs popcount(row XOR prefix) cycles, at least 1 (Sec. VI-A: >= m + 4 per tile).
+    The detector/pruner/dispatcher phase (m+4 cycles) overlaps with the previous tile's computation, so only the
+    first tile's is added. The computation repeats for each of ceil(M/n) output-channel tiles.
+    skip_empty=True: rows with no spike in the tile cost nothing (an optimistic upper bound for Prosperity)."""
+    K, N = S.shape
+    rows = np.empty((T * N, K), dtype=np.uint8)
+    for t in range(T):
+        rows[t * N:(t + 1) * N] = ((S >> t) & 1).T
+    R_ = rows.shape[0]
+    nmt = math.ceil(R_ / m)
+    pad = nmt * m - R_
+    total = 0
+    pw = (1 << np.arange(k)).astype(np.int64)
+    idx = np.arange(m)
+    for k0 in range(0, K, k):
+        blk = rows[:, k0:k0 + k].astype(np.int64)
+        v = blk @ pw[:blk.shape[1]]
+        valid_row = np.ones(R_, dtype=bool)
+        if pad:
+            v = np.concatenate([v, np.zeros(pad, dtype=np.int64)])
+            valid_row = np.concatenate([valid_row, np.zeros(pad, dtype=bool)])
+        v = v.reshape(nmt, m)
+        vr = valid_row.reshape(nmt, m)
+        pop = _popc16(v)
+        # cand[t, i, j]: row j can be the Prefix of row i
+        sub = (v[:, None, :] & ~v[:, :, None]) == 0
+        earlier = (pop[:, None, :] < pop[:, :, None]) | ((v[:, None, :] == v[:, :, None]) & (idx[None, :] < idx[:, None])[None])
+        cand = sub & earlier & vr[:, None, :]
+        best = np.where(cand, pop[:, None, :], 0).max(2)
+        cost = pop - best
+        if skip_empty:
+            cost = np.where(pop == 0, 0, np.maximum(cost, 1))
+        else:
+            cost = np.maximum(cost, 1)
+        cost = np.where(vr, cost, 0)
+        total += int(cost.sum()) + pipe * nmt
+    return total * math.ceil(M / n) + (m + 4)
+
+
+def _popc16(x):
+    x = x.astype(np.int64)
+    c = np.zeros_like(x)
+    for b in range(16):
+        c += (x >> b) & 1
+    return c

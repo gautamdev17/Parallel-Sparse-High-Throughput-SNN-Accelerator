@@ -21,6 +21,13 @@
    "throughput": 936.6470931816043,
    "thr_per_adder": 7.317555415481284
   },
+  "VGG16|prosperity": {
+   "cycles_b1": 1544723,
+   "cycles_b16": 23819031,
+   "latency_ms": 1.93090375,
+   "throughput": 537.3854209266532,
+   "thr_per_adder": 4.198323600989478
+  },
   "VGG16|ours": {
    "cycles_b1": 405230,
    "cycles_b16": 4634555,
@@ -48,6 +55,13 @@
    "latency_ms": 1.9152150000000001,
    "throughput": 516.8934718494768,
    "thr_per_adder": 4.038230248824037
+  },
+  "ResNet18|prosperity": {
+   "cycles_b1": 2843164,
+   "cycles_b16": 45305887,
+   "latency_ms": 3.553955,
+   "throughput": 282.523990756433,
+   "thr_per_adder": 2.207218677784633
   },
   "ResNet18|ours": {
    "cycles_b1": 550695,
@@ -79,6 +93,13 @@
    "throughput": 361.3715903884643,
    "thr_per_adder": 2.8232155499098774
   },
+  "VGG16|prosperity": {
+   "cycles_b1": 1604305,
+   "cycles_b16": 24642452,
+   "latency_ms": 2.00538125,
+   "throughput": 519.4288295661487,
+   "thr_per_adder": 4.058037730985537
+  },
   "VGG16|ours": {
    "cycles_b1": 4623242,
    "cycles_b16": 58428087,
@@ -106,6 +127,13 @@
    "latency_ms": 5.004805,
    "throughput": 199.6534328364448,
    "thr_per_adder": 1.559792444034725
+  },
+  "ResNet18|prosperity": {
+   "cycles_b1": 2952260,
+   "cycles_b16": 47099177,
+   "latency_ms": 3.690325,
+   "throughput": 271.7669567771853,
+   "thr_per_adder": 2.1231793498217604
   },
   "ResNet18|ours": {
    "cycles_b1": 6794337,
