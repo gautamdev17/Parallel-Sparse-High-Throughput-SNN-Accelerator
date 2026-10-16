@@ -195,3 +195,44 @@ if __name__ == "__main__":
     old = json.load(open(path)) if os.path.exists(path) else {}
     old.update({k: {str(a): b for a, b in v.items()} for k, v in res.items()})
     json.dump(old, open(path, "w"), indent=1)
+
+
+def spikeflow_fig17():
+    """SpikeFlow Fig. 17: T=4, all designs with SpikeFlow's 256 PEs (Table 1). Paper averages (LeNet-MNIST,
+    VGG-CIFAR10, VGG-CIFAR100): SpikeFlow vs Eyeriss +117% (2.17x), vs PTB +49.6% (1.50x).
+    Data here: the real VGG9-CIFAR10 (T=4) spike traces of the Prosperity repo (the paper's own models are not
+    released). Eyeriss at 256 PEs: dense, ceil(M/16) x K*T*L/16 (the Prosperity repo's Eyeriss rule, 16x16)."""
+    import prosperity_official  # noqa: F401
+    import networks as NW
+    from baselines import ptb_layer_cycles, spikeflow_layer_cycles
+    DATA = os.path.join(HERE, "third_party", "prosperity_data")
+    ops = NW.create_network("vgg9", os.path.join(DATA, "vgg9_cifar10.pkl"))
+    tot = dict(spikeflow=0, ptb=0, ptb_repo_rules=0, eyeriss=0)
+    for op in ops:
+        if not isinstance(op, (NW.Conv2D, NW.FC)):
+            continue
+        fc = NW.conv2d_2_fc(op) if isinstance(op, NW.Conv2D) else op
+        T, L, K, M = fc.time_steps, fc.sequence_length, fc.input_dim, fc.output_dim
+        x = fc.activation_tensor.sparse_map.reshape(T, L, K).bool().numpy()
+        S = np.zeros((K, L), dtype=np.uint8)
+        for t in range(T):
+            S |= (x[t].T.astype(np.uint8) << t)
+        tot["spikeflow"] += spikeflow_layer_cycles(S, M, T=T)
+        tot["ptb"] += ptb_layer_cycles(S, M, T=T, rows=16, cols=16, tws_list=(1, 2, 4))[0]
+        tot["eyeriss"] += math.ceil(M / 16) * (K * T * L // 16)
+        # PTB with the Prosperity repo's rules: fixed TWS=4, per-pixel cold start of 2 x rows cycles
+        tot["ptb_repo_rules"] += ptb_layer_cycles(S, M, T=T, rows=16, cols=16, tws_list=(4,))[0] + L * 16 * 2
+    r = dict(cycles=tot, spikeflow_vs_eyeriss=tot["eyeriss"] / tot["spikeflow"],
+             spikeflow_vs_ptb=tot["ptb"] / tot["spikeflow"],
+             spikeflow_vs_ptb_repo_rules=tot["ptb_repo_rules"] / tot["spikeflow"], paper_vs_eyeriss=2.17, paper_vs_ptb=1.496)
+    print(f"SpikeFlow Fig. 17 (VGG9-CIFAR10 real spikes, T=4, 256 PEs): SpikeFlow vs Eyeriss "
+          f"{r['spikeflow_vs_eyeriss']:.2f}x (paper avg 2.17x), vs PTB {r['spikeflow_vs_ptb']:.2f}x / "
+          f"{r['spikeflow_vs_ptb_repo_rules']:.2f}x with the Prosperity repo's PTB rules (paper avg 1.50x)")
+    return r
+
+
+if __name__ == "__main__" and "fig17" in sys.argv[1:]:
+    path = os.path.join(HERE, "results", "paper_checks.json")
+    old = json.load(open(path)) if os.path.exists(path) else {}
+    old["spikeflow_fig17"] = spikeflow_fig17()
+    json.dump(old, open(path, "w"), indent=1)

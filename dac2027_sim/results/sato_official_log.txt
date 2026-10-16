@@ -1,0 +1,8 @@
+VGG16|1|sparse90 2,448,376 cycles
+VGG16|16|sparse90 26,798,266 cycles
+ResNet18|1|sparse90 3,555,140 cycles
+ResNet18|16|sparse90 54,404,548 cycles
+VGG16|1|zipstats 4,541,498 cycles
+VGG16|16|zipstats 40,245,768 cycles
+ResNet18|1|zipstats 5,254,034 cycles
+ResNet18|16|zipstats 78,481,200 cycles

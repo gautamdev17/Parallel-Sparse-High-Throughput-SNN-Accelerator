@@ -142,5 +142,18 @@
    "ours_tws4": 46060256,
    "ratio": 0.9858588473726044
   }
+ },
+ "spikeflow_fig17": {
+  "cycles": {
+   "spikeflow": 1356368,
+   "ptb": 1596864,
+   "ptb_repo_rules": 9979620,
+   "eyeriss": 2424832
+  },
+  "spikeflow_vs_eyeriss": 1.7877390206787538,
+  "spikeflow_vs_ptb": 1.1773088129475187,
+  "spikeflow_vs_ptb_repo_rules": 7.3576050157479385,
+  "paper_vs_eyeriss": 2.17,
+  "paper_vs_ptb": 1.496
  }
 }

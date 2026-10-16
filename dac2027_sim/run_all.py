@@ -16,7 +16,7 @@ import numpy as np
 
 import workload as wl
 from ours import Cfg, run_layer_fast
-from baselines import loas_layer_cycles, ptb_layer_cycles, spikex_layer_cycles, prosperity_layer_cycles, LOAS_P_ZIP
+from baselines import loas_layer_cycles, ptb_layer_cycles, spikex_layer_cycles, prosperity_layer_cycles, spikeflow_layer_cycles, LOAS_P_ZIP
 
 F_HZ = 800e6
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -46,7 +46,7 @@ def run_layer(task):
                 ours=o["cycles"], ours_stats={k: v for k, v in o.items() if k != "cycles"},
                 loas_zip=loas_layer_cycles(M, K, N, LOAS_P_ZIP),
                 ptb=ptb[0], ptb_tws=ptb[1], spikex=spx[0], spikex_mode=spx[1],
-                prosperity=pro, prosperity_opt=pro_opt,
+                prosperity=pro, prosperity_opt=pro_opt, spikeflow=spikeflow_layer_cycles(S, M),
                 nonsilent=float((S != 0).mean()), secs=time.time() - t0)
 
 
@@ -54,7 +54,7 @@ def run(tasks, cache_file):
     path = os.path.join(OUT, cache_file)
     cache = json.load(open(path)) if os.path.exists(path) else {}
     key = lambda t: f"{t[0]}|{t[1]}|{t[2]}|{t[3]}"
-    todo = [t for t in tasks if key(t) not in cache or "prosperity" not in cache[key(t)]]
+    todo = [t for t in tasks if key(t) not in cache or "spikeflow" not in cache[key(t)]]
     todo.sort(key=lambda t: -np.prod(wl.gemm_shape(wl.NETWORKS[t[0]]()[t[1]], t[2])))
     print(f"{len(todo)} layer runs ({len(tasks) - len(todo)} cached)", flush=True)
     t0 = time.time()
@@ -69,22 +69,26 @@ def run(tasks, cache_file):
     return cache
 
 
-DESIGNS = [("loas_zip", "LoAS"), ("spikex", "SpikeX (8x8)"), ("ptb", "PTB (16x8)"),
-           ("prosperity", "Prosperity (official sim)"), ("ours", "Ours (4x4, T=8)")]
-ADDERS = {"ours": 128, "loas_zip": 128, "ptb": 128, "spikex": 64, "prosperity": 128}
+DESIGNS = [("loas_zip", "LoAS"), ("spikex", "SpikeX (8x8)"), ("ptb", "PTB (16x8)"), ("sato", "SATO (128 PE)"),
+           ("spikeflow", "SpikeFlow (16x16)"), ("prosperity", "Prosperity (official sim)"), ("ours", "Ours (4x4, T=8)")]
+ADDERS = {"ours": 128, "loas_zip": 128, "ptb": 128, "spikex": 64, "prosperity": 128, "sato": 128, "spikeflow": 256}
 
 
 def summarize(cache, wname, nets=("VGG16", "ResNet18")):
     rows = {}
-    off = os.path.join(OUT, "prosperity_official.json")      # official Prosperity simulator, if run
-    official = json.load(open(off)) if os.path.exists(off) else {}
+    official = {}
+    for d, f in (("prosperity", "prosperity_official.json"), ("sato", "sato_official.json")):
+        p = os.path.join(OUT, f)                               # official Prosperity-repo simulators
+        if os.path.exists(p):
+            official[d] = json.load(open(p))
     for net in nets:
         nl = len(wl.NETWORKS[net]())
         for d, _ in DESIGNS:
-            c1 = sum(cache[f"{net}|{li}|1|{wname}"][d] for li in range(nl))
-            c16 = sum(cache[f"{net}|{li}|16|{wname}"][d] for li in range(nl))
-            if d == "prosperity" and f"{net}|1|{wname}" in official:
-                c1, c16 = official[f"{net}|1|{wname}"], official[f"{net}|16|{wname}"]
+            if d in official:
+                c1, c16 = official[d][f"{net}|1|{wname}"], official[d][f"{net}|16|{wname}"]
+            else:
+                c1 = sum(cache[f"{net}|{li}|1|{wname}"][d] for li in range(nl))
+                c16 = sum(cache[f"{net}|{li}|16|{wname}"][d] for li in range(nl))
             rows[net, d] = dict(cycles_b1=c1, cycles_b16=c16, latency_ms=c1 / F_HZ * 1e3,
                                 throughput=16 * F_HZ / c16, thr_per_adder=16 * F_HZ / c16 / ADDERS[d])
     return rows

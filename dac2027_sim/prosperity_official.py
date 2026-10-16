@@ -84,7 +84,7 @@ _saved = sys.modules.pop("baselines", None)
 import simulator as S  # noqa: E402  (official code)
 import networks as NW  # noqa: E402
 from accelerator import Accelerator  # noqa: E402
-from baselines import run_simulation_PTB, run_PTB_convfc  # noqa: E402
+from baselines import run_simulation_PTB, run_PTB_convfc, run_simulation_sato  # noqa: E402
 sys.modules["p_baselines"] = sys.modules.pop("baselines")
 sys.path.remove(SIM)
 if _saved is not None:
@@ -136,11 +136,41 @@ def verify():
 
 
 REF = {  # reference/time_reference.xlsx (seconds at 500 MHz)
-    "vgg16_cifar10": dict(Prosperity=2.1503906e-2, PTB=0.145917404),
-    "vgg16_cifar100": dict(Prosperity=3.3576808e-2, PTB=0.316902108),
-    "resnet18_cifar10": dict(Prosperity=1.176426e-2, PTB=8.0507168e-2),
-    "resnet18_cifar100": dict(Prosperity=1.1631254e-2, PTB=9.6489344e-2),
+    "vgg16_cifar10": dict(Prosperity=2.1503906e-2, PTB=0.145917404, SATO=8.5968e-2),
+    "vgg16_cifar100": dict(Prosperity=3.3576808e-2, PTB=0.316902108, SATO=0.38986304),
+    "resnet18_cifar10": dict(Prosperity=1.176426e-2, PTB=8.0507168e-2, SATO=3.666688e-2),
+    "resnet18_cifar100": dict(Prosperity=1.1631254e-2, PTB=9.6489344e-2, SATO=3.5221376e-2),
 }
+
+
+def sato_reference():
+    import contextlib, io
+    out = {}
+    for name, ref in REF.items():
+        with contextlib.redirect_stdout(io.StringIO()):
+            c = run_simulation_sato(NW.create_network(name.split("_")[0], os.path.join(DATA, name + ".pkl"))).total_cycles
+        out[name] = dict(sato_s=c / 500e6, sato_ref_s=ref["SATO"])
+        print(f"{name:18s} SATO {c/500e6*1e3:9.3f} ms (paper ref {ref['SATO']*1e3:9.3f})", flush=True)
+    json.dump(out, open(os.path.join(HERE, "results", "sato_reference_check.json"), "w"), indent=1)
+
+
+def sato_ours():
+    from multiprocessing import Pool
+    tasks = [(net, b, w) for w in ("sparse90", "zipstats") for net in ("VGG16", "ResNet18") for b in (1, 16)]
+    with Pool(min(8, len(tasks))) as p:
+        res = p.map(_sato_one, tasks)
+    out = {f"{net}|{b}|{w}": c for (net, b, w), c in zip(tasks, res)}
+    json.dump(out, open(os.path.join(HERE, "results", "sato_official.json"), "w"), indent=1)
+    for k, v in out.items():
+        print(k, f"{v:,} cycles")
+
+
+def _sato_one(t):
+    import contextlib, io
+    net, b, w = t
+    wd, ns, q = WORKLOADS[w]
+    with contextlib.redirect_stdout(io.StringIO()):
+        return int(run_simulation_sato(our_ops(net, b, wd, ns, q)).total_cycles)
 
 
 def reference():
@@ -200,4 +230,5 @@ def _one(t):
 sys.path.insert(1, HERE)
 
 if __name__ == "__main__":
-    {"verify": verify, "reference": reference, "ours": ours}[sys.argv[1]]()
+    {"verify": verify, "reference": reference, "ours": ours, "sato_reference": sato_reference,
+     "sato_ours": sato_ours}[sys.argv[1]]()

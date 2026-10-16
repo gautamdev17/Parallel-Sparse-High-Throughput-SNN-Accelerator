@@ -1,0 +1,18 @@
+{
+ "vgg16_cifar10": {
+  "sato_s": 0.085968,
+  "sato_ref_s": 0.085968
+ },
+ "vgg16_cifar100": {
+  "sato_s": 0.38986304,
+  "sato_ref_s": 0.38986304
+ },
+ "resnet18_cifar10": {
+  "sato_s": 0.03666688,
+  "sato_ref_s": 0.03666688
+ },
+ "resnet18_cifar100": {
+  "sato_s": 0.035221376,
+  "sato_ref_s": 0.035221376
+ }
+}

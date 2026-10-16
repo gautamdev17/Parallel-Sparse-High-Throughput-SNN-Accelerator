@@ -21,11 +21,15 @@ This is the workload the author specified in `current_arch/REPORT.md` section 15
 | VGG16 | LoAS | 11.217 | 22.1x | 89 | 31.0x |
 | VGG16 | SpikeX (8x8) | 4.170 | 8.2x | 240 | 11.5x |
 | VGG16 | PTB (16x8) | 1.067 | 2.1x | 937 | 2.9x |
+| VGG16 | SATO (128 PE, Prosperity-repo model) | 3.060 | 6.0x | 478 | 5.8x |
+| VGG16 | SpikeFlow (16x16) | 2.002 | 3.9x | 502 | 5.5x |
 | VGG16 | Prosperity (official simulator) | 0.833 | 1.6x | 1,642 | 1.7x |
 | VGG16 | **Ours (4x4 PE x 8 adders)** | **0.507** | – | **2,762** | – |
 | ResNet18 | LoAS | 18.846 | 27.4x | 53 | 30.1x |
 | ResNet18 | SpikeX (8x8) | 7.472 | 10.9x | 132 | 12.0x |
 | ResNet18 | PTB (16x8) | 1.915 | 2.8x | 517 | 3.1x |
+| ResNet18 | SATO (128 PE, Prosperity-repo model) | 4.444 | 6.5x | 235 | 6.8x |
+| ResNet18 | SpikeFlow (16x16) | 3.568 | 5.2x | 278 | 5.7x |
 | ResNet18 | Prosperity (official simulator) | 1.282 | 1.9x | 804 | 2.0x |
 | ResNet18 | **Ours** | **0.688** | – | **1,596** | – |
 
@@ -236,3 +240,45 @@ Our PTB cycle model, run at the same settings, agrees with theirs within 0–7%:
 - **Effect on the main results:** none. At T=8 the stride is a single block, so both rules give identical cycles.
 
 **PTB paper's own experiments** use DVS-Gesture and CIFAR10-DVS spike traces from trained models, which are not available. Its baseline, the time-serial array, is also not specified closely enough to rebuild. We therefore validate PTB through the third-party implementation above.
+
+**SATO** (`sato.pdf`).
+- **Model used:** the SATO model inside the official Prosperity simulator, run unmodified through `prosperity_official.py sato_*`.
+  - Each (timestep, pixel) spike row goes greedily to the least-loaded of 128 PEs; cycles = the busiest PE's spike count × output channels.
+  - LIF costs neurons × (log₂T + 1) cycles.
+- **Reference check:** it reproduces the Prosperity paper's SATO reference exactly on all four real-data benchmarks: 85.968, 389.863, 36.667 and 35.221 ms.
+- **SATO's own paper** evaluates temporally coded (single-spike) networks against Eyeriss, S2N2 and SpinalFlow, and reports only relative speedups (30.9×, 22.1×, 6.4×) and its Table 3. Those networks and their spike data are not available, so its own figures cannot be reproduced.
+
+**SpikeFlow** (`Spikeflow.pdf`).
+- **Model:** `baselines.spikeflow_layer_cycles`. It has no released code, so this is our model of the paper (Table 1, Secs. 4.1–4.3):
+  - 16×16 output-stationary array; rows are 16 output channels.
+  - The 16 columns hold 16/T pixels × T timesteps.
+  - One input streams per cycle, and an input is skipped when it is silent for the whole column group.
+  - No zero-weight skipping.
+- **Fig. 17 check** (T=4, every design on 256 PEs), run on the Prosperity repo's real VGG9 CIFAR10 (T=4) spikes. The paper's own LeNet and VGG models are not released.
+
+  | SpikeFlow vs | Our models | Paper average |
+  |---|---:|---:|
+  | Eyeriss | 1.79× | 2.17× |
+  | PTB | 1.18× (our generous PTB) / 7.36× (the Prosperity repo's PTB rules, where the per-pixel cold start dominates at T=4) | 1.50× |
+
+  The direction matches and the paper's PTB number falls between our two PTB variants. The network is different, so exact agreement is not expected.
+- **PE synthesis vs Table 2** (same flow: Yosys + OpenSTA, Nangate45). The paper does not give register widths; an 8-bit weight and 16-bit psum are assumed (`hw/rtl/spikeflow/spikeflow_pe.v`).
+
+  | | SpikeFlow PE | Common 8×8 MAC PE | Ratio |
+  |---|---:|---:|---:|
+  | Paper | 159.6 µm² | 368.1 µm² | 0.43 |
+  | Ours | 260.7 µm² | 648.8 µm² | 0.40 |
+
+  The ratio matches; the absolute areas differ because of the unknown widths.
+
+**What "reproduced" means here.**
+
+| Design | Status |
+|---|---|
+| Prosperity | Exact: official code, reference results reproduced (within 0.8%) |
+| SATO | Exact against the Prosperity repo's SATO model and reference times |
+| PTB | Against a third-party implementation: 0–7%, with the PTB paper's own data unavailable |
+| SpikeX | Approximate: Fig. 10 trend and magnitude, 1.45–5.2× vs the paper's 1.3–7.1× |
+| SpikeFlow | Approximate: Fig. 17 direction and range; PE area ratio |
+
+None of the remaining four papers released code or data, so exact reproduction of their figures is not possible.

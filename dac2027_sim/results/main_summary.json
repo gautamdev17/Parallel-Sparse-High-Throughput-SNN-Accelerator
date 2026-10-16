@@ -21,6 +21,20 @@
    "throughput": 936.6470931816043,
    "thr_per_adder": 7.317555415481284
   },
+  "VGG16|sato": {
+   "cycles_b1": 2448376,
+   "cycles_b16": 26798266,
+   "latency_ms": 3.06047,
+   "throughput": 477.6428445034466,
+   "thr_per_adder": 3.7315847226831766
+  },
+  "VGG16|spikeflow": {
+   "cycles_b1": 1601259,
+   "cycles_b16": 25509512,
+   "latency_ms": 2.00157375,
+   "throughput": 501.773612917409,
+   "thr_per_adder": 1.960053175458629
+  },
   "VGG16|prosperity": {
    "cycles_b1": 666778,
    "cycles_b16": 7797229,
@@ -55,6 +69,20 @@
    "latency_ms": 1.9152150000000001,
    "throughput": 516.8934718494768,
    "thr_per_adder": 4.038230248824037
+  },
+  "ResNet18|sato": {
+   "cycles_b1": 3555140,
+   "cycles_b16": 54404548,
+   "latency_ms": 4.443924999999999,
+   "throughput": 235.2744480112214,
+   "thr_per_adder": 1.8380816250876673
+  },
+  "ResNet18|spikeflow": {
+   "cycles_b1": 2854289,
+   "cycles_b16": 46066061,
+   "latency_ms": 3.56786125,
+   "throughput": 277.8618297752873,
+   "thr_per_adder": 1.085397772559716
   },
   "ResNet18|prosperity": {
    "cycles_b1": 1025513,
@@ -93,6 +121,20 @@
    "throughput": 361.3715903884643,
    "thr_per_adder": 2.8232155499098774
   },
+  "VGG16|sato": {
+   "cycles_b1": 4541498,
+   "cycles_b16": 40245768,
+   "latency_ms": 5.6768725,
+   "throughput": 318.04586261094585,
+   "thr_per_adder": 2.4847333016480144
+  },
+  "VGG16|spikeflow": {
+   "cycles_b1": 3869059,
+   "cycles_b16": 61425020,
+   "latency_ms": 4.83632375,
+   "throughput": 208.3841405342644,
+   "thr_per_adder": 0.8140005489619703
+  },
   "VGG16|prosperity": {
    "cycles_b1": 1117161,
    "cycles_b16": 15861061,
@@ -127,6 +169,20 @@
    "latency_ms": 5.004805,
    "throughput": 199.6534328364448,
    "thr_per_adder": 1.559792444034725
+  },
+  "ResNet18|sato": {
+   "cycles_b1": 5254034,
+   "cycles_b16": 78481200,
+   "latency_ms": 6.5675425,
+   "throughput": 163.0963848666942,
+   "thr_per_adder": 1.2741905067710484
+  },
+  "ResNet18|spikeflow": {
+   "cycles_b1": 6912849,
+   "cycles_b16": 110524018,
+   "latency_ms": 8.64106125,
+   "throughput": 115.81193148443083,
+   "thr_per_adder": 0.4523903573610579
   },
   "ResNet18|prosperity": {
    "cycles_b1": 2034105,

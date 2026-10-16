@@ -9,10 +9,11 @@ import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
 R = os.path.join(HERE, "results")
 # fixed categorical order (reference palette slots 1-5); identity also carried by legend + direct labels
-ORDER = ["loas_zip", "spikex", "ptb", "prosperity", "ours"]
-COL = {"loas_zip": "#2a78d6", "spikex": "#eb6834", "ptb": "#1baf7a", "ours": "#eda100", "prosperity": "#e87ba4"}
-LAB = {"loas_zip": "LoAS", "spikex": "SpikeX (8x8)", "ptb": "PTB (16x8)", "prosperity": "Prosperity (official sim)",
-       "ours": "Ours (4x4 PE, T=8)"}
+ORDER = ["loas_zip", "spikex", "ptb", "sato", "spikeflow", "prosperity", "ours"]
+COL = {"loas_zip": "#2a78d6", "spikex": "#eb6834", "ptb": "#1baf7a", "ours": "#eda100", "prosperity": "#e87ba4",
+       "sato": "#008300", "spikeflow": "#6250d6"}
+LAB = {"loas_zip": "LoAS", "spikex": "SpikeX (8x8)", "ptb": "PTB (16x8)", "sato": "SATO (128 PE)",
+       "spikeflow": "SpikeFlow (16x16)", "prosperity": "Prosperity (official sim)", "ours": "Ours (4x4 PE, T=8)"}
 INK, INK2, GRID = "#0b0b0b", "#52514e", "#e4e3df"
 plt.rcParams.update({"font.family": "serif", "font.size": 9, "axes.edgecolor": INK2, "axes.labelcolor": INK,
                      "xtick.color": INK2, "ytick.color": INK2, "axes.spines.top": False, "axes.spines.right": False})
@@ -21,25 +22,25 @@ plt.rcParams.update({"font.family": "serif", "font.size": 9, "axes.edgecolor": I
 def bars():
     s = json.load(open(os.path.join(R, "main_summary.json")))["sparse90"]
     nets, ds = ["VGG16", "ResNet18"], ORDER
-    fig, axes = plt.subplots(1, 2, figsize=(7.2, 2.9))
+    fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.3))
     for ax, (key, ylab, fmt) in zip(axes, [("latency_ms", "Latency, batch 1 (ms)", "{:.2f}"),
                                            ("throughput", "Throughput, batch 16 (img/s)", "{:,.0f}")]):
-        w = 0.15
+        w = 0.11
         for i, d in enumerate(ds):
             x = np.arange(len(nets)) + (i - (len(ds) - 1) / 2) * (w + 0.012)
             v = [s[f"{n}|{d}"][key] for n in nets]
             ax.bar(x, v, w, color=COL[d], label=LAB[d], zorder=3)
             for xi, vi in zip(x, v):
-                ax.text(xi, vi, fmt.format(vi), ha="center", va="bottom", fontsize=6.5, color=INK)
+                ax.text(xi, vi, fmt.format(vi), ha="center", va="bottom", fontsize=5.5, color=INK, rotation=90)
         ax.set_xticks(range(len(nets)), nets)
         ax.set_ylabel(ylab)
         ax.yaxis.grid(True, color=GRID, lw=0.6, zorder=0)
-        ax.set_ylim(0, ax.get_ylim()[1] * 1.08)
+        ax.set_ylim(0, ax.get_ylim()[1] * 1.15)
     h, l = axes[0].get_legend_handles_labels()
-    fig.legend(h, l, fontsize=7, frameon=False, loc="lower center", ncol=5)
+    fig.legend(h, l, fontsize=6.5, frameon=False, loc="lower center", ncol=4)
     fig.suptitle("Weights 90% sparse, activations 90% non-silent-sparse, INT8, T=8, 800 MHz, 128 adders "
-                 "(SpikeX 64)", fontsize=8, color=INK2)
-    fig.tight_layout(rect=(0, 0.07, 1, 1))
+                 "(SpikeX 64, SpikeFlow 256 as in their papers)", fontsize=8, color=INK2)
+    fig.tight_layout(rect=(0, 0.11, 1, 1))
     fig.savefig(os.path.join(R, "latency_throughput_sparse90.png"), dpi=300)
 
 

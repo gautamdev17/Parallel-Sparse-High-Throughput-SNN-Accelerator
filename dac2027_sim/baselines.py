@@ -176,3 +176,25 @@ def _popc16(x):
     for b in range(16):
         c += (x >> b) & 1
     return c
+
+
+# ----------------------------------------------------------------------------- SpikeFlow
+def spikeflow_layer_cycles(S, M, T=8, rows=16, pcd=16):
+    """SpikeFlow (J. Syst. Archit. 2025, Spikeflow.pdf): 16 x 16 output-stationary systolic array (Table 1),
+    1-bit-gated accumulator PEs, adjustable temporal-spatial mapping (Sec. 4.1): the pcd=16 columns hold
+    pcd // T pixels x T timesteps when T <= pcd (T > pcd: the time domain is split into ceil(T/pcd) chunks).
+    Rows = 16 output channels. One input (K index) streams per cycle; an input is skipped when it is silent
+    for the whole column group (Silence Cell Group / Silence Cell / Partial Silence Cell, Sec. 4.2).
+    No zero-weight skipping. One array fill (rows + pcd - 2) per layer (passes are double-buffered)."""
+    K, N = S.shape
+    nz = S != 0                                       # (K, N): input k spikes at least once for pixel n
+    if T <= pcd:
+        g = pcd // T
+        pad = (-N) % g
+        if pad:
+            nz = np.concatenate([nz, np.zeros((K, pad), dtype=bool)], 1)
+        per_pass = nz.reshape(K, -1, g).any(2).sum(0)  # non-silent inputs per pixel group
+        cyc = int(per_pass.sum())
+    else:
+        raise NotImplementedError("T > pcd: call spikeflow_long")
+    return math.ceil(M / rows) * cyc + rows + pcd - 2
