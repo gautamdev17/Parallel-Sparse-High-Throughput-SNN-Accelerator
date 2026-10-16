@@ -19,10 +19,10 @@ plt.rcParams.update({"font.family": "serif", "font.size": 9, "axes.edgecolor": I
                      "xtick.color": INK2, "ytick.color": INK2, "axes.spines.top": False, "axes.spines.right": False})
 
 
-def bars():
-    s = json.load(open(os.path.join(R, "main_summary.json")))["sparse90"]
+def bars(src="main_summary.json", out="latency_throughput_sparse90.png", note=""):
+    s = json.load(open(os.path.join(R, src)))["sparse90"]
     nets, ds = ["VGG16", "ResNet18"], ORDER
-    fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.3))
+    fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.5))
     for ax, (key, ylab, fmt) in zip(axes, [("latency_ms", "Latency, batch 1 (ms)", "{:.2f}"),
                                            ("throughput", "Throughput, batch 16 (img/s)", "{:,.0f}")]):
         w = 0.11
@@ -38,15 +38,15 @@ def bars():
         ax.set_ylim(0, ax.get_ylim()[1] * 1.15)
     h, l = axes[0].get_legend_handles_labels()
     fig.legend(h, l, fontsize=6.5, frameon=False, loc="lower center", ncol=4)
-    fig.suptitle("Weights & activations 90% sparse, INT8, T=8, 800 MHz; 128 adders (SpikeX 64, SpikeFlow 256)",
+    fig.suptitle("Weights & activations 90% sparse, INT8, T=8, 800 MHz; 128 adders (SpikeX 64, SpikeFlow 256)" + note,
                  fontsize=8, color=INK2)
     fig.tight_layout(rect=(0, 0.11, 1, 1))
-    fig.savefig(os.path.join(R, "latency_throughput_sparse90.png"), dpi=300)
+    fig.savefig(os.path.join(R, out), dpi=300)
 
 
-def bars_normalized():
+def bars_normalized(src="main_summary.json", out="latency_throughput_normalized.png", note=""):
     """same data as bars(), normalized to LoAS = 1x: speed-up = LoAS latency / latency, throughput / LoAS."""
-    s = json.load(open(os.path.join(R, "main_summary.json")))["sparse90"]
+    s = json.load(open(os.path.join(R, src)))["sparse90"]
     nets, ds = ["VGG16", "ResNet18"], ORDER
     fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.3))
     specs = [(lambda n, d: s[f"{n}|loas_zip"]["latency_ms"] / s[f"{n}|{d}"]["latency_ms"],
@@ -68,10 +68,10 @@ def bars_normalized():
         ax.set_ylim(0, ax.get_ylim()[1] * 1.15)
     h, l = axes[0].get_legend_handles_labels()
     fig.legend(h, l, fontsize=6.5, frameon=False, loc="lower center", ncol=4)
-    fig.suptitle("Normalized to LoAS = 1x. Weights & activations 90% sparse, INT8, T=8, 800 MHz",
+    fig.suptitle("Normalized to LoAS = 1x. Weights & activations 90% sparse, INT8, T=8, 800 MHz" + note,
                  fontsize=8, color=INK2)
     fig.tight_layout(rect=(0, 0.11, 1, 1))
-    fig.savefig(os.path.join(R, "latency_throughput_normalized.png"), dpi=300)
+    fig.savefig(os.path.join(R, out), dpi=300)
 
 
 def sweep():
@@ -105,4 +105,8 @@ def sweep():
 if __name__ == "__main__":
     bars()
     bars_normalized()
+    if os.path.exists(os.path.join(R, "main_v2_summary.json")):      # version 2: DRAM included (memory_model.py)
+        note = "\nv2: DRAM traffic included, 1024 bits/cycle, double-buffered (stall only beyond compute)"
+        bars("main_v2_summary.json", "latency_throughput_v2.png", note)
+        bars_normalized("main_v2_summary.json", "latency_throughput_normalized_v2.png", note)
     sweep()

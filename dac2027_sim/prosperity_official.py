@@ -94,9 +94,19 @@ _orig = S.find_product_sparsity
 S.find_product_sparsity = fast_find_product_sparsity
 
 
+MEM_W = int(os.environ.get("DRAM_BITS_PER_CYCLE", 1024))     # official default 1024
+SUFFIX = "" if MEM_W == 1024 else f"_bw{MEM_W}"
+if MEM_W != 1024:
+    # PTB model hard-codes the 1024-bit interface; re-load it with the same code and only that constant changed
+    import inspect, textwrap
+    _pb = sys.modules["p_baselines"]
+    _src = textwrap.dedent(inspect.getsource(_pb.run_PTB_convfc)).replace("// 1024", f"// {MEM_W}")
+    exec(compile(_src, "<run_PTB_convfc bw>", "exec"), _pb.__dict__)
+
+
 def prosperity_accel():
     return Accelerator(type="Prosperity", adder_array_size=128, LIF_array_size=32, tile_size_M=256,
-                       tile_size_K=16, product_sparsity=True, issue_type=2, dense=False)
+                       tile_size_K=16, product_sparsity=True, issue_type=2, dense=False, mem_if_width=MEM_W)
 
 
 def run_model_ops(ops, name="x"):
@@ -213,7 +223,7 @@ def ours():
     with Pool(min(8, len(tasks))) as p:
         res = p.map(_one, tasks)
     out = {f"{net}|{b}|{w}": c for (net, b, w), c in zip(tasks, res)}
-    json.dump(out, open(os.path.join(HERE, "results", "prosperity_official.json"), "w"), indent=1)
+    json.dump(out, open(os.path.join(HERE, "results", f"prosperity_official{SUFFIX}.json"), "w"), indent=1)
     for k, v in out.items():
         print(k, f"{v:,} cycles")
 
@@ -269,7 +279,7 @@ def ptb_ours():
     out = {}
     for (net, batch, b, w), c in zip(tasks, res):
         out[f"{net}|{batch}|{w}"] = out.get(f"{net}|{batch}|{w}", 0) + c
-    json.dump(out, open(os.path.join(HERE, "results", "ptb_official.json"), "w"), indent=1)
+    json.dump(out, open(os.path.join(HERE, "results", f"ptb_official{SUFFIX}.json"), "w"), indent=1)
     for k, v in out.items():
         print(k, f"{v:,} cycles")
 

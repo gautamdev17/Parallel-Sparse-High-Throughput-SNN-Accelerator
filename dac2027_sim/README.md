@@ -321,3 +321,43 @@ What matches and what doesn't:
 The paper averages its own trained LeNet-MNIST and VGG-CIFAR10/100 models, which are not released. The SpikeFlow-vs-Eyeriss ratio depends directly on how sparse those models' spikes are, so the remaining gap is mainly the workload.
 
 **Bottom line for SpikeX and SpikeFlow:** trends and directions are reproduced, and individual points are within about 15–40%. Closer agreement needs the authors' code or trained models.
+
+## Version 2: main-memory (DRAM) access included (`memory_model.py`)
+
+Plots: `results/latency_throughput_v2.png` and `results/latency_throughput_normalized_v2.png`. Tables: `results/main_v2_tables.md`.
+
+**Common rule for every design.** This is the rule the official Prosperity simulator applies to Prosperity and to its PTB model.
+
+| Setting | Value |
+|---|---|
+| DRAM interface | 1,024 bits/cycle (about 102 GB/s at 800 MHz) |
+| Buffering | Double-buffered |
+| Layer latency | compute + first-tile load + max(0, DRAM cycles − compute) |
+
+**DRAM traffic per design:**
+
+| Design | Traffic model |
+|---|---|
+| Prosperity, PTB | The official Prosperity-repo simulators (their own DRAM model, already in their cycle counts) |
+| LoAS | The team's LoAS model (zip `memory.py`), T=8, 256 KB SRAM. LoAS has no on-chip im2col, so every output position fetches its own input fiber: about 9× the raw feature map for 3×3 convolutions. One correction (see below). |
+| Ours | Packed weight columns (8-bit weight + 2-bit label per PE, plus filter ids); 64 KB staging buffer. Partial sums stay in the 192 KB output buffer and never spill. |
+| SpikeX | Dense 8-bit weights; 54 KB GLB (from the paper) |
+| SpikeFlow | Dense 8-bit weights; only non-silent input neurons transferred; 18.5 KB on-chip memory (from the paper) |
+| SATO | Dense 8-bit weights; 54 KB buffer (not given in the paper; assumed) |
+
+For ours, SpikeX, SpikeFlow and SATO, traffic is computed with on-chip im2col, using the cheaper of two loop orders: weights kept on chip with inputs re-read, or inputs kept on chip with weights re-read.
+
+**The correction to `memory.py`:** it charges weight traffic as `fBt * mt * nt`, which counts all the weights once per weight tile. On VGG16's fc2 layer that over-counts 74×, giving about 1,580 MB per image. Here LoAS uses the same two-loop-order rule as the other designs.
+
+**Result (90/90 workload, batch 1):**
+
+| | LoAS | SpikeX | SATO | SpikeFlow | Ours |
+|---|---:|---:|---:|---:|---:|
+| VGG16 DRAM traffic (MB) | 38.9 | 34.3 | 34.3 | 34.0 | 9.9 |
+| ResNet18 DRAM traffic (MB) | 15.0 | 13.6 | 13.6 | 12.2 | 4.4 |
+
+- **LoAS moves the most data,** but at 1,024 bits/cycle every design is compute-bound, so latency rises by at most about 2% (SpikeFlow VGG16 +2.4%, ours +0.8%).
+- **Ours moves the least** because only non-zero weights are stored, in packed columns.
+- **The ranking is unchanged from version 1.**
+
+**Not finished:** a lower-bandwidth sensitivity run (256 bits/cycle) is not complete. At 256 bits/cycle, ours and SpikeFlow start to be memory-bound on the VGG16 fully connected layers. That run needs the official Prosperity and PTB simulators rerun at the same bandwidth for a fair comparison.
