@@ -229,6 +229,59 @@ def _one(t):
 
 sys.path.insert(1, HERE)
 
+def ptb_ops_image(net, batch, b, wd, ns, q, T=8):
+    """one image (b) of our batch as official Conv2D / FC + LIF operators (conv inputs = feature maps, so the
+    Prosperity repo's own img2col and time-window packing run on them). Same seeds/tensors as run_all.py."""
+    import workload as wl
+    ops = []
+    for li, layer in enumerate(wl.NETWORKS[net]()):
+        name, ci, co, k, s, h = layer
+        M, K, N = wl.gemm_shape(layer, batch)
+        seed = zlib.crc32(f"{net}|{li}|{batch}|{wd}|{ns}|{q}".encode())
+        rng = np.random.default_rng(seed)
+        wl.rand_weights(rng, M, K, wd)                       # same draw order as workload.layer_tensors
+        X = wl.rand_spikes(rng, (batch, ci, h, h), ns, q)[b]  # (C, H, H) T-bit trains of image b
+        bits = ((X[None] >> np.arange(T)[:, None, None, None]) & 1).astype(np.float32)   # T, C, H, H
+        if k > 1 or s > 1 or h > 1:
+            op = NW.Conv2D(f"conv2d_{li}", h, ci, co, k, k // 2, s, 1, T)
+            op.activation_tensor.sparse_map = torch.from_numpy(bits)
+            nn_out = op.output_H * op.output_H * co
+        else:
+            op = NW.FC(f"fc_{li}", ci, co, 1, 1, T)
+            op.activation_tensor.sparse_map = torch.from_numpy(bits.reshape(1, T, 1, ci))
+            nn_out = co
+        ops.append(op)
+        ops.append(NW.LIFNeuron(f"lif_{li}", nn_out, 1, T))
+    return ops
+
+
+def ptb_ours():
+    """PTB = the Prosperity repo's run_simulation_PTB, unmodified. Batch 16 = the 16 images run one after
+    another (PTB has no cross-image batching; its cold start is per output pixel of each image)."""
+    from multiprocessing import Pool
+    tasks = []
+    for w in ("sparse90", "zipstats"):
+        for net in ("VGG16", "ResNet18"):
+            tasks.append((net, 1, 0, w))
+            tasks += [(net, 16, b, w) for b in range(16)]
+    with Pool(8) as p:
+        res = p.map(_ptb_one, tasks)
+    out = {}
+    for (net, batch, b, w), c in zip(tasks, res):
+        out[f"{net}|{batch}|{w}"] = out.get(f"{net}|{batch}|{w}", 0) + c
+    json.dump(out, open(os.path.join(HERE, "results", "ptb_official.json"), "w"), indent=1)
+    for k, v in out.items():
+        print(k, f"{v:,} cycles")
+
+
+def _ptb_one(t):
+    import contextlib, io
+    net, batch, b, w = t
+    wd, ns, q = WORKLOADS[w]
+    with contextlib.redirect_stdout(io.StringIO()):
+        return int(run_simulation_PTB(ptb_ops_image(net, batch, b, wd, ns, q)).total_cycles)
+
+
 if __name__ == "__main__":
     {"verify": verify, "reference": reference, "ours": ours, "sato_reference": sato_reference,
-     "sato_ours": sato_ours}[sys.argv[1]]()
+     "sato_ours": sato_ours, "ptb_ours": ptb_ours}[sys.argv[1]]()

@@ -12,7 +12,7 @@ R = os.path.join(HERE, "results")
 ORDER = ["loas_zip", "spikex", "ptb", "sato", "spikeflow", "prosperity", "ours"]
 COL = {"loas_zip": "#2a78d6", "spikex": "#eb6834", "ptb": "#1baf7a", "ours": "#eda100", "prosperity": "#e87ba4",
        "sato": "#008300", "spikeflow": "#6250d6"}
-LAB = {"loas_zip": "LoAS", "spikex": "SpikeX (8x8)", "ptb": "PTB (16x8)", "sato": "SATO (128 PE)",
+LAB = {"loas_zip": "LoAS", "spikex": "SpikeX (8x8)", "ptb": "PTB (16x8, Prosperity-repo model)", "sato": "SATO (128 PE)",
        "spikeflow": "SpikeFlow (16x16)", "prosperity": "Prosperity (official sim)", "ours": "Ours (4x4 PE, T=8)"}
 INK, INK2, GRID = "#0b0b0b", "#52514e", "#e4e3df"
 plt.rcParams.update({"font.family": "serif", "font.size": 9, "axes.edgecolor": INK2, "axes.labelcolor": INK,
@@ -38,8 +38,8 @@ def bars():
         ax.set_ylim(0, ax.get_ylim()[1] * 1.15)
     h, l = axes[0].get_legend_handles_labels()
     fig.legend(h, l, fontsize=6.5, frameon=False, loc="lower center", ncol=4)
-    fig.suptitle("Weights 90% sparse, activations 90% non-silent-sparse, INT8, T=8, 800 MHz, 128 adders "
-                 "(SpikeX 64, SpikeFlow 256 as in their papers)", fontsize=8, color=INK2)
+    fig.suptitle("Weights & activations 90% sparse, INT8, T=8, 800 MHz; 128 adders (SpikeX 64, SpikeFlow 256)",
+                 fontsize=8, color=INK2)
     fig.tight_layout(rect=(0, 0.11, 1, 1))
     fig.savefig(os.path.join(R, "latency_throughput_sparse90.png"), dpi=300)
 

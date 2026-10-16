@@ -20,14 +20,14 @@ This is the workload the author specified in `current_arch/REPORT.md` section 15
 |---|---|---:|---:|---:|---:|
 | VGG16 | LoAS | 11.217 | 22.1x | 89 | 31.0x |
 | VGG16 | SpikeX (8x8) | 4.170 | 8.2x | 240 | 11.5x |
-| VGG16 | PTB (16x8) | 1.067 | 2.1x | 937 | 2.9x |
+| VGG16 | PTB (16x8, Prosperity-repo model) | 4.627 | 9.1x | 215 | 12.8x |
 | VGG16 | SATO (128 PE, Prosperity-repo model) | 3.060 | 6.0x | 478 | 5.8x |
 | VGG16 | SpikeFlow (16x16) | 2.002 | 3.9x | 502 | 5.5x |
 | VGG16 | Prosperity (official simulator) | 0.833 | 1.6x | 1,642 | 1.7x |
 | VGG16 | **Ours (4x4 PE x 8 adders)** | **0.507** | – | **2,762** | – |
 | ResNet18 | LoAS | 18.846 | 27.4x | 53 | 30.1x |
 | ResNet18 | SpikeX (8x8) | 7.472 | 10.9x | 132 | 12.0x |
-| ResNet18 | PTB (16x8) | 1.915 | 2.8x | 517 | 3.1x |
+| ResNet18 | PTB (16x8, Prosperity-repo model) | 7.941 | 11.5x | 125 | 12.8x |
 | ResNet18 | SATO (128 PE, Prosperity-repo model) | 4.444 | 6.5x | 235 | 6.8x |
 | ResNet18 | SpikeFlow (16x16) | 3.568 | 5.2x | 278 | 5.7x |
 | ResNet18 | Prosperity (official simulator) | 1.282 | 1.9x | 804 | 2.0x |
@@ -37,6 +37,9 @@ This is the workload the author specified in `current_arch/REPORT.md` section 15
 
 The full tables, with cycles and img/s per adder, are in `results/main_tables.md`.
 
+* **PTB** numbers come from the **PTB model inside the official Prosperity simulator** (`baselines.run_simulation_PTB`), run unmodified via `prosperity_official.py ptb_ours`. It reproduces the Prosperity paper's PTB reference times exactly.
+  * The model: a 16×8 array with fixed TWS=4, StSAP packing, a per-output-pixel cold start, DRAM stalls and LIF cycles. Batch 16 = the 16 images run one after another.
+  * Our own PTB model (`baselines.ptb_layer_cycles`) agrees with it within 0–7% at the same settings (see the validation section). Our earlier, generous settings (best TWS=1, no cold start or stalls) gave 1.067 ms on VGG16 and 1.915 ms on ResNet18. Those are kept in `results/main.json` as `ptb`.
 * **LoAS** uses the zip's closed form and statistics unchanged: 16 TPPEs, `matches + 21` per 128-chunk, and p = 0.261. `verify.py` reproduces the zip exactly: VGG16 = 8,973,849 cycles = 11.2173 ms. The zip has no ResNet18 entry, so the same formula was applied to the standard CIFAR ResNet18. The zip's p does not depend on weight sparsity, so LoAS is the same on every workload below.
 
 * **Prosperity** numbers come from the **official Prosperity simulator** (github Prosperity-main, MIT, vendored unmodified in `third_party/prosperity`), run by `prosperity_official.py`.
@@ -141,7 +144,7 @@ Timing rules (full list in the `ours.py` docstring):
 >
 > With the scratchpads, PTB synthesizes to 0.953 mm² and SpikeX to 0.468 mm².
 >
-> The power, energy and EDP numbers below are from the version **without** scratchpads (PTB 0.093 mm², SpikeX 0.037 mm²) and must be re-measured. Prosperity has no RTL here, so it appears only in the latency and throughput results.
+> The power, energy and EDP numbers below are from the version **without** scratchpads (PTB 0.093 mm², SpikeX 0.037 mm²) and must be re-measured. They also still use our earlier PTB latency (1.067 / 1.915 ms), not the Prosperity-repo PTB latency (4.627 / 7.941 ms) now used above. Prosperity has no RTL here, so it appears only in the latency and throughput results.
 
 All four designs were synthesized with the same flow and library:
 - **Synthesis:** Yosys 0.66 + ABC to the Nangate45 typical library (from the OpenSTA install).
@@ -277,7 +280,7 @@ Our PTB cycle model, run at the same settings, agrees with theirs within 0–7%:
 |---|---|
 | Prosperity | Exact: official code, reference results reproduced (within 0.8%) |
 | SATO | Exact against the Prosperity repo's SATO model and reference times |
-| PTB | Against a third-party implementation: 0–7%, with the PTB paper's own data unavailable |
+| PTB | Numbers are the Prosperity repo's PTB model, which reproduces that paper's PTB reference exactly. Our own model agrees with it within 0–7%. The PTB paper's own data is unavailable |
 | SpikeX | Approximate: Fig. 10 trend and magnitude, 1.45–5.2× vs the paper's 1.3–7.1× |
 | SpikeFlow | Approximate: Fig. 17 direction and range; PE area ratio |
 

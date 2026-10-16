@@ -69,7 +69,7 @@ def run(tasks, cache_file):
     return cache
 
 
-DESIGNS = [("loas_zip", "LoAS"), ("spikex", "SpikeX (8x8)"), ("ptb", "PTB (16x8)"), ("sato", "SATO (128 PE)"),
+DESIGNS = [("loas_zip", "LoAS"), ("spikex", "SpikeX (8x8)"), ("ptb", "PTB (16x8, Prosperity-repo model)"), ("sato", "SATO (128 PE)"),
            ("spikeflow", "SpikeFlow (16x16)"), ("prosperity", "Prosperity (official sim)"), ("ours", "Ours (4x4, T=8)")]
 ADDERS = {"ours": 128, "loas_zip": 128, "ptb": 128, "spikex": 64, "prosperity": 128, "sato": 128, "spikeflow": 256}
 
@@ -77,7 +77,8 @@ ADDERS = {"ours": 128, "loas_zip": 128, "ptb": 128, "spikex": 64, "prosperity": 
 def summarize(cache, wname, nets=("VGG16", "ResNet18")):
     rows = {}
     official = {}
-    for d, f in (("prosperity", "prosperity_official.json"), ("sato", "sato_official.json")):
+    for d, f in (("prosperity", "prosperity_official.json"), ("sato", "sato_official.json"),
+                 ("ptb", "ptb_official.json")):
         p = os.path.join(OUT, f)                               # official Prosperity-repo simulators
         if os.path.exists(p):
             official[d] = json.load(open(p))
