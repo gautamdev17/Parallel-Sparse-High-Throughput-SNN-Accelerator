@@ -247,8 +247,157 @@ def gen_array(W, S, kind):
     print(f"{kind}: {len(rows)} stimulus cycles, {len(checks)} iterations")
 
 
-if __name__ == "__main__":
+if __name__ == "__main__" and len(sys.argv) == 1:
     layer, W, S = tensors()
     gen_ours(W, S)
     gen_array(W, S, "ptb")
     gen_array(W, S, "spikex")
+
+
+def gen_spikeflow(W, S, npasses=64, T=8, pcd=16, rows=16):
+    """SpikeFlow passes (channel block 0, consecutive pixel groups): only non-silent K entries, as in the model."""
+    g = pcd // T
+    M, K = W.shape
+    words, hdr, checks = [], [], []
+    for p0 in range(0, S.shape[1], g):
+        if len(hdr) == npasses:
+            break
+        px = list(range(p0, min(p0 + g, S.shape[1])))
+        ks = [k for k in range(K) if any(S[k, p] for p in px)]
+        if not ks:
+            continue
+        hdr.append(len(ks))
+        for k in ks:
+            w = [int(W[r, k]) & 0xff for r in range(rows)]
+            sp = 0
+            for c in range(pcd):
+                p = px[c // T] if c // T < len(px) else None
+                if p is not None and (int(S[k, p]) >> (c % T)) & 1:
+                    sp |= 1 << c
+            words.append((w, sp))
+        checks.append(px)
+    d = os.path.join(OUT, "spikeflow")
+    os.makedirs(d, exist_ok=True)
+    with open(os.path.join(d, "passes.txt"), "w") as f:
+        i = 0
+        for n in hdr + [1]:                         # + one flush pass
+            f.write(f"{n}\n")
+            for _ in range(n):
+                if i < len(words):
+                    w, sp = words[i]
+                else:
+                    w, sp = [0] * rows, 0
+                f.write("".join(f"{x:02x}" for x in reversed(w)) + f" {sp:04x}\n")
+                i += 1
+    ref = wl.dense_sums(W[:rows], S)
+    exp = np.array([[[ref[r, px[c // T], c % T] if c // T < len(px) else 0 for c in range(pcd)] for r in range(rows)]
+                    for px in checks])
+    np.savez(os.path.join(d, "expected.npz"), sums=exp)
+    model_cycles = sum(hdr) + rows + pcd - 2       # baselines.spikeflow_layer_cycles on these passes (one block)
+    json.dump(dict(passes=len(hdr), entries=sum(hdr), model_cycles=model_cycles), open(os.path.join(d, "meta.json"), "w"))
+    print(f"spikeflow: {len(hdr)} passes, {sum(hdr)} entries, model cycles {model_cycles}")
+
+
+if __name__ == "__main__" and len(sys.argv) > 1 and sys.argv[1] == "spikeflow":
+    layer, W, S = tensors()
+    gen_spikeflow(W, S)
+
+
+def gen_sato(W, S, nch=8, npe=128, T=8, iw=12):
+    """SATO schedule of the Prosperity-repo model: rows (t, pixel) t-major, greedy least-loaded PE (first index on
+    ties), then for each output channel every PE walks its rows' spikes; channel phase = max PE load."""
+    K, N = S.shape
+    rows = []
+    for t in range(T):
+        for p in range(N):
+            rows.append([k for k in range(K) if (int(S[k, p]) >> t) & 1])
+    load = np.zeros(npe, dtype=np.int64)
+    owner = []
+    for r in rows:
+        i = int(np.argmin(load))
+        owner.append(i)
+        load[i] += len(r)
+    maxload = int(load.max())
+    per_pe = [[] for _ in range(npe)]
+    for ri, i in enumerate(owner):
+        if rows[ri]:
+            per_pe[i].append(ri)
+    stim, checks = [], []
+    for n in range(nch):
+        seq = [[(ri, k, j == len(rows[ri]) - 1) for ri in per_pe[i] for j, k in enumerate(rows[ri])] for i in range(npe)]
+        for c in range(maxload):
+            v = re = 0
+            idx = [0] * npe
+            ww = [0] * npe
+            for i in range(npe):
+                if c < len(seq[i]):
+                    ri, k, last = seq[i][c]
+                    v |= 1 << i
+                    re |= (1 << i) if last else 0
+                    idx[i], ww[i] = k, int(W[n, k]) & 0xff
+                    if last:
+                        t, p = divmod(ri, N)
+                        checks.append((i, n, int(sum(int(W[n, kk]) for kk in rows[ri]))))
+            stim.append((v, re, idx, ww))
+    d = os.path.join(OUT, "sato")
+    os.makedirs(d, exist_ok=True)
+    width = 2 * npe + npe * iw + npe * 8
+    hexrows(os.path.join(d, "in.hex"),
+            [pack_fields([(v, npe), (re, npe)] + [(x, iw) for x in reversed(idx)] + [(x, 8) for x in reversed(ww)])
+             for v, re, idx, ww in stim], width)
+    # dispatcher stream: the rows of the layer, one per cycle (popcount of the first 16 inputs + count of the rest)
+    drows = []
+    for r in rows[:len(stim)]:
+        lo = sum(1 << k for k in r if k < 16)
+        drows.append(pack_fields([(1, 1), (lo, 16), (min(63, sum(1 for k in r if k >= 16)), 6)]))
+    hexrows(os.path.join(d, "disp.hex"), drows, 23)
+    json.dump(dict(ncyc=len(stim), maxload=maxload, channels=nch, rows=len(rows), owner=owner[:len(drows)],
+                   checks=checks), open(os.path.join(d, "meta.json"), "w"))
+    print(f"sato: {len(stim)} cycles = {nch} channels x max load {maxload}; {len(checks)} row integrations to check")
+
+
+if __name__ == "__main__" and len(sys.argv) > 1 and sys.argv[1] == "sato":
+    layer, W, S = tensors()
+    gen_sato(W, S)
+
+
+def gen_prosperity(W, S, ntiles=16, m=256, k=16, n=128, T=8):
+    """tiles of the official simulator's layout (rows = (pixel, t), pixel-major), m-tile 0, k-tiles 0..ntiles-1,
+    with the official find_product_sparsity result and cost per tile."""
+    sys.path.insert(0, os.path.dirname(HERE))
+    import prosperity_official as P                 # official code (needs torch)
+    import torch
+    K, N = S.shape
+    rows = np.zeros((N * T, K), dtype=np.uint8)
+    for p in range(N):
+        for t in range(T):
+            rows[p * T + t] = (S[:, p] >> t) & 1
+    d = os.path.join(OUT, "prosperity")
+    os.makedirs(d, exist_ok=True)
+    tiles, wts, meta = [], [], []
+    for kt in range(ntiles):
+        act = rows[:m, kt * k:(kt + 1) * k]
+        pre, prefix = P._orig(torch.from_numpy(act.astype(bool)))          # the simulator's own function
+        pre = pre.numpy().astype(np.uint8)
+        prefix = prefix.numpy().astype(int).tolist()
+        nnz_pre = int(pre.sum())
+        zero_pre = int((pre.sum(1) == 0).sum())
+        zero_ori = int((act.sum(1) == 0).sum())
+        compute = nnz_pre + zero_pre - zero_ori                             # simulator: cur_compute_cycles
+        preprocess = int((act.sum(1) > 1).sum()) + m // 8                   # simulator: prosparsity_cycles
+        tiles += [sum(int(b) << j for j, b in enumerate(r)) for r in act]
+        Wt = W[:n, kt * k:(kt + 1) * k]                                     # (n, k)
+        wts += [pack_fields([(int(Wt[c, j]) & 0xff, 8) for c in reversed(range(n))]) for j in range(k)]
+        res = (Wt.astype(np.int64) @ act.T.astype(np.int64)).T             # (m, n) tile result per row
+        meta.append(dict(compute=compute, preprocess=preprocess, prefix=prefix,
+                         pattern=[sum(int(b) << j for j, b in enumerate(r)) for r in pre], res=res.tolist()))
+    hexrows(os.path.join(d, "rows.hex"), tiles, k)
+    hexrows(os.path.join(d, "wts.hex"), wts, n * 8)
+    json.dump(dict(ntiles=ntiles, tiles=meta), open(os.path.join(d, "meta.json"), "w"))
+    print(f"prosperity: {ntiles} tiles, official compute cycles {sum(t['compute'] for t in meta)}, "
+          f"preprocess {sum(t['preprocess'] for t in meta)}")
+
+
+if __name__ == "__main__" and len(sys.argv) > 1 and sys.argv[1] == "prosperity":
+    layer, W, S = tensors()
+    gen_prosperity(W, S)

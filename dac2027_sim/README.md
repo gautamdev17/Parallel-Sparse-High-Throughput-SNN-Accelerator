@@ -361,3 +361,44 @@ For ours, SpikeX, SpikeFlow and SATO, traffic is computed with on-chip im2col, u
 - **The ranking is unchanged from version 1.**
 
 **Not finished:** a lower-bandwidth sensitivity run (256 bits/cycle) is not complete. At 256 bits/cycle, ours and SpikeFlow start to be memory-bound on the VGG16 fully connected layers. That run needs the official Prosperity and PTB simulators rerun at the same bandwidth for a fair comparison.
+
+## RTL for every design, power, energy, EDP (version 2 latency)
+
+`hw/energy_v2.py` -> `results/energy_v2_tables.md` and `results/power_area_energy_edp_v2.png`.
+
+**RTL.** None of PTB, SpikeX, SATO, SpikeFlow or Prosperity released RTL (the Prosperity repo has its simulator only), so all five are our RTL written from the papers and models. LoAS uses the given RTL with two marked fixes. Each RTL is checked against the dense reference, and its cycle count against its cycle model:
+
+| Design | Functional check | Cycles: RTL vs cycle model |
+|---|---|---|
+| Ours | Full 64×128 output tile, bit-exact at RTL and gate level | 8,651 vs 8,653 |
+| SpikeFlow | 64 passes × 16 rows × 16 columns, exact | 12,752 vs 12,753, plus 681 DMA stall cycles of the testbench's 1-word/cycle load |
+| SATO | 16,384 row integrations exact; dispatcher choices identical to the model's greedy assignment | 4,240 vs 4,240 |
+| Prosperity | Prefix/pattern of all 294 searched rows equal the official `find_product_sparsity`; 1,401 rows × 128 channels exact | Preprocess 806 vs 806; processor 1,434 vs 1,418 (+1 write-back cycle per tile) |
+| PTB, SpikeX | 144 and 80 iterations exact (with the paper's 96×8-bit scratchpad per PE) | Equal by construction (one slot per cycle) |
+| LoAS | Given RTL: exact at 5% density; drops matches at 26.1% (FIFO overflow) | ~200 vs ~54 cycles per chunk (the zip formula flatters LoAS) |
+
+**Comparison with the papers' own numbers** (28 nm scaled to 45 nm by area × (45/28)² and power × (45/28) × (1.1/0.9)², first order):
+
+| Design | Paper | Ours (Nangate45) | Verdict |
+|---|---|---|---|
+| LoAS (TPPE ×16) | 0.526 mm², 79.4 mW at 560 MHz (zip) | 0.370 mm², 63.2 mW at 560 MHz | Close (0.7× area, 0.8× power) |
+| SATO core | 0.0524 mm², 114.6 mW (45 nm equivalent, 200 MHz) | 0.0755 mm² (includes the dispatcher), 8.4 mW at 200 MHz | Area 1.4×; **power about 14× lower**, cannot be reconciled without SATO's RTL |
+| SpikeFlow | 1.19 mm², 127.2 mW (same tools, 100 MHz) | 0.791 mm² | Area 0.66×; power pending |
+| Prosperity PPU logic | 0.225 mm², 367 mW at 28 nm, 500 MHz | Pending | — |
+| PTB, SpikeX | Not reported | 0.953 mm², 536 mW / 0.468 mm², 278 mW | — |
+
+**PTB and SpikeX power is pessimistic.** About 97% of it is register clock power from the 96-byte-per-PE scratchpads, built as ungated registers. A real register file with clock gating would draw much less.
+
+**Energy and EDP (VGG16, batch 1):**
+
+| Design | Power (mW) | Latency (ms) | Energy (mJ) | EDP (mJ·ms) |
+|---|---:|---:|---:|---:|
+| LoAS | 90.2 | 11.24 | 1.014 | 11.39 |
+| SpikeX | 278.2 | 4.17 | 1.161 | 4.85 |
+| PTB | 535.9 | 4.63 | 2.480 | 11.47 |
+| SATO | 33.7 | 3.07 | **0.103** | 0.316 |
+| Ours | 382.8 | 0.51 | 0.196 | **0.100** |
+
+- **SATO has the lowest energy** because its RTL is small and its measured power is low (see the caveat above).
+- **Ours has the lowest EDP**, 3.2× better than SATO.
+- **SpikeFlow and Prosperity power are pending:** gate-level runs of their large netlists are still going.
