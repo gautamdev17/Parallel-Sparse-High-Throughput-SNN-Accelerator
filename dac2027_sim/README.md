@@ -285,3 +285,39 @@ Our PTB cycle model, run at the same settings, agrees with theirs within 0–7%:
 | SpikeFlow | Approximate: Fig. 17 direction and range; PE area ratio |
 
 None of the remaining four papers released code or data, so exact reproduction of their figures is not possible.
+
+### SpikeX and SpikeFlow: closest achievable match (`paper_checks.py fig9 fig10v fig17`)
+
+Only details stated in the papers were added. No free parameter was tuned to fit the curves.
+
+**SpikeX Fig. 9** (CONV1 N-MNIST, T=30, random inputs): latency reduction from 0.5% to 0.01% firing.
+
+| TWS | 2 | 3 | 5 | 10 |
+|---|---:|---:|---:|---:|
+| Paper | 93.9% | 92.0% | 91.1% | 90.4% |
+| Our model | 96.8% | 97.0% | 96.8% | 96.9% |
+
+- **Gap:** 3–7 percentage points.
+- **Cause:** SpikeX's simulator takes latency as the worse of data access and array compute (Sec. V-B). Data access does not shrink with firing rate, which puts a floor under latency at low rates. Our model is compute-only.
+- **Why it isn't modelled:** the floor's size needs the clock frequency, which the paper does not give. Choosing one would be fitting.
+
+**SpikeX Fig. 10:** all three readings of the text give about the same error, an RMS log error of 0.35–0.40 (about 40% typical deviation per point).
+- the same fixed TWS for both sides, as the caption's "with- and without agile NTWU dispatch" suggests;
+- PTB at one fixed TWS for the layer, as Sec. V-C states;
+- both re-optimized at each rate (what we had).
+
+What matches and what doesn't:
+- **Matches:** direction, the high-rate end (1.45× vs 1.30× at 5%), and the 0.2% point (3.89× vs 3.96×).
+- **Doesn't match:** the low-rate end (4.4–5.2× vs 6.5–7.1×) and the 0.3–2% range, where ours is higher.
+- **Missing details:** the PTB-baseline mapping and the data-access term are not specified well enough to close the gap.
+
+**SpikeFlow Fig. 17** (T=4, 256 PEs), on real VGG9 CIFAR10 spikes. Added detail from Sec. 5.2.1: the comparison designs use an independent LIF module (16 units) after the array, while SpikeFlow pipelines its LIF-PE row.
+
+| SpikeFlow vs | Our model | Paper average |
+|---|---:|---:|
+| Eyeriss | 1.82× | 2.17× (about 16% low) |
+| PTB | 1.21× (generous PTB) / 7.36× (Prosperity-repo PTB rules) | 1.50× |
+
+The paper averages its own trained LeNet-MNIST and VGG-CIFAR10/100 models, which are not released. The SpikeFlow-vs-Eyeriss ratio depends directly on how sparse those models' spikes are, so the remaining gap is mainly the workload.
+
+**Bottom line for SpikeX and SpikeFlow:** trends and directions are reproduced, and individual points are within about 15–40%. Closer agreement needs the authors' code or trained models.

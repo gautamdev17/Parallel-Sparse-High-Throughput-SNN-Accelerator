@@ -207,7 +207,7 @@ def spikeflow_fig17():
     from baselines import ptb_layer_cycles, spikeflow_layer_cycles
     DATA = os.path.join(HERE, "third_party", "prosperity_data")
     ops = NW.create_network("vgg9", os.path.join(DATA, "vgg9_cifar10.pkl"))
-    tot = dict(spikeflow=0, ptb=0, ptb_repo_rules=0, eyeriss=0)
+    tot = dict(spikeflow=0, ptb=0, ptb_repo_rules=0, eyeriss=0, ptb_lif=0, eyeriss_lif=0)
     for op in ops:
         if not isinstance(op, (NW.Conv2D, NW.FC)):
             continue
@@ -220,14 +220,23 @@ def spikeflow_fig17():
         tot["spikeflow"] += spikeflow_layer_cycles(S, M, T=T)
         tot["ptb"] += ptb_layer_cycles(S, M, T=T, rows=16, cols=16, tws_list=(1, 2, 4))[0]
         tot["eyeriss"] += math.ceil(M / 16) * (K * T * L // 16)
+        # Sec. 5.2.1: the control groups use an independent LIF module (16 LIF units, Table 1) that runs after
+        # the systolic array, time step by time step; SpikeFlow's LIF-PE row is pipelined with the array.
+        lif = math.ceil(M * L * T / 16)
+        tot["ptb_lif"] += ptb_layer_cycles(S, M, T=T, rows=16, cols=16, tws_list=(1, 2, 4))[0] + lif
+        tot["eyeriss_lif"] += math.ceil(M / 16) * (K * T * L // 16) + lif
         # PTB with the Prosperity repo's rules: fixed TWS=4, per-pixel cold start of 2 x rows cycles
         tot["ptb_repo_rules"] += ptb_layer_cycles(S, M, T=T, rows=16, cols=16, tws_list=(4,))[0] + L * 16 * 2
     r = dict(cycles=tot, spikeflow_vs_eyeriss=tot["eyeriss"] / tot["spikeflow"],
              spikeflow_vs_ptb=tot["ptb"] / tot["spikeflow"],
-             spikeflow_vs_ptb_repo_rules=tot["ptb_repo_rules"] / tot["spikeflow"], paper_vs_eyeriss=2.17, paper_vs_ptb=1.496)
+             spikeflow_vs_ptb_repo_rules=tot["ptb_repo_rules"] / tot["spikeflow"],
+             spikeflow_vs_eyeriss_lif=tot["eyeriss_lif"] / tot["spikeflow"], spikeflow_vs_ptb_lif=tot["ptb_lif"] / tot["spikeflow"],
+             paper_vs_eyeriss=2.17, paper_vs_ptb=1.496)
     print(f"SpikeFlow Fig. 17 (VGG9-CIFAR10 real spikes, T=4, 256 PEs): SpikeFlow vs Eyeriss "
           f"{r['spikeflow_vs_eyeriss']:.2f}x (paper avg 2.17x), vs PTB {r['spikeflow_vs_ptb']:.2f}x / "
-          f"{r['spikeflow_vs_ptb_repo_rules']:.2f}x with the Prosperity repo's PTB rules (paper avg 1.50x)")
+          f"{r['spikeflow_vs_ptb_repo_rules']:.2f}x with the Prosperity repo's PTB rules (paper avg 1.50x)\n"
+          f"  + independent LIF module in the control groups (Sec. 5.2.1): vs Eyeriss {r['spikeflow_vs_eyeriss_lif']:.2f}x "
+          f"(paper 2.17x), vs PTB {r['spikeflow_vs_ptb_lif']:.2f}x (paper 1.50x)")
     return r
 
 
@@ -235,4 +244,74 @@ if __name__ == "__main__" and "fig17" in sys.argv[1:]:
     path = os.path.join(HERE, "results", "paper_checks.json")
     old = json.load(open(path)) if os.path.exists(path) else {}
     old["spikeflow_fig17"] = spikeflow_fig17()
+    json.dump(old, open(path, "w"), indent=1)
+
+
+PAPER_FIG9 = {2: 93.9, 3: 92.0, 5: 91.1, 10: 90.4}   # % latency reduction, firing rate 0.5% -> 0.01%
+
+
+def spikex_fig9(seeds=(0, 1, 2)):
+    """SpikeX Fig. 9: CONV1 of N-MNIST (Table II: H=34, R=16, E=3, C=2, M=12, T=30 -> stride 2, no padding),
+    random inputs, SpikeX latency at fixed TWS for firing rates 0.5% and 0.01%; paper reports the reduction."""
+    T, C, H, k, M = 30, 2, 34, 3, 12
+    out = {}
+    print("SpikeX Fig. 9 (CONV1 N-MNIST, T=30): latency reduction 0.5% -> 0.01% firing rate")
+    for tws, paper in PAPER_FIG9.items():
+        red = []
+        for sd in seeds:
+            rng = np.random.default_rng(100 + sd)
+            lat = {}
+            for r in (0.005, 0.0001):
+                X = rng.random((C, H, H, T)) < r
+                S = im2col_long(X, k, 2, 0)                 # (34 - 3) // 2 + 1 = 16
+                lat[r] = spikex_long(S, M, rows=8, cols=8, tws_list=[tws])[0]
+            red.append(100 * (1 - lat[0.0001] / lat[0.005]))
+        out[tws] = dict(paper=paper, ours=float(np.mean(red)))
+        print(f"  TWS={tws:2d}: paper {paper:.1f}%   ours {np.mean(red):.1f}%")
+    return out
+
+
+if __name__ == "__main__" and "fig9" in sys.argv[1:]:
+    path = os.path.join(HERE, "results", "paper_checks.json")
+    old = json.load(open(path)) if os.path.exists(path) else {}
+    old["spikex_fig9"] = {str(a): b for a, b in spikex_fig9().items()}
+    json.dump(old, open(path, "w"), indent=1)
+
+
+def spikex_fig10_variants():
+    """Fig. 10 under the two readings the paper's text supports:
+      A) 'with- and without agile NTWU dispatch' at the SAME TWS (only the dispatch differs);
+      B) PTB at ONE fixed TWS for the layer (exhaustive search over the whole firing-rate sweep), SpikeX best."""
+    rng = np.random.default_rng(10)
+    T, C, H, k, M = 300, 8, 32, 5, 16
+    tws_list = [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 25, 30, 50, 60, 75, 100, 150, 300]
+    rows = []
+    for r in PAPER_FIG10:
+        X = rng.random((C, H, H, T)) < r
+        S = im2col_long(X, k, 4, 1)
+        ptb = {t: ptb_long(S, M, rows=8, cols=8, tws_list=[t])[0] for t in tws_list}
+        spx = {t: spikex_long(S, M, rows=8, cols=8, tws_list=[t])[0] for t in tws_list}
+        rows.append((r, ptb, spx))
+    # A: same TWS for both; report the TWS whose curve is closest to the paper (RMS of log ratio) and all others
+    def rms(curve):
+        return float(np.sqrt(np.mean([np.log(c / PAPER_FIG10[r]) ** 2 for r, c in curve])))
+    curvesA = {t: [(r, p[t] / s[t]) for r, p, s in rows] for t in tws_list}
+    # B: PTB fixed at the TWS minimising its total cycles over the sweep; SpikeX free per rate
+    tb = min(tws_list, key=lambda t: sum(p[t] for _, p, _ in rows))
+    curveB = [(r, p[tb] / min(s.values())) for r, p, s in rows]
+    out = {"A_same_tws": {str(t): {"rms_log_err": rms(c), "curve": {str(r): v for r, v in c}} for t, c in curvesA.items()},
+           "B_ptb_fixed_tws": {"tws": tb, "rms_log_err": rms(curveB), "curve": {str(r): v for r, v in curveB}}}
+    print(f"{'rate':>7} {'paper':>6} | B: PTB fixed TWS={tb} | A same TWS=" + " ".join(f"{t:>5d}" for t in (1, 2, 5, 10, 30)))
+    for i, r in enumerate(PAPER_FIG10):
+        print(f"{r*100:6.2f}% {PAPER_FIG10[r]:6.2f} | {curveB[i][1]:6.2f}            | " +
+              " ".join(f"{curvesA[t][i][1]:5.2f}" for t in (1, 2, 5, 10, 30)))
+    print("RMS log error  B:", f"{rms(curveB):.2f}", " A:", " ".join(f"TWS{t}={rms(curvesA[t]):.2f}" for t in (1, 2, 5, 10, 30)),
+          " current (both re-optimized per rate):", f"{rms([(r, min(p.values()) / min(s.values())) for r, p, s in rows]):.2f}")
+    return out
+
+
+if __name__ == "__main__" and "fig10v" in sys.argv[1:]:
+    path = os.path.join(HERE, "results", "paper_checks.json")
+    old = json.load(open(path)) if os.path.exists(path) else {}
+    old["spikex_fig10_variants"] = spikex_fig10_variants()
     json.dump(old, open(path, "w"), indent=1)
