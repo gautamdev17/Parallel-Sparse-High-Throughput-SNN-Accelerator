@@ -25,7 +25,7 @@ STYLE = {"loas_zip":   dict(color="#e6e9ed", hatch="////"),
          "sato":       dict(color="#6f93b3", hatch=""),
          "spikeflow":  dict(color="#4a7396", hatch="\\\\\\\\"),
          "prosperity": dict(color="#2c4f6e", hatch=""),
-         "ours":       dict(color="#b5302a", hatch="")}
+         "ours":       dict(color="#e8871e", hatch="")}
 EDGE = "#2b2b2b"
 
 plt.rcParams.update({
@@ -59,7 +59,7 @@ def draw(norm, out, note=""):
                 for xi, vi in zip(x, v):
                     ax.annotate(f"{vi:.2f}" if idx == 0 else f"{vi:.2f}\u00d7", (xi, vi), xytext=(0, 2),
                                 textcoords="offset points", ha="center", va="bottom", fontsize=7.5,
-                                rotation=90, color=STYLE["ours"]["color"], zorder=5,
+                                rotation=90, color="#a85a0c", zorder=5,
                                 bbox=dict(boxstyle="square,pad=0.08", fc="white", ec="none"))
         ax.axhline(1.0, color=EDGE, lw=0.6, ls=(0, (4, 2)), zorder=2)
         ax.set_xticks(range(len(NETS)), NETS)
