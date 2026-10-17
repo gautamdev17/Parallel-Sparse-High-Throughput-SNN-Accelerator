@@ -115,5 +115,68 @@ def v4():
     draw(norm, "v4_fig")
 
 
+
+def power_energy_edp():
+    """v1 latency (equal adders; LoAS from loas_model.py) x power of our RTL of each design (hw/build/*_power.rpt,
+    Nangate45, gate-level activity, 800 MHz; LoAS = 16 x the given TPPE RTL).
+    energy = power x batch-1 latency, EDP = energy x latency. Normalized to the worst design by mean energy = 1x."""
+    sys.path.insert(0, os.path.join(HERE, "hw"))
+    import energy_v2 as E2
+    s = json.load(open(os.path.join(R, "main_summary.json")))["sparse90"]
+    own = json.load(open(os.path.join(R, "loas_own.json")))
+    val, rows = {}, ["| Network | Design | Power (mW) | Latency b=1 (ms) | Energy (mJ) | EDP (mJ*ms) |",
+                     "|---|---|---:|---:|---:|---:|"]
+    for n in NETS:
+        val[n] = {}
+        for d in ORDER:
+            hw, mult = E2.HW[d]
+            p = E2.power_w(hw) * mult * 1e3
+            lat = own[f"sparse90|{n}|1"] / F_HZ * 1e3 if d == "loas_zip" else s[f"{n}|{d}"]["latency_ms"]
+            e = p * lat * 1e-3
+            val[n][d] = (p, e, e * lat)
+            rows.append(f"| {n} | {NAME[d]} | {p:.1f} | {lat:.3f} | {e:.4f} | {e * lat:.5f} |")
+    keep = [d for d in ORDER if d != "spikeflow"]
+    base = max((d for d in keep if d != "ours"), key=lambda d: np.mean([val[n][d][1] for n in NETS]))
+    mid = sorted((d for d in keep if d != "ours"), key=lambda d: -np.mean([val[n][d][1] / val[n][base][1] for n in NETS]))
+    order = mid + ["ours"]
+    norm = {n: {d: tuple(val[n][d][i] / val[n][base][i] for i in range(3)) for d in keep} for n in NETS}
+    print(f"normalized to {NAME[base]} = 1x; order", [NAME[d] for d in order])
+    for n in NETS:
+        print(n, {NAME[d]: tuple(round(x, 3) for x in norm[n][d]) for d in order})
+    open(os.path.join(R, "v1_power_energy_edp.md"), "w").write(
+        "### v1 power, energy, EDP (sparse90, batch 1, 800 MHz; power from our RTL of each design, Nangate45)\n\n"
+        + "\n".join(rows) + f"\n\nNormalized to {NAME[base]} = 1x in v1_power_energy_edp.png. SpikeFlow is not plotted: its "
+        "power report is not physical (10.75 W combinational internal vs 16 mW switching) and must be re-measured.\n")
+    print("\n".join(rows))
+    fig, axes = plt.subplots(1, 3, figsize=(7.16, 2.45))
+    w = 0.125
+    for ax, idx, ylab, tag in ((axes[0], 0, "Normalized power", "(a)"), (axes[1], 1, "Normalized energy", "(b)"),
+                               (axes[2], 2, "Normalized EDP", "(c)")):
+        for i, d in enumerate(order):
+            x = np.arange(len(NETS)) + (i - (len(order) - 1) / 2) * (w + 0.008)
+            v = [norm[n][d][idx] for n in NETS]
+            ax.bar(x, v, w, color=STYLE[d]["color"], hatch=STYLE[d]["hatch"], edgecolor=EDGE, linewidth=0.55,
+                   label=NAME[d], zorder=3)
+            if d == "ours":
+                for xi, vi in zip(x, v):
+                    ax.annotate(f"{vi:.2f}" if vi >= 0.01 else f"{vi:.3f}", (xi, vi), xytext=(0, 2),
+                                textcoords="offset points", ha="center", va="bottom", fontsize=7.5, rotation=90,
+                                color="#a85a0c", zorder=5, bbox=dict(boxstyle="square,pad=0.08", fc="white", ec="none"))
+        ax.axhline(1.0, color=EDGE, lw=0.6, ls=(0, (4, 2)), zorder=2)
+        ax.set_xticks(range(len(NETS)), NETS)
+        ax.set_xlim(-0.55, len(NETS) - 0.45)
+        ax.set_ylabel(ylab)
+        ax.yaxis.grid(True, ls=":", color="#b0b0b0", lw=0.5, zorder=0)
+        top = max(norm[n][d][idx] for n in NETS for d in keep)
+        ax.set_ylim(0, top * 1.32)
+        ax.text(0.5, -0.17, tag, transform=ax.transAxes, ha="center", va="top", fontsize=10)
+    h, l = axes[0].get_legend_handles_labels()
+    fig.legend(h, l, ncol=7, loc="upper center", bbox_to_anchor=(0.5, 1.0), frameon=False, fontsize=8.5,
+               handlelength=1.5, handleheight=0.9, columnspacing=1.1, handletextpad=0.4)
+    fig.subplots_adjust(left=0.065, right=0.99, top=0.86, bottom=0.2, wspace=0.38)
+    for ext in ("png", "pdf"):
+        fig.savefig(os.path.join(R, f"v1_power_energy_edp.{ext}"), dpi=300)
+
+
 if __name__ == "__main__":
-    {"v1": v1, "v4": v4}[sys.argv[1]]()
+    {"v1": v1, "v4": v4, "pe": power_energy_edp}[sys.argv[1]]()
