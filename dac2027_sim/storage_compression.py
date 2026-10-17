@@ -20,8 +20,10 @@ lossless width is used (favours that baseline):
               TBs paired (greedy, 1's complement first); per slot T bits + 1 owner bit per TW when paired +
               ceil(log2 K)-bit address per neuron; plus the TB-tags (T/TWS bits per neuron) that the trimming reads.
               Layout not given in the paper; best TWS of {1, 2, 4}.
-  Phi         weights dense 8-bit + all pattern-weight products (q=128 per 16-input partition and output), 8 bit:
-              (8 + 128*8)/(16*8) = 9x the dense weights = the paper's "9x dense without the prefetcher" (Fig 12b).
+  Phi         weights dense 8-bit (Phi does not compress weights). Its pattern-weight products (PWPs) are
+              precomputed partial results, not a representation of W, so they are not counted -- like Prosperity's
+              product-sparsity table. (Counting all PWPs at 8 bit would add 8x the dense weights, the paper's "9x
+              dense without the prefetcher", Fig 12b.)
               Spikes: L1 pattern index matrix as a bitmask (1 bit per row segment) + 7-bit index per patterned
               segment; L2 packs (Sec 4.2.2): one partial-sum unit per row segment with corrections + one unit per
               +-1 correction, unit = 1-bit label + 4-bit column + 1-bit value. Field widths are not given in the
@@ -167,8 +169,8 @@ def phi_act_bits(X, Xcal=None, k=16, q=128, idx_bits=7, unit=6):
     return bits
 
 
-def phi_bits(W, S, q=128, k=16, pwp_bits=8):
-    wb = 8 * M * K + q * math.ceil(K / k) * M * pwp_bits
+def phi_bits(W, S, q=128, k=16):
+    wb = 8 * M * K
     return wb, phi_act_bits(spike_rows(S).T.T, None, k, q)        # rows = timestep x pixel, columns = K
 
 
@@ -255,16 +257,16 @@ def plot():
             ax.annotate(f"{y[-1]:.1f}\u00d7", (x[-1], y[-1]), xytext=(-4, 4), textcoords="offset points",
                         ha="right", va="bottom", fontsize=7.5, color="#a85a0c", fontweight="bold")
     ax.set_yscale("log")
-    ticks = [0.2, 0.5, 1, 2, 5, 10, 20]
+    ticks = [0.5, 1, 2, 5, 10, 20]
     ax.yaxis.set_major_locator(FixedLocator(ticks))
     ax.yaxis.set_major_formatter(FixedFormatter([f"{t:g}\u00d7" for t in ticks]))
     ax.yaxis.set_minor_locator(NullLocator())
-    ax.set_ylim(0.15, 25)
+    ax.set_ylim(0.5, 25)
     ax.set_xticks(x, [f"{100 * s:g}%" for s in SPARSITY])
     ax.set_xlim(-0.25, len(x) - 0.75)
     ax.tick_params(labelsize=8)
-    ax.set_xlabel("Sparsity of weights and spikes", fontsize=8.5)
-    ax.set_ylabel("Compression ratio (dense / packed)", fontsize=8.5)
+    ax.set_xlabel("Sparsity", fontsize=8.5)
+    ax.set_ylabel("Compression ratio", fontsize=8.5)
     ax.yaxis.grid(True, ls="-", color="#e6e6e6", lw=0.6, zorder=0)
     h, l = ax.get_legend_handles_labels()
     PS.inside_legend(ax, h, l, ncol=2, loc="upper left", handlelength=2.0, fontsize=6.8)
