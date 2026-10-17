@@ -20,17 +20,23 @@ Timing rules (both implementations):
   * Packer: reads the K-tile's pixel spike trains at pp pixel slices/cycle, one K-tile at a time (a K-tile of n
     pixels takes ceil(n/pp) cycles, as in the RTL packer), drops pixels with no spike in the K-tile, first-fit
     into <= G pixels/group with a window of W_open open groups. Double-buffered: packing K-tile i starts when
-    K-tile i-1 is packed and K-tile i-2's groups have all entered the array.
-  * Pass j with P_j groups: group g enters row k at cycle s_j + g + k and PE (k,c) at s_j + g + k + c;
-    its running sums leave column c and reach the edge FIFO at s_j + g + R + c.
-    s_j >= pack done of its K-tile;  s_{j+1} >= s_j + max(P_j, L)  with L = ceil(R*C/Lw) when weights
-    are double-buffered (shadow register per PE, loaded along the wavefront right after the PE swaps),
-    or s_{j+1} >= s_j + P_j + (R-1) + (C-1) + L without shadow registers.
+    K-tile i-1 is packed and K-tile i-2's groups have all entered the array (released the cycle after its last one).
+  * Pass j with P_j groups, one group per cycle: a group injected at cycle x enters row k at x + k and PE (k,c) at
+    x + k + c; its running sums leave column c and reach the edge FIFO at x + R + c. Without backpressure stalls
+    group g of pass j is injected at s_j + g.
+    s_j >= pack done of its K-tile;  s_{j+1} >= max(e_j + 1, s_j + L) with e_j the injection of pass j's last group
+    and L = ceil(R*C/Lw) when weights are double-buffered (shadow register per PE, loaded along the wavefront right
+    after the PE swaps), or s_{j+1} >= e_j + 1 + (R-1) + (C-1) + L without shadow registers.
+  * Edge-FIFO backpressure (D entries per column): a group is injected at cycle x only if, for every column c,
+    FIFO occupancy at the end of x-1 + entries of the groups injected in [x-R-c, x-1] (still above the FIFO) +
+    the group's own entries for column c <= D; otherwise the feeder holds it (a stall cycle). A group's entries for
+    a column are the distinct (filter, pixel) slots it adds to, known at injection from the group's spike bits and
+    labels and the pass's weights. No pop is assumed, so the FIFO never overflows.
   * Edge unit: one FIFO per column, up to E read-modify-writes per column per cycle into the output buffer,
     only for running sums that received at least one addition. An entry arriving at cycle a is written into the
     FIFO at the end of a and can be served from a+1. Same-address arbiter (as in the RTL): column 0 first, then
     FIFO order; an entry whose (filter, pixel) equals an earlier offered entry's waits, with the entries behind it.
-    Entry by entry in edge_sim.c (ctypes).
+    Injection, packer and edge entry by entry, per output tile, in edge_sim.c (ctypes).
   * After the last K-tile of an output tile (including the packer finishing K-tiles that turn out empty) and empty
     edge FIFOs: LIF sweep over the dirty entries, lif_units per cycle. Then the next output tile starts (single output buffer) or, with obuf_double,
     the next tile's passes start right away and only the buffer reuse two tiles later waits.
@@ -54,6 +60,7 @@ class Cfg:
     Mt: int = 64          # output tile: filters
     Nt: int = 128         # output tile: pixels
     E: int = 4            # edge unit: running-sum writes per column per cycle
+    D: int = 80           # edge FIFO entries per column (backpressure keeps occupancy <= D); 0 = unbounded
     Lw: int = 16          # weights (+labels) loaded per cycle
     shadow: bool = True   # double-buffered weight registers
     obuf_double: bool = False
@@ -162,6 +169,12 @@ class _Packer:
     def release(self, t):
         self.free.append(t)
 
+    def state(self):
+        return [self.end, self.free[-2], self.free[-1]]
+
+    def set_state(self, st):
+        self.end, self.free = st[0], [st[1], st[2]]
+
 
 _EDGE = None
 
@@ -175,39 +188,26 @@ def _edge_lib():
         if not os.path.exists(lib) or os.path.getmtime(lib) < os.path.getmtime(src):
             subprocess.run(["cc", "-O2", "-shared", "-fPIC", "-o", lib, src], check=True)
         _EDGE = ctypes.CDLL(lib)
-        L, P = ctypes.c_long, ctypes.c_void_p
-        _EDGE.edge_sim.restype = L
-        _EDGE.edge_sim.argtypes = [L, P, P, P, ctypes.c_int, ctypes.c_int, L, P, P]
+        L, P, I = ctypes.c_long, ctypes.c_void_p, ctypes.c_int
+        _EDGE.tile_sim.restype = None
+        _EDGE.tile_sim.argtypes = [I, P, P, L, P, P, I, I, I, I, I, I, L, P, P]
     return _EDGE
 
 
-def edge_run(t, col, addr, C, E, t0):
-    """entries (arrival cycle, column, address), already in (cycle, column, slot) order ->
-    (cycle after the last output-buffer update, max FIFO occupancy, conflict holds). See edge_sim.c."""
-    import ctypes
-    t = np.ascontiguousarray(t, dtype=np.int64)
-    col = np.ascontiguousarray(col, dtype=np.int32)
+def tile_run(P, npass, pkc, n, addr, cfg, t0, packer):
+    """one output tile: injection with edge-FIFO backpressure, packer, edge unit (edge_sim.c).
+    P, npass: per scanned K-tile; n: entries per (unit, column); addr: their addresses in (unit, column, slot) order.
+    -> dict(edge_end, arr_end, s_next, pk_last, qmax, conflicts, stalls); updates the packer state."""
+    P = np.ascontiguousarray(P, dtype=np.int32)
+    npass = np.ascontiguousarray(npass, dtype=np.int32)
+    n = np.ascontiguousarray(n, dtype=np.int32)
     addr = np.ascontiguousarray(addr, dtype=np.int64)
-    qm, nc = ctypes.c_long(0), ctypes.c_long(0)
-    end = _edge_lib().edge_sim(len(t), t.ctypes.data, col.ctypes.data, addr.ctypes.data, C, E, t0,
-                               ctypes.byref(qm), ctypes.byref(nc))
-    return int(end), int(qm.value), int(nc.value)
-
-
-def _edge_finish(arr, E, t0):
-    """arr: list of (time, count) in increasing time for one column -> (last service cycle + 1, max queue)."""
-    q, tp, qmax, last = 0, None, 0, t0 - 1
-    for t, a in arr:
-        if tp is not None:
-            q = max(0, q - E * (t - tp - 1))
-        q += a
-        qmax = max(qmax, q)
-        q = max(0, q - E)
-        tp = t
-        last = t
-    if tp is None:
-        return t0, 0
-    return last + math.ceil(q / E) + 1, qmax
+    pk = np.array(packer.state(), dtype=np.int64)
+    out = np.zeros(7, dtype=np.int64)
+    _edge_lib().tile_sim(len(P), P.ctypes.data, npass.ctypes.data, pkc, n.ctypes.data, addr.ctypes.data,
+                         cfg.R, cfg.C, cfg.E, cfg.D, cfg.L, int(cfg.shadow), t0, pk.ctypes.data, out.ctypes.data)
+    packer.set_state([int(v) for v in pk])
+    return dict(zip(("edge_end", "arr_end", "s_next", "pk_last", "qmax", "conflicts", "stalls"), map(int, out)))
 
 
 # ------------------------------------------------------------------ fast model
@@ -222,15 +222,14 @@ def run_layer_fast(W, S, cfg, plan=None):
     packer = _Packer(cfg.pp)
     t_start, end_all = 0, 0
     obuf_free = [0, 0]
-    st = dict(passes=0, groups=0, ktiles_run=0, pixels_nonzero=0, rmw=0, lif=0, fifo_max=0, edge_conflicts=0)
+    st = dict(passes=0, groups=0, ktiles_run=0, pixels_nonzero=0, rmw=0, lif=0, fifo_max=0, edge_conflicts=0,
+              fifo_stalls=0)
     G = cfg.G
     for bi, (m0, m1) in enumerate(plan.mblocks):
         for (n0, n1) in nblocks:
             nn = n1 - n0
             start = max(t_start, obuf_free[-2]) if cfg.obuf_double else t_start
-            s_next = start + cfg.L
-            arr_end = pk_last = start
-            ent = []                                            # per K-tile: (cycle, column, address, slot) arrays
+            kP, kNP, ns, ads = [], [], [], []                   # per scanned K-tile; per-unit entry counts/addresses
             dirty = np.zeros((m1 - m0, nn), dtype=bool)
             for kt in range(plan.nK):
                 cols, Wt = plan.cols[bi, kt]
@@ -238,12 +237,10 @@ def run_layer_fast(W, S, cfg, plan=None):
                     continue
                 St = Sp[kt * R:(kt + 1) * R, n0:n1]
                 masks = tile_masks(St, T)
-                pk = packer.pack(nn)
-                pk_last = pk
                 groups = pack_spikes(masks, cfg.G, cfg.W_open)
                 st["pixels_nonzero"] += sum(1 for m in masks if m)
                 if not groups:
-                    packer.release(pk)
+                    kP.append(0); kNP.append(0)
                     continue
                 st["ktiles_run"] += 1
                 touched = ((Wt != 0).astype(np.float32) @ (St != 0).astype(np.float32)) > 0
@@ -252,35 +249,33 @@ def run_layer_fast(W, S, cfg, plan=None):
                 GP = np.full((P, G), -1, dtype=np.int64)
                 for g, ps in enumerate(groups):
                     GP[g, :len(ps)] = ps
-                fl_all, pj, cj, fij, starts = [], [], [], [], []
-                for j, pas in enumerate(_passes(cols, C)):
-                    s = max(s_next, pk)
-                    starts.append(s)
+                fl_all, pj, cj, fij = [], [], [], []
+                pas_list = _passes(cols, C)
+                for j, pas in enumerate(pas_list):
                     for c, fl in enumerate(pas):
                         for fi, f in enumerate(fl):
                             fl_all.append(f); pj.append(j); cj.append(c); fij.append(fi)
-                    st["passes"] += 1
-                    st["groups"] += P
-                    s_next = s + max(P, cfg.L) if cfg.shadow else s + P + (R - 1) + (C - 1) + cfg.L
-                    last_in = s + P
-                    # the last group's (possibly empty) bundle leaves the last column at s+P-1+R+C-1
-                    arr_end = max(arr_end, s + P + R + C - 1)
-                packer.release(last_in)
-                # running-sum entries: bundle of group g leaves column c at s_j + g + R + c, slots in (fi, pos) order
+                st["passes"] += len(pas_list)
+                st["groups"] += P * len(pas_list)
+                kP.append(P); kNP.append(len(pas_list))
+                # running-sum entries: unit (pass j, group g) leaves column c R + c cycles after it entered,
+                # slots in (fi, pos) order
                 fl_all, pj, cj, fij = map(np.array, (fl_all, pj, cj, fij))
                 sub = touched[fl_all][:, np.where(GP >= 0, GP, 0)] & (GP >= 0)[None]
                 fx, g, pos = np.nonzero(sub)
-                ent.append((np.array(starts)[pj[fx]] + g + R + cj[fx], cj[fx], fl_all[fx] * 4096 + GP[g, pos],
-                            fij[fx] * G + pos))
-            array_end = s_next  # no pass entered after this point
-            edge_end = start
-            if ent:
-                t_, c_, a_, sl_ = (np.concatenate(x) for x in zip(*ent))
-                o = np.lexsort((sl_, c_, t_))
-                edge_end, qm, nc = edge_run(t_[o], c_[o], a_[o], C, cfg.E, start)
-                st["fifo_max"] = max(st["fifo_max"], qm)
-                st["edge_conflicts"] += nc
-                st["rmw"] += len(t_)
+                unit, col = pj[fx] * P + g, cj[fx]
+                o = np.lexsort((fij[fx] * G + pos, col, unit))
+                ns.append(np.bincount(unit * C + col, minlength=len(pas_list) * P * C))
+                ads.append((fl_all[fx] * 4096 + GP[g, pos])[o])
+            edge_end = arr_end = pk_last = array_end = start
+            if kP:
+                r = tile_run(kP, kNP, -(-nn // cfg.pp), np.concatenate(ns) if ns else np.zeros(0),
+                             np.concatenate(ads) if ads else np.zeros(0), cfg, start, packer)
+                edge_end, arr_end, pk_last, array_end = r["edge_end"], r["arr_end"], r["pk_last"], r["s_next"]
+                st["fifo_max"] = max(st["fifo_max"], r["qmax"])
+                st["edge_conflicts"] += r["conflicts"]
+                st["fifo_stalls"] += r["stalls"]
+                st["rmw"] += int(sum(int(x.sum()) for x in ns))
             nd = int(dirty.sum())
             lif_c = math.ceil(nd / cfg.lif_units)
             st["lif"] += lif_c
@@ -309,7 +304,7 @@ def run_layer_stepped(W, S, cfg):
     packer = _Packer(cfg.pp)
     cyc, end_all, t_start = 0, 0, 0
     obuf_free = [0, 0]
-    stats = dict(passes=0, adder_ops=0, fifo_max=0)
+    stats = dict(passes=0, adder_ops=0, fifo_max=0, fifo_stalls=0)
 
     for bi, (m0, m1) in enumerate(plan.mblocks):
         for (n0, n1) in nblocks:
@@ -409,21 +404,38 @@ def run_layer_stepped(W, S, cfg):
                 shadow[:, :] = 0
                 shadow_t[:, :] = start + cfg.L - 1
             feed = [[] for _ in range(R)]          # skew registers: row k sees row-0 injection k cycles later
-            in_flight = 0
+            sent = {}                              # injection cycle -> entries per column (backpressure credits)
+
+            def entries_of(pas, gj):
+                """entries the group's bundle will write into each column FIFO: distinct (filter, pixel) slots that
+                get at least one addition (weight != 0 and spike bit set), from the pass weights and the group."""
+                bits, lab = pas["g"][gj]
+                return tuple(len({(int(pas["f"][k, c]), int(lab[k, t])) for k in range(R) for t in range(T)
+                                  if pas["w"][k, c] != 0 and bits[k] >> t & 1}) for c in range(C))
+
             while True:
                 # injection decision at row 0 (spike items for rows k>0 are delayed k cycles by the skew)
+                # backpressure: the group may enter only if, for every column, the FIFO occupancy (end of the last
+                # cycle) + the entries of the bundles still in the array above it + this group's entries <= D
                 inject = None
                 if j < len(passes) and cyc >= max(allow, pk_of(j)):
-                    if g == 0:
-                        s[j] = cyc
-                    inject = (j, g)
-                    g += 1
-                    if g == passes[j]["P"]:
-                        P = passes[j]["P"]
-                        nxt = s[j] + max(P, cfg.L) if cfg.shadow else s[j] + P + (R - 1) + (C - 1) + cfg.L
-                        if j in kt_last:
-                            packer.release(s[j] + P)
-                        j, g, allow = j + 1, 0, nxt
+                    need = entries_of(passes[j], g)
+                    ok = cfg.D <= 0 or all(len(fifo[c]) + need[c] + sum(sent.get(y, (0,) * C)[c]
+                                                                         for y in range(cyc - R - c, cyc)) <= cfg.D
+                                           for c in range(C))
+                    if not ok:
+                        stats["fifo_stalls"] += 1
+                    else:
+                        if g == 0:
+                            s[j] = cyc
+                        inject = (j, g)
+                        sent[cyc] = need
+                        g += 1
+                        if g == passes[j]["P"]:
+                            nxt = max(cyc + 1, s[j] + cfg.L) if cfg.shadow else cyc + 1 + (R - 1) + (C - 1) + cfg.L
+                            if j in kt_last:
+                                packer.release(cyc + 1)
+                            j, g, allow = j + 1, 0, nxt
                 for k in range(R):
                     feed[k].append(inject)
                 # shift: new register contents
@@ -498,8 +510,10 @@ def run_layer_stepped(W, S, cfg):
                     if exits[c] is not None:
                         pj, gj = exits[c]["id"]
                         fi, pos = passes[pj]["fi"], passes[pj]["pos"][gj]
+                        assert len(exits[c]["sums"]) == sent[cyc - R - c][c], "backpressure credit != entries"
                         fifo[c].extend(sorted(exits[c]["sums"].items(),
                                               key=lambda kv: (fi[kv[0][0], c], pos[kv[0][1]])))
+                        assert cfg.D <= 0 or len(fifo[c]) <= cfg.D, "edge FIFO overflow"
                         stats["fifo_max"] = max(stats["fifo_max"], len(fifo[c]))
                 busy = any(fifo)
                 active = any(spk[k][c] is not None or bund[k][c] is not None for k in range(R) for c in range(C))

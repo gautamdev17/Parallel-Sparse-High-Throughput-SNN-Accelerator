@@ -3,8 +3,9 @@ audit_ours.py -- independent audit of the cycle model of our design (ours.py).
 
 1. An INDEPENDENT simulator written from DAC2027_accelerator_explained_rows.pdf, sharing no code with ours.py:
    its own weight packer, spike packer, and a cycle-by-cycle loop over global time with explicit resources
-   (packer, group feeder, shadow-weight loader, per-column edge FIFOs, LIF sweep). It is run on random layers and
-   its cycle count must equal ours.run_layer_fast, and its output sums must equal the dense reference.
+   (packer, group feeder with edge-FIFO backpressure, shadow-weight loader, per-column edge FIFOs, LIF sweep). It is
+   run on random layers (half of them with a 20-entry FIFO so that backpressure binds) and its cycle count must
+   equal ours.run_layer_fast, and its output sums must equal the dense reference.
 2. Lower bounds for every VGG16 / ResNet18 layer that any correct implementation of the hardware must respect:
      compute    : effectual adds / (R*C*T)          (128 adders, one add each per cycle)
      feeder     : groups injected                    (one group enters the array per cycle per pass)
@@ -25,7 +26,7 @@ sys.path.insert(0, HERE)
 
 # =============================================================================== part 1: independent simulator
 class Hw:
-    R, C, T, F, G, OPEN, PP, MT, NT, E, LW, LIF = 4, 4, 8, 4, 4, 4, 8, 64, 128, 4, 16, 16
+    R, C, T, F, G, OPEN, PP, MT, NT, E, LW, LIF, FIFO = 4, 4, 8, 4, 4, 4, 8, 64, 128, 4, 16, 16, 80
 
 
 def my_weight_columns(wt, F):
@@ -105,26 +106,19 @@ def independent_sim(W, S, hw=Hw):
     t = 0
     pack_clock = 0                   # packer: one K-tile at a time, PP slices per cycle
     released = [0, 0]                # cycle each K-tile's group buffer is freed (double buffer)
+    load = math.ceil(R * C / hw.LW)
     for (m0, m1, n0, n1, kts) in tiles:
         npx = n1 - n0
         tile_start = t
-        next_inject = tile_start + math.ceil(R * C / hw.LW)   # first weights loaded
-        arrivals = {c: [] for c in range(C)}                  # (cycle, [addresses in slot order])
-        last_bundle_exit = tile_start
-        pk_last = tile_start
         dirty = set()
+        # what every group of every pass puts into each column FIFO: the (f, p) it adds to, in slot order
+        work = []                    # per K-tile: (groups, [per pass: [per group: [per column: [(f, p)]]]])
         for (kt, spk, wt, groups, passes) in kts:
-            pstart = max(pack_clock, released[-2])
-            pack_clock = pstart + -(-npx // hw.PP)
-            ready = pack_clock
-            pk_last = ready
-            if not groups:
-                released.append(ready)
-                continue
+            per_pass = []
             for cols in passes:
-                s = max(next_inject, ready)
-                for g, px in enumerate(groups):
-                    # the group's running sums leave column c at s + g + R + c; count the touched (f, p) and add
+                per_group = []
+                for px in groups:
+                    per_col = []
                     for c, fl in enumerate(cols):
                         ents = []
                         for f in fl:
@@ -143,59 +137,112 @@ def independent_sim(W, S, hw=Hw):
                                     ents.append((f, p))
                                     sums[m0 + f, n0 + p] += contrib
                                     dirty.add((f, p))
-                        if ents:
-                            arrivals[c].append((s + g + R + c, ents))
-                last_bundle_exit = max(last_bundle_exit, s + len(groups) - 1 + R + C - 1 + 1)
-                next_inject = s + max(len(groups), math.ceil(R * C / hw.LW))
-                last_in = s + len(groups)
-            released.append(last_in)
-        # edge FIFOs: an entry arriving at cycle a is in the FIFO from a+1; each cycle every column offers its
-        # first E entries, column 0 first; an entry with the same (f, p) as an earlier offered one waits (and the
-        # entries behind it in that FIFO)
-        evs = sorted((ta, c, ents) for c in range(C) for ta, ents in arrivals[c])
+                        per_col.append(ents)
+                    per_col += [[] for _ in range(C - len(cols))]
+                    per_group.append(per_col)
+                per_pass.append(per_group)
+            work.append((groups, per_pass))
+        # cycle loop: feeder (one group per cycle, held when an edge FIFO could overflow), array delay, edge FIFOs.
+        # Feeder credit: a group may enter at cycle x only if for each column c: FIFO entries now + entries of the
+        # groups still above that FIFO (entered at s with s + R + c >= x) + its own entries <= FIFO depth.
+        # Edge: a bundle that entered at s is written into FIFO c at the end of s + R + c and served from the next
+        # cycle; each cycle every column offers its first E entries, column 0 first; an entry with the same (f, p)
+        # as an earlier offered one waits (and the entries behind it in that FIFO).
         fifo = [[] for _ in range(C)]
-        edge_done, x, i = tile_start, None, 0
-        while i < len(evs) or any(fifo):
-            if not any(fifo) and (x is None or evs[i][0] > x):
-                x = evs[i][0]
-            offered = [fifo[c][:hw.E] for c in range(C)]
+        above = []                   # (entry cycle, per-column entries) of groups not yet in every FIFO
+        ki, pi, gi = 0, 0, 0
+        ready = None
+        may_start = tile_start + load
+        pass_start = None
+        pk_last = last_bundle_exit = edge_done = tile_start
+
+        def to_next_ktile():
+            nonlocal ki, ready, pack_clock, pk_last
+            while ki < len(work):
+                pack_clock = max(pack_clock, released[-2]) + -(-npx // hw.PP)
+                pk_last = pack_clock
+                if work[ki][0]:
+                    ready = pack_clock
+                    return
+                released.append(pack_clock)
+                ki += 1
+
+        to_next_ktile()
+        x = tile_start
+        while ki < len(work) or above or any(fifo):
+            if not above and not any(fifo) and gi == 0 and ki < len(work):
+                x = max(x, may_start, ready)
+            # feeder
+            if ki < len(work) and (gi > 0 or x >= max(may_start, ready)):
+                groups, per_pass = work[ki]
+                mine = per_pass[pi][gi]
+                fits = all(len(fifo[c]) + len(mine[c]) + sum(len(e[c]) for s0, e in above if s0 + R + c >= x)
+                           <= hw.FIFO for c in range(C))
+                if fits:
+                    above.append((x, mine))
+                    if gi == 0:
+                        pass_start = x
+                    last_bundle_exit = max(last_bundle_exit, x + R + C)
+                    gi += 1
+                    if gi == len(groups):
+                        gi, pi = 0, pi + 1
+                        may_start = max(x + 1, pass_start + load)
+                        if pi == len(per_pass):
+                            released.append(x + 1)
+                            ki, pi = ki + 1, 0
+                            to_next_ktile()
+            # edge service
             flat = []
             for c in range(C):
+                offered = fifo[c][:hw.E]
                 k = 0
-                for e, a in enumerate(offered[c]):
-                    if a in flat or a in offered[c][:e]:
+                for e, a in enumerate(offered):
+                    if a in flat or a in offered[:e]:
                         break
                     k += 1
-                flat += offered[c]
+                flat += offered
                 if k:
                     del fifo[c][:k]
                     edge_done = max(edge_done, x + 1)
-            while i < len(evs) and evs[i][0] == x:
-                fifo[evs[i][1]] += evs[i][2]
-                i += 1
+            # bundles reaching the FIFOs at the end of x
+            for s0, e in above:
+                for c in range(C):
+                    if s0 + R + c == x:
+                        fifo[c] += e[c]
+                        assert len(fifo[c]) <= hw.FIFO
+            above = [(s0, e) for s0, e in above if s0 + R + C - 1 > x]
             x += 1
         t = max(edge_done, last_bundle_exit, tile_start, pk_last) + -(-len(dirty) // hw.LIF)
     return t, sums
 
 
 def random_check(n=60):
+    """odd layers run with a 20-entry edge FIFO (independent sim and ours.py alike) so that backpressure binds."""
     import workload as wl
     from ours import Cfg, run_layer_fast
+
+    class Small(Hw):
+        FIFO = 20
+
     rng = np.random.default_rng(7)
-    bad = 0
+    bad = stalled = 0
     for i in range(n):
         M = int(rng.integers(1, 90)); K = int(rng.integers(1, 40)); N = int(rng.integers(1, 200))
         wd, ns = [(0.1, 0.1), (0.3, 0.3), (1.0, 0.5), (0.05, 0.2)][i % 4]
         W = wl.rand_weights(rng, M, K, wd)
         S = wl.rand_spikes(rng, (K, N), ns, 0.3)
-        c_ind, sums = independent_sim(W, S)
-        c_fast = run_layer_fast(W, S, Cfg())["cycles"]
+        hw = Small if i % 2 else Hw
+        c_ind, sums = independent_sim(W, S, hw)
+        fast = run_layer_fast(W, S, Cfg(D=hw.FIFO))
+        c_fast = fast["cycles"]
+        stalled += fast["fifo_stalls"] > 0
         ok_v = np.array_equal(sums, wl.dense_sums(W, S))
         if c_ind != c_fast or not ok_v:
             bad += 1
-            print(f"  MISMATCH layer {i}: M{M} K{K} N{N} independent {c_ind} ours.py {c_fast} values_ok={ok_v}")
+            print(f"  MISMATCH layer {i}: M{M} K{K} N{N} FIFO {hw.FIFO} independent {c_ind} ours.py {c_fast} "
+                  f"values_ok={ok_v}")
     print(f"[{'ok' if bad == 0 else 'FAIL'}] independent simulator vs ours.run_layer_fast on {n} random layers: "
-          f"{n - bad} identical cycle counts, sums bit-exact vs dense")
+          f"{n - bad} identical cycle counts, sums bit-exact vs dense ({stalled} with backpressure stalls)")
 
 
 # =============================================================================== part 2: lower bounds

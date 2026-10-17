@@ -56,10 +56,12 @@ def doc_example():
 
 def random_layers():
     rng = np.random.default_rng(1)
-    cases = 0
+    cases = stalled = 0
     shapes = [(6, 13, 9), (10, 24, 20), (16, 36, 40), (3, 5, 7), (20, 9, 33), (64 + 5, 20, 10)]
     cfgs = [Cfg(), Cfg(F=2, G=2), Cfg(shadow=False), Cfg(E=1), Cfg(Lw=4), Cfg(pp=2, W_open=2),
-            Cfg(R=8, C=2, G=3), Cfg(Mt=8, Nt=16), Cfg(Mt=8, Nt=16, E=2, Lw=2, shadow=False), Cfg(R=3, C=5, F=3)]
+            Cfg(R=8, C=2, G=3), Cfg(Mt=8, Nt=16), Cfg(Mt=8, Nt=16, E=2, Lw=2, shadow=False), Cfg(R=3, C=5, F=3),
+            # small edge FIFOs: backpressure stalls the feeder
+            Cfg(D=16), Cfg(D=20, E=1), Cfg(D=24, E=2, shadow=False), Cfg(R=8, C=2, G=3, D=12, Lw=4)]
     for (M, K, N), cfg, (wd, ns) in itertools.product(shapes, cfgs, [(0.1, 0.1), (0.3, 0.3), (1.0, 0.5)]):
         W = wl.rand_weights(rng, M, K, wd)
         S = wl.rand_spikes(rng, (K, N), ns, 0.3)
@@ -72,8 +74,13 @@ def random_layers():
         fast = run_layer_fast(W, S, cfg)
         assert fast["cycles"] == st["cycles"], (M, K, N, cfg, fast["cycles"], st["cycles"])
         assert fast["fifo_max"] == st["fifo_max"], (fast["fifo_max"], st["fifo_max"])
+        assert fast["fifo_stalls"] == st["fifo_stalls"], (fast["fifo_stalls"], st["fifo_stalls"])
+        assert st["fifo_max"] <= cfg.D
         cases += 1
-    print(f"[ok] {cases} random layers: stepped simulator bit-exact vs dense, cycles == fast model")
+        stalled += st["fifo_stalls"] > 0
+    assert stalled > 0
+    print(f"[ok] {cases} random layers: stepped simulator bit-exact vs dense, cycles == fast model "
+          f"({stalled} with edge-FIFO backpressure stalls, FIFO never above D)")
 
 
 def loas_zip():

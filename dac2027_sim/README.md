@@ -4,7 +4,7 @@ This folder models the design in `DAC2027_accelerator_explained_rows.pdf`. It is
 
 ```bash
 python3 verify.py          # must print three [ok] lines
-python3 audit_ours.py random   # independent simulator == ours.py on 60 random layers
+python3 audit_ours.py random   # independent simulator == ours.py on 60 random layers (half with a 20-entry FIFO)
 python3 hw/rtl_closed.py net VGG16 1   # whole network on the RTL: bit-exact + cycle-exact vs ours.py (also ResNet18, batch 16)
 python3 run_all.py         # main tables -> results/main_tables.md, main_summary.json
 python3 run_all.py sweep   # weight-sparsity sweep -> results/sweep_summary.json
@@ -92,22 +92,23 @@ On this workload Ours beats LoAS and SpikeX by about 2x but **loses to PTB by 1.
 
 | Variant | VGG16 ms | VGG16 img/s | ResNet18 ms | ResNet18 img/s |
 |---|---:|---:|---:|---:|
-| **base: 4x4, F=4 filters/column, G=4 pixels/group, E=4** | **0.507** | **2,762** | **0.688** | **1,596** |
-| shape 2x8 / 8x2 / 16x1 | 0.570 / 0.760 / 0.937 | 2,287 / 1,685 / 1,368 | 0.764 / 1.094 / 1.339 | 1,362 / 969 / 784 |
-| F=2, G=2 (4x smaller sum bundle) | 0.917 | 1,273 | 1.440 | 716 |
-| F=4, G=2 / F=2, G=4 | 0.748 / 0.613 | 1,594 / 2,237 | 1.158 / 0.848 | 893 / 1,294 |
-| edge ports E=2 / E=8 | 0.626 / 0.507 | 1,913 / 2,762 | 0.948 / 0.688 | 1,054 / 1,596 |
-| **no shadow weight registers** | **1.827** | 1,434 | **1.696** | 996 |
-| weight load 4/cycle instead of 16 | 0.922 | 2,557 | 0.891 | 1,595 |
-| packer 4 pixels/cycle instead of 8 | 0.583 | 2,207 | 0.807 | 1,316 |
-| double output buffer (approximate, see below) | 0.490 | 2,908 | 0.653 | 1,711 |
+| **base: 4x4, F=4 filters/column, G=4 pixels/group, E=4, 80-entry edge FIFO** | **0.542** | **2,762** | **0.688** | **1,596** |
+| shape 2x8 / 8x2 / 16x1 | 0.663 / 0.773 / 0.992 | 2,287 / 1,678 / 1,265 | 0.764 / 1.100 / 1.452 | 1,362 / 964 / 714 |
+| F=2, G=2 (4x smaller sum bundle) | 0.952 | 1,273 | 1.440 | 716 |
+| F=4, G=2 / F=2, G=4 | 0.783 / 0.648 | 1,594 / 2,237 | 1.158 / 0.848 | 893 / 1,294 |
+| edge ports E=2 / E=8 | 0.662 / 0.542 | 1,913 / 2,762 | 0.949 / 0.688 | 1,054 / 1,596 |
+| edge FIFO 40 / 160 / unbounded entries | 0.544 / 0.542 / 0.542 | 2,736 / 2,762 / 2,762 | 0.694 / 0.688 / 0.688 | 1,576 / 1,596 / 1,596 |
+| **no shadow weight registers** | **1.836** | 1,434 | **1.696** | 996 |
+| weight load 4/cycle instead of 16 | 0.947 | 2,557 | 0.891 | 1,595 |
+| packer 4 pixels/cycle instead of 8 | 0.608 | 2,207 | 0.807 | 1,316 |
+| double output buffer (approximate, see below) | 0.526 | 2,908 | 0.653 | 1,711 |
 
 The base point is already the best of the shapes tried. The results depend on three hardware features, and the paper must include all three:
-* shadow weight registers (without them, VGG16 latency is 3.6x worse),
+* shadow weight registers (without them, VGG16 latency is 3.4x worse),
 * a weight bus of 16 weights per cycle (the same weight bandwidth as LoAS: 16 TPPEs × 1 weight per cycle),
 * a packer that scans 8 pixel slices per cycle.
 
-The edge FIFO peaked at 79 entries per column, so the hardware needs roughly 80 entries per column. The model assumes this and does not simulate backpressure.
+**Edge FIFO depth.** Each column FIFO has 80 entries, and the feeder applies backpressure (rule under "Timing rules" below), so no FIFO can overflow. The rule reserves room for every bundle still in the array and assumes no pops, so peak occupancy stays at 60 or below. On this workload it costs 3–32 stall cycles per network, under 0.002%: base vs unbounded FIFO is 433,561 vs 433,553 cycles (VGG16 b1) and 8,019,935 vs 8,019,903 (ResNet18 b16). 160 entries removes even those stalls. 40 entries costs 0.4–1.3%. Without backpressure an 80-entry FIFO would overflow: the unbounded FIFO peaks at 79 entries here and at up to 147 in the weight-density sweep. 80 entries plus backpressure is therefore enough.
 
 ## What "cycle-accurate" means here, and how it was checked
 
@@ -119,7 +120,7 @@ The edge FIFO peaked at 79 entries per column, so the hardware needs roughly 80 
 * `run_layer_fast` computes the same schedule pass by pass. It is the version used for the full networks.
 * `verify.py` checks:
   1. The PDF's worked example: one column for filters A and B, groups {p0,p1} and {p2,p3}, all 8 running sums of Fig. 3, the 5-cycle stream of Sec. 5.7, and the LIF spike maps of Fig. 14.
-  2. 180 random layers over 10 configurations: stepped outputs are **bit-exact** against the dense `W @ bit_t(S)` + LIF, and **stepped cycles equal fast cycles** in every case.
+  2. 252 random layers over 14 configurations, four of them with small edge FIFOs (12–24 entries) so that backpressure stalls the feeder (50 layers stall): stepped outputs are **bit-exact** against the dense `W @ bit_t(S)` + LIF, **stepped cycles, stall cycles and peak FIFO occupancy equal the fast model's** in every case, and the stepped simulator asserts that every predicted entry count equals the entries its bundle actually writes and that no FIFO exceeds its depth.
   3. The zip's LoAS numbers.
 * Three injected bugs (a weight-load violation, a packer clash, an edge off-by-one) were each caught by `verify.py`.
 
@@ -127,22 +128,26 @@ Timing rules (full list in the `ours.py` docstring):
 * Output tiles are 64 filters × 128 pixels (a 192 KB output buffer).
 * K-tiles are R consecutive inputs. Filters are packed offline per K-tile with first-fit decreasing.
 * The packer is double-buffered and scans pp pixel slices per cycle, one K-tile at a time (ceil(n/pp) cycles per K-tile, as in the RTL). It does first-fit with 4 open groups.
-* Pass j+1 starts at least max(P_j, load) cycles after pass j.
-* Edge unit: an entry leaving a column at cycle a is written into the column FIFO at the end of a and served from a+1. Up to E=4 read-modify-writes per column per cycle; a same-address arbiter (column 0 first, then FIFO order) holds back an entry whose (filter, pixel) equals an earlier offered entry's in that cycle. Simulated entry by entry (`edge_sim.c`).
+* Pass j+1 starts after pass j's last group has entered and at least `load` cycles after pass j started (max(P_j, load) cycles when nothing stalls).
+* Edge-FIFO backpressure: a group enters at cycle x only if, for every column c, the FIFO's occupancy at the end of x-1 + the entries of the groups injected in the last R + c cycles (still above that FIFO) + the group's own entries ≤ 80. Otherwise the feeder holds that cycle. A group's entries per column are the distinct (filter label, pixel label) slots it adds to; the controller computes them at injection from the group's spike bits and labels and the pass's weights (non-zero, filter label). The rule assumes no pops, so it is conservative and a FIFO can never overflow.
+* Edge unit: an entry leaving a column at cycle a is written into the column FIFO at the end of a and served from a+1. Up to E=4 read-modify-writes per column per cycle; a same-address arbiter (column 0 first, then FIFO order) holds back an entry whose (filter, pixel) equals an earlier offered entry's in that cycle. Injection, packer and edge unit are simulated together, cycle by cycle and entry by entry, per output tile (`edge_sim.c`).
 * The tile ends after the last bundle drains, the edge FIFOs empty and the packer has scanned every K-tile of the tile; then the LIF sweeps the dirty entries at 16 per cycle.
 
 ### Whole-network RTL verification (closed loop)
 
-`hw/rtl_closed.py` + `hw/tb/tb_ours_closed.v` run `ours_core.v` (Verilator) over **every layer of VGG16 and ResNet18 at batch 1 and 16**. Only offline data go into the RTL: the packed weight columns of each pass and the raw spike slices. The **RTL packer forms the groups** that are injected, and the testbench controller schedules from RTL signals only (packer outputs, edge-FIFO occupancy) following the doc's rules: packer double buffering, pass start once its K-tile is packed, shadow weights written behind the wavefront, and tile end when the RTL edge FIFOs are empty, followed by the LIF sweep through the RTL LIF units. Each run checks every output's 8 partial sums (24 bit) against the dense `W @ bit_t(S)`, every output's LIF spikes against the integer LIF (`V = (V >> 1) + x`), and the total cycle count against `ours.run_layer_fast`.
+`hw/rtl_closed.py` + `hw/tb/tb_ours_closed.v` run `ours_core.v` (Verilator) over **every layer of VGG16 and ResNet18 at batch 1 and 16**. Only offline data go into the RTL: the packed weight columns of each pass and the raw spike slices. The **RTL packer forms the groups** that are injected, and the testbench controller schedules from RTL signals only (packer outputs, edge-FIFO occupancy) following the doc's rules: packer double buffering, pass start once its K-tile is packed, shadow weights written behind the wavefront, edge-FIFO backpressure (the credit rule above, using the RTL FIFO counts), and tile end when the RTL edge FIFOs are empty, followed by the LIF sweep through the RTL LIF units. Each run checks every output's 8 partial sums (24 bit) against the dense `W @ bit_t(S)`, every output's LIF spikes against the integer LIF (`V = (V >> 1) + x`), the total cycle count, the feeder stall cycles and the peak FIFO occupancy against `ours.run_layer_fast`, that no FIFO overflows, and that every predicted per-column entry count equals the number of entries the RTL bundle writes into the FIFO.
 
 | Run | Layers | Outputs checked | RTL cycles | Model cycles |
 |---|---:|---:|---:|---:|
-| VGG16 batch 1 | 16 | all, bit-exact | 433,553 | 433,553 |
-| VGG16 batch 16 | 16 | all (4.4 M), bit-exact | 4,634,623 | 4,634,623 |
-| ResNet18 batch 1 | 21 | all, bit-exact | 550,749 | 550,749 |
-| ResNet18 batch 16 | 21 | all, bit-exact | 8,019,903 | 8,019,903 |
+| VGG16 batch 1 | 16 | all, bit-exact | 433,561 | 433,561 |
+| VGG16 batch 16 | 16 | all (4.6 M), bit-exact | 4,634,640 | 4,634,640 |
+| ResNet18 batch 1 | 21 | all, bit-exact | 550,752 | 550,752 |
+| ResNet18 batch 16 | 21 | all (9.8 M), bit-exact | 8,019,935 | 8,019,935 |
+| VGG16 batch 1, weight density 0.3 | 16 | all, bit-exact | 894,017 | 894,017 |
+| VGG16 batch 1, weight density 0.5 | 16 | all, bit-exact | 1,347,020 | 1,347,020 |
+| ResNet18 batch 1, weight density 0.3 | 21 | all, bit-exact | 1,235,650 | 1,235,650 |
 
-Per-layer results: `results/rtl_closed_<net>_b<batch>.json`. 20 random layers (several output tiles each, densities 5–100%) are also cycle-exact. Two of them, at 30% density, are not bit-exact because their FIFO peaks at 87 and 91 entries, above the 80 entries.
+Per-layer results: `results/rtl_closed_<net>_b<batch>[_wd<density>].json`. The weight-density 0.3/0.5 runs are the sweep points where the FIFO would reach 86–147 entries without backpressure. With it the RTL FIFOs peak at 60, and the feeder stalls 37, 39 and 100 cycles; the RTL and model stall counts are equal on every layer. The main-workload runs stall 3–32 cycles. 20 random layers (several output tiles each, densities 5–100%) are also cycle-exact and bit-exact. That includes the two 30%-density layers whose FIFOs used to overflow at 87 and 91 entries; they now stall 17 and 10 cycles.
 
 The closed-loop run found three things the earlier one-tile check missed, and all are fixed:
 1. **Lost output-buffer updates (RTL bug):** two edge ports could read-modify-write the same (filter, pixel) in the same cycle. This hit layers with few pixels (N ≤ 64, e.g. 473 lost updates in VGG16 fc2 at batch 1). Fix: the same-address arbiter in `ours_core.v` (16×15/2 address comparators), modelled in `ours.py`.
@@ -151,7 +156,7 @@ The closed-loop run found three things the earlier one-tile check missed, and al
 
 Also the controller requirement: shadow weights are loaded speculatively for the next pass in table order and rewritten if that K-tile packs to zero groups. The pass parity toggles per executed pass.
 
-**Not covered: FIFO capacity.** The edge FIFO has 80 entries and no backpressure. The RTL flags overflow, and the model reports `fifo_max`. On the main workloads (`sparse90`, `zipstats`) the peak is 79. In the weight-density sweep, denser weights (≥ 30%) exceed 80, so those sweep points need either a deeper FIFO or backpressure, which is not modelled.
+**FIFO capacity: backpressure.** The edge FIFO has 80 entries. The controller holds a group unless every column FIFO can absorb it together with the bundles still in the array above it. It predicts each group's entries per column from the group's spike bits and labels and the pass's weights. In hardware this is a 16-slot touch mask per column (4 rows × 8 timesteps of label compares), a popcount, and a short history of the last R + C injections. This is controller logic; it is not in `ours_core.v`. The rule is identical in `tb_ours_closed.v`, `ours.py` (both simulators, via `edge_sim.c`) and `audit_ours.py`. No run overflows. On the main workloads the stalls cost ≤ 0.002% of cycles, and across the weight-density sweep ≤ 0.012%. Before backpressure, the sweep peaked at 110–147 entries for weight density 0.2–0.5.
 
 ## Assumptions to state in the paper (these affect every number)
 
@@ -395,7 +400,7 @@ For ours, SpikeX, SpikeFlow and SATO, traffic is computed with on-chip im2col, u
 
 | Design | Functional check | Cycles: RTL vs cycle model |
 |---|---|---|
-| Ours | Whole VGG16 and ResNet18, batch 1 and 16, closed loop (RTL packer, RTL edge FIFOs), bit-exact sums and spikes | Equal on every layer (e.g. VGG16 b16 4,634,623 vs 4,634,623) |
+| Ours | Whole VGG16 and ResNet18, batch 1 and 16, closed loop (RTL packer, RTL edge FIFOs with backpressure), bit-exact sums and spikes | Equal on every layer (e.g. VGG16 b16 4,634,640 vs 4,634,640) |
 | SpikeFlow | 64 passes × 16 rows × 16 columns, exact | 12,752 vs 12,753, plus 681 DMA stall cycles of the testbench's 1-word/cycle load |
 | SATO | 16,384 row integrations exact; dispatcher choices identical to the model's greedy assignment | 4,240 vs 4,240 |
 | Prosperity | Prefix/pattern of all 294 searched rows equal the official `find_product_sparsity`; 1,401 rows × 128 channels exact | Preprocess 806 vs 806; processor 1,434 vs 1,418 (+1 write-back cycle per tile) |

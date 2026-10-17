@@ -43,11 +43,11 @@
    "thr_per_adder": 12.825069008490068
   },
   "VGG16|ours": {
-   "cycles_b1": 433553,
-   "cycles_b16": 4634623,
-   "latency_ms": 0.5419412499999999,
-   "throughput": 2761.821188044853,
-   "thr_per_adder": 21.576728031600414
+   "cycles_b1": 433561,
+   "cycles_b16": 4634640,
+   "latency_ms": 0.54195125,
+   "throughput": 2761.8110576010217,
+   "thr_per_adder": 21.576648887507982
   },
   "ResNet18|loas_zip": {
    "cycles_b1": 15076980.231999999,
@@ -92,11 +92,11 @@
    "thr_per_adder": 6.278891928779533
   },
   "ResNet18|ours": {
-   "cycles_b1": 550749,
-   "cycles_b16": 8019903,
-   "latency_ms": 0.6884362500000001,
-   "throughput": 1596.0292786583577,
-   "thr_per_adder": 12.46897873951842
+   "cycles_b1": 550752,
+   "cycles_b16": 8019935,
+   "latency_ms": 0.68844,
+   "throughput": 1596.0229104101218,
+   "thr_per_adder": 12.468928987579076
   }
  },
  "zipstats": {

@@ -8,9 +8,13 @@ Checks per layer:
            and the 8 LIF output spikes from the RTL LIF units == integer LIF reference (V = (V >> 1) + x)
   cycles : total RTL cycles of the layer == ours.run_layer_fast(W, S, Cfg())["cycles"]
   hazards: no output-buffer RMW conflict, no edge-FIFO overflow
+  backpressure: feeder stall cycles and peak FIFO occupancy RTL == model; every predicted per-column entry count
+           (the controller's credit) == the entries the RTL bundle actually writes
 
   python3 rtl_closed.py random [n]              # n random small layers (several output tiles each)
   python3 rtl_closed.py net VGG16 1 [layers]    # every layer (or a list like 0,3,7) of VGG16 at batch 1
+  python3 rtl_closed.py net VGG16 1 all 0.3     # same at weight density 0.3 (the sweep's dense points, where the
+                                                # edge FIFOs would reach 110-147 entries without backpressure)
 """
 import json, os, subprocess, sys, time, zlib
 import numpy as np
@@ -125,14 +129,17 @@ def run_check(W, S, tag):
                rtl_cycles=int(kv["cycles"]), model_cycles=int(model["cycles"]), entries=entries,
                sum_mismatch=bad_sum, spike_mismatch=bad_spk, conflicts=int(kv["conflicts"]),
                overflow=kv["overflow"], fifo_max_rtl=int(kv["fifo_max"]), fifo_max_model=int(model["fifo_max"]),
+               stalls_rtl=int(kv["stalls"]), stalls_model=int(model["fifo_stalls"]), pred_err=int(kv["pred_err"]),
                sim_s=round(time.time() - t0, 1))
     ok = (bad_sum == 0 and bad_spk == 0 and res["rtl_cycles"] == res["model_cycles"] and res["conflicts"] == 0
-          and "1" not in res["overflow"])
+          and "1" not in res["overflow"] and res["pred_err"] == 0 and res["stalls_rtl"] == res["stalls_model"]
+          and res["fifo_max_rtl"] == res["fifo_max_model"])
     res["ok"] = ok
     print(f"[{'ok' if ok else 'FAIL'}] {tag}: M{res['M']} K{res['K']} N{res['N']} tiles {res['tiles']} "
           f"passes {npass} | RTL {res['rtl_cycles']} vs model {res['model_cycles']} cycles | "
           f"sums wrong {bad_sum}/{entries}, spikes wrong {bad_spk} | conflicts {res['conflicts']} "
-          f"overflow {res['overflow']} fifo_max {res['fifo_max_rtl']} | {res['sim_s']} s", flush=True)
+          f"overflow {res['overflow']} fifo_max {res['fifo_max_rtl']}/{res['fifo_max_model']} "
+          f"stalls {res['stalls_rtl']}/{res['stalls_model']} pred_err {res['pred_err']} | {res['sim_s']} s", flush=True)
     return res
 
 
@@ -148,14 +155,14 @@ def random_layers(n):
     return out
 
 
-def net_layers(net, batch, which=None):
+def net_layers(net, batch, which=None, wd=0.1):
     out = []
     for li, layer in enumerate(wl.NETWORKS[net]()):
         if which is not None and li not in which:
             continue
-        seed = zlib.crc32(f"{net}|{li}|{batch}|0.1|0.1|0.3".encode())
-        W, S = wl.layer_tensors(layer, batch, 0.1, 0.1, 0.3, seed)
-        out.append(run_check(W, S, f"{net} b{batch} L{li}"))
+        seed = zlib.crc32(f"{net}|{li}|{batch}|{wd}|0.1|0.3".encode())     # same tensors as run_all.py
+        W, S = wl.layer_tensors(layer, batch, wd, 0.1, 0.3, seed)
+        out.append(run_check(W, S, f"{net} b{batch} L{li}" + (f" wd{wd}" if wd != 0.1 else "")))
     return out
 
 
@@ -166,11 +173,12 @@ if __name__ == "__main__":
         name = "rtl_closed_random"
     else:
         net, batch = sys.argv[2], int(sys.argv[3])
-        which = set(map(int, sys.argv[4].split(","))) if len(sys.argv) > 4 else None
-        res = net_layers(net, batch, which)
-        name = f"rtl_closed_{net}_b{batch}"
+        which = set(map(int, sys.argv[4].split(","))) if len(sys.argv) > 4 and sys.argv[4] != "all" else None
+        wd = float(sys.argv[5]) if len(sys.argv) > 5 else 0.1
+        res = net_layers(net, batch, which, wd)
+        name = f"rtl_closed_{net}_b{batch}" + (f"_wd{wd}" if wd != 0.1 else "")
     allok = all(r["ok"] for r in res)
     tot_r = sum(r["rtl_cycles"] for r in res); tot_m = sum(r["model_cycles"] for r in res)
     print(f"{'ALL OK' if allok else 'FAILURES'}: {len(res)} layers, RTL {tot_r:,} vs model {tot_m:,} cycles")
-    if sys.argv[1] != "random" and len(sys.argv) <= 4:
+    if sys.argv[1] != "random" and which is None:
         json.dump(res, open(os.path.join(os.path.dirname(HERE), "results", name + ".json"), "w"), indent=1)

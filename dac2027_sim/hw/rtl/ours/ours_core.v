@@ -75,6 +75,9 @@ endmodule
 // 80-entry FIFO, up to 16 writes (the touched slots of one bundle) and up to 4 reads per cycle.
 // Banked: entry n lives in bank n%16, row n/16, so 16 consecutive writes always hit 16 different banks.
 // rd_v marks the (up to E) head entries on offer; the edge arbiter decides how many leave (pop, in order).
+// The FIFO itself has no backpressure: the controller that injects groups holds a group unless every column's
+// count + the entries still in the array above it + the group's own entries fit in D (hw/tb/tb_ours_closed.v,
+// ours.py), so count never exceeds D; overflow is a sticky error flag only.
 module ours_edge_fifo #(parameter EW = 93, NS = 16, BANKS = 16, ROWS = 5, E = 4) (
     input  wire               clk, rst,
     input  wire [NS-1:0]      wr_v,          // which slots carry an entry
