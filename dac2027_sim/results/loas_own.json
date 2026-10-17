@@ -1,0 +1,10 @@
+{
+ "sparse90|VGG16|1": 2548501,
+ "sparse90|VGG16|16": 40687458,
+ "sparse90|ResNet18|1": 4336311,
+ "sparse90|ResNet18|16": 69330196,
+ "zipstats|VGG16|1": 7498876,
+ "zipstats|VGG16|16": 120179230,
+ "zipstats|ResNet18|1": 13196528,
+ "zipstats|ResNet18|16": 211211698
+}

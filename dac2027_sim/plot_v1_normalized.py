@@ -23,8 +23,26 @@ plt.rcParams.update({"font.family": "serif", "font.serif": ["Times New Roman", "
                      "font.size": 9, "hatch.linewidth": 0.5, "axes.linewidth": 0.9})
 
 
+LOAS_OWN = "--loas-own" in __import__("sys").argv     # LoAS from loas_model.py instead of the zip formula
+
+
 def main():
     s = json.load(open(os.path.join(R, "main_summary.json")))["sparse90"]
+    if LOAS_OWN:
+        own = json.load(open(os.path.join(R, "loas_own.json")))
+        for net in NETS:
+            s[f"{net}|loas_zip"] = dict(s[f"{net}|loas_zip"], latency_ms=own[f"sparse90|{net}|1"] / 800e6 * 1e3,
+                                        throughput=16 * 800e6 / own[f"sparse90|{net}|16"])
+        rows = ["| Network | Design | Latency (ms) | Normalized latency | Throughput (img/s) | Normalized throughput |",
+                "|---|---|---:|---:|---:|---:|"]
+        for net in NETS:
+            b = s[f"{net}|loas_zip"]
+            for d in ORDER:
+                r = s[f"{net}|{d}"]
+                rows.append(f"| {net} | {NAME[d]} | {r['latency_ms']:.3f} | {r['latency_ms'] / b['latency_ms']:.3f} | "
+                            f"{r['throughput']:,.0f} | {r['throughput'] / b['throughput']:.2f} |")
+        open(os.path.join(R, "v1_loas_own_tables.md"), "w").write("\n".join(rows) + "\n")
+        print("\n".join(rows))
     fig, axes = plt.subplots(1, 2, figsize=(7.2, 2.9))
     specs = [("latency_ms", lambda v, b: v / b, "Normalized latency", "(a) Latency"),
              ("throughput", lambda v, b: v / b, "Normalized throughput",
@@ -65,7 +83,7 @@ def main():
         ax.set_title(title, fontsize=9, fontweight="bold", y=-0.52)
     fig.subplots_adjust(left=0.085, right=0.99, top=0.97, bottom=0.36, wspace=0.28)
     for ext in ("png", "pdf"):
-        fig.savefig(os.path.join(R, f"v1_normalized.{ext}"), dpi=300)
+        fig.savefig(os.path.join(R, f"v1_normalized{'_loas_own' if LOAS_OWN else ''}.{ext}"), dpi=300)
 
 
 if __name__ == "__main__":
