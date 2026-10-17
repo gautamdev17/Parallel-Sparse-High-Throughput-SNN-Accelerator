@@ -231,7 +231,7 @@ def validate():
 
 
 LINES = [  # key, label, colour, line style, marker
-    ("ours", "Ours", "#e8871e", "-", "o"),
+    ("ours", "Ours", "#e8871e", "-", "o"),   # = figstyle.OURS
     ("loas", "LoAS", "#5f5f5f", "-", "D"),
     ("ptb", "PTB", "#8fb0cf", "-", "s"),
     ("phi", "Phi", "#2c4f6e", "-", "^"),
@@ -241,20 +241,20 @@ LINES = [  # key, label, colour, line style, marker
 
 
 def plot():
-    import plot_ptb_style as PS
+    import figstyle as FS                      # DAC / ACM style, drawn at \columnwidth
     from matplotlib.ticker import FixedLocator, NullLocator, FixedFormatter
-    plt = PS.plt
+    plt = FS.plt
     d = json.load(open(os.path.join(R_OUT, "compression.json")))
-    fig, ax = plt.subplots(figsize=(3.5, 2.6))
+    fig, ax = plt.subplots(figsize=(FS.COL, 2.25))
     x = np.arange(len(SPARSITY))
     for k, lab, col, ls, mk in LINES:
         y = [d[str(s)][k]["ratio"] for s in SPARSITY]
         ours = k == "ours"
-        ax.plot(x, y, color=col, ls=ls, lw=1.9 if ours else 1.0, marker=mk, ms=4.3 if ours else 3.2,
-                mfc=col if ours else "white", mec=col, mew=0.9, label=lab, zorder=5 if ours else 3)
+        ax.plot(x, y, color=col, ls=ls, lw=1.5 if ours else 0.9, marker=mk, ms=3.8 if ours else 3.0,
+                mfc=col if ours else "white", mec=col, mew=0.8, label=lab, zorder=5 if ours else 3)
         if ours:
             ax.annotate(f"{y[-1]:.1f}\u00d7", (x[-1], y[-1]), xytext=(-4, 4), textcoords="offset points",
-                        ha="right", va="bottom", fontsize=7.5, color="#a85a0c", fontweight="bold")
+                        ha="right", va="bottom", fontsize=7, color=FS.OURS_TEXT, fontweight="bold")
     ax.set_yscale("log")
     ticks = [0.5, 1, 2, 5, 10]
     ax.yaxis.set_major_locator(FixedLocator(ticks))
@@ -263,15 +263,14 @@ def plot():
     ax.set_ylim(0.5, 20)
     ax.set_xticks(x, [f"{100 * s:g}%" for s in SPARSITY])
     ax.set_xlim(-0.25, len(x) - 0.75)
-    ax.tick_params(labelsize=8)
-    ax.set_xlabel("Sparsity", fontsize=8.5)
-    ax.set_ylabel("Compression ratio", fontsize=8.5)
-    ax.yaxis.grid(True, ls="-", color="#e6e6e6", lw=0.6, zorder=0)
+    ax.set_xlabel("Sparsity")
+    ax.set_ylabel("Compression ratio")
+    ax.yaxis.grid(True, zorder=0)
     h, l = ax.get_legend_handles_labels()
-    PS.inside_legend(ax, h, l, ncol=2, loc="upper left", handlelength=2.0, fontsize=6.8)
-    fig.subplots_adjust(left=0.15, right=0.97, top=0.97, bottom=0.16)
+    FS.inside_legend(ax, h, l, ncol=2, loc="upper left", handlelength=2.0, fontsize=7)
+    fig.subplots_adjust(left=0.135, right=0.975, top=0.98, bottom=0.165)
     for ext in ("png", "pdf"):
-        fig.savefig(os.path.join(R_OUT, f"compression.{ext}"), dpi=300)
+        fig.savefig(os.path.join(R_OUT, f"compression.{ext}"))
 
 
 if __name__ == "__main__":

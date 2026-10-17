@@ -1,14 +1,13 @@
-"""plot_ptb_style.py -- normalized latency / throughput figures in the style of the PTB paper (Fig. 11):
-grouped bars per network, grey-scale fills with hatching, ours in blue, boxed legend, heavy frame, inward ticks.
+"""plot_ptb_style.py -- paper figures (DAC / ACM style from figstyle.py): normalized latency / throughput and
+power / EDP as grouped bars, grey-blue baselines with hatching, ours in orange, boxed legends inside the axes.
 
   python3 plot_ptb_style.py v1   -> results/v1_ptbstyle.png/.pdf      (equal adders; LoAS from loas_model.py)
   python3 plot_ptb_style.py v4   -> results/v4_ptbstyle.png/.pdf + results/v4_tables.md  (16 PEs in every design)
 """
 import json, math, os, sys
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
 import numpy as np
+import figstyle as FS                      # DAC/ACM style: Libertine 8 pt, embedded TrueType, column widths
+plt = FS.plt
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 R = os.path.join(HERE, "results")
@@ -26,8 +25,8 @@ STYLE = {"loas_zip":   dict(color="#e6e9ed", hatch="////"),
          "spikeflow":  dict(color="#4a7396", hatch="\\\\\\\\"),
          "prosperity": dict(color="#2c4f6e", hatch=""),
          "ours":       dict(color="#e8871e", hatch="")}
-EDGE = "#2b2b2b"
-LABEL = "#a85a0c"           # colour of ours' value labels
+EDGE = FS.EDGE
+LABEL = FS.OURS_TEXT        # colour of ours' value labels
 
 # palette options: (baseline colour/hatch per design, ours colour, ours label colour); PALETTE=<name> picks one
 _G = {"ptb": "#f0f0f0", "spikex": "#d6d6d6", "loas_zip": "#ffffff", "sato": "#b0b0b0", "spikeflow": "#8c8c8c",
@@ -45,14 +44,8 @@ PALETTES = {
 }
 
 
-def inside_legend(ax, h, l, ncol=3, loc="upper center", handlelength=1.0, fontsize=7.3):
-    """compact boxed legend inside an axes: square patch handles, square-cornered black frame."""
-    lg = ax.legend(h, l, ncol=ncol, loc=loc, frameon=True, fancybox=False, framealpha=1.0, edgecolor=EDGE,
-                   fontsize=fontsize, handlelength=handlelength, handleheight=1.0, handletextpad=0.45,
-                   columnspacing=0.9, borderpad=0.45, labelspacing=0.35, borderaxespad=0.5)
-    lg.get_frame().set_linewidth(0.6)
-    lg.set_zorder(10)
-    return lg
+def inside_legend(ax, h, l, ncol=3, loc="upper center", handlelength=1.0, fontsize=7):
+    return FS.inside_legend(ax, h, l, ncol=ncol, loc=loc, handlelength=handlelength, fontsize=fontsize)
 
 
 def use_palette(name):
@@ -67,18 +60,9 @@ def use_palette(name):
 if os.environ.get("PALETTE"):
     use_palette(os.environ["PALETTE"])
 
-plt.rcParams.update({
-    "font.family": "serif", "font.serif": ["Times New Roman", "Times", "DejaVu Serif"],
-    "font.size": 10, "axes.linewidth": 1.0, "hatch.linewidth": 0.45, "hatch.color": EDGE,
-    "xtick.direction": "in", "ytick.direction": "in", "xtick.major.width": 0.9, "ytick.major.width": 0.9,
-    "xtick.major.size": 3.5, "ytick.major.size": 3.5, "xtick.top": True, "ytick.right": True,
-    "ytick.minor.visible": True, "ytick.minor.size": 2, "ytick.minor.width": 0.6, "xtick.minor.visible": False,
-})
-
-
 def draw(norm, out, note=""):
     """norm[net][design] = (normalized latency, normalized throughput), LoAS = 1."""
-    fig, axes = plt.subplots(1, 2, figsize=(7.16, 2.55))
+    fig, axes = plt.subplots(1, 2, figsize=(FS.TEXT, 2.05))
     w = 0.112
     # the worst design (lowest mean throughput) is 1x; bars run from it to the best baseline, ours last
     base = min((d for d in ORDER if d != "ours"), key=lambda d: np.mean([norm[n][d][1] for n in NETS]))
@@ -92,27 +76,27 @@ def draw(norm, out, note=""):
         for i, d in enumerate(order):
             x = np.arange(len(NETS)) + (i - (len(order) - 1) / 2) * (w + 0.008)
             v = [norm[n][d][idx] for n in NETS]
-            ax.bar(x, v, w, color=STYLE[d]["color"], hatch=STYLE[d]["hatch"], edgecolor=EDGE, linewidth=0.55,
+            ax.bar(x, v, w, color=STYLE[d]["color"], hatch=STYLE[d]["hatch"], edgecolor=EDGE, linewidth=0.5,
                    label=NAME[d], zorder=3)
             if d == "ours":
                 for xi, vi in zip(x, v):
                     ax.annotate(f"{vi:.2f}" if idx == 0 else f"{vi:.2f}\u00d7", (xi, vi), xytext=(0, 2),
-                                textcoords="offset points", ha="center", va="bottom", fontsize=7.5,
+                                textcoords="offset points", ha="center", va="bottom", fontsize=6.8,
                                 rotation=90, color=LABEL, zorder=5,
                                 bbox=dict(boxstyle="square,pad=0.08", fc="white", ec="none"))
         ax.axhline(1.0, color=EDGE, lw=0.6, ls=(0, (4, 2)), zorder=2)
         ax.set_xticks(range(len(NETS)), NETS)
         ax.set_xlim(-0.55, len(NETS) - 0.45)
         ax.set_ylabel(ylab)
-        ax.yaxis.grid(True, ls=":", color="#b0b0b0", lw=0.5, zorder=0)
+        ax.yaxis.grid(True, zorder=0)
         top = max(norm[n][d][idx] for n in NETS for d in ORDER)
         ax.set_ylim(0, top * (1.95 if idx == 0 else 1.32))       # (a) leaves room for the legend
-        ax.text(0.5, -0.17, tag, transform=ax.transAxes, ha="center", va="top", fontsize=10)
+        FS.panel_tag(ax, tag, y=-0.15)
     h, l = axes[0].get_legend_handles_labels()
     inside_legend(axes[0], h, l, ncol=3)
-    fig.subplots_adjust(left=0.075, right=0.99, top=0.97, bottom=0.2, wspace=0.27)
+    fig.subplots_adjust(left=0.065, right=0.995, top=0.985, bottom=0.235, wspace=0.22)
     for ext in ("png", "pdf"):
-        fig.savefig(os.path.join(R, f"{out}{os.environ.get('OUT_SUFFIX', '')}.{ext}"), dpi=300)
+        fig.savefig(os.path.join(R, f"{out}{os.environ.get('OUT_SUFFIX', '')}.{ext}"))
 
 
 def v1():
@@ -188,7 +172,7 @@ def power_edp():
         "18.5 KB buffer as external SRAM, like every other design.\n")
     print("\n".join(rows))
     # power is a property of the design, not of the network: one group in (a)
-    fig, axes = plt.subplots(1, 2, figsize=(7.16, 2.55), gridspec_kw=dict(width_ratios=[1, 2]))
+    fig, axes = plt.subplots(1, 2, figsize=(FS.TEXT, 2.05), gridspec_kw=dict(width_ratios=[1, 2]))
     w = 0.125
     for ax, idx, ylab, tag in ((axes[0], 0, "Normalized power", "(a)"), (axes[1], 2, "Normalized EDP", "(b)")):
         ax.set_yscale("log")
@@ -199,12 +183,12 @@ def power_edp():
             x = np.arange(len(nets)) + (i - (len(order) - 1) / 2) * (w + 0.008)
             v = [norm[n][d][idx] for n in nets]
             ax.bar(x, [vi - bot for vi in v], w, bottom=bot, color=STYLE[d]["color"], hatch=STYLE[d]["hatch"],
-                   edgecolor=EDGE, linewidth=0.55, label=NAME[d], zorder=3)
+                   edgecolor=EDGE, linewidth=0.5, label=NAME[d], zorder=3)
             for xi, vi in zip(x, v):
                 if d == "ours":
                     ax.annotate(f"{vi:.2f}" if vi >= 0.095 else f"{vi:.3f}", (xi, vi), xytext=(0, 2),
                                 textcoords="offset points", ha="center", va="bottom", rotation=90,
-                                fontsize=6.3 if d != "ours" else 7, zorder=5,
+                                fontsize=6.8, zorder=5,
                                 color=LABEL if d == "ours" else "#333333",
                                 fontweight="bold" if d == "ours" else "normal",
                                 bbox=dict(boxstyle="square,pad=0.06", fc="white", ec="none"))
@@ -214,15 +198,20 @@ def power_edp():
         else:
             ax.set_xticks(range(len(nets)), nets)
         ax.set_xlim(-0.55, len(nets) - 0.45)
-        ax.set_ylabel(ylab + " (log)")
-        ax.yaxis.grid(True, which="major", ls=":", color="#b0b0b0", lw=0.5, zorder=0)
+        ax.set_ylabel(ylab)
+        from matplotlib.ticker import FixedLocator, FixedFormatter, NullLocator
+        ax.yaxis.grid(True, which="major", zorder=0)
         ax.set_ylim(bot, 6.0 if idx == 0 else 1e3)               # (b) leaves room for the legend
-        ax.text(0.5, -0.17, tag, transform=ax.transAxes, ha="center", va="top", fontsize=10)
+        dec = [10.0 ** e for e in range(int(round(math.log10(bot))), 1)]
+        ax.yaxis.set_major_locator(FixedLocator(dec))
+        ax.yaxis.set_major_formatter(FixedFormatter([f"{t:g}" for t in dec]))
+        ax.yaxis.set_minor_locator(NullLocator())
+        FS.panel_tag(ax, tag, y=-0.15)
     h, l = axes[0].get_legend_handles_labels()
     inside_legend(axes[1], h, l, ncol=4)
-    fig.subplots_adjust(left=0.085, right=0.99, top=0.97, bottom=0.2, wspace=0.3)
+    fig.subplots_adjust(left=0.07, right=0.995, top=0.985, bottom=0.235, wspace=0.24)
     for ext in ("png", "pdf"):
-        fig.savefig(os.path.join(R, f"v1_power_edp.{ext}"), dpi=300)
+        fig.savefig(os.path.join(R, f"v1_power_edp.{ext}"))
 
 
 if __name__ == "__main__":
