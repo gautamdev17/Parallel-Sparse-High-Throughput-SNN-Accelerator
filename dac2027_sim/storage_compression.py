@@ -233,12 +233,9 @@ def validate():
 LINES = [  # key, label, colour, line style, marker
     ("ours", "Ours", "#e8871e", "-", "o"),
     ("loas", "LoAS", "#5f5f5f", "-", "D"),
-    ("spikeflow", "SpikeFlow", "#4a7396", "-", "v"),
     ("ptb", "PTB", "#8fb0cf", "-", "s"),
-    ("prosperity", "Prosperity", "#2c4f6e", (0, (3, 2)), None),
-    ("spikex", "SpikeX", "#9a9a9a", (0, (1, 1.5)), None),
-    ("phi", "Phi", "#4a7396", (0, (5, 1.5, 1, 1.5)), "x"),
-]
+    ("phi", "Phi", "#2c4f6e", "-", "^"),
+]   # plotted: designs that pack / compress. SpikeX, SpikeFlow, Prosperity store dense data (see table)
 
 
 def plot():
@@ -257,11 +254,11 @@ def plot():
             ax.annotate(f"{y[-1]:.1f}\u00d7", (x[-1], y[-1]), xytext=(-4, 4), textcoords="offset points",
                         ha="right", va="bottom", fontsize=7.5, color="#a85a0c", fontweight="bold")
     ax.set_yscale("log")
-    ticks = [0.5, 1, 2, 5, 10, 20]
+    ticks = [0.5, 1, 2, 5, 10]
     ax.yaxis.set_major_locator(FixedLocator(ticks))
     ax.yaxis.set_major_formatter(FixedFormatter([f"{t:g}\u00d7" for t in ticks]))
     ax.yaxis.set_minor_locator(NullLocator())
-    ax.set_ylim(0.5, 25)
+    ax.set_ylim(0.5, 20)
     ax.set_xticks(x, [f"{100 * s:g}%" for s in SPARSITY])
     ax.set_xlim(-0.25, len(x) - 0.75)
     ax.tick_params(labelsize=8)
