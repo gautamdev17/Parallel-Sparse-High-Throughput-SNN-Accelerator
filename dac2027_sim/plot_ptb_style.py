@@ -116,10 +116,11 @@ def v4():
 
 
 
-def power_energy_edp():
+def power_edp():
     """v1 latency (equal adders; LoAS from loas_model.py) x power of our RTL of each design (hw/build/*_power.rpt,
     Nangate45, gate-level activity, 800 MHz; LoAS = 16 x the given TPPE RTL).
-    energy = power x batch-1 latency, EDP = energy x latency. Normalized to the worst design by mean energy = 1x."""
+    energy = power x batch-1 latency, EDP = energy x latency. Plots power and EDP, normalized to the worst design by
+    mean EDP = 1x (energy is in the table)."""
     sys.path.insert(0, os.path.join(HERE, "hw"))
     import energy_v2 as E2
     s = json.load(open(os.path.join(R, "main_summary.json")))["sparse90"]
@@ -136,22 +137,21 @@ def power_energy_edp():
             val[n][d] = (p, e, e * lat)
             rows.append(f"| {n} | {NAME[d]} | {p:.1f} | {lat:.3f} | {e:.4f} | {e * lat:.5f} |")
     keep = [d for d in ORDER if d != "spikeflow"]
-    base = max((d for d in keep if d != "ours"), key=lambda d: np.mean([val[n][d][1] for n in NETS]))
-    mid = sorted((d for d in keep if d != "ours"), key=lambda d: -np.mean([val[n][d][1] / val[n][base][1] for n in NETS]))
+    base = max((d for d in keep if d != "ours"), key=lambda d: np.mean([val[n][d][2] for n in NETS]))
+    mid = sorted((d for d in keep if d != "ours"), key=lambda d: -np.mean([val[n][d][2] / val[n][base][2] for n in NETS]))
     order = mid + ["ours"]
     norm = {n: {d: tuple(val[n][d][i] / val[n][base][i] for i in range(3)) for d in keep} for n in NETS}
     print(f"normalized to {NAME[base]} = 1x; order", [NAME[d] for d in order])
     for n in NETS:
         print(n, {NAME[d]: tuple(round(x, 3) for x in norm[n][d]) for d in order})
-    open(os.path.join(R, "v1_power_energy_edp.md"), "w").write(
+    open(os.path.join(R, "v1_power_edp.md"), "w").write(
         "### v1 power, energy, EDP (sparse90, batch 1, 800 MHz; power from our RTL of each design, Nangate45)\n\n"
-        + "\n".join(rows) + f"\n\nNormalized to {NAME[base]} = 1x in v1_power_energy_edp.png. SpikeFlow is not plotted: its "
+        + "\n".join(rows) + f"\n\nNormalized to {NAME[base]} = 1x in v1_power_edp.png. SpikeFlow is not plotted: its "
         "power report is not physical (10.75 W combinational internal vs 16 mW switching) and must be re-measured.\n")
     print("\n".join(rows))
-    fig, axes = plt.subplots(1, 3, figsize=(7.16, 2.45))
+    fig, axes = plt.subplots(1, 2, figsize=(7.16, 2.55))
     w = 0.125
-    for ax, idx, ylab, tag in ((axes[0], 0, "Normalized power", "(a)"), (axes[1], 1, "Normalized energy", "(b)"),
-                               (axes[2], 2, "Normalized EDP", "(c)")):
+    for ax, idx, ylab, tag in ((axes[0], 0, "Normalized power", "(a)"), (axes[1], 2, "Normalized EDP", "(b)")):
         for i, d in enumerate(order):
             x = np.arange(len(NETS)) + (i - (len(order) - 1) / 2) * (w + 0.008)
             v = [norm[n][d][idx] for n in NETS]
@@ -173,10 +173,10 @@ def power_energy_edp():
     h, l = axes[0].get_legend_handles_labels()
     fig.legend(h, l, ncol=7, loc="upper center", bbox_to_anchor=(0.5, 1.0), frameon=False, fontsize=8.5,
                handlelength=1.5, handleheight=0.9, columnspacing=1.1, handletextpad=0.4)
-    fig.subplots_adjust(left=0.065, right=0.99, top=0.86, bottom=0.2, wspace=0.38)
+    fig.subplots_adjust(left=0.075, right=0.99, top=0.86, bottom=0.2, wspace=0.27)
     for ext in ("png", "pdf"):
-        fig.savefig(os.path.join(R, f"v1_power_energy_edp.{ext}"), dpi=300)
+        fig.savefig(os.path.join(R, f"v1_power_edp.{ext}"), dpi=300)
 
 
 if __name__ == "__main__":
-    {"v1": v1, "v4": v4, "pe": power_energy_edp}[sys.argv[1]]()
+    {"v1": v1, "v4": v4, "pe": power_edp}[sys.argv[1]]()

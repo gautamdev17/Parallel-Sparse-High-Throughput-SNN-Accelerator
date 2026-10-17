@@ -17,4 +17,4 @@
 | ResNet18 | Prosperity | 156.2 | 1.282 | 0.2003 | 0.25671 |
 | ResNet18 | Ours | 382.8 | 0.688 | 0.2635 | 0.18140 |
 
-Normalized to PTB = 1x in v1_power_energy_edp.png. SpikeFlow is not plotted: its power report is not physical (10.75 W combinational internal vs 16 mW switching) and must be re-measured.
+Normalized to PTB = 1x in v1_power_edp.png. SpikeFlow is not plotted: its power report is not physical (10.75 W combinational internal vs 16 mW switching) and must be re-measured.
