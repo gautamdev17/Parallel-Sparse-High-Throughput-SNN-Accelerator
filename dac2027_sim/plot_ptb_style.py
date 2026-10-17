@@ -138,6 +138,20 @@ def v4():
 
 
 
+def ours_power_mw(f_lif=0.0401, clk=800e6):
+    """our pipelined core: gate-level power measured at 500 MHz (hw/build_buf/pw_stream.rpt, pw_lif.rpt, weighted by
+    the LIF share of VGG16 cycles), rescaled to the common clock of the comparison: internal + switching power scale
+    with the clock, leakage does not."""
+    def tot(f):
+        for l in open(os.path.join(HERE, "hw", "build_buf", f)):
+            if l.startswith("Total"):
+                v = [float(x) for x in l.split()[1:5]]
+                return v[0] + v[1], v[2]
+    (ds, ls), (dl, ll) = tot("pw_stream.rpt"), tot("pw_lif.rpt")
+    dyn, leak = (1 - f_lif) * ds + f_lif * dl, (1 - f_lif) * ls + f_lif * ll
+    return 1e3 * (dyn * clk / 500e6 + leak)
+
+
 def power_edp():
     """v1 latency (equal adders; LoAS from loas_model.py) x power of our RTL of each design (hw/build/*_power.rpt,
     Nangate45, gate-level activity, 800 MHz; LoAS = 16 x the given TPPE RTL).
@@ -153,7 +167,7 @@ def power_edp():
         val[n] = {}
         for d in ORDER:
             hw, mult = ("spikeflow_ext", 1) if d == "spikeflow" else E2.HW[d]
-            p = E2.power_w(hw) * mult * 1e3
+            p = E2.power_w(hw) * mult * 1e3 if d != "ours" else ours_power_mw()
             lat = own[f"sparse90|{n}|1"] / F_HZ * 1e3 if d == "loas_zip" else s[f"{n}|{d}"]["latency_ms"]
             e = p * lat * 1e-3
             val[n][d] = (p, e, e * lat)
