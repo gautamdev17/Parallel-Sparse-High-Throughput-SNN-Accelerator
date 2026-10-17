@@ -161,7 +161,7 @@ def power_edp():
             ax.bar(x, [vi - bot for vi in v], w, bottom=bot, color=STYLE[d]["color"], hatch=STYLE[d]["hatch"],
                    edgecolor=EDGE, linewidth=0.55, label=NAME[d], zorder=3)
             for xi, vi in zip(x, v):
-                if d != base:
+                if d == "ours":
                     ax.annotate(f"{vi:.2f}" if vi >= 0.095 else f"{vi:.3f}", (xi, vi), xytext=(0, 2),
                                 textcoords="offset points", ha="center", va="bottom", rotation=90,
                                 fontsize=6.3 if d != "ours" else 7, zorder=5,
