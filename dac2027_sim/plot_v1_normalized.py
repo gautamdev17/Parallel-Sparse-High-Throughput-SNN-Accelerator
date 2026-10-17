@@ -26,9 +26,9 @@ plt.rcParams.update({"font.family": "serif", "font.serif": ["Times New Roman", "
 def main():
     s = json.load(open(os.path.join(R, "main_summary.json")))["sparse90"]
     fig, axes = plt.subplots(1, 2, figsize=(7.2, 2.9))
-    specs = [("latency_ms", lambda v, b: v / b, "Normalized latency\n(LoAS = 1, lower is better)", "(a) Latency, batch 1"),
-             ("throughput", lambda v, b: v / b, "Normalized throughput\n(LoAS = 1, higher is better)",
-              "(b) Throughput, batch 16")]
+    specs = [("latency_ms", lambda v, b: v / b, "Normalized latency", "(a) Latency"),
+             ("throughput", lambda v, b: v / b, "Normalized throughput",
+              "(b) Throughput")]
     nd = len(ORDER)
     gap = 1.2
     for ax, (key, f, ylab, title) in zip(axes, specs):
