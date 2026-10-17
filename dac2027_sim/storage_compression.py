@@ -228,37 +228,47 @@ def validate():
     return lines
 
 
-LINES = [  # key, label, colour, line style, marker, width
-    ("ours", "Ours", "#e8871e", "-", "o", 2.0),
-    ("loas", "LoAS", "#8c8c8c", "-", "D", 1.1),
-    ("ptb", "PTB", "#7fa2c3", "-", "s", 1.1),
-    ("phi", "Phi", "#4a7396", (0, (5, 1.5, 1, 1.5)), "X", 1.1),
-    ("spikeflow", "SpikeFlow", "#6f93b3", (0, (4, 2)), "v", 1.1),
-    ("spikex", "SpikeX", "#c3d3e2", "-", "^", 1.1),
-    ("prosperity", "Prosperity", "#2c4f6e", (0, (1, 1.5)), "P", 1.1),
+LINES = [  # key, label, colour, line style, marker
+    ("ours", "Ours", "#e8871e", "-", "o"),
+    ("loas", "LoAS", "#5f5f5f", "-", "D"),
+    ("spikeflow", "SpikeFlow", "#4a7396", "-", "v"),
+    ("ptb", "PTB", "#8fb0cf", "-", "s"),
+    ("prosperity", "Prosperity", "#2c4f6e", (0, (3, 2)), None),
+    ("spikex", "SpikeX", "#9a9a9a", (0, (1, 1.5)), None),
+    ("phi", "Phi", "#4a7396", (0, (5, 1.5, 1, 1.5)), "x"),
 ]
 
 
 def plot():
     import plot_ptb_style as PS
+    from matplotlib.ticker import FixedLocator, NullLocator, FixedFormatter
     plt = PS.plt
     d = json.load(open(os.path.join(R_OUT, "compression.json")))
-    fig, ax = plt.subplots(figsize=(3.5, 2.75))
+    fig, ax = plt.subplots(figsize=(3.5, 2.6))
     x = np.arange(len(SPARSITY))
-    for k, lab, col, ls, mk, lw in LINES:
-        ax.plot(x, [d[str(s)][k]["ratio"] for s in SPARSITY], color=col, ls=ls, marker=mk, lw=lw,
-                ms=4.2 if k == "ours" else 3.6, mec=PS.EDGE, mew=0.5, label=lab, zorder=4 if k == "ours" else 3)
-    ax.axhline(1.0, color=PS.EDGE, lw=0.6, ls=(0, (4, 2)), zorder=2)
+    for k, lab, col, ls, mk in LINES:
+        y = [d[str(s)][k]["ratio"] for s in SPARSITY]
+        ours = k == "ours"
+        ax.plot(x, y, color=col, ls=ls, lw=1.9 if ours else 1.0, marker=mk, ms=4.3 if ours else 3.2,
+                mfc=col if ours else "white", mec=col, mew=0.9, label=lab, zorder=5 if ours else 3)
+        if ours:
+            ax.annotate(f"{y[-1]:.1f}\u00d7", (x[-1], y[-1]), xytext=(-4, 4), textcoords="offset points",
+                        ha="right", va="bottom", fontsize=7.5, color="#a85a0c", fontweight="bold")
     ax.set_yscale("log")
-    ax.set_ylim(0.1, 30)
+    ticks = [0.2, 0.5, 1, 2, 5, 10, 20]
+    ax.yaxis.set_major_locator(FixedLocator(ticks))
+    ax.yaxis.set_major_formatter(FixedFormatter([f"{t:g}\u00d7" for t in ticks]))
+    ax.yaxis.set_minor_locator(NullLocator())
+    ax.set_ylim(0.15, 25)
     ax.set_xticks(x, [f"{100 * s:g}%" for s in SPARSITY])
-    ax.set_xlim(-0.3, len(x) - 0.7)
-    ax.set_xlabel("Sparsity (weights and spikes)", fontsize=9)
+    ax.set_xlim(-0.25, len(x) - 0.75)
+    ax.tick_params(labelsize=8)
+    ax.set_xlabel("Sparsity of weights and spikes", fontsize=8.5)
     ax.set_ylabel("Compression ratio (dense / packed)", fontsize=8.5)
-    ax.yaxis.grid(True, which="major", ls=":", color="#b0b0b0", lw=0.5, zorder=0)
+    ax.yaxis.grid(True, ls="-", color="#e6e6e6", lw=0.6, zorder=0)
     h, l = ax.get_legend_handles_labels()
-    PS.inside_legend(ax, h, l, ncol=2, loc="upper left", handlelength=2.2, fontsize=6.8)
-    fig.subplots_adjust(left=0.17, right=0.97, top=0.97, bottom=0.17)
+    PS.inside_legend(ax, h, l, ncol=2, loc="upper left", handlelength=2.0, fontsize=6.8)
+    fig.subplots_adjust(left=0.15, right=0.97, top=0.97, bottom=0.16)
     for ext in ("png", "pdf"):
         fig.savefig(os.path.join(R_OUT, f"compression.{ext}"), dpi=300)
 
