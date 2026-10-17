@@ -1,11 +1,11 @@
 """
 storage_compression.py -- stored bits of weights + spikes after each design's packing / compression, on the SAME matrices.
 
-  y = (packed weight bits + packed spike bits) / (dense weight bits + dense spike bits)        (lower = better)
-  dense: 8-bit weights (M x K) and T-bit spike trains (K inputs x N pixels).
-  x = sparsity s: weight density 1-s (int8, uniform non-zero positions); spike BIT density 1-s, from silent /
-      non-silent neurons (a non-silent neuron fires each timestep with prob. q, at least once): non-silent fraction
-      ns = (1-s) T / E[spikes | non-silent], q = 0.3 (raised only where ns would exceed 1).
+  compression ratio = (dense weight bits + dense spike bits) / (packed weight bits + packed spike bits)  (higher =
+  better); dense: int8 weights (M x K = 128 x 128) and T=8-bit spike trains (K x N = 128 x 128).
+  x = sparsity s, applied independently to both matrices: exactly s of the weights are 0 (the rest non-zero int8);
+      exactly s of the neurons are silent (all T bits 0), every other neuron has >= 1 spike in its T timesteps
+      (each timestep fires with q = 0.3, as in the main sparse90 workload).
 
 Formats (paper quotes: results/compression_formats.md). Where a paper leaves a field width open, the smallest
 lossless width is used (favours that baseline):
@@ -46,35 +46,32 @@ from baselines import _tags, ptb_pairs_count
 
 R_OUT = os.path.join(HERE, "results")
 T = 8
-M, K, N = 128, 1152, 256
+M, K, N = 128, 128, 128
 SPARSITY = [0.50, 0.70, 0.80, 0.90, 0.95, 0.98]
 
 
 # ------------------------------------------------------------------ inputs
 def spikes(rng, K, N, s, T=T, q=0.3):
-    d = 1 - s
-    e = lambda q: T * q / (1 - (1 - q) ** T)          # mean spikes of a non-silent neuron (>= 1 spike)
-    ns = d * T / e(q)
-    if ns > 1:                                         # dense end: every neuron fires, raise q
-        lo, hi = q, 1.0
-        for _ in range(60):
-            mid = (lo + hi) / 2
-            lo, hi = (mid, hi) if e(mid) < d * T else (lo, mid)
-        q, ns = lo, 1.0
-    S = np.zeros((K, N), np.uint8)
-    on = rng.random((K, N)) < ns
-    n = int(on.sum())
+    """exactly round((1-s) K N) non-silent neurons, each with a T-bit train of >= 1 spike."""
+    n = round((1 - s) * K * N)
+    S = np.zeros(K * N, np.uint8)
+    pos = rng.choice(K * N, n, replace=False)
     bits = np.zeros((n, T), bool)
     todo = np.arange(n)
     while len(todo):
         bits[todo] = rng.random((len(todo), T)) < q
         todo = todo[~bits[todo].any(1)]
-    S[on] = (bits * (1 << np.arange(T))).sum(1).astype(np.uint8)
-    return S
+    S[pos] = (bits * (1 << np.arange(T))).sum(1).astype(np.uint8)
+    return S.reshape(K, N)
 
 
 def weights(rng, M, K, s):
-    return wl.rand_weights(rng, M, K, 1 - s)
+    """exactly round((1-s) M K) non-zero int8 weights."""
+    n = round((1 - s) * M * K)
+    W = np.zeros(M * K, np.int16)
+    v = rng.integers(1, 128, n) * rng.choice([-1, 1], n)
+    W[rng.choice(M * K, n, replace=False)] = v
+    return W.reshape(M, K).astype(np.int8)
 
 
 # ------------------------------------------------------------------ formats
@@ -202,8 +199,8 @@ def run():
                "nonsilent": float((S != 0).mean())}
         for key, _, fn in DESIGNS:
             wb, ab = fn(W, S)
-            row[key] = dict(w=int(wb), a=int(ab), ratio=(wb + ab) / dense, w_ratio=wb / (8 * M * K),
-                            a_ratio=ab / (T * K * N))
+            row[key] = dict(w=int(wb), a=int(ab), ratio=dense / (wb + ab), w_ratio=8 * M * K / wb,
+                            a_ratio=T * K * N / ab)
         out[str(s)] = row
         print(f"s={s:.0%} bit {row['bit_density']:.3f} ns {row['nonsilent']:.3f} | " +
               " ".join(f"{k} {row[k]['ratio']:.3f}" for k, _, _ in DESIGNS), flush=True)
@@ -253,14 +250,14 @@ def plot():
                 ms=4.2 if k == "ours" else 3.6, mec=PS.EDGE, mew=0.5, label=lab, zorder=4 if k == "ours" else 3)
     ax.axhline(1.0, color=PS.EDGE, lw=0.6, ls=(0, (4, 2)), zorder=2)
     ax.set_yscale("log")
-    ax.set_ylim(0.1, 12)
+    ax.set_ylim(0.1, 30)
     ax.set_xticks(x, [f"{100 * s:g}%" for s in SPARSITY])
     ax.set_xlim(-0.3, len(x) - 0.7)
     ax.set_xlabel("Sparsity (weights and spikes)", fontsize=9)
-    ax.set_ylabel("Packed / dense bits (log)", fontsize=9)
+    ax.set_ylabel("Compression ratio (dense / packed)", fontsize=8.5)
     ax.yaxis.grid(True, which="major", ls=":", color="#b0b0b0", lw=0.5, zorder=0)
     h, l = ax.get_legend_handles_labels()
-    PS.inside_legend(ax, h, l, ncol=2, loc="lower left", handlelength=2.2, fontsize=6.8)
+    PS.inside_legend(ax, h, l, ncol=2, loc="upper left", handlelength=2.2, fontsize=6.8)
     fig.subplots_adjust(left=0.17, right=0.97, top=0.97, bottom=0.17)
     for ext in ("png", "pdf"):
         fig.savefig(os.path.join(R_OUT, f"compression.{ext}"), dpi=300)

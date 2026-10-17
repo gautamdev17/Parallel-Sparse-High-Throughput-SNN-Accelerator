@@ -1,15 +1,15 @@
 # Stored-bit compression: formats and validation
 
-`storage_compression.py` -> `compression.json`, `compression.png`. y = (packed weight bits + packed spike bits) / (dense 8-bit weights + dense T-bit spikes); lower is better. Same matrices for every design: M=128 outputs, K=1152 inputs, N=256 pixels, T=8 (a VGG16 conv layer); weight density and spike bit density both = 1 - sparsity.
+`storage_compression.py` -> `compression.json`, `compression.png`. Compression ratio = (dense 8-bit weights + dense T-bit spikes) / (packed weight bits + packed spike bits); higher is better. Same matrices for every design: weights 128 x 128 (int8), spikes 128 inputs x 128 pixels, T=8. At sparsity x, exactly x of the weights are zero and exactly x of the neurons are silent; a non-silent neuron has >= 1 spike (each timestep p = 0.3).
 
 | Sparsity | Ours | LoAS | PTB | Phi | SpikeFlow | SpikeX | Prosperity |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| 50% | 3.031 | 0.968 | 2.055 | 4.250 | 1.083 | 1.167 | 1.000 |
-| 70% | 2.551 | 0.863 | 1.905 | 4.063 | 1.045 | 1.167 | 1.000 |
-| 80% | 1.637 | 0.621 | 1.438 | 3.830 | 0.836 | 1.167 | 1.000 |
-| 90% | 0.762 | 0.377 | 0.968 | 3.491 | 0.626 | 1.167 | 1.000 |
-| 95% | 0.422 | 0.256 | 0.734 | 3.305 | 0.521 | 1.167 | 1.000 |
-| 98% | 0.199 | 0.183 | 0.595 | 3.171 | 0.459 | 1.167 | 1.000 |
+| 50% | 0.71 | 1.58 | 0.94 | 0.20 | 1.23 | 0.89 | 1.00 |
+| 70% | 1.19 | 2.30 | 1.13 | 0.21 | 1.40 | 0.89 | 1.00 |
+| 80% | 1.69 | 2.99 | 1.25 | 0.21 | 1.51 | 0.89 | 1.00 |
+| 90% | 3.00 | 4.26 | 1.40 | 0.21 | 1.63 | 0.89 | 1.00 |
+| 95% | 5.41 | 5.41 | 1.49 | 0.22 | 1.70 | 0.89 | 1.00 |
+| 98% | 10.88 | 6.46 | 1.55 | 0.22 | 1.75 | 0.89 | 1.00 |
 
 Formats (paper sources; where a width is not given, the choice that reproduces the paper's own measured numbers, else the smallest lossless one):
 
