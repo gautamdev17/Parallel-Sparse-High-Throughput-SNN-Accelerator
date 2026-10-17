@@ -149,15 +149,17 @@ def power_edp():
         + "\n".join(rows) + f"\n\nNormalized to {NAME[base]} = 1x in v1_power_edp.png (log scale). SpikeFlow power: core with its "
         "18.5 KB buffer as external SRAM, like every other design.\n")
     print("\n".join(rows))
-    fig, axes = plt.subplots(1, 2, figsize=(7.16, 2.55))
+    # power is a property of the design, not of the network: one group in (a)
+    fig, axes = plt.subplots(1, 2, figsize=(7.16, 2.55), gridspec_kw=dict(width_ratios=[1, 2]))
     w = 0.125
     for ax, idx, ylab, tag in ((axes[0], 0, "Normalized power", "(a)"), (axes[1], 2, "Normalized EDP", "(b)")):
         ax.set_yscale("log")
-        lo = min(norm[n][d][idx] for n in NETS for d in keep)
+        nets = NETS[:1] if idx == 0 else NETS
+        lo = min(norm[n][d][idx] for n in nets for d in keep)
         bot = 10 ** math.floor(math.log10(lo * 0.6))
         for i, d in enumerate(order):
-            x = np.arange(len(NETS)) + (i - (len(order) - 1) / 2) * (w + 0.008)
-            v = [norm[n][d][idx] for n in NETS]
+            x = np.arange(len(nets)) + (i - (len(order) - 1) / 2) * (w + 0.008)
+            v = [norm[n][d][idx] for n in nets]
             ax.bar(x, [vi - bot for vi in v], w, bottom=bot, color=STYLE[d]["color"], hatch=STYLE[d]["hatch"],
                    edgecolor=EDGE, linewidth=0.55, label=NAME[d], zorder=3)
             for xi, vi in zip(x, v):
@@ -169,8 +171,11 @@ def power_edp():
                                 fontweight="bold" if d == "ours" else "normal",
                                 bbox=dict(boxstyle="square,pad=0.06", fc="white", ec="none"))
         ax.axhline(1.0, color=EDGE, lw=0.6, ls=(0, (4, 2)), zorder=2)
-        ax.set_xticks(range(len(NETS)), NETS)
-        ax.set_xlim(-0.55, len(NETS) - 0.45)
+        if idx == 0:
+            ax.set_xticks([])
+        else:
+            ax.set_xticks(range(len(nets)), nets)
+        ax.set_xlim(-0.55, len(nets) - 0.45)
         ax.set_ylabel(ylab + " (log)")
         ax.yaxis.grid(True, which="major", ls=":", color="#b0b0b0", lw=0.5, zorder=0)
         ax.set_ylim(bot, 6.0)
@@ -178,7 +183,7 @@ def power_edp():
     h, l = axes[0].get_legend_handles_labels()
     fig.legend(h, l, ncol=7, loc="upper center", bbox_to_anchor=(0.5, 1.0), frameon=False, fontsize=8.5,
                handlelength=1.5, handleheight=0.9, columnspacing=1.1, handletextpad=0.4)
-    fig.subplots_adjust(left=0.075, right=0.99, top=0.86, bottom=0.2, wspace=0.27)
+    fig.subplots_adjust(left=0.085, right=0.99, top=0.86, bottom=0.2, wspace=0.3)
     for ext in ("png", "pdf"):
         fig.savefig(os.path.join(R, f"v1_power_edp.{ext}"), dpi=300)
 
