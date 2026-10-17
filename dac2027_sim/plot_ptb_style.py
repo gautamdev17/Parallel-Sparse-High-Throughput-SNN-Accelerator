@@ -41,25 +41,30 @@ def draw(norm, out, note=""):
     """norm[net][design] = (normalized latency, normalized throughput), LoAS = 1."""
     fig, axes = plt.subplots(1, 2, figsize=(7.16, 2.55))
     w = 0.112
+    # LoAS (1x) first, then the other baselines from worst to best (mean normalized throughput), ours last
+    mid = [d for d in ORDER if d not in ("loas_zip", "ours")]
+    mid.sort(key=lambda d: np.mean([norm[n][d][1] for n in NETS]))
+    order = ["loas_zip"] + mid + ["ours"]
     for ax, idx, ylab, tag in ((axes[0], 0, "Normalized latency", "(a)"),
                                (axes[1], 1, "Normalized throughput", "(b)")):
-        for i, d in enumerate(ORDER):
-            x = np.arange(len(NETS)) + (i - (len(ORDER) - 1) / 2) * (w + 0.008)
+        for i, d in enumerate(order):
+            x = np.arange(len(NETS)) + (i - (len(order) - 1) / 2) * (w + 0.008)
             v = [norm[n][d][idx] for n in NETS]
             ax.bar(x, v, w, color=STYLE[d]["color"], hatch=STYLE[d]["hatch"], edgecolor=EDGE, linewidth=0.55,
                    label=NAME[d], zorder=3)
             if d == "ours":
                 for xi, vi in zip(x, v):
                     ax.annotate(f"{vi:.2f}" if idx == 0 else f"{vi:.1f}\u00d7", (xi, vi), xytext=(0, 2),
-                                textcoords="offset points", ha="center", va="bottom", fontsize=8,
-                                color=STYLE["ours"]["color"])
+                                textcoords="offset points", ha="center", va="bottom", fontsize=7.5,
+                                rotation=90, color=STYLE["ours"]["color"], zorder=5,
+                                bbox=dict(boxstyle="square,pad=0.08", fc="white", ec="none"))
         ax.axhline(1.0, color=EDGE, lw=0.6, ls=(0, (4, 2)), zorder=2)
         ax.set_xticks(range(len(NETS)), NETS)
         ax.set_xlim(-0.55, len(NETS) - 0.45)
         ax.set_ylabel(ylab)
         ax.yaxis.grid(True, ls=":", color="#b0b0b0", lw=0.5, zorder=0)
         top = max(norm[n][d][idx] for n in NETS for d in ORDER)
-        ax.set_ylim(0, top * 1.14)
+        ax.set_ylim(0, top * 1.2)
         ax.text(0.5, -0.17, tag, transform=ax.transAxes, ha="center", va="top", fontsize=10)
     h, l = axes[0].get_legend_handles_labels()
     fig.legend(h, l, ncol=7, loc="upper center", bbox_to_anchor=(0.5, 1.0), frameon=False, fontsize=8.5,
