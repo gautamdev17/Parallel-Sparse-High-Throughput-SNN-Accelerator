@@ -41,10 +41,13 @@ def draw(norm, out, note=""):
     """norm[net][design] = (normalized latency, normalized throughput), LoAS = 1."""
     fig, axes = plt.subplots(1, 2, figsize=(7.16, 2.55))
     w = 0.112
-    # LoAS (1x) first, then the other baselines from worst to best (mean normalized throughput), ours last
-    mid = [d for d in ORDER if d not in ("loas_zip", "ours")]
+    # the worst design (lowest mean throughput) is 1x; bars run from it to the best baseline, ours last
+    base = min((d for d in ORDER if d != "ours"), key=lambda d: np.mean([norm[n][d][1] for n in NETS]))
+    norm = {n: {d: (norm[n][d][0] / norm[n][base][0], norm[n][d][1] / norm[n][base][1]) for d in ORDER} for n in NETS}
+    mid = [d for d in ORDER if d != "ours"]
     mid.sort(key=lambda d: np.mean([norm[n][d][1] for n in NETS]))
-    order = ["loas_zip"] + mid + ["ours"]
+    order = mid + ["ours"]
+    print(f"{out}: normalized to {NAME[base]} = 1x; order", [NAME[d] for d in order])
     for ax, idx, ylab, tag in ((axes[0], 0, "Normalized latency", "(a)"),
                                (axes[1], 1, "Normalized throughput", "(b)")):
         for i, d in enumerate(order):
@@ -64,7 +67,7 @@ def draw(norm, out, note=""):
         ax.set_ylabel(ylab)
         ax.yaxis.grid(True, ls=":", color="#b0b0b0", lw=0.5, zorder=0)
         top = max(norm[n][d][idx] for n in NETS for d in ORDER)
-        ax.set_ylim(0, top * 1.2)
+        ax.set_ylim(0, top * 1.32)
         ax.text(0.5, -0.17, tag, transform=ax.transAxes, ha="center", va="top", fontsize=10)
     h, l = axes[0].get_legend_handles_labels()
     fig.legend(h, l, ncol=7, loc="upper center", bbox_to_anchor=(0.5, 1.0), frameon=False, fontsize=8.5,
