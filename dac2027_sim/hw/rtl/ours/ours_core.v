@@ -72,12 +72,14 @@ module ours_pe #(parameter T = 8, F = 4, G = 4, SW = 10) (
 endmodule
 
 
-// 80-entry FIFO, up to 16 writes (the touched slots of one bundle) and 4 reads per cycle.
+// 80-entry FIFO, up to 16 writes (the touched slots of one bundle) and up to 4 reads per cycle.
 // Banked: entry n lives in bank n%16, row n/16, so 16 consecutive writes always hit 16 different banks.
+// rd_v marks the (up to E) head entries on offer; the edge arbiter decides how many leave (pop, in order).
 module ours_edge_fifo #(parameter EW = 93, NS = 16, BANKS = 16, ROWS = 5, E = 4) (
     input  wire               clk, rst,
     input  wire [NS-1:0]      wr_v,          // which slots carry an entry
     input  wire [NS*EW-1:0]   wr_d,
+    input  wire [2:0]         pop,
     output wire [E-1:0]       rd_v,
     output wire [E*EW-1:0]    rd_d,
     output reg  [7:0]         count,
@@ -97,7 +99,8 @@ module ours_edge_fifo #(parameter EW = 93, NS = 16, BANKS = 16, ROWS = 5, E = 4)
             nwr = nwr + wr_v[s];
         end
     end
-    wire [2:0] nrd = (count >= E) ? E : count[2:0];
+    wire [2:0] avail = (count >= E) ? E : count[2:0];
+    wire [2:0] nrd = pop;
     // per-bank write select
     reg [EW-1:0] bdata [0:BANKS-1];
     reg [BANKS-1:0] bwe;
@@ -117,7 +120,7 @@ module ours_edge_fifo #(parameter EW = 93, NS = 16, BANKS = 16, ROWS = 5, E = 4)
     genvar g;
     generate for (g = 0; g < E; g = g + 1) begin : rp
         wire [6:0] a = (rptr + g >= D) ? rptr + g - D : rptr + g;
-        assign rd_v[g] = (g < nrd);
+        assign rd_v[g] = (g < avail);
         assign rd_d[g*EW +: EW] = mem[a];
     end endgenerate
     always @(posedge clk or posedge rst) begin
@@ -361,6 +364,35 @@ module ours_core #(parameter R = 4, C = 4, T = 8, F = 4, G = 4, SW = 10, PSW = 2
         end
     endgenerate
 
+    // ---------------- edge arbiter: the C*E head entries on offer (priority: column 0 first, then FIFO order).
+    // An entry may not update the output buffer in the same cycle as an earlier offered entry with the same
+    // (filter, pixel) address (both would read the old value); it and the entries behind it in its FIFO wait.
+    wire [C*E-1:0] cv, ok, iss;
+    wire [C*E*(FIDW+PIDW)-1:0] ca;
+    wire [C*3-1:0] npop;
+    genvar qa, qb;
+    generate
+        for (qa = 0; qa < C*E; qa = qa + 1) begin : arb
+            wire [C*E-1:0] same;
+            for (qb = 0; qb < C*E; qb = qb + 1) begin : cmp
+                if (qb < qa) begin : lo
+                    assign same[qb] = cv[qb] && (ca[qb*(FIDW+PIDW) +: FIDW+PIDW] == ca[qa*(FIDW+PIDW) +: FIDW+PIDW]);
+                end else begin : hi
+                    assign same[qb] = 1'b0;
+                end
+            end
+            assign ok[qa] = cv[qa] && !(|same);
+            if (qa % E == 0) begin : h
+                assign iss[qa] = ok[qa];
+            end else begin : t
+                assign iss[qa] = ok[qa] && iss[qa - 1];
+            end
+        end
+        for (qa = 0; qa < C; qa = qa + 1) begin : pc
+            assign npop[qa*3 +: 3] = iss[qa*E] + iss[qa*E + 1] + iss[qa*E + 2] + iss[qa*E + 3];
+        end
+    endgenerate
+
     // ---------------- id sideband: column c needs the ids R + c cycles after injection
     localparam IDW = G * PIDW + F * FIDW;
     generate for (c = 0; c < C; c = c + 1) begin : ids
@@ -389,12 +421,14 @@ module ours_core #(parameter R = 4, C = 4, T = 8, F = 4, G = 4, SW = 10, PSW = 2
         wire [E*EW-1:0] rd;
         wire [7:0] cnt;
         ours_edge_fifo #(.EW(EW), .NS(NS), .E(E)) fifo (
-            .clk(clk), .rst(rst), .wr_v(bt[R][c]), .wr_d(wd), .rd_v(rv), .rd_d(rd),
+            .clk(clk), .rst(rst), .wr_v(bt[R][c]), .wr_d(wd), .pop(npop[c*3 +: 3]), .rd_v(rv), .rd_d(rd),
             .count(cnt), .overflow(fifo_overflow[c]));
         for (e = 0; e < E; e = e + 1) begin : rmw
             localparam Q = c * E + e;
             wire [EW-1:0] ent = rd[e*EW +: EW];
-            assign obuf_we[Q] = rv[e];
+            assign cv[Q] = rv[e];
+            assign ca[Q*(FIDW+PIDW) +: FIDW+PIDW] = ent[EW-1 -: FIDW+PIDW];
+            assign obuf_we[Q] = iss[Q];
             assign obuf_addr[Q*(FIDW+PIDW) +: FIDW+PIDW] = ent[EW-1 -: FIDW+PIDW];
             for (tt = 0; tt < T; tt = tt + 1) begin : add
                 wire signed [SW-1:0] v = ent[tt*SW +: SW];

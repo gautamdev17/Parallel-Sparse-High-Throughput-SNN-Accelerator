@@ -43,11 +43,11 @@
    "thr_per_adder": 12.825069008490068
   },
   "VGG16|ours": {
-   "cycles_b1": 405230,
-   "cycles_b16": 4634555,
-   "latency_ms": 0.5065375,
-   "throughput": 2761.8617105633657,
-   "thr_per_adder": 21.577044613776295
+   "cycles_b1": 433553,
+   "cycles_b16": 4634623,
+   "latency_ms": 0.5419412499999999,
+   "throughput": 2761.821188044853,
+   "thr_per_adder": 21.576728031600414
   },
   "ResNet18|loas_zip": {
    "cycles_b1": 15076980.231999999,
@@ -92,11 +92,11 @@
    "thr_per_adder": 6.278891928779533
   },
   "ResNet18|ours": {
-   "cycles_b1": 550695,
-   "cycles_b16": 8019857,
-   "latency_ms": 0.68836875,
-   "throughput": 1596.0384331042312,
-   "thr_per_adder": 12.469050258626806
+   "cycles_b1": 550749,
+   "cycles_b16": 8019903,
+   "latency_ms": 0.6884362500000001,
+   "throughput": 1596.0292786583577,
+   "thr_per_adder": 12.46897873951842
   }
  },
  "zipstats": {
@@ -143,11 +143,11 @@
    "thr_per_adder": 6.304748465439985
   },
   "VGG16|ours": {
-   "cycles_b1": 4623242,
-   "cycles_b16": 58428087,
-   "latency_ms": 5.779052500000001,
-   "throughput": 219.07272096722934,
-   "thr_per_adder": 1.7115056325564793
+   "cycles_b1": 4631734,
+   "cycles_b16": 58428767,
+   "latency_ms": 5.7896675,
+   "throughput": 219.07017137637013,
+   "thr_per_adder": 1.7114857138778916
   },
   "ResNet18|loas_zip": {
    "cycles_b1": 15076980.231999999,
@@ -192,11 +192,11 @@
    "thr_per_adder": 3.134821493702943
   },
   "ResNet18|ours": {
-   "cycles_b1": 6794337,
-   "cycles_b16": 101814085,
-   "latency_ms": 8.49292125,
-   "throughput": 125.71934423414991,
-   "thr_per_adder": 0.9821823768292962
+   "cycles_b1": 6794464,
+   "cycles_b16": 101815285,
+   "latency_ms": 8.49308,
+   "throughput": 125.71786249972192,
+   "thr_per_adder": 0.9821708007790775
   }
  }
 }

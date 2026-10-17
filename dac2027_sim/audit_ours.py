@@ -103,19 +103,21 @@ def independent_sim(W, S, hw=Hw):
             tiles.append((m0, m1, n0, n1, kts))
     # ---- time loop
     t = 0
-    pack_clock = 0.0                 # packer works on a continuous slice stream
+    pack_clock = 0                   # packer: one K-tile at a time, PP slices per cycle
     released = [0, 0]                # cycle each K-tile's group buffer is freed (double buffer)
     for (m0, m1, n0, n1, kts) in tiles:
         npx = n1 - n0
         tile_start = t
         next_inject = tile_start + math.ceil(R * C / hw.LW)   # first weights loaded
-        arrivals = {c: [] for c in range(C)}                  # (cycle, entries)
+        arrivals = {c: [] for c in range(C)}                  # (cycle, [addresses in slot order])
         last_bundle_exit = tile_start
+        pk_last = tile_start
         dirty = set()
         for (kt, spk, wt, groups, passes) in kts:
             pstart = max(pack_clock, released[-2])
-            pack_clock = pstart + npx / hw.PP
-            ready = math.ceil(pack_clock)
+            pack_clock = pstart + -(-npx // hw.PP)
+            ready = pack_clock
+            pk_last = ready
             if not groups:
                 released.append(ready)
                 continue
@@ -124,7 +126,7 @@ def independent_sim(W, S, hw=Hw):
                 for g, px in enumerate(groups):
                     # the group's running sums leave column c at s + g + R + c; count the touched (f, p) and add
                     for c, fl in enumerate(cols):
-                        n_ent = 0
+                        ents = []
                         for f in fl:
                             for p in px:
                                 contrib = np.zeros(T, dtype=np.int64)
@@ -138,28 +140,41 @@ def independent_sim(W, S, hw=Hw):
                                             if (v >> tt) & 1:
                                                 contrib[tt] += w
                                 if hit:
-                                    n_ent += 1
+                                    ents.append((f, p))
                                     sums[m0 + f, n0 + p] += contrib
                                     dirty.add((f, p))
-                        if n_ent:
-                            arrivals[c].append((s + g + R + c, n_ent))
+                        if ents:
+                            arrivals[c].append((s + g + R + c, ents))
                 last_bundle_exit = max(last_bundle_exit, s + len(groups) - 1 + R + C - 1 + 1)
                 next_inject = s + max(len(groups), math.ceil(R * C / hw.LW))
                 last_in = s + len(groups)
             released.append(last_in)
-        # edge FIFOs: E entries per cycle per column, served from the arrival cycle on
-        edge_done = tile_start
-        for c in range(C):
-            q, cyc = 0, None
-            for (ta, na) in arrivals[c]:
-                if cyc is not None:
-                    q = max(0, q - hw.E * (ta - cyc - 1))
-                q += na
-                q = max(0, q - hw.E)
-                cyc = ta
-            if cyc is not None:
-                edge_done = max(edge_done, cyc + -(-q // hw.E) + 1)
-        t = max(edge_done, last_bundle_exit, tile_start) + -(-len(dirty) // hw.LIF)
+        # edge FIFOs: an entry arriving at cycle a is in the FIFO from a+1; each cycle every column offers its
+        # first E entries, column 0 first; an entry with the same (f, p) as an earlier offered one waits (and the
+        # entries behind it in that FIFO)
+        evs = sorted((ta, c, ents) for c in range(C) for ta, ents in arrivals[c])
+        fifo = [[] for _ in range(C)]
+        edge_done, x, i = tile_start, None, 0
+        while i < len(evs) or any(fifo):
+            if not any(fifo) and (x is None or evs[i][0] > x):
+                x = evs[i][0]
+            offered = [fifo[c][:hw.E] for c in range(C)]
+            flat = []
+            for c in range(C):
+                k = 0
+                for e, a in enumerate(offered[c]):
+                    if a in flat or a in offered[c][:e]:
+                        break
+                    k += 1
+                flat += offered[c]
+                if k:
+                    del fifo[c][:k]
+                    edge_done = max(edge_done, x + 1)
+            while i < len(evs) and evs[i][0] == x:
+                fifo[evs[i][1]] += evs[i][2]
+                i += 1
+            x += 1
+        t = max(edge_done, last_bundle_exit, tile_start, pk_last) + -(-len(dirty) // hw.LIF)
     return t, sums
 
 

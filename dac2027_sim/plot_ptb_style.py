@@ -57,7 +57,7 @@ def draw(norm, out, note=""):
                    label=NAME[d], zorder=3)
             if d == "ours":
                 for xi, vi in zip(x, v):
-                    ax.annotate(f"{vi:.2f}" if idx == 0 else f"{vi:.1f}\u00d7", (xi, vi), xytext=(0, 2),
+                    ax.annotate(f"{vi:.2f}" if idx == 0 else f"{vi:.2f}\u00d7", (xi, vi), xytext=(0, 2),
                                 textcoords="offset points", ha="center", va="bottom", fontsize=7.5,
                                 rotation=90, color=STYLE["ours"]["color"], zorder=5,
                                 bbox=dict(boxstyle="square,pad=0.08", fc="white", ec="none"))

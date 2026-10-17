@@ -4,6 +4,8 @@ This folder models the design in `DAC2027_accelerator_explained_rows.pdf`. It is
 
 ```bash
 python3 verify.py          # must print three [ok] lines
+python3 audit_ours.py random   # independent simulator == ours.py on 60 random layers
+python3 hw/rtl_closed.py net VGG16 1   # whole network on the RTL: bit-exact + cycle-exact vs ours.py (also ResNet18, batch 16)
 python3 run_all.py         # main tables -> results/main_tables.md, main_summary.json
 python3 run_all.py sweep   # weight-sparsity sweep -> results/sweep_summary.json
 python3 sensitivity.py     # design knobs at 128 adders -> results/sensitivity.json
@@ -18,13 +20,13 @@ This is the workload the author specified in `current_arch/REPORT.md` section 15
 
 | Network | Design | Latency b=1 (ms) | Ours faster by | Throughput b=16 (img/s) | Ours higher by |
 |---|---|---:|---:|---:|---:|
-| VGG16 | LoAS | 11.217 | 22.1x | 89 | 31.0x |
-| VGG16 | SpikeX (8x8) | 4.170 | 8.2x | 240 | 11.5x |
-| VGG16 | PTB (16x8, Prosperity-repo model) | 4.627 | 9.1x | 215 | 12.8x |
-| VGG16 | SATO (128 PE, Prosperity-repo model) | 3.060 | 6.0x | 478 | 5.8x |
-| VGG16 | SpikeFlow (16x16) | 2.002 | 3.9x | 502 | 5.5x |
-| VGG16 | Prosperity (official simulator) | 0.833 | 1.6x | 1,642 | 1.7x |
-| VGG16 | **Ours (4x4 PE x 8 adders)** | **0.507** | – | **2,762** | – |
+| VGG16 | LoAS | 11.217 | 20.7x | 89 | 31.0x |
+| VGG16 | SpikeX (8x8) | 4.170 | 7.7x | 240 | 11.5x |
+| VGG16 | PTB (16x8, Prosperity-repo model) | 4.627 | 8.5x | 215 | 12.8x |
+| VGG16 | SATO (128 PE, Prosperity-repo model) | 3.060 | 5.6x | 478 | 5.8x |
+| VGG16 | SpikeFlow (16x16) | 2.002 | 3.7x | 502 | 5.5x |
+| VGG16 | Prosperity (official simulator) | 0.833 | 1.5x | 1,642 | 1.7x |
+| VGG16 | **Ours (4x4 PE x 8 adders)** | **0.542** | – | **2,762** | – |
 | ResNet18 | LoAS | 18.846 | 27.4x | 53 | 30.1x |
 | ResNet18 | SpikeX (8x8) | 7.472 | 10.9x | 132 | 12.0x |
 | ResNet18 | PTB (16x8, Prosperity-repo model) | 7.941 | 11.5x | 125 | 12.8x |
@@ -124,9 +126,32 @@ The edge FIFO peaked at 79 entries per column, so the hardware needs roughly 80 
 Timing rules (full list in the `ours.py` docstring):
 * Output tiles are 64 filters × 128 pixels (a 192 KB output buffer).
 * K-tiles are R consecutive inputs. Filters are packed offline per K-tile with first-fit decreasing.
-* The packer is double-buffered and scans pp pixel slices per cycle. It does first-fit with 4 open groups.
+* The packer is double-buffered and scans pp pixel slices per cycle, one K-tile at a time (ceil(n/pp) cycles per K-tile, as in the RTL). It does first-fit with 4 open groups.
 * Pass j+1 starts at least max(P_j, load) cycles after pass j.
-* The tile ends after the last bundle drains, the edge FIFO empties, and the LIF sweeps the dirty entries at 16 per cycle.
+* Edge unit: an entry leaving a column at cycle a is written into the column FIFO at the end of a and served from a+1. Up to E=4 read-modify-writes per column per cycle; a same-address arbiter (column 0 first, then FIFO order) holds back an entry whose (filter, pixel) equals an earlier offered entry's in that cycle. Simulated entry by entry (`edge_sim.c`).
+* The tile ends after the last bundle drains, the edge FIFOs empty and the packer has scanned every K-tile of the tile; then the LIF sweeps the dirty entries at 16 per cycle.
+
+### Whole-network RTL verification (closed loop)
+
+`hw/rtl_closed.py` + `hw/tb/tb_ours_closed.v` run `ours_core.v` (Verilator) over **every layer of VGG16 and ResNet18 at batch 1 and 16**. Only offline data go into the RTL: the packed weight columns of each pass and the raw spike slices. The **RTL packer forms the groups** that are injected, and the testbench controller schedules from RTL signals only (packer outputs, edge-FIFO occupancy) following the doc's rules: packer double buffering, pass start once its K-tile is packed, shadow weights written behind the wavefront, and tile end when the RTL edge FIFOs are empty, followed by the LIF sweep through the RTL LIF units. Each run checks every output's 8 partial sums (24 bit) against the dense `W @ bit_t(S)`, every output's LIF spikes against the integer LIF (`V = (V >> 1) + x`), and the total cycle count against `ours.run_layer_fast`.
+
+| Run | Layers | Outputs checked | RTL cycles | Model cycles |
+|---|---:|---:|---:|---:|
+| VGG16 batch 1 | 16 | all, bit-exact | 433,553 | 433,553 |
+| VGG16 batch 16 | 16 | all (4.4 M), bit-exact | 4,634,623 | 4,634,623 |
+| ResNet18 batch 1 | 21 | all, bit-exact | 550,749 | 550,749 |
+| ResNet18 batch 16 | 21 | all, bit-exact | 8,019,903 | 8,019,903 |
+
+Per-layer results: `results/rtl_closed_<net>_b<batch>.json`. 20 random layers (several output tiles each, densities 5–100%) are also cycle-exact. Two of them, at 30% density, are not bit-exact because their FIFO peaks at 87 and 91 entries, above the 80 entries.
+
+The closed-loop run found three things the earlier one-tile check missed, and all are fixed:
+1. **Lost output-buffer updates (RTL bug):** two edge ports could read-modify-write the same (filter, pixel) in the same cycle. This hit layers with few pixels (N ≤ 64, e.g. 473 lost updates in VGG16 fc2 at batch 1). Fix: the same-address arbiter in `ours_core.v` (16×15/2 address comparators), modelled in `ours.py`.
+2. **Packer timing (model too optimistic):** the model let several small K-tiles share one packer cycle; the RTL packs one K-tile per cycle. This only matters when a tile has fewer than 8 pixels. VGG16 batch-1 latency rises 7.0% (405,230 → 433,553 cycles, from fc1/fc2/b5). The other numbers move by ≤ 0.2%.
+3. **Edge FIFO latency and trailing empty K-tiles:** a FIFO entry is served the cycle after it is written, and a tile cannot end before the packer has scanned its last K-tiles. These cost +1 to +4 cycles per tile.
+
+Also the controller requirement: shadow weights are loaded speculatively for the next pass in table order and rewritten if that K-tile packs to zero groups. The pass parity toggles per executed pass.
+
+**Not covered: FIFO capacity.** The edge FIFO has 80 entries and no backpressure. The RTL flags overflow, and the model reports `fifo_max`. On the main workloads (`sparse90`, `zipstats`) the peak is 79. In the weight-density sweep, denser weights (≥ 30%) exceed 80, so those sweep points need either a deeper FIFO or backpressure, which is not modelled.
 
 ## Assumptions to state in the paper (these affect every number)
 
@@ -186,7 +211,7 @@ Where our power goes:
 **RTL verification:** every RTL is checked against the dense reference by `hw/check_rtl.py`.
 - **SpikeX:** 80 iterations, exact.
 - **PTB:** 144 iterations, exact.
-- **Ours:** a full 64×128 output tile, exact at both RTL and gate level. The packer's 3,135 groups are identical to the Python model's. The RTL takes 8,651 cycles against the cycle model's 8,653.
+- **Ours:** whole VGG16 and ResNet18 at batch 1 and 16, closed loop, bit-exact and cycle-exact (see "Whole-network RTL verification" above). The older one-tile replay (`gen_stim.py`, used for power) is also exact at RTL and gate level.
 - **LoAS:** the provided RTL needed two marked fixes: a doubly driven ready net, and a loop bound Yosys could not synthesize. It still drops matches when its 8-deep FIFO fills (110 of 240 at 26.1% density) and takes about 200 cycles per 128-chunk, against 54 in the zip's closed form. Its latency is still taken from the zip formula.
 
 **Workload behind each power number:**
@@ -370,7 +395,7 @@ For ours, SpikeX, SpikeFlow and SATO, traffic is computed with on-chip im2col, u
 
 | Design | Functional check | Cycles: RTL vs cycle model |
 |---|---|---|
-| Ours | Full 64×128 output tile, bit-exact at RTL and gate level | 8,651 vs 8,653 |
+| Ours | Whole VGG16 and ResNet18, batch 1 and 16, closed loop (RTL packer, RTL edge FIFOs), bit-exact sums and spikes | Equal on every layer (e.g. VGG16 b16 4,634,623 vs 4,634,623) |
 | SpikeFlow | 64 passes × 16 rows × 16 columns, exact | 12,752 vs 12,753, plus 681 DMA stall cycles of the testbench's 1-word/cycle load |
 | SATO | 16,384 row integrations exact; dispatcher choices identical to the model's greedy assignment | 4,240 vs 4,240 |
 | Prosperity | Prefix/pattern of all 294 searched rows equal the official `find_product_sparsity`; 1,401 rows × 128 channels exact | Preprocess 806 vs 806; processor 1,434 vs 1,418 (+1 write-back cycle per tile) |
