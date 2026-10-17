@@ -17,50 +17,54 @@ NETS = ["VGG16", "ResNet18"]
 ORDER = ["loas_zip", "spikex", "ptb", "sato", "spikeflow", "prosperity", "ours"]
 NAME = {"loas_zip": "LoAS", "spikex": "SpikeX", "ptb": "PTB", "sato": "SATO", "spikeflow": "SpikeFlow",
         "prosperity": "Prosperity", "ours": "Ours"}
-# grey-scale + hatching like PTB's figures; ours is the single coloured series
-STYLE = {"loas_zip": dict(color="#000000", hatch=""),
-         "spikex": dict(color="#7f7f7f", hatch=""),
-         "ptb": dict(color="#ffffff", hatch=""),
-         "sato": dict(color="#c8c8c8", hatch="////"),
-         "spikeflow": dict(color="#ffffff", hatch="\\\\\\\\"),
-         "prosperity": dict(color="#9a9a9a", hatch="xxx"),
-         "ours": dict(color="#1d3fd6", hatch="")}
+# own palette: muted cool tones for the baselines (distinct fill + pattern, readable in grey-scale print),
+# one warm accent for ours
+STYLE = {"loas_zip":   dict(color="#e6e9ed", hatch="////"),
+         "spikex":     dict(color="#c3d3e2", hatch=""),
+         "ptb":        dict(color="#9bb7cf", hatch="...."),
+         "sato":       dict(color="#6f93b3", hatch=""),
+         "spikeflow":  dict(color="#4a7396", hatch="\\\\\\\\"),
+         "prosperity": dict(color="#2c4f6e", hatch=""),
+         "ours":       dict(color="#b5302a", hatch="")}
+EDGE = "#2b2b2b"
 
 plt.rcParams.update({
     "font.family": "serif", "font.serif": ["Times New Roman", "Times", "DejaVu Serif"],
-    "font.weight": "bold", "axes.labelweight": "bold", "axes.titleweight": "bold",
-    "font.size": 11, "axes.linewidth": 1.4, "hatch.linewidth": 0.7,
-    "xtick.direction": "in", "ytick.direction": "in", "xtick.major.width": 1.2, "ytick.major.width": 1.2,
-    "xtick.major.size": 4, "ytick.major.size": 4, "xtick.top": True, "ytick.right": True,
-    "legend.frameon": True, "legend.edgecolor": "black", "legend.fancybox": False, "legend.framealpha": 1.0,
+    "font.size": 10, "axes.linewidth": 1.0, "hatch.linewidth": 0.45, "hatch.color": EDGE,
+    "xtick.direction": "in", "ytick.direction": "in", "xtick.major.width": 0.9, "ytick.major.width": 0.9,
+    "xtick.major.size": 3.5, "ytick.major.size": 3.5, "xtick.top": True, "ytick.right": True,
+    "ytick.minor.visible": True, "ytick.minor.size": 2, "ytick.minor.width": 0.6, "xtick.minor.visible": False,
 })
 
 
 def draw(norm, out, note=""):
     """norm[net][design] = (normalized latency, normalized throughput), LoAS = 1."""
-    fig, axes = plt.subplots(1, 2, figsize=(10.5, 3.9))
-    w = 0.11
-    for ax, idx, ylab, tag in ((axes[0], 0, "Normalized Latency", "(a)"),
-                               (axes[1], 1, "Normalized Throughput", "(b)")):
+    fig, axes = plt.subplots(1, 2, figsize=(7.16, 2.55))
+    w = 0.112
+    for ax, idx, ylab, tag in ((axes[0], 0, "Normalized latency", "(a)"),
+                               (axes[1], 1, "Normalized throughput", "(b)")):
         for i, d in enumerate(ORDER):
-            x = np.arange(len(NETS)) + (i - (len(ORDER) - 1) / 2) * w
+            x = np.arange(len(NETS)) + (i - (len(ORDER) - 1) / 2) * (w + 0.008)
             v = [norm[n][d][idx] for n in NETS]
-            ax.bar(x, v, w, color=STYLE[d]["color"], hatch=STYLE[d]["hatch"], edgecolor="black", linewidth=0.9,
+            ax.bar(x, v, w, color=STYLE[d]["color"], hatch=STYLE[d]["hatch"], edgecolor=EDGE, linewidth=0.55,
                    label=NAME[d], zorder=3)
-        ax.set_xticks(range(len(NETS)), NETS, fontsize=13)
-        ax.set_xlim(-0.6, len(NETS) - 0.4)
-        ax.set_ylabel(ylab, fontsize=14)
-        ax.yaxis.grid(True, ls=(0, (3, 3)), color="#9e9e9e", lw=0.6, zorder=0)
+            if d == "ours":
+                for xi, vi in zip(x, v):
+                    ax.annotate(f"{vi:.2f}" if idx == 0 else f"{vi:.1f}\u00d7", (xi, vi), xytext=(0, 2),
+                                textcoords="offset points", ha="center", va="bottom", fontsize=8,
+                                color=STYLE["ours"]["color"])
+        ax.axhline(1.0, color=EDGE, lw=0.6, ls=(0, (4, 2)), zorder=2)
+        ax.set_xticks(range(len(NETS)), NETS)
+        ax.set_xlim(-0.55, len(NETS) - 0.45)
+        ax.set_ylabel(ylab)
+        ax.yaxis.grid(True, ls=":", color="#b0b0b0", lw=0.5, zorder=0)
         top = max(norm[n][d][idx] for n in NETS for d in ORDER)
-        ax.set_ylim(0, top * 1.45)
-        ax.legend(ncol=4, fontsize=9.5, loc="upper center", handlelength=1.6, columnspacing=0.9,
-                  borderpad=0.4, labelspacing=0.3)
-        ax.text(0.5, -0.2, tag, transform=ax.transAxes, ha="center", va="top", fontsize=14, fontweight="normal")
-        for lab in ax.get_yticklabels():
-            lab.set_fontweight("bold")
-    if note:
-        fig.suptitle(note, fontsize=12)
-    fig.subplots_adjust(left=0.07, right=0.99, top=0.9 if note else 0.97, bottom=0.2, wspace=0.22)
+        ax.set_ylim(0, top * 1.14)
+        ax.text(0.5, -0.17, tag, transform=ax.transAxes, ha="center", va="top", fontsize=10)
+    h, l = axes[0].get_legend_handles_labels()
+    fig.legend(h, l, ncol=7, loc="upper center", bbox_to_anchor=(0.5, 1.0), frameon=False, fontsize=8.5,
+               handlelength=1.5, handleheight=0.9, columnspacing=1.1, handletextpad=0.4)
+    fig.subplots_adjust(left=0.075, right=0.99, top=0.86, bottom=0.2, wspace=0.27)
     for ext in ("png", "pdf"):
         fig.savefig(os.path.join(R, f"{out}.{ext}"), dpi=300)
 
@@ -77,7 +81,7 @@ def v1():
             lat = l0 if d == "loas_zip" else s[f"{n}|{d}"]["latency_ms"]
             thr = t0 if d == "loas_zip" else s[f"{n}|{d}"]["throughput"]
             norm[n][d] = (lat / l0, thr / t0)
-    draw(norm, "v1_ptbstyle")
+    draw(norm, "v1_fig")
 
 
 def v4():
@@ -100,7 +104,7 @@ def v4():
         "### v4: 16 PEs in every design, LoAS from loas_model.py, workload sparse90 (T=8, 800 MHz)\n\n"
         + "\n".join(rows) + "\n\nOurs and LoAS PEs have 8 adders each (one per timestep); the other designs' PEs have 1.\n")
     print("\n".join(rows))
-    draw(norm, "v4_ptbstyle")
+    draw(norm, "v4_fig")
 
 
 if __name__ == "__main__":
