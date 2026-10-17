@@ -146,7 +146,7 @@ def main():
         return dict(freq_MHz=freq / 1e6, latency_ms=t * 1e3, gops=gops, power_W=p, gopj=gops / p,
                     area_mm2=at * 1e-6 * A28 + sum(sram_area.values()), core_W=p_core, sram_W=p_leak + e_sram / t)
     f28 = fmax45 / D28 * 1e6
-    rows = {"target 500 MHz (packer, LIF, edge pipelined)": ppa(500e6), "as synthesized (fmax)": ppa(f28)}
+    rows = {"500 MHz (timing met at 45 nm)": ppa(500e6), "fmax (510 MHz at 45 nm, scaled)": ppa(f28)}
     out["ours_28nm"] = rows
     lines += ["", "Ours at 28 nm on VGG16 (batch 1, sparse90), operations in Phi's definition "
               f"({VGG['ops'] / 1e6:.1f} M per image; {VGG['eff'] / 1e6:.2f} M touch a non-zero weight):", "",
@@ -159,8 +159,8 @@ def main():
     json.dump(out, open(os.path.join(RES, "ppa.json"), "w"), indent=1)
     print("\n".join(lines))
     # ---- comparison table
-    r = rows["target 500 MHz (packer, LIF, edge pipelined)"]
-    rf = rows["as synthesized (fmax)"]
+    r = rows["500 MHz (timing met at 45 nm)"]
+    rf = rows["fmax (510 MHz at 45 nm, scaled)"]
     C = ["# Comparison with published SNN accelerators", "",
          "Baseline numbers are as reported in each paper (GOP/s, GOP/J only where the paper reports them; Phi Table 2 "
          "for PTB / SATO / Stellar so one column has one source). 'OP' = one accumulation per '1' spike bit per output "
@@ -174,8 +174,8 @@ def main():
          "| LoAS | MICRO'24 | 32 nm | 800 MHz | 2.08 (incl. 256 KB SRAM) | 188.9 | - | - | - | only normalized results |",
          "| Prosperity | HPCA'25 | 28 nm | 500 MHz | 0.529 (incl. buffers) | 915 (incl. DRAM) | 390.10 | 299.80 | VGG16/CIFAR100 (own Table IV) | OP not defined |",
          "| Phi | ISCA'25 | 28 nm | 500 MHz | 0.662 (incl. 240 KB buffers) | 346.6 (on-chip) | 242.80 | 285.81 | VGG16/CIFAR100 (own Table 2) | GOP/J likely incl. DRAM |",
-         f"| **Ours** (target clock) | - | 28 nm (scaled from 45 nm) | 500 MHz | {r['area_mm2']:.3f} (incl. 260 KB SRAM) | {1e3 * r['power_W']:.1f} (core + SRAM) | {r['gops']:.1f} | {r['gopj']:.0f} | VGG16, sparse90 synthetic | needs pipelined packer/LIF/edge |",
-         f"| Ours (as synthesized) | - | 28 nm (scaled) | {rf['freq_MHz']:.0f} MHz | {rf['area_mm2']:.3f} | {1e3 * rf['power_W']:.1f} | {rf['gops']:.1f} | {rf['gopj']:.0f} | VGG16, sparse90 synthetic | current RTL timing |",
+         f"| **Ours** (target clock) | - | 28 nm (scaled from 45 nm) | 500 MHz | {r['area_mm2']:.3f} (incl. 260 KB SRAM) | {1e3 * r['power_W']:.1f} (core + SRAM) | {r['gops']:.1f} | {r['gopj']:.0f} | VGG16, sparse90 synthetic | timing met at 500 MHz (45 nm, synthesis) |",
+         f"| Ours (as synthesized) | - | 28 nm (scaled) | {rf['freq_MHz']:.0f} MHz | {rf['area_mm2']:.3f} | {1e3 * rf['power_W']:.1f} | {rf['gops']:.1f} | {rf['gopj']:.0f} | VGG16, sparse90 synthetic | fmax scaled to 28 nm |",
          "", "\\* PTB, SATO numbers as re-simulated by Phi (Table 2, 500 MHz, 28 nm); Prosperity's Table IV gives different values "
          "for the same baselines (PTB 41.37 / 34.15, SATO 33.63 / 49.70), so sources are not mixed within a column.",
          "Workloads differ: the baselines' VGG16/CIFAR100 spikes are ~10% (Phi) to 34% (Prosperity) dense with dense weights; "
