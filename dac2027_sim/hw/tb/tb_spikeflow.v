@@ -11,10 +11,26 @@ module tb_spikeflow;
     reg [R*8-1:0] dma_w_data = 0; reg [C-1:0] dma_s_data = 0;
     wire nxt_take, busy, act;
     wire [R*C*PSW-1:0] psum; wire [R-1:0] row_done; wire [C-1:0] spk;
+    wire [11:0] sram_raddr;
+`ifdef SF_EXT_SRAM
+    // the double-buffered SRAM outside the core: DMA writes the idle half, the core reads {act, k}
+    reg [R*8-1:0] wmem [0:2047];
+    reg [C-1:0]   smem [0:4095];
+    always @(posedge clk) begin
+        if (dma_w_we) wmem[{~act, 1'b0, dma_w_addr}] <= dma_w_data;
+        if (dma_s_we) smem[{~act, dma_s_addr}] <= dma_s_data;
+    end
+    wire [R*8-1:0] sram_w = wmem[{sram_raddr[11], 1'b0, sram_raddr[8:0]}];
+    wire [C-1:0]   sram_s = smem[sram_raddr];
+`endif
     spikeflow_core dut(.clk(clk), .rst(rst), .dma_w_we(dma_w_we), .dma_w_addr(dma_w_addr), .dma_w_data(dma_w_data),
         .dma_s_we(dma_s_we), .dma_s_addr(dma_s_addr), .dma_s_data(dma_s_data), .nxt_v(nxt_v), .nxt_n(nxt_n),
         .nxt_take(nxt_take), .busy(busy), .act(act), .vth(18'sd200), .vset(18'sd0),
-        .psum_out(psum), .row_done(row_done), .lif_spk(spk));
+        .psum_out(psum), .row_done(row_done), .lif_spk(spk)
+`ifdef SF_EXT_SRAM
+        , .sram_raddr(sram_raddr), .sram_wdata_rd(sram_w), .sram_sdata_rd(sram_s), .obuf_we(), .obuf_waddr()
+`endif
+        );
     integer fd, fo, n, i, r, c, cyc = 0, t0 = -1, tlast = 0, stalls = 0, npass = 0, code;
     reg [R*8-1:0] wv; reg [C-1:0] sv;
     always @(posedge clk) cyc <= cyc + 1;

@@ -74,7 +74,17 @@ module spikeflow_core #(parameter R = 16, C = 16, PSW = 16,
     output wire [R*C*PSW-1:0]    psum_out,
     output wire [R-1:0]          row_done,
     output wire [C-1:0]          lif_spk
+`ifdef SF_EXT_SRAM
+    // the 18.5 KB double buffer as SRAM outside the core (as for every other design in the power comparison):
+    // synchronous read ports, the read data is registered in w_now / s_now exactly as with the internal buffer
+    , output wire [11:0]         sram_raddr,     // {half, k}
+    input  wire [R*8-1:0]        sram_wdata_rd,
+    input  wire [C-1:0]          sram_sdata_rd,
+    output wire                  obuf_we,
+    output wire [10:0]           obuf_waddr      // {half, word}; data = lif_spk
+`endif
 );
+`ifndef SF_EXT_SRAM
     // ---------------- double-buffered on-chip memory (18.5 KB)
     reg [R*8-1:0] wbuf [0:1][0:WB_WORDS-1];
     reg [C-1:0]   sbuf [0:1][0:SB_WORDS-1];
@@ -83,6 +93,7 @@ module spikeflow_core #(parameter R = 16, C = 16, PSW = 16,
         if (dma_w_we) wbuf[~act][dma_w_addr] <= dma_w_data;
         if (dma_s_we) sbuf[~act][dma_s_addr] <= dma_s_data;
     end
+`endif
 
     // ---------------- sequencer: one non-silent K entry per cycle, passes back to back
     reg [10:0] k, n;
@@ -98,8 +109,13 @@ module spikeflow_core #(parameter R = 16, C = 16, PSW = 16,
             in_v <= busy;
             first_d <= busy & first;
             if (busy) begin
+`ifdef SF_EXT_SRAM
+                w_now <= sram_wdata_rd;
+                s_now <= sram_sdata_rd;
+`else
                 w_now <= wbuf[act][k[8:0]];
                 s_now <= sbuf[act][k];
+`endif
             end
             if (nxt_take) begin
                 busy <= 1; k <= 0; n <= nxt_n; first <= 1; act <= ~act;
@@ -174,6 +190,16 @@ module spikeflow_core #(parameter R = 16, C = 16, PSW = 16,
         if (rst) begin owp <= 0; lgo_d <= 0; end
         else begin
             lgo_d <= lgo;
-            if (lgo_d) begin obuf[act][owp] <= lif_spk; owp <= (owp == OB_WORDS - 1) ? 0 : owp + 1; end
+            if (lgo_d) begin
+`ifndef SF_EXT_SRAM
+                obuf[act][owp] <= lif_spk;
+`endif
+                owp <= (owp == OB_WORDS - 1) ? 0 : owp + 1;
+            end
         end
+`ifdef SF_EXT_SRAM
+    assign sram_raddr = {act, k};
+    assign obuf_we = lgo_d;
+    assign obuf_waddr = {act, owp};
+`endif
 endmodule

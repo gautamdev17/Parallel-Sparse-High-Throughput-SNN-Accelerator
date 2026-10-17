@@ -4,7 +4,7 @@ grouped bars per network, grey-scale fills with hatching, ours in blue, boxed le
   python3 plot_ptb_style.py v1   -> results/v1_ptbstyle.png/.pdf      (equal adders; LoAS from loas_model.py)
   python3 plot_ptb_style.py v4   -> results/v4_ptbstyle.png/.pdf + results/v4_tables.md  (16 PEs in every design)
 """
-import json, os, sys
+import json, math, os, sys
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -130,13 +130,13 @@ def power_edp():
     for n in NETS:
         val[n] = {}
         for d in ORDER:
-            hw, mult = E2.HW[d]
+            hw, mult = ("spikeflow_ext", 1) if d == "spikeflow" else E2.HW[d]
             p = E2.power_w(hw) * mult * 1e3
             lat = own[f"sparse90|{n}|1"] / F_HZ * 1e3 if d == "loas_zip" else s[f"{n}|{d}"]["latency_ms"]
             e = p * lat * 1e-3
             val[n][d] = (p, e, e * lat)
             rows.append(f"| {n} | {NAME[d]} | {p:.1f} | {lat:.3f} | {e:.4f} | {e * lat:.5f} |")
-    keep = [d for d in ORDER if d != "spikeflow"]
+    keep = list(ORDER)
     base = max((d for d in keep if d != "ours"), key=lambda d: np.mean([val[n][d][2] for n in NETS]))
     mid = sorted((d for d in keep if d != "ours"), key=lambda d: -np.mean([val[n][d][2] / val[n][base][2] for n in NETS]))
     order = mid + ["ours"]
@@ -146,29 +146,34 @@ def power_edp():
         print(n, {NAME[d]: tuple(round(x, 3) for x in norm[n][d]) for d in order})
     open(os.path.join(R, "v1_power_edp.md"), "w").write(
         "### v1 power, energy, EDP (sparse90, batch 1, 800 MHz; power from our RTL of each design, Nangate45)\n\n"
-        + "\n".join(rows) + f"\n\nNormalized to {NAME[base]} = 1x in v1_power_edp.png. SpikeFlow is not plotted: its "
-        "power report is not physical (10.75 W combinational internal vs 16 mW switching) and must be re-measured.\n")
+        + "\n".join(rows) + f"\n\nNormalized to {NAME[base]} = 1x in v1_power_edp.png (log scale). SpikeFlow power: core with its "
+        "18.5 KB buffer as external SRAM, like every other design.\n")
     print("\n".join(rows))
     fig, axes = plt.subplots(1, 2, figsize=(7.16, 2.55))
     w = 0.125
     for ax, idx, ylab, tag in ((axes[0], 0, "Normalized power", "(a)"), (axes[1], 2, "Normalized EDP", "(b)")):
+        ax.set_yscale("log")
+        lo = min(norm[n][d][idx] for n in NETS for d in keep)
+        bot = 10 ** math.floor(math.log10(lo * 0.6))
         for i, d in enumerate(order):
             x = np.arange(len(NETS)) + (i - (len(order) - 1) / 2) * (w + 0.008)
             v = [norm[n][d][idx] for n in NETS]
-            ax.bar(x, v, w, color=STYLE[d]["color"], hatch=STYLE[d]["hatch"], edgecolor=EDGE, linewidth=0.55,
-                   label=NAME[d], zorder=3)
-            if d == "ours":
-                for xi, vi in zip(x, v):
-                    ax.annotate(f"{vi:.2f}" if vi >= 0.01 else f"{vi:.3f}", (xi, vi), xytext=(0, 2),
-                                textcoords="offset points", ha="center", va="bottom", fontsize=7.5, rotation=90,
-                                color="#a85a0c", zorder=5, bbox=dict(boxstyle="square,pad=0.08", fc="white", ec="none"))
+            ax.bar(x, [vi - bot for vi in v], w, bottom=bot, color=STYLE[d]["color"], hatch=STYLE[d]["hatch"],
+                   edgecolor=EDGE, linewidth=0.55, label=NAME[d], zorder=3)
+            for xi, vi in zip(x, v):
+                if d != base:
+                    ax.annotate(f"{vi:.2f}" if vi >= 0.095 else f"{vi:.3f}", (xi, vi), xytext=(0, 2),
+                                textcoords="offset points", ha="center", va="bottom", rotation=90,
+                                fontsize=6.3 if d != "ours" else 7, zorder=5,
+                                color="#a85a0c" if d == "ours" else "#333333",
+                                fontweight="bold" if d == "ours" else "normal",
+                                bbox=dict(boxstyle="square,pad=0.06", fc="white", ec="none"))
         ax.axhline(1.0, color=EDGE, lw=0.6, ls=(0, (4, 2)), zorder=2)
         ax.set_xticks(range(len(NETS)), NETS)
         ax.set_xlim(-0.55, len(NETS) - 0.45)
-        ax.set_ylabel(ylab)
-        ax.yaxis.grid(True, ls=":", color="#b0b0b0", lw=0.5, zorder=0)
-        top = max(norm[n][d][idx] for n in NETS for d in keep)
-        ax.set_ylim(0, top * 1.32)
+        ax.set_ylabel(ylab + " (log)")
+        ax.yaxis.grid(True, which="major", ls=":", color="#b0b0b0", lw=0.5, zorder=0)
+        ax.set_ylim(bot, 6.0)
         ax.text(0.5, -0.17, tag, transform=ax.transAxes, ha="center", va="top", fontsize=10)
     h, l = axes[0].get_legend_handles_labels()
     fig.legend(h, l, ncol=7, loc="upper center", bbox_to_anchor=(0.5, 1.0), frameon=False, fontsize=8.5,
