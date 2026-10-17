@@ -21,7 +21,13 @@
 `timescale 1ns/1ps
 module tb_ours_closed;
     localparam R = 4, C = 4, T = 8, F = 4, G = 4, PSW = 24, E = 4, NLIF = 16, PP = 8, AW = 13, PIDW = 7, FIDW = 6;
-    localparam MAXT = 1 << 14, MAXKT = 1 << 20, MAXP = 1 << 20, MAXS = 1 << 23;
+`ifndef TB_MAXT
+ `define TB_MAXT 14
+ `define TB_MAXKT 20
+ `define TB_MAXP 20
+ `define TB_MAXS 23
+`endif
+    localparam MAXT = 1 << `TB_MAXT, MAXKT = 1 << `TB_MAXKT, MAXP = 1 << `TB_MAXP, MAXS = 1 << `TB_MAXS;
     reg clk = 0, rst = 1;
     always #1 clk = ~clk;
 
@@ -60,10 +66,24 @@ module tb_ours_closed;
         .pk_gv(gv), .pk_gm(gm), .pk_gl(glab), .pk_gid(gid), .pk_gc(gc));
 
     // edge FIFO occupancy, read from the RTL
+`ifdef GATE   // hierarchical gate-level netlist: generate-block instance names are escaped
+    wire [7:0] fc0 = dut.\ids[0].fifo .count, fc1 = dut.\ids[1].fifo .count,
+               fc2 = dut.\ids[2].fifo .count, fc3 = dut.\ids[3].fifo .count;
+`else
     wire [7:0] fc0 = dut.ids[0].fifo.count, fc1 = dut.ids[1].fifo.count,
                fc2 = dut.ids[2].fifo.count, fc3 = dut.ids[3].fifo.count;
+`endif
     // entries written into each FIFO at the coming clock edge (the bundle leaving the array this cycle)
+`ifdef GATE   // nwr is optimised away in the netlist: count the FIFO's write-valid input port instead
+    function automatic [4:0] pc16(input [15:0] v);
+        integer b; begin pc16 = 0; for (b = 0; b < 16; b = b + 1) pc16 = pc16 + v[b]; end
+    endfunction
+    wire [15:0] wv0 = dut.\ids[0].fifo .wr_v, wv1 = dut.\ids[1].fifo .wr_v,
+                wv2 = dut.\ids[2].fifo .wr_v, wv3 = dut.\ids[3].fifo .wr_v;
+    wire [4:0] nw0 = pc16(wv0), nw1 = pc16(wv1), nw2 = pc16(wv2), nw3 = pc16(wv3);
+`else
     wire [4:0] nw0 = dut.ids[0].fifo.nwr, nw1 = dut.ids[1].fifo.nwr, nw2 = dut.ids[2].fifo.nwr, nw3 = dut.ids[3].fifo.nwr;
+`endif
     localparam FDEPTH = 80;
 
     // ------------------------------------------------------------------ output buffer SRAM (tagged per tile)
@@ -187,6 +207,8 @@ module tb_ours_closed;
     endfunction
     reg [T-1:0] spk_of [0:(1<<AW)-1];
     integer fo;
+    integer vcd_from = -1, vcd_len = 0, vcd_on = 0, vcd_lif = 0, vcd_done = 0;
+    reg [8*80-1:0] vcd_file;
 
     task automatic start_tile;
         begin
@@ -248,6 +270,11 @@ module tb_ours_closed;
         for (x = 0; x < 16; x = x + 1) begin st_cyc[x] = -1; st_q[x] = -1; end
         for (x = 0; x < R + C; x = x + 1) hist_t[x] = -100;
         fo = $fopen("closed/out_closed.txt", "w");
+        if (!$value$plusargs("vcd_from=%d", vcd_from)) vcd_from = -1;
+        if (!$value$plusargs("vcd_len=%d", vcd_len)) vcd_len = 0;
+        vcd_lif = $test$plusargs("vcd_lif");
+        if (!$value$plusargs("vcd_file=%s", vcd_file)) vcd_file = "closed/window.vcd";
+        if (vcd_from >= 0 || vcd_lif) $dumpfile(vcd_file);
         repeat (3) @(negedge clk);
         rst = 0;
     end
@@ -278,6 +305,17 @@ module tb_ours_closed;
                 pred_err = pred_err + 1;
         end
         hist_t[cyc % (R + C)] = -100;                        // no injection yet in this cycle
+        // ---- VCD window control (the dump covers whole cycles of the DUT only)
+        if (!vcd_done) begin
+            if (!vcd_on && ((vcd_from >= 0 && cyc == vcd_from) || (vcd_lif && ti == 0 && state == 1))) begin
+                $dumpvars(0, tb_ours_closed.dut); vcd_on = cyc;
+                $display("VCD_ON cyc=%0d", cyc);
+            end else if (vcd_on && ((vcd_from >= 0 && cyc == vcd_from + vcd_len) || (vcd_lif && ti == 1))) begin
+                $dumpoff; vcd_done = 1;
+                $display("VCD_WINDOW %0d cycles (%0d..%0d)", cyc - vcd_on, vcd_on, cyc);
+                $finish;
+            end
+        end
         // ---- defaults for this cycle
         inj_v = 0; wl_en = 0; sl_v = 0; pk_flush = 0; lif_v = 0; lif_n = 0;
         fed_kt = -1; fed_flush = 0;

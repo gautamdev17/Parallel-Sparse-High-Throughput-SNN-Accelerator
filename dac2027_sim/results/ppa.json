@@ -1,0 +1,52 @@
+{
+ "area45_um2": {
+  "PE array (16 PEs)": 199372.32,
+  "edge FIFOs (4 x 80 entries)": 390850.824,
+  "packer (8 slices/cycle)": 46626.608,
+  "LIF units (16)": 40291.552,
+  "arbiter, skew, id sideband, RMW adders": 28843.444
+ },
+ "power45_W": {
+  "PE array (16 PEs)": 0.13230447148200003,
+  "edge FIFOs (4 x 80 entries)": 0.157755891474,
+  "packer (8 slices/cycle)": 0.022970233979999997,
+  "LIF units (16)": 0.0024310801220800006,
+  "arbiter, skew, id sideband, RMW adders": 0.012649427141919911
+ },
+ "power45_total_W": 0.32811110419999995,
+ "annotated_unannotated": [
+  0,
+  0
+ ],
+ "worst_path_ns": {
+  "packer (8 slices/cycle)": 23.11,
+  "edge FIFOs (4 x 80 entries)": 22.31,
+  "output-buffer RMW ports": 21.91,
+  "LIF units (16)": 10.67,
+  "PE array (16 PEs)": 1.68,
+  "arbiter, skew, id sideband, RMW adders": 0.35
+ },
+ "fmax45_MHz": 43.271311120726956,
+ "ours_28nm": {
+  "target 500 MHz (packer, LIF, edge pipelined)": {
+   "freq_MHz": 500.0,
+   "latency_ms": 0.8671220000000001,
+   "gops": 75.41867003720354,
+   "power_W": 0.45341348450876484,
+   "gopj": 166.33530455961912,
+   "area_mm2": 0.7118494036701235,
+   "core_W": 0.09966374790074999,
+   "sram_W": 0.35374973660801484
+  },
+  "as synthesized (fmax)": {
+   "freq_MHz": 48.13271537344489,
+   "latency_ms": 9.007615644290002,
+   "gops": 7.260210757488947,
+   "power_W": 0.16100027369600675,
+   "gopj": 45.09440009522804,
+   "area_mm2": 0.7118494036701235,
+   "core_W": 0.009594173621515129,
+   "sram_W": 0.15140610007449162
+  }
+ }
+}
