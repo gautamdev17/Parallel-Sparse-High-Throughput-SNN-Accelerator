@@ -27,6 +27,45 @@ STYLE = {"loas_zip":   dict(color="#e6e9ed", hatch="////"),
          "prosperity": dict(color="#2c4f6e", hatch=""),
          "ours":       dict(color="#e8871e", hatch="")}
 EDGE = "#2b2b2b"
+LABEL = "#a85a0c"           # colour of ours' value labels
+
+# palette options: (baseline colour/hatch per design, ours colour, ours label colour); PALETTE=<name> picks one
+_G = {"ptb": "#f0f0f0", "spikex": "#d6d6d6", "loas_zip": "#ffffff", "sato": "#b0b0b0", "spikeflow": "#8c8c8c",
+      "prosperity": "#5e5e5e"}
+_H = {"ptb": "....", "spikex": "", "loas_zip": "////", "sato": "", "spikeflow": "\\\\\\\\", "prosperity": ""}
+PALETTES = {
+    "A_grey_black": ({d: dict(color=_G[d], hatch=_H[d]) for d in _G}, "#111111", "#111111"),
+    "B_white_hatch_black": ({"ptb": dict(color="white", hatch="...."), "spikex": dict(color="white", hatch="----"),
+                             "loas_zip": dict(color="white", hatch="////"), "sato": dict(color="white", hatch="xxxx"),
+                             "spikeflow": dict(color="white", hatch="\\\\\\\\"),
+                             "prosperity": dict(color="#bdbdbd", hatch="")}, "#1a1a1a", "#1a1a1a"),
+    "C_grey_navy": ({d: dict(color=_G[d], hatch=_H[d]) for d in _G}, "#1f3d7a", "#1f3d7a"),
+    "D_grey_teal": ({d: dict(color=_G[d], hatch=_H[d]) for d in _G}, "#13756f", "#13756f"),
+    "E_blue_black": (None, "#111111", "#111111"),
+}
+
+
+def inside_legend(ax, h, l, ncol=3, loc="upper center", handlelength=1.0, fontsize=7.3):
+    """compact boxed legend inside an axes: square patch handles, square-cornered black frame."""
+    lg = ax.legend(h, l, ncol=ncol, loc=loc, frameon=True, fancybox=False, framealpha=1.0, edgecolor=EDGE,
+                   fontsize=fontsize, handlelength=handlelength, handleheight=1.0, handletextpad=0.45,
+                   columnspacing=0.9, borderpad=0.45, labelspacing=0.35, borderaxespad=0.5)
+    lg.get_frame().set_linewidth(0.6)
+    lg.set_zorder(10)
+    return lg
+
+
+def use_palette(name):
+    global LABEL
+    base, ours, lab = PALETTES[name]
+    if base is not None:
+        STYLE.update({d: dict(v) for d, v in base.items()})
+    STYLE["ours"] = dict(color=ours, hatch="")
+    LABEL = lab
+
+
+if os.environ.get("PALETTE"):
+    use_palette(os.environ["PALETTE"])
 
 plt.rcParams.update({
     "font.family": "serif", "font.serif": ["Times New Roman", "Times", "DejaVu Serif"],
@@ -59,7 +98,7 @@ def draw(norm, out, note=""):
                 for xi, vi in zip(x, v):
                     ax.annotate(f"{vi:.2f}" if idx == 0 else f"{vi:.2f}\u00d7", (xi, vi), xytext=(0, 2),
                                 textcoords="offset points", ha="center", va="bottom", fontsize=7.5,
-                                rotation=90, color="#a85a0c", zorder=5,
+                                rotation=90, color=LABEL, zorder=5,
                                 bbox=dict(boxstyle="square,pad=0.08", fc="white", ec="none"))
         ax.axhline(1.0, color=EDGE, lw=0.6, ls=(0, (4, 2)), zorder=2)
         ax.set_xticks(range(len(NETS)), NETS)
@@ -67,14 +106,13 @@ def draw(norm, out, note=""):
         ax.set_ylabel(ylab)
         ax.yaxis.grid(True, ls=":", color="#b0b0b0", lw=0.5, zorder=0)
         top = max(norm[n][d][idx] for n in NETS for d in ORDER)
-        ax.set_ylim(0, top * 1.32)
+        ax.set_ylim(0, top * (1.95 if idx == 0 else 1.32))       # (a) leaves room for the legend
         ax.text(0.5, -0.17, tag, transform=ax.transAxes, ha="center", va="top", fontsize=10)
     h, l = axes[0].get_legend_handles_labels()
-    fig.legend(h, l, ncol=7, loc="upper center", bbox_to_anchor=(0.5, 1.0), frameon=False, fontsize=8.5,
-               handlelength=1.5, handleheight=0.9, columnspacing=1.1, handletextpad=0.4)
-    fig.subplots_adjust(left=0.075, right=0.99, top=0.86, bottom=0.2, wspace=0.27)
+    inside_legend(axes[0], h, l, ncol=3)
+    fig.subplots_adjust(left=0.075, right=0.99, top=0.97, bottom=0.2, wspace=0.27)
     for ext in ("png", "pdf"):
-        fig.savefig(os.path.join(R, f"{out}.{ext}"), dpi=300)
+        fig.savefig(os.path.join(R, f"{out}{os.environ.get('OUT_SUFFIX', '')}.{ext}"), dpi=300)
 
 
 def v1():
@@ -167,7 +205,7 @@ def power_edp():
                     ax.annotate(f"{vi:.2f}" if vi >= 0.095 else f"{vi:.3f}", (xi, vi), xytext=(0, 2),
                                 textcoords="offset points", ha="center", va="bottom", rotation=90,
                                 fontsize=6.3 if d != "ours" else 7, zorder=5,
-                                color="#a85a0c" if d == "ours" else "#333333",
+                                color=LABEL if d == "ours" else "#333333",
                                 fontweight="bold" if d == "ours" else "normal",
                                 bbox=dict(boxstyle="square,pad=0.06", fc="white", ec="none"))
         ax.axhline(1.0, color=EDGE, lw=0.6, ls=(0, (4, 2)), zorder=2)
@@ -178,12 +216,11 @@ def power_edp():
         ax.set_xlim(-0.55, len(nets) - 0.45)
         ax.set_ylabel(ylab + " (log)")
         ax.yaxis.grid(True, which="major", ls=":", color="#b0b0b0", lw=0.5, zorder=0)
-        ax.set_ylim(bot, 6.0)
+        ax.set_ylim(bot, 6.0 if idx == 0 else 1e3)               # (b) leaves room for the legend
         ax.text(0.5, -0.17, tag, transform=ax.transAxes, ha="center", va="top", fontsize=10)
     h, l = axes[0].get_legend_handles_labels()
-    fig.legend(h, l, ncol=7, loc="upper center", bbox_to_anchor=(0.5, 1.0), frameon=False, fontsize=8.5,
-               handlelength=1.5, handleheight=0.9, columnspacing=1.1, handletextpad=0.4)
-    fig.subplots_adjust(left=0.085, right=0.99, top=0.86, bottom=0.2, wspace=0.3)
+    inside_legend(axes[1], h, l, ncol=4)
+    fig.subplots_adjust(left=0.085, right=0.99, top=0.97, bottom=0.2, wspace=0.3)
     for ext in ("png", "pdf"):
         fig.savefig(os.path.join(R, f"v1_power_edp.{ext}"), dpi=300)
 
