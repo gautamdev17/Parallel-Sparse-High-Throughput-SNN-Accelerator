@@ -235,7 +235,9 @@ LINES = [  # key, label, colour, line style, marker
     ("loas", "LoAS", "#5f5f5f", "-", "D"),
     ("ptb", "PTB", "#8fb0cf", "-", "s"),
     ("phi", "Phi", "#2c4f6e", "-", "^"),
-]   # plotted: designs that pack / compress. SpikeX, SpikeFlow, Prosperity store dense data (see table)
+    ("prosperity", "Prosperity", "#4a7396", (0, (4, 2)), "P"),
+]   # SpikeX and SpikeFlow are not plotted (no packing); Prosperity stores dense data (product sparsity
+    # reduces computation, not storage) and is shown at its 1x
 
 
 def plot():
