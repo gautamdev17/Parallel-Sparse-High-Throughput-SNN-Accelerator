@@ -27,6 +27,7 @@ sys.path.insert(0, HERE)
 # =============================================================================== part 1: independent simulator
 class Hw:
     R, C, T, F, G, OPEN, PP, MT, NT, E, LW, LIF, FIFO = 4, 4, 8, 4, 4, 4, 8, 64, 128, 4, 16, 16, 80
+    LANES, LIF_LAT = 8, 4        # packer lanes (PP/LANES slices per cycle each); LIF latency (SRAM read + pipeline)
 
 
 def my_weight_columns(wt, F):
@@ -104,8 +105,10 @@ def independent_sim(W, S, hw=Hw):
             tiles.append((m0, m1, n0, n1, kts))
     # ---- time loop
     t = 0
-    pack_clock = 0                   # packer: one K-tile at a time, PP slices per cycle
-    released = [0, 0]                # cycle each K-tile's group buffer is freed (double buffer)
+    lanes = [0] * hw.LANES           # packer lanes: cycle each lane is free; K-tiles start in order
+    last_start = 0
+    nslot = hw.LANES + 2
+    released = [0] * nslot           # cycle each K-tile's group-buffer slot is freed (NS slots)
     load = math.ceil(R * C / hw.LW)
     for (m0, m1, n0, n1, kts) in tiles:
         npx = n1 - n0
@@ -157,21 +160,28 @@ def independent_sim(W, S, hw=Hw):
         pk_last = last_bundle_exit = edge_done = tile_start
 
         def to_next_ktile():
-            nonlocal ki, ready, pack_clock, pk_last
+            nonlocal ki, ready, last_start, pk_last
+            skipped = -1                     # pack-done of empty K-tiles just before (shadow weights rewritten then)
             while ki < len(work):
-                pack_clock = max(pack_clock, released[-2]) + -(-npx // hw.PP)
-                pk_last = pack_clock
+                ln = lanes.index(min(lanes))
+                last_start = max(last_start, lanes[ln], released[-nslot])
+                lanes[ln] = last_start + -(-npx // (hw.PP // hw.LANES))
+                pk_last = lanes[ln]
                 if work[ki][0]:
-                    ready = pack_clock
+                    ready = max(lanes[ln], skipped + 1)
                     return
-                released.append(pack_clock)
+                released.append(lanes[ln])
+                skipped = max(skipped, lanes[ln])
                 ki += 1
 
         to_next_ktile()
         x = tile_start
+        prev, xprev = [], None               # addresses issued in the previous cycle (write in flight)
         while ki < len(work) or above or any(fifo):
             if not above and not any(fifo) and gi == 0 and ki < len(work):
                 x = max(x, may_start, ready)
+            if xprev != x - 1:
+                prev = []
             # feeder
             if ki < len(work) and (gi > 0 or x >= max(may_start, ready)):
                 groups, per_pass = work[ki]
@@ -191,19 +201,21 @@ def independent_sim(W, S, hw=Hw):
                             released.append(x + 1)
                             ki, pi = ki + 1, 0
                             to_next_ktile()
-            # edge service
-            flat = []
+            # edge service (an address issued in the previous cycle is blocked; writes complete one cycle later)
+            flat, issued = [], []
             for c in range(C):
                 offered = fifo[c][:hw.E]
                 k = 0
                 for e, a in enumerate(offered):
-                    if a in flat or a in offered[:e]:
+                    if a in flat or a in offered[:e] or a in prev:
                         break
                     k += 1
                 flat += offered
                 if k:
+                    issued += fifo[c][:k]
                     del fifo[c][:k]
-                    edge_done = max(edge_done, x + 1)
+                    edge_done = max(edge_done, x + 2)
+            prev, xprev = issued, x
             # bundles reaching the FIFOs at the end of x
             for s0, e in above:
                 for c in range(C):
@@ -212,7 +224,8 @@ def independent_sim(W, S, hw=Hw):
                         assert len(fifo[c]) <= hw.FIFO
             above = [(s0, e) for s0, e in above if s0 + R + C - 1 > x]
             x += 1
-        t = max(edge_done, last_bundle_exit, tile_start, pk_last) + -(-len(dirty) // hw.LIF)
+        lif_c = -(-len(dirty) // hw.LIF)
+        t = max(edge_done, last_bundle_exit, tile_start, pk_last) + lif_c + (hw.LIF_LAT if lif_c else 0)
     return t, sums
 
 

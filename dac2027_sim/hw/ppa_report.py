@@ -18,12 +18,13 @@ Table 2, 45 -> 32 nm high-performance, 28 nm taken as 32 nm; the paper has no 28
 import json, math, os, re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-B = os.path.join(HERE, "build_hier")
+B = os.path.join(HERE, os.environ.get("PPA_DIR", "build_buf"))
 RES = os.path.join(os.path.dirname(HERE), "results")
 SP_COUNTS = os.environ.get("COUNTS", "")
 A28, E28, D28 = (28 / 45) ** 2, 0.486, 0.899
-F_LIF = 0.0338                      # LIF share of VGG16 batch-1 cycles (main.json ours_stats)
-CLK45 = 800e6                       # clock of the activity windows (1.25 ns)
+F_LIF = float(os.environ.get("F_LIF", "0.0338"))   # LIF share of VGG16 batch-1 cycles (main.json ours_stats)
+CLK45 = float(os.environ.get("CLK", "500e6"))     # clock of the activity windows and of the timing check
+PERIOD = 1e9 / CLK45
 
 # CACTI 7 at 28 nm (itrs-hp, Prosperity's config): area mm2, read nJ, write nJ, leakage mW
 SRAM = {"output buffer (192 KB, 24 B entries)": (0.33139, 0.0322515, 0.03484, 94.214),
@@ -34,18 +35,24 @@ SRAM = {"output buffer (192 KB, 24 B entries)": (0.33139, 0.0322515, 0.03484, 94
 # bit per output channel), cycles, and SRAM accesses
 VGG = dict(ops=65397188, eff=6546561, cyc=433561, rmw=2637541, lif_entries=234304, passes=157977,
            groups_inj=339839, slices=1298419)
+try:   # cycles of the current model (packing, passes, RMW and LIF counts do not depend on the timing rules)
+    _m = json.load(open(os.path.join(RES, "main.json")))
+    VGG["cyc"] = sum(_m[f"VGG16|{i}|1|sparse90"]["ours"] for i in range(16))
+except (OSError, KeyError):
+    pass
 
 
 def areas():
-    t = open(os.path.join(B, "ours_hier_synth.log")).read()
+    t = open(os.path.join(B, [f for f in os.listdir(B) if f.endswith("_synth.log")][0])).read()
     last = t[t.rindex("=== design hierarchy ==="):] if "=== design hierarchy ===" in t else t
     mod = {}
     for m in re.finditer(r"Chip area for module '\\?\$?([^']+)': ([\d.]+)", t):
         name = m.group(1).split("\\")[-1]
         mod[name] = float(m.group(2))
+    lanes = int(os.environ.get("LANES", "8"))
     a = {"PE array (16 PEs)": 16 * mod["ours_pe"],
          "edge FIFOs (4 x 80 entries)": 4 * mod["ours_edge_fifo"],
-         "packer (8 slices/cycle)": mod["ours_packer"] + 8 * mod["pk_step"],
+         "packer (8 slices/cycle)": lanes * (mod["ours_packer"] + (8 // lanes) * mod["pk_step"]),
          "LIF units (16)": 16 * mod["ours_lif"],
          "arbiter, skew, id sideband, RMW adders": mod["ours_core"]}
     return a
@@ -74,7 +81,7 @@ def power(rpt):
 def worst_paths():
     w = {}
     grp = None
-    for l in open(os.path.join(B, "sta_end.rpt")):
+    for l in open(os.path.join(B, os.environ.get("STA_RPT", "sta_end2.rpt"))):
         if l.startswith("max_delay/setup group"):
             grp = l.split()[-1]; continue
         p = l.split()
@@ -82,11 +89,11 @@ def worst_paths():
             continue
         n, s = p[0], float(p[-2])
         k = ("PE array (16 PEs)" if ".pe/" in n else "edge FIFOs (4 x 80 entries)" if ".fifo/" in n else
-             "LIF units (16)" if n.startswith("lif[") else "packer (8 slices/cycle)" if n.startswith("packer/")
+             "LIF units (16)" if n.startswith("lif[") else "packer (8 slices/cycle)" if n.startswith(("packer/", "lane["))
              else "output-buffer RMW ports" if "/" not in n and not n.startswith("_") else
              "arbiter, skew, id sideband, RMW adders")
         w[k] = min(w.get(k, 9e9), s)
-    return {k: 1.25 - v for k, v in w.items()}
+    return {k: PERIOD - v for k, v in w.items()}
 
 
 def main():
@@ -110,9 +117,9 @@ def main():
     lines = ["# Our design: area and power breakdown", "",
              "Core: Yosys + ABC, Nangate45 typical, hierarchy kept; power: OpenSTA with gate-level activity from the "
              "closed-loop testbench (1000 streaming cycles of VGG16 L3 + the drain/LIF sweep of a ResNet18 tile, "
-             f"weighted {1 - F_LIF:.3f} / {F_LIF:.3f} by the LIF share of VGG16 cycles), at 800 MHz activity. "
+             f"weighted {1 - F_LIF:.3f} / {F_LIF:.3f} by the LIF share of VGG16 cycles), at {CLK45 / 1e6:.0f} MHz. "
              "SRAM: CACTI 7 at 28 nm. 28 nm core = 45 nm x (28/45)^2 area, x 0.486 energy (Stillmaker & Baas 2017).", "",
-             "| Block | Area 45 nm (mm^2) | Area 28 nm (mm^2) | Share | Power 45 nm @800 MHz (mW) | Share | Worst path 45 nm (ns) |",
+             f"| Block | Area 45 nm (mm^2) | Area 28 nm (mm^2) | Share | Power 45 nm @{CLK45 / 1e6:.0f} MHz (mW) | Share | Worst path 45 nm (ns) |",
              "|---|---:|---:|---:|---:|---:|---:|"]
     at = sum(a45.values())
     for k in a45:

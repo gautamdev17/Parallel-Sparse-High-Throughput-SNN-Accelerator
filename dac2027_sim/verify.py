@@ -45,10 +45,12 @@ def doc_example():
     # Sec. 5.7: streaming starts after the 1-cycle weight load; last result leaves after 5 cycles
     fast = run_layer_fast(W, S, cfg)
     assert fast["cycles"] == st["cycles"]
-    # total = weight load (L=1) + 5 stream cycles (G2 leaves the bottom after cycle 4) + 1 edge-FIFO write
-    #         + 1 output-buffer read-modify-write + 1 LIF sweep cycle (7 dirty entries, (A,p1) never written,
-    #         8 LIF units)
-    stream = st["cycles"] - cfg.L - 1 - 1 - 1
+    # total = packing (4 pixels on one lane at pp/lanes = 2 slices per cycle: 2 cycles, the weight load L=1
+    #         overlaps the first) + 5 stream cycles (G2 leaves the bottom after cycle 4) + 1 edge-FIFO write
+    #         + 2 output-buffer read-modify-write (read, then write) + 1 LIF sweep cycle (7 dirty entries,
+    #         (A,p1) never written, 8 LIF units) + 4 LIF latency (buffer read + 4-stage LIF pipeline)
+    pack = -(-4 // (cfg.pp // min(cfg.pk_lanes, cfg.pp)))
+    stream = st["cycles"] - pack - 1 - 2 - 1 - cfg.lif_lat
     assert stream == 5, stream
     print(f"[ok] doc example: packing, 8 running sums, LIF spikes; stream = 5 cycles (Sec. 5.7), "
           f"total with load+LIF = {st['cycles']} cycles")

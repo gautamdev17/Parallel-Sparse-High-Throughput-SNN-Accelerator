@@ -8,13 +8,13 @@
 | VGG16 | SATO | 33.7 | 3.060 | 0.1031 | 0.31564 |
 | VGG16 | SpikeFlow | 74.1 | 2.002 | 0.1483 | 0.29677 |
 | VGG16 | Prosperity | 156.2 | 0.833 | 0.1302 | 0.10852 |
-| VGG16 | Ours | 382.8 | 0.542 | 0.2074 | 0.11242 |
+| VGG16 | Ours | 382.8 | 0.456 | 0.1746 | 0.07964 |
 | ResNet18 | LoAS | 90.2 | 5.420 | 0.4892 | 2.65149 |
 | ResNet18 | SpikeX | 295.7 | 7.472 | 2.2093 | 16.50816 |
 | ResNet18 | PTB | 600.5 | 7.941 | 4.7689 | 37.87058 |
 | ResNet18 | SATO | 33.7 | 4.444 | 0.1498 | 0.66550 |
 | ResNet18 | SpikeFlow | 74.1 | 3.568 | 0.2643 | 0.94296 |
 | ResNet18 | Prosperity | 156.2 | 1.282 | 0.2003 | 0.25671 |
-| ResNet18 | Ours | 382.8 | 0.688 | 0.2635 | 0.18140 |
+| ResNet18 | Ours | 382.8 | 0.679 | 0.2598 | 0.17637 |
 
 Normalized to PTB = 1x in v1_power_edp.png (log scale). SpikeFlow power: core with its 18.5 KB buffer as external SRAM, like every other design.

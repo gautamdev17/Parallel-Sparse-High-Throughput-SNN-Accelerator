@@ -1,7 +1,7 @@
 read_liberty ../lib/NangateOpenCellLibrary_typical.lib
-read_verilog ours_hier_netlist.v
+read_verilog @NETLIST@
 link_design ours_core
-create_clock -name clk -period 1.25 [get_ports clk]
+create_clock -name clk -period @PERIOD@ [get_ports clk]
 read_vcd -scope tb_ours_closed/dut @VCD@
 report_activity_annotation
 puts "BLOCK total"
@@ -19,6 +19,9 @@ puts "BLOCK fifo [llength $fifos]"
 report_power -instances $fifos -digits 6
 puts "BLOCK lif [llength $lifs]"
 report_power -instances $lifs -digits 6
-puts "BLOCK packer"
-report_power -instances [get_cells packer] -digits 6
+set pks {}
+foreach c [get_cells *] { if {[string match "lane*.packer" [get_full_name $c]]} { lappend pks $c } }
+if {[llength $pks] == 0} { set pks [get_cells packer] }
+puts "BLOCK packer [llength $pks]"
+report_power -instances $pks -digits 6
 exit

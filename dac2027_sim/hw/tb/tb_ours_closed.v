@@ -20,7 +20,8 @@
 // Writes out_closed.txt (tile, address, 8 sums, LIF spikes) and a summary line with the total cycle count.
 `timescale 1ns/1ps
 module tb_ours_closed;
-    localparam R = 4, C = 4, T = 8, F = 4, G = 4, PSW = 24, E = 4, NLIF = 16, PP = 8, AW = 13, PIDW = 7, FIDW = 6;
+    localparam R = 4, C = 4, T = 8, F = 4, G = 4, PSW = 24, E = 4, NLIF = 16, PL = 8, PPL = 1, NSL = PL + 2,
+               AW = 13, PIDW = 7, FIDW = 6, LIFP = 4;   // packer lanes x slices; group-buffer slots; LIF stages
 `ifndef TB_MAXT
  `define TB_MAXT 14
  `define TB_MAXKT 20
@@ -40,27 +41,29 @@ module tb_ours_closed;
     reg [R*C-1:0] wl_en = 0, wl_par = 0;
     reg [R*C*8-1:0] wl_w = 0;
     reg [R*C*2-1:0] wl_f = 0;
-    reg [PP-1:0] sl_v = 0;
-    reg [PP*R*T-1:0] sl_m = 0;
-    reg [PP*PIDW-1:0] sl_id = 0;
-    reg pk_flush = 0;
+    reg [PL*PPL-1:0] sl_v = 0;
+    reg [PL*PPL*R*T-1:0] sl_m = 0;
+    reg [PL*PPL*PIDW-1:0] sl_id = 0;
+    reg [PL-1:0] pk_flush = 0;
     reg [NLIF-1:0] lif_v = 0;
     reg [NLIF*T*PSW-1:0] lif_x = 0;
     reg signed [PSW-1:0] theta = 0;
     wire [C*E-1:0] obuf_we;
-    wire [C*E*AW-1:0] obuf_addr;
+    wire [C*E*AW-1:0] obuf_addr, obuf_waddr;
     wire [C*E*T*PSW-1:0] obuf_rdata, obuf_wdata;
     wire [C-1:0] ovf;
     wire [NLIF*T-1:0] lif_spk;
-    wire [PP+3:0] gv;
-    wire [(PP+4)*R*T-1:0] gm;
-    wire [(PP+4)*2*R*T-1:0] glab;
-    wire [(PP+4)*G*PIDW-1:0] gid;
-    wire [(PP+4)*3-1:0] gc;
+    localparam NO = PPL + 4;                                  // group outputs per lane and cycle
+    wire [PL*NO-1:0] gv;
+    wire [PL*NO*R*T-1:0] gm;
+    wire [PL*NO*2*R*T-1:0] glab;
+    wire [PL*NO*G*PIDW-1:0] gid;
+    wire [PL*NO*3-1:0] gc;
 
     ours_core dut(.clk(clk), .rst(rst), .inj_v(inj_v), .inj_par(inj_par), .inj_bits(inj_bits), .inj_lab(inj_lab),
         .inj_pid(inj_pid), .inj_fid(inj_fid), .wl_en(wl_en), .wl_w(wl_w), .wl_f(wl_f), .wl_par(wl_par),
-        .obuf_we(obuf_we), .obuf_addr(obuf_addr), .obuf_rdata(obuf_rdata), .obuf_wdata(obuf_wdata),
+        .obuf_we(obuf_we), .obuf_addr(obuf_addr), .obuf_waddr(obuf_waddr), .obuf_rdata(obuf_rdata),
+        .obuf_wdata(obuf_wdata),
         .fifo_overflow(ovf), .lif_v(lif_v), .lif_x(lif_x), .theta(theta), .lif_spk(lif_spk),
         .sl_v(sl_v), .sl_m(sl_m), .sl_id(sl_id), .pk_flush(pk_flush),
         .pk_gv(gv), .pk_gm(gm), .pk_gl(glab), .pk_gid(gid), .pk_gc(gc));
@@ -94,23 +97,28 @@ module tb_ours_closed;
     integer nd_w = 0, conflicts = 0, rmw = 0;
     reg [15:0] nd_tag = 0;
     wire [31:0] nd = (nd_tag == cur_tag) ? nd_w : 0;     // dirty entries of the current tile
-    genvar gq;
-    generate for (gq = 0; gq < C*E; gq = gq + 1) begin : rd
-        wire [AW-1:0] a = obuf_addr[gq*AW +: AW];
-        assign obuf_rdata[gq*T*PSW +: T*PSW] = (otag[a] == cur_tag) ? obuf[a] : {T*PSW{1'b0}};
-    end endgenerate
+    // synchronous SRAM: the read data of obuf_addr is registered (obuf_rdata in the next cycle); writes from the
+    // core's second RMW stage (obuf_waddr / obuf_wdata) at the edge; a read and a write of the same edge return the
+    // old value (the core's arbiter never issues such a read)
+    reg [C*E*T*PSW-1:0] rdq = 0;
+    assign obuf_rdata = rdq;
     integer i, j;
+    reg [AW-1:0] ra;
     always @(posedge clk) if (rst) begin
         for (i = 0; i < (1<<AW); i = i + 1) otag[i] = 0;
     end else begin
+        for (i = 0; i < C*E; i = i + 1) begin
+            ra = obuf_addr[i*AW +: AW];
+            rdq[i*T*PSW +: T*PSW] <= (otag[ra] == cur_tag) ? obuf[ra] : {T*PSW{1'b0}};
+        end
         if (nd_tag != cur_tag) begin nd_w = 0; nd_tag = cur_tag; end
         for (i = 0; i < C*E; i = i + 1) if (obuf_we[i]) begin
             for (j = 0; j < i; j = j + 1)
-                if (obuf_we[j] && obuf_addr[j*AW +: AW] == obuf_addr[i*AW +: AW]) conflicts = conflicts + 1;
-            obuf[obuf_addr[i*AW +: AW]] <= obuf_wdata[i*T*PSW +: T*PSW];
-            if (otag[obuf_addr[i*AW +: AW]] != cur_tag) begin
-                otag[obuf_addr[i*AW +: AW]] = cur_tag;
-                dlist[nd_w] = obuf_addr[i*AW +: AW];
+                if (obuf_we[j] && obuf_waddr[j*AW +: AW] == obuf_waddr[i*AW +: AW]) conflicts = conflicts + 1;
+            obuf[obuf_waddr[i*AW +: AW]] <= obuf_wdata[i*T*PSW +: T*PSW];
+            if (otag[obuf_waddr[i*AW +: AW]] != cur_tag) begin
+                otag[obuf_waddr[i*AW +: AW]] = cur_tag;
+                dlist[nd_w] = obuf_waddr[i*AW +: AW];
                 nd_w = nd_w + 1;
             end
             rmw = rmw + 1;
@@ -129,11 +137,16 @@ module tb_ours_closed;
 
     // ------------------------------------------------------------------ run-time state
     integer pk_ready [0:MAXKT-1], freed [0:MAXKT-1], ngr [0:MAXKT-1];
-    reg [R*T-1:0] gb_m [0:255];
-    reg [2*R*T-1:0] gb_l [0:255];
-    reg [G*PIDW-1:0] gb_id [0:255];
+    reg [R*T-1:0] gb_m [0:NSL*128-1];
+    reg [2*R*T-1:0] gb_l [0:NSL*128-1];
+    reg [G*PIDW-1:0] gb_id [0:NSL*128-1];
+    integer ln_kt [0:PL-1], ln_fq [0:PL-1], ln_fed [0:PL-1], ln_fl [0:PL-1], l, sb;
+    integer skipk = -1;
+    integer lif_end = 0, pend_n = 0, dl_n [0:7], dl_a [0:8*NLIF-1];
+    integer pend_a [0:NLIF-1];
+    reg [NLIF*T*PSW-1:0] pend_x;
     integer st_cyc [0:15], st_q [0:15];
-    integer cyc = 0, fk = 0, fq = 0, feeding = 0, fed_kt = -1, fed_flush = 0;
+    integer cyc = 0, fk = 0;
     integer ti = 0, state = 0, aj = 0, ap = 0, s_next = 0, injecting = 0, ig = 0, cur_q = 0, cur_P = 0, cur_kt = 0;
     integer arr_end = 0, tstart = 0, li = 0, lif_n = 0, slot, k, c, d, q, pe, x, nwait, fmax = 0, tot = -1;
     integer lif_a [0:NLIF-1];
@@ -149,16 +162,16 @@ module tb_ours_closed;
     integer stalls = 0, pred_err = 0, fr_kt = -1, bp_ok = 0, hy, hk;
 
     // entries the bundle of group-buffer slot sl in pass q will write into each column FIFO
-    task automatic predict(input integer q, input integer sl);
+    task automatic predict(input integer pq, input integer psl);
         integer cc, kk, t2, s2;
         reg [15:0] tch;
         begin
             for (cc = 0; cc < C; cc = cc + 1) begin
                 tch = 0;
                 for (kk = 0; kk < R; kk = kk + 1)
-                    if (p_w[q*16 + kk*C + cc] != 0)
+                    if (p_w[pq*16 + kk*C + cc] != 0)
                         for (t2 = 0; t2 < T; t2 = t2 + 1)
-                            if (gb_m[sl][kk*T + t2]) tch[{p_f[q*16 + kk*C + cc], gb_l[sl][kk*2*T + 2*t2 +: 2]}] = 1'b1;
+                            if (gb_m[psl][kk*T + t2]) tch[{p_f[pq*16 + kk*C + cc], gb_l[psl][kk*2*T + 2*t2 +: 2]}] = 1'b1;
                 need[cc] = 0;
                 for (s2 = 0; s2 < 16; s2 = s2 + 1) need[cc] = need[cc] + tch[s2];
             end
@@ -212,7 +225,7 @@ module tb_ours_closed;
 
     task automatic start_tile;
         begin
-            tstart = cyc; arr_end = cyc; s_next = cyc + 1; aj = t_kf[ti]; ap = 0; state = 0;
+            tstart = cyc; arr_end = cyc; s_next = cyc + 1; aj = t_kf[ti]; ap = 0; state = 0; skipk = -1;
             cur_tag = ti[15:0] + 16'd1;
             // L = 1: the shadow registers are free from the tile's first cycle; the first pass that runs is
             // written into them (below) as soon as it is known, and cannot start before start + L
@@ -222,15 +235,15 @@ module tb_ours_closed;
 
     task automatic inject(input integer g);
         begin
-            slot = (cur_kt % 2) * 128 + g;
+            slot = (cur_kt % NSL) * 128 + g;
             inj_v = 1; inj_par = cur_par;
             arr_end = cyc + R + C;
             hist_t[cyc % (R + C)] = cyc;
             for (x = 0; x < C; x = x + 1) hist_n[(cyc % (R + C))*C + x] = need[x];
             inj_bits = gb_m[slot]; inj_lab = gb_l[slot]; inj_pid = gb_id[slot];
             for (x = 0; x < C*F; x = x + 1) inj_fid[x*FIDW +: FIDW] = p_fid[cur_q*16 + x];
-            if ($test$plusargs("dbg")) $display("INJ cyc=%0d tile=%0d kt=%0d q=%0d g=%0d bits=%h lab=%h pid=%h",
-                                                cyc, ti, cur_kt, cur_q, g, gb_m[slot], gb_l[slot], gb_id[slot]);
+            if ($test$plusargs("dbg")) $display("INJ cyc=%0d tile=%0d kt=%0d q=%0d g=%0d slot=%0d bits=%h lab=%h need=%0d %0d %0d %0d",
+                                                cyc, ti, cur_kt, cur_q, g, slot, gb_m[slot], gb_l[slot], need[0], need[1], need[2], need[3]);
         end
     endtask
 
@@ -268,6 +281,8 @@ module tb_ours_closed;
         $fclose(fd);
         $readmemh("closed/slices.hex", slices, 0, nslc - 1);
         for (x = 0; x < 16; x = x + 1) begin st_cyc[x] = -1; st_q[x] = -1; end
+        for (x = 0; x < PL; x = x + 1) begin ln_kt[x] = -1; ln_fed[x] = -1; ln_fl[x] = 0; end
+        for (x = 0; x < 8; x = x + 1) dl_n[x] = 0;
         for (x = 0; x < R + C; x = x + 1) hist_t[x] = -100;
         fo = $fopen("closed/out_closed.txt", "w");
         if (!$value$plusargs("vcd_from=%d", vcd_from)) vcd_from = -1;
@@ -282,18 +297,20 @@ module tb_ours_closed;
     // ------------------------------------------------------------------ controller: one step per cycle
     always @(negedge clk) if (!rst && tot < 0) begin
         // ---- observe the registers updated at the last edge (results of cycle cyc-1)
-        if (fed_kt >= 0) begin
-            for (x = 0; x < PP + 4; x = x + 1) if (gv[x]) begin
-                slot = (fed_kt % 2) * 128 + ngr[fed_kt];
+        for (l = 0; l < PL; l = l + 1) if (ln_fed[l] >= 0) begin
+            for (x = l * NO; x < (l + 1) * NO; x = x + 1) if (gv[x]) begin
+                slot = (ln_fed[l] % NSL) * 128 + ngr[ln_fed[l]];
                 gb_m[slot] = gm[x*R*T +: R*T]; gb_l[slot] = glab[x*2*R*T +: 2*R*T]; gb_id[slot] = gid[x*G*PIDW +: G*PIDW];
-                ngr[fed_kt] = ngr[fed_kt] + 1;
+                ngr[ln_fed[l]] = ngr[ln_fed[l]] + 1;
             end
-            if (fed_flush) begin
-                pk_ready[fed_kt] = cyc;
-                if (ngr[fed_kt] == 0) freed[fed_kt] = cyc;
+            if (ln_fl[l]) begin
+                pk_ready[ln_fed[l]] = cyc;
+                if (ngr[ln_fed[l]] == 0) freed[ln_fed[l]] = cyc;
             end
         end
-        for (x = 0; x < lif_n; x = x + 1) spk_of[lif_a[x]] = lif_spk[x*T +: T];
+        // LIF results of the entries presented LIFP cycles ago (pipelined LIF)
+        for (x = 0; x < dl_n[(cyc - LIFP + 8) % 8]; x = x + 1)
+            spk_of[dl_a[((cyc - LIFP + 8) % 8) * NLIF + x]] = lif_spk[x*T +: T];
         if (fc0 > fmax) fmax = fc0;
         if (fc1 > fmax) fmax = fc1;
         if (fc2 > fmax) fmax = fc2;
@@ -301,8 +318,12 @@ module tb_ours_closed;
         // the bundle leaving column c now was injected at cyc - R - c: its predicted entries must match the RTL
         for (c = 0; c < C; c = c + 1) begin
             hy = cyc - R - c; hk = (hy + R + C) % (R + C);
-            if (((hist_t[hk] == hy) ? hist_n[hk*C + c] : 0) != (c == 0 ? nw0 : c == 1 ? nw1 : c == 2 ? nw2 : nw3))
+            if (((hist_t[hk] == hy) ? hist_n[hk*C + c] : 0) != (c == 0 ? nw0 : c == 1 ? nw1 : c == 2 ? nw2 : nw3)) begin
                 pred_err = pred_err + 1;
+                if ($test$plusargs("dbg") && pred_err < 6)
+                    $display("PRED cyc=%0d col=%0d inj_cyc=%0d hist_t=%0d pred=%0d rtl=%0d", cyc, c, hy, hist_t[hk],
+                             hist_n[hk*C + c], (c == 0 ? nw0 : c == 1 ? nw1 : c == 2 ? nw2 : nw3));
+            end
         end
         hist_t[cyc % (R + C)] = -100;                        // no injection yet in this cycle
         // ---- VCD window control (the dump covers whole cycles of the DUT only)
@@ -318,7 +339,12 @@ module tb_ours_closed;
         end
         // ---- defaults for this cycle
         inj_v = 0; wl_en = 0; sl_v = 0; pk_flush = 0; lif_v = 0; lif_n = 0;
-        fed_kt = -1; fed_flush = 0;
+        for (l = 0; l < PL; l = l + 1) begin ln_fed[l] = -1; ln_fl[l] = 0; end
+        // the entries issued to the LIF sweep last cycle: their output-buffer read data arrives now
+        dl_n[cyc % 8] = pend_n;
+        for (x = 0; x < pend_n; x = x + 1) begin lif_v[x] = 1'b1; dl_a[(cyc % 8) * NLIF + x] = pend_a[x]; end
+        lif_x = pend_x;
+        pend_n = 0;
         if (cyc == 0) begin ti = 0; start_tile; end
         // ---- array side (state transitions can chain within one cycle)
         nwait = 0;
@@ -326,7 +352,7 @@ module tb_ours_closed;
             nwait = 1;
             if (state == 0) begin                                   // RUN: inject passes
                 if (injecting) begin
-                    predict(cur_q, (cur_kt % 2) * 128 + ig);
+                    predict(cur_q, (cur_kt % NSL) * 128 + ig);
                     bp_check;
                     if (bp_ok) begin
                         inject(ig); ig = ig + 1;
@@ -334,19 +360,20 @@ module tb_ours_closed;
                     end else stalls = stalls + 1;
                 end else begin
                     while (aj < t_kf[ti] + t_kc[ti] && pk_ready[aj] >= 0 && pk_ready[aj] <= cyc && ngr[aj] == 0) begin
+                        if (pk_ready[aj] > skipk) skipk = pk_ready[aj];   // shadow weights rewritten in that cycle
                         aj = aj + 1; ap = 0;
                     end
                     if (aj == t_kf[ti] + t_kc[ti]) begin
                         state = 1; nwait = 0;
-                    end else if (pk_ready[aj] >= 0 && pk_ready[aj] <= cyc && cyc >= s_next) begin
-                        predict(k_pf[aj] + ap, (aj % 2) * 128);
+                    end else if (pk_ready[aj] >= 0 && pk_ready[aj] <= cyc && cyc >= s_next && cyc > skipk) begin
+                        predict(k_pf[aj] + ap, (aj % NSL) * 128);
                         bp_check;
                         if (bp_ok) begin
                             cur_kt = aj; cur_q = k_pf[aj] + ap; cur_P = ngr[aj];
                             cur_par = ~last_par; last_par = cur_par;
                             st_cyc[cyc % 16] = cyc; st_q[cyc % 16] = cur_q;
                             fr_kt = (ap == k_np[aj] - 1) ? aj : -1;
-                            inject(0); ig = 1; injecting = (cur_P > 1);
+                            inject(0); ig = 1; injecting = (cur_P > 1); skipk = -1;
                             s_next = cyc + 1;                       // L = 1 (and after this pass's last group)
                             if (ap == k_np[aj] - 1) begin aj = aj + 1; ap = 0; end
                             else ap = ap + 1;
@@ -354,21 +381,21 @@ module tb_ours_closed;
                         end else stalls = stalls + 1;
                     end
                 end
-            end else if (state == 1) begin                          // DRAIN: array empty and edge FIFOs empty
-                if (cyc >= arr_end && fc0 == 0 && fc1 == 0 && fc2 == 0 && fc3 == 0) begin
+            end else if (state == 1) begin                          // DRAIN: array, edge FIFOs and RMW writes done
+                if (cyc >= arr_end && fc0 == 0 && fc1 == 0 && fc2 == 0 && fc3 == 0 && obuf_we == 0) begin
                     state = 2; li = 0; nwait = 0;
                 end
             end else if (state == 2) begin                          // LIF sweep, 16 dirty entries per cycle
-                if (li < nd) begin
+                if (li < nd) begin                                  // issue: read the entries (data next cycle)
                     for (x = 0; x < NLIF && li < nd; x = x + 1) begin
-                        lif_v[x] = 1'b1; lif_x[x*T*PSW +: T*PSW] = obuf[dlist[li]]; lif_a[x] = dlist[li];
-                        li = li + 1; lif_n = lif_n + 1;
+                        pend_x[x*T*PSW +: T*PSW] = obuf[dlist[li]]; pend_a[x] = dlist[li];
+                        li = li + 1; pend_n = pend_n + 1;
                     end
-                    if (li >= nd) state = 3;                        // tile ends after this cycle
+                    if (li >= nd) begin state = 3; lif_end = cyc + 1 + LIFP; end   // last results captured then
                 end else begin
-                    state = 3; nwait = 0;                           // nothing dirty: ends now
+                    state = 3; lif_end = cyc; nwait = 0;            // nothing dirty: ends now
                 end
-            end else if (state == 3 && lif_n == 0) begin            // tile end: next tile starts this cycle
+            end else if (state == 3 && cyc >= lif_end) begin        // tile end: next tile starts this cycle
                 dump_tile;
                 ti = ti + 1;
                 if (ti == ntiles) tot = cyc;
@@ -392,16 +419,20 @@ module tb_ours_closed;
                     wl_par[pe] = ~pe_par[pe];
                 end
             end
-        // ---- packer feeder
-        if (!feeding && fk < nkt && (fk < 2 || (freed[fk - 2] >= 0 && freed[fk - 2] <= cyc))) begin
-            feeding = 1; fq = 0;
-        end
-        if (feeding) begin
-            for (x = 0; x < PP; x = x + 1) if (fq + x < k_nn[fk]) begin
-                sl_v[x] = 1'b1; sl_m[x*R*T +: R*T] = slices[k_sb[fk] + fq + x]; sl_id[x*PIDW +: PIDW] = fq + x;
+        // ---- packer lanes: K-tiles start in scan order on a free lane once their group-buffer slot is free
+        //      (K-tile fk - NSL released); each lane feeds PPL slices of its K-tile per cycle
+        for (l = 0; l < PL; l = l + 1)
+            if (ln_kt[l] < 0 && fk < nkt && (fk < NSL || (freed[fk - NSL] >= 0 && freed[fk - NSL] <= cyc))) begin
+                ln_kt[l] = fk; ln_fq[l] = 0; fk = fk + 1;
             end
-            fed_kt = fk; fq = fq + PP;
-            if (fq >= k_nn[fk]) begin pk_flush = 1; fed_flush = 1; feeding = 0; fk = fk + 1; end
+        for (l = 0; l < PL; l = l + 1) if (ln_kt[l] >= 0) begin
+            for (x = 0; x < PPL; x = x + 1) if (ln_fq[l] + x < k_nn[ln_kt[l]]) begin
+                sb = l * PPL + x;
+                sl_v[sb] = 1'b1; sl_m[sb*R*T +: R*T] = slices[k_sb[ln_kt[l]] + ln_fq[l] + x];
+                sl_id[sb*PIDW +: PIDW] = ln_fq[l] + x;
+            end
+            ln_fed[l] = ln_kt[l]; ln_fq[l] = ln_fq[l] + PPL;
+            if (ln_fq[l] >= k_nn[ln_kt[l]]) begin pk_flush[l] = 1'b1; ln_fl[l] = 1; ln_kt[l] = -1; end
         end
         if (tot >= 0) begin
             $fclose(fo);

@@ -4,7 +4,8 @@
 //   label per weight), G = 4 pixels per group (2-bit pixel label per spike bit), double-buffered (shadow)
 //   weights, running sums of SW = 10 bits per (filter, pixel, timestep) inside the array (R * 127 < 2^9),
 //   edge unit with an 80-entry FIFO per column (16 writes, E = 4 read-modify-writes per cycle, 24-bit sums),
-//   16 leaky LIF units, and the run-time packer (8 pixel slices per cycle, first-fit, 4 open groups).
+//   16 leaky LIF units (pipelined, 2 timesteps per stage), and the run-time packer: 8 lanes x 1 pixel slice per
+//   cycle (each lane packs its own K-tile; first-fit, 4 open groups).
 // Not inside the core (SRAM, the same exclusion as for LoAS/PTB/SpikeX): weight memory, spike memory, group
 // buffer, output buffer. The output buffer is accessed through the obuf_* read-modify-write ports.
 `timescale 1ns/1ps
@@ -143,25 +144,45 @@ endmodule
 
 // one leaky integrate-and-fire neuron over T timesteps in one cycle (doc Sec. 8: V = V/2 + x; fire if
 // V >= theta, then V -= theta), registered output.
-module ours_lif #(parameter T = 8, PSW = 24) (
+module ours_lif #(parameter T = 8, PSW = 24, TPS = 2) (
     input  wire clk, rst, v,
     input  wire [T*PSW-1:0] x,
     input  wire signed [PSW-1:0] theta,
-    output reg  [T-1:0] spk
+    output wire [T-1:0] spk
 );
-    reg signed [PSW+1:0] V;
-    reg [T-1:0] s;
-    integer t;
-    always @(*) begin
-        V = 0;
-        for (t = 0; t < T; t = t + 1) begin
-            V = (V >>> 1) + $signed(x[t*PSW +: PSW]);
-            s[t] = (V >= theta);
-            if (s[t]) V = V - theta;
+    // pipelined over the timesteps: stage k handles timesteps k*TPS .. k*TPS+TPS-1 (V = V/2 + x; fire if
+    // V >= theta, then V -= theta); spk is valid T/TPS cycles after v
+    localparam NST = T / TPS;
+    reg [NST-1:0] sv;
+    reg signed [PSW+1:0] sV [0:NST-1];
+    reg [T-1:0] sS [0:NST-1];
+    reg [T*PSW-1:0] sX [0:NST-1];
+    reg signed [PSW+1:0] Vt;
+    reg [T-1:0] St;
+    reg [T*PSW-1:0] src;
+    reg [PSW-1:0] xt;
+    integer k, t;
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            sv <= 0;
+            for (k = 0; k < NST; k = k + 1) begin sV[k] <= 0; sS[k] <= 0; sX[k] <= 0; end
+        end else begin
+            for (k = NST - 1; k >= 0; k = k - 1) begin
+                Vt = (k == 0) ? 0 : sV[k-1];
+                St = (k == 0) ? 0 : sS[k-1];
+                src = (k == 0) ? x : sX[k-1];
+                for (t = 0; t < TPS; t = t + 1) begin
+                    xt = src[(k * TPS + t) * PSW +: PSW];
+                    Vt = (Vt >>> 1) + $signed(xt);
+                    St[k * TPS + t] = (Vt >= theta);
+                    if (St[k * TPS + t]) Vt = Vt - theta;
+                end
+                sv[k] <= (k == 0) ? v : sv[k-1];
+                sV[k] <= Vt; sS[k] <= St; sX[k] <= (k == 0) ? x : sX[k-1];
+            end
         end
     end
-    always @(posedge clk or posedge rst)
-        if (rst) spk <= 0; else if (v) spk <= s;
+    assign spk = sS[NST-1];
 endmodule
 
 
@@ -280,7 +301,7 @@ endmodule
 
 
 module ours_core #(parameter R = 4, C = 4, T = 8, F = 4, G = 4, SW = 10, PSW = 24, E = 4,
-                   NLIF = 16, PP = 8, FIDW = 6, PIDW = 7) (
+                   NLIF = 16, PL = 8, PP = 1, FIDW = 6, PIDW = 7) (
     input  wire clk, rst,
     // ---- array injection (row 0 timing; rows k>0 are skewed by k cycles inside)
     input  wire                    inj_v, inj_par,
@@ -293,27 +314,30 @@ module ours_core #(parameter R = 4, C = 4, T = 8, F = 4, G = 4, SW = 10, PSW = 2
     input  wire [R*C*8-1:0]        wl_w,
     input  wire [R*C*2-1:0]        wl_f,
     input  wire [R*C-1:0]          wl_par,
-    // ---- output buffer read-modify-write, E ports per column (async read, write at clock edge)
+    // ---- output buffer read-modify-write, E ports per column, synchronous SRAM, 2 stages:
+    //      cycle 1 (issue): obuf_addr is read; cycle 2: obuf_rdata (the registered read data) + the running sum is
+    //      written to obuf_waddr. The arbiter keeps an address issued in cycle 1 out of cycle 2 (read-after-write).
     output wire [C*E-1:0]          obuf_we,
     output wire [C*E*(FIDW+PIDW)-1:0] obuf_addr,
+    output wire [C*E*(FIDW+PIDW)-1:0] obuf_waddr,
     input  wire [C*E*T*PSW-1:0]    obuf_rdata,
     output wire [C*E*T*PSW-1:0]    obuf_wdata,
     output wire [C-1:0]            fifo_overflow,
-    // ---- LIF sweep
+    // ---- LIF sweep (lif_x = output-buffer entries; spikes T/2 cycles after lif_v, pipelined over timesteps)
     input  wire [NLIF-1:0]         lif_v,
     input  wire [NLIF*T*PSW-1:0]   lif_x,
     input  wire signed [PSW-1:0]   theta,
     output wire [NLIF*T-1:0]       lif_spk,
-    // ---- packer
-    input  wire [PP-1:0]           sl_v,
-    input  wire [PP*R*T-1:0]       sl_m,
-    input  wire [PP*PIDW-1:0]      sl_id,
-    input  wire                    pk_flush,
-    output wire [PP+4-1:0]         pk_gv,
-    output wire [(PP+4)*R*T-1:0]   pk_gm,
-    output wire [(PP+4)*2*R*T-1:0] pk_gl,
-    output wire [(PP+4)*G*PIDW-1:0] pk_gid,
-    output wire [(PP+4)*3-1:0]     pk_gc
+    // ---- packer: PL independent lanes, each packing its own K-tile at PP pixel slices per cycle
+    input  wire [PL*PP-1:0]           sl_v,
+    input  wire [PL*PP*R*T-1:0]       sl_m,
+    input  wire [PL*PP*PIDW-1:0]      sl_id,
+    input  wire [PL-1:0]              pk_flush,
+    output wire [PL*(PP+4)-1:0]       pk_gv,
+    output wire [PL*(PP+4)*R*T-1:0]   pk_gm,
+    output wire [PL*(PP+4)*2*R*T-1:0] pk_gl,
+    output wire [PL*(PP+4)*G*PIDW-1:0] pk_gid,
+    output wire [PL*(PP+4)*3-1:0]     pk_gc
 );
     localparam NS = F * G, BW = NS * T * SW, EW = FIDW + PIDW + T * SW;
 
@@ -370,8 +394,8 @@ module ours_core #(parameter R = 4, C = 4, T = 8, F = 4, G = 4, SW = 10, PSW = 2
     // ---------------- edge arbiter: the C*E head entries on offer (priority: column 0 first, then FIFO order).
     // An entry may not update the output buffer in the same cycle as an earlier offered entry with the same
     // (filter, pixel) address (both would read the old value); it and the entries behind it in its FIFO wait.
-    wire [C*E-1:0] cv, ok, iss;
-    wire [C*E*(FIDW+PIDW)-1:0] ca;
+    wire [C*E-1:0] cv, ok, iss, sbv;
+    wire [C*E*(FIDW+PIDW)-1:0] ca, sba;
     wire [C*3-1:0] npop;
     genvar qa, qb;
     generate
@@ -384,7 +408,11 @@ module ours_core #(parameter R = 4, C = 4, T = 8, F = 4, G = 4, SW = 10, PSW = 2
                     assign same[qb] = 1'b0;
                 end
             end
-            assign ok[qa] = cv[qa] && !(|same);
+            wire [C*E-1:0] prev;              // read-after-write: the address is being written this cycle
+            for (qb = 0; qb < C*E; qb = qb + 1) begin : rw
+                assign prev[qb] = sbv[qb] && (sba[qb*(FIDW+PIDW) +: FIDW+PIDW] == ca[qa*(FIDW+PIDW) +: FIDW+PIDW]);
+            end
+            assign ok[qa] = cv[qa] && !(|same) && !(|prev);
             if (qa % E == 0) begin : h
                 assign iss[qa] = ok[qa];
             end else begin : t
@@ -431,10 +459,17 @@ module ours_core #(parameter R = 4, C = 4, T = 8, F = 4, G = 4, SW = 10, PSW = 2
             wire [EW-1:0] ent = rd[e*EW +: EW];
             assign cv[Q] = rv[e];
             assign ca[Q*(FIDW+PIDW) +: FIDW+PIDW] = ent[EW-1 -: FIDW+PIDW];
-            assign obuf_we[Q] = iss[Q];
-            assign obuf_addr[Q*(FIDW+PIDW) +: FIDW+PIDW] = ent[EW-1 -: FIDW+PIDW];
+            assign obuf_addr[Q*(FIDW+PIDW) +: FIDW+PIDW] = ent[EW-1 -: FIDW+PIDW];   // stage 1: read
+            reg sb_v; reg [FIDW+PIDW-1:0] sb_a; reg [T*SW-1:0] sb_d;                  // stage 2 registers
+            always @(posedge clk or posedge rst)
+                if (rst) begin sb_v <= 1'b0; sb_a <= 0; sb_d <= 0; end
+                else begin sb_v <= iss[Q]; sb_a <= ent[EW-1 -: FIDW+PIDW]; sb_d <= ent[T*SW-1:0]; end
+            assign sbv[Q] = sb_v;
+            assign sba[Q*(FIDW+PIDW) +: FIDW+PIDW] = sb_a;
+            assign obuf_we[Q] = sb_v;
+            assign obuf_waddr[Q*(FIDW+PIDW) +: FIDW+PIDW] = sb_a;
             for (tt = 0; tt < T; tt = tt + 1) begin : add
-                wire signed [SW-1:0] v = ent[tt*SW +: SW];
+                wire signed [SW-1:0] v = sb_d[tt*SW +: SW];
                 assign obuf_wdata[(Q*T + tt)*PSW +: PSW] =
                     $signed(obuf_rdata[(Q*T + tt)*PSW +: PSW]) + {{(PSW-SW){v[SW-1]}}, v};
             end
@@ -447,8 +482,13 @@ module ours_core #(parameter R = 4, C = 4, T = 8, F = 4, G = 4, SW = 10, PSW = 2
                                         .theta(theta), .spk(lif_spk[e*T +: T]));
     end endgenerate
 
-    // ---------------- packer
-    ours_packer #(.PP(PP), .MW(R*T), .G(G), .OPEN(4), .PIDW(PIDW)) packer (
-        .clk(clk), .rst(rst), .sl_v(sl_v), .sl_m(sl_m), .sl_id(sl_id), .flush(pk_flush),
-        .gv(pk_gv), .gm(pk_gm), .gl(pk_gl), .gid(pk_gid), .gc(pk_gc));
+    // ---------------- packer lanes
+    generate for (e = 0; e < PL; e = e + 1) begin : lane
+        localparam NO = PP + 4;
+        ours_packer #(.PP(PP), .MW(R*T), .G(G), .OPEN(4), .PIDW(PIDW)) packer (
+            .clk(clk), .rst(rst), .sl_v(sl_v[e*PP +: PP]), .sl_m(sl_m[e*PP*R*T +: PP*R*T]),
+            .sl_id(sl_id[e*PP*PIDW +: PP*PIDW]), .flush(pk_flush[e]),
+            .gv(pk_gv[e*NO +: NO]), .gm(pk_gm[e*NO*R*T +: NO*R*T]), .gl(pk_gl[e*NO*2*R*T +: NO*2*R*T]),
+            .gid(pk_gid[e*NO*G*PIDW +: NO*G*PIDW]), .gc(pk_gc[e*NO*3 +: NO*3]));
+    end endgenerate
 endmodule
