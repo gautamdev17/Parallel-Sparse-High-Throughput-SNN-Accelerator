@@ -1,0 +1,8 @@
+VGG16|ours {'onchip_wgt_MB': 1.071, 'onchip_act_MB': 9.489, 'pe_wgt_MB': 0.67, 'pe_act_MB': 12.987, 'obuf_rmw_entries': 2638104.875, 'lif_reads_entries': 233237.188, 'group_write_MB': 1.665, 'packer_raw_read_MB': 5.194, 'pe_psum_MB': 45.394}
+VGG16|spikex {'onchip_wgt_MB': 26.694, 'onchip_act_MB': 3.337, 'pe_wgt_MB': 213.555, 'pe_act_MB': 26.697}
+VGG16|spikeflow {'onchip_wgt_MB': 25.507, 'onchip_act_MB': 3.189, 'pe_wgt_MB': 408.108, 'pe_act_MB': 51.018}
+VGG16|loas_zip {'onchip_wgt_MB': 4.773, 'onchip_act_MB': 45.8, 'pe_wgt_MB': 76.361, 'pe_act_MB': 45.8}
+ResNet18|ours {'onchip_wgt_MB': 1.196, 'onchip_act_MB': 16.043, 'pe_wgt_MB': 0.748, 'pe_act_MB': 22.263, 'obuf_rmw_entries': 4727427.438, 'lif_reads_entries': 538329.25, 'group_write_MB': 2.862, 'packer_raw_read_MB': 8.68, 'pe_psum_MB': 80.946}
+ResNet18|spikex {'onchip_wgt_MB': 48.306, 'onchip_act_MB': 6.038, 'pe_wgt_MB': 386.451, 'pe_act_MB': 48.307}
+ResNet18|spikeflow {'onchip_wgt_MB': 46.065, 'onchip_act_MB': 5.758, 'pe_wgt_MB': 737.042, 'pe_act_MB': 92.131}
+ResNet18|loas_zip {'onchip_wgt_MB': 8.683, 'onchip_act_MB': 77.177, 'pe_wgt_MB': 128.017, 'pe_act_MB': 77.668}

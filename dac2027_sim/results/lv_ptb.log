@@ -1,0 +1,3 @@
+VGG16 {'onchip_wgt_MB': 23.621574, 'onchip_act_MB': 3.864768, 'pe_wgt_MB': 188.972592, 'pe_act_MB': 61.836288, 'cycles': 3701483, 'slots': 65223, 'pairs': 63520}
+ResNet18 {'onchip_wgt_MB': 41.52851, 'onchip_act_MB': 6.505832, 'pe_wgt_MB': 332.22808, 'pe_act_MB': 104.093312, 'cycles': 6352976, 'slots': 169166, 'pairs': 167116}
+done

@@ -1,0 +1,154 @@
+"""
+memory_model.py -- main-memory (DRAM) access for LoAS, SpikeX, SpikeFlow, SATO and Ours.
+
+Transaction-level model, the same rules for every design (PTB and Prosperity already include the official
+Prosperity simulator's own DRAM model and are taken from there):
+
+  traffic per layer = inputs + weights + outputs, each in the design's own storage format, with re-fetching when
+  the operands do not fit in an on-chip operand buffer of B bytes (same B for every design):
+      fits  (min(W, A) <= B):            W + A + O
+      else  (tile one operand by B/2):   O + min(W + A * ceil(W / (B/2)),  A + W * ceil(A / (B/2)))
+  layer cycles = max(compute cycles, traffic / bandwidth)   (double-buffered: transfers overlap compute)
+  + the first transfer of the layer, which cannot overlap: min(W, B/2) + min(A, B/2) bytes.
+
+Storage formats (inputs are the layer's input feature map, im2col is done on chip as in the Prosperity repo):
+  Ours      spikes: T bits per input neuron (plain spike memory, doc Sec. 9)
+            weights: packed non-zeros, 8-bit value + 2-bit filter label, + 4 x 6-bit filter ids per packed column
+            outputs: T bits per output neuron
+  LoAS      spikes: 1-bit non-silent bitmask per neuron + T bits per non-silent neuron (bitmask + fibre)
+            weights: 1-bit bitmask per weight position + 8 bits per non-zero
+            outputs: same compressed spike format (output non-silent density assumed = input density)
+  SpikeX    spikes: T bits per neuron (activation tags skip only all-silent blocks; at these densities none are)
+            weights: dense 8-bit (no weight sparsity)
+            outputs: T bits per output neuron
+  SpikeFlow spikes: 1-bit silence label per neuron + T bits per non-silent neuron (Sec. 4.2, Fig. 8)
+            weights: dense 8-bit; outputs: labels + non-silent trains
+  SATO      spikes: T bits per neuron, weights dense 8-bit, outputs T bits per neuron
+
+Defaults: B = 64 KB, bandwidth 64 GB/s (Prosperity Tbl. III, DDR4 x4) and 30 GB/s (PTB / SpikeX Tbl. 4 / Sec. V);
+clock 800 MHz.
+
+  python3 memory_model.py          -> results/memory_model.json, results/memory_tables.md
+"""
+import json, math, os, sys, zlib
+from multiprocessing import Pool
+import numpy as np
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import workload as wl
+from ours import Cfg, LayerPlan
+
+F_HZ = 800e6
+BUF = 64 * 1024
+WORKLOADS = {"sparse90": (0.10, 0.10, 0.3), "zipstats": (1.00, 0.261, 0.3)}
+DESIGNS = ["loas_zip", "spikex", "spikeflow", "sato", "ours"]
+
+
+def layer_bytes(task):
+    """DRAM bytes (inputs, weights, outputs) per design for one layer."""
+    net, li, batch, wname = task
+    wd, ns, q = WORKLOADS[wname]
+    layer = wl.NETWORKS[net]()[li]
+    name, ci, co, k, s, h = layer
+    M, K, N = wl.gemm_shape(layer, batch)
+    T = 8
+    seed = zlib.crc32(f"{net}|{li}|{batch}|{wd}|{ns}|{q}".encode())
+    rng = np.random.default_rng(seed)
+    W = wl.rand_weights(rng, M, K, wd)
+    X = wl.rand_spikes(rng, (batch, ci, h, h), ns, q)            # same draws as workload.layer_tensors
+    n_in = X.size
+    n_in_ns = int((X != 0).sum())
+    n_out = M * N                                                # output neurons (all images)
+    n_out_ns = int(round(n_out * ns))
+    nnz_w = int((W != 0).sum())
+    plan = LayerPlan(W, Cfg())
+    packed_cols = sum(len(c) for c, _ in plan.cols.values())
+    dense_in = n_in * T / 8
+    comp_in = (n_in + n_in_ns * T) / 8
+    dense_out = n_out * T / 8
+    comp_out = (n_out + n_out_ns * T) / 8
+    dense_w = M * K
+    b = {
+        "ours": (dense_in, nnz_w * 10 / 8 + packed_cols * 24 / 8, dense_out),
+        "loas_zip": (comp_in, M * K / 8 + nnz_w, comp_out),
+        "spikex": (dense_in, dense_w, dense_out),
+        "spikeflow": (comp_in, dense_w, comp_out),
+        "sato": (dense_in, dense_w, dense_out),
+    }
+    return task, b
+
+
+def traffic(A, Wb, O, buf=BUF):
+    if min(A, Wb) <= buf:
+        return A + Wb + O
+    h = buf / 2
+    return O + min(Wb + A * math.ceil(Wb / h), A + Wb * math.ceil(A / h))
+
+
+def first_load(A, Wb, buf=BUF):
+    return min(A, buf / 2) + min(Wb, buf / 2)
+
+
+def main():
+    main_cache = json.load(open(os.path.join(HERE, "results", "main.json")))
+    tasks = [(net, li, b, w) for w in WORKLOADS for net in ("VGG16", "ResNet18")
+             for li in range(len(wl.NETWORKS[net]())) for b in (1, 16)]
+    with Pool(os.cpu_count()) as p:
+        res = dict(p.map(layer_bytes, tasks))
+    sato_official = json.load(open(os.path.join(HERE, "results", "sato_official.json")))
+    out = {}
+    for gbps in (64, 30):
+        bpc = gbps * 1e9 / F_HZ                                  # bytes per cycle
+        for w in WORKLOADS:
+            for net in ("VGG16", "ResNet18"):
+                nl = len(wl.NETWORKS[net]())
+                for b in (1, 16):
+                    for d in DESIGNS:
+                        comp = mem = tot = byt = 0
+                        for li in range(nl):
+                            A, Wb, O = res[(net, li, b, w)][d]
+                            t = traffic(A, Wb, O)
+                            if d == "sato":
+                                c = None                         # SATO compute comes as a network total only
+                            else:
+                                c = main_cache[f"{net}|{li}|{b}|{w}"][d]
+                            m = t / bpc
+                            byt += t
+                            mem += m
+                            if c is not None:
+                                comp += c
+                                tot += max(c, m) + first_load(A, Wb) / bpc
+                        if d == "sato":                          # network-level: max over the whole network
+                            comp = sato_official[f"{net}|{b}|{w}"]
+                            tot = max(comp, mem)
+                        out[f"{gbps}|{w}|{net}|{b}|{d}"] = dict(compute_cycles=comp, mem_cycles=mem,
+                                                                 total_cycles=tot, dram_MB=byt / 1e6)
+    json.dump(out, open(os.path.join(HERE, "results", "memory_model.json"), "w"), indent=1)
+    # PTB / Prosperity: official simulator totals (already include their DRAM model)
+    ptb = json.load(open(os.path.join(HERE, "results", "ptb_official.json")))
+    pro = json.load(open(os.path.join(HERE, "results", "prosperity_official.json")))
+    lines = []
+    for gbps in (64, 30):
+        lines += [f"### Workload sparse90, DRAM {gbps} GB/s, {BUF // 1024} KB operand buffer, 800 MHz", "",
+                  "| Network | Design | DRAM traffic b=1 (MB) | Compute-only latency (ms) | With memory latency (ms) "
+                  "| Memory-bound? | Throughput b=16 with memory (img/s) |", "|---|---|---:|---:|---:|---|---:|"]
+        for net in ("VGG16", "ResNet18"):
+            for d in ["loas_zip", "spikex", "ptb", "sato", "spikeflow", "prosperity", "ours"]:
+                if d in ("ptb", "prosperity"):
+                    src = ptb if d == "ptb" else pro
+                    c1, c16 = src[f"{net}|1|sparse90"], src[f"{net}|16|sparse90"]
+                    lines.append(f"| {net} | {d} (official sim, own DRAM model) | – | – | {c1 / F_HZ * 1e3:.3f} | – | "
+                                 f"{16 * F_HZ / c16:,.0f} |")
+                    continue
+                r1, r16 = out[f"{gbps}|sparse90|{net}|1|{d}"], out[f"{gbps}|sparse90|{net}|16|{d}"]
+                mb = "yes" if r1["mem_cycles"] > r1["compute_cycles"] else "no"
+                lines.append(f"| {net} | {d} | {r1['dram_MB']:.2f} | {r1['compute_cycles'] / F_HZ * 1e3:.3f} | "
+                             f"{r1['total_cycles'] / F_HZ * 1e3:.3f} | {mb} | {16 * F_HZ / r16['total_cycles']:,.0f} |")
+        lines.append("")
+    open(os.path.join(HERE, "results", "memory_tables.md"), "w").write("\n".join(lines))
+    print("\n".join(lines))
+
+
+if __name__ == "__main__":
+    main()

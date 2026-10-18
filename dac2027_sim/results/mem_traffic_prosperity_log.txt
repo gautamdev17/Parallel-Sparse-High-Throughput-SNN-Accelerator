@@ -1,0 +1,4 @@
+VGG16 1 {'act_MB': np.float64(0.44122), 'wgt_MB': 37.791424, 'out_MB': 0.284672}
+VGG16 16 {'act_MB': np.float64(0.45765), 'wgt_MB': 10.914412, 'out_MB': 0.284672}
+ResNet18 1 {'act_MB': np.float64(0.65854), 'wgt_MB': 21.502656, 'out_MB': 0.6144}
+ResNet18 16 {'act_MB': np.float64(0.658792), 'wgt_MB': 17.301932, 'out_MB': 0.6144}

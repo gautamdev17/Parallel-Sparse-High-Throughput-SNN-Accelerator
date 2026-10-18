@@ -1,0 +1,124 @@
+148 layer tasks, 84 network tasks
+ done ('sato', 'VGG16', 1, 0, 'sparse90') 5,682,552.0
+ done ('ptb', 'VGG16', 1, 0, 'sparse90') 25,908,519
+ done ('ptb', 'VGG16', 16, 1, 'sparse90') 25,784,747
+ done ('ptb', 'VGG16', 16, 0, 'sparse90') 25,981,303
+ done ('ptb', 'VGG16', 16, 2, 'sparse90') 26,224,703
+ done ('ptb', 'VGG16', 16, 3, 'sparse90') 25,604,703
+ done ('sato', 'VGG16', 16, 0, 'sparse90') 84,104,740.0
+ done ('ptb', 'VGG16', 16, 4, 'sparse90') 26,537,831
+ done ('ptb', 'VGG16', 16, 5, 'sparse90') 25,812,219
+ done ('ptb', 'VGG16', 16, 6, 'sparse90') 25,969,875
+ done ('ptb', 'VGG16', 16, 7, 'sparse90') 26,049,279
+ done ('ptb', 'VGG16', 16, 8, 'sparse90') 25,822,371
+ done ('ptb', 'VGG16', 16, 9, 'sparse90') 26,100,947
+ done ('ptb', 'VGG16', 16, 10, 'sparse90') 26,040,991
+ done ('ptb', 'VGG16', 16, 11, 'sparse90') 25,983,359
+ done ('ptb', 'VGG16', 16, 12, 'sparse90') 26,536,595
+ done ('ptb', 'VGG16', 16, 13, 'sparse90') 25,997,095
+ done ('sato', 'ResNet18', 1, 0, 'sparse90') 9,957,764.0
+ done ('ptb', 'VGG16', 16, 14, 'sparse90') 25,939,775
+ done ('ptb', 'VGG16', 16, 15, 'sparse90') 25,865,095
+ done ('ptb', 'ResNet18', 1, 0, 'sparse90') 42,657,892
+ done ('ptb', 'ResNet18', 16, 0, 'sparse90') 43,562,824
+ done ('ptb', 'ResNet18', 16, 1, 'sparse90') 42,868,056
+ done ('sato', 'ResNet18', 16, 0, 'sparse90') 158,238,410.0
+ done ('ptb', 'ResNet18', 16, 2, 'sparse90') 42,889,228
+ done ('ptb', 'ResNet18', 16, 3, 'sparse90') 42,901,948
+ done ('ptb', 'ResNet18', 16, 4, 'sparse90') 42,956,484
+ done ('ptb', 'ResNet18', 16, 5, 'sparse90') 43,053,944
+ done ('ptb', 'ResNet18', 16, 6, 'sparse90') 43,266,000
+ done ('ptb', 'ResNet18', 16, 7, 'sparse90') 42,817,880
+ done ('ptb', 'ResNet18', 16, 8, 'sparse90') 43,149,544
+ done ('prosperity', 'VGG16', 1, 0, 'sparse90') 3,430,351
+ done ('ptb', 'ResNet18', 16, 9, 'sparse90') 43,047,684
+ done ('ptb', 'ResNet18', 16, 10, 'sparse90') 43,559,120
+ done ('ptb', 'ResNet18', 16, 11, 'sparse90') 43,377,804
+ done ('ptb', 'ResNet18', 16, 12, 'sparse90') 42,863,776
+ done ('ptb', 'ResNet18', 16, 13, 'sparse90') 43,094,736
+ done ('sato', 'VGG16', 1, 0, 'zipstats') 13,013,498.0
+ done ('ptb', 'ResNet18', 16, 15, 'sparse90') 43,019,696
+ done ('ptb', 'ResNet18', 16, 14, 'sparse90') 43,058,816
+ done ('sato', 'VGG16', 16, 0, 'zipstats') 189,683,058.0
+ done ('ptb', 'VGG16', 1, 0, 'zipstats') 55,803,383
+ done ('ptb', 'VGG16', 16, 0, 'zipstats') 55,850,403
+ done ('ptb', 'VGG16', 16, 1, 'zipstats') 56,585,155
+ done ('ptb', 'VGG16', 16, 2, 'zipstats') 56,194,847
+ done ('prosperity', 'ResNet18', 1, 0, 'sparse90') 6,092,546
+ done ('ptb', 'VGG16', 16, 3, 'zipstats') 56,147,331
+ done ('ptb', 'VGG16', 16, 4, 'zipstats') 56,001,271
+ done ('ptb', 'VGG16', 16, 5, 'zipstats') 56,614,979
+ done ('ptb', 'VGG16', 16, 6, 'zipstats') 56,261,275
+ done ('ptb', 'VGG16', 16, 7, 'zipstats') 55,924,179
+ done ('ptb', 'VGG16', 16, 8, 'zipstats') 56,278,119
+ done ('ptb', 'VGG16', 16, 9, 'zipstats') 55,417,167
+ done ('ptb', 'VGG16', 16, 10, 'zipstats') 55,781,855
+ done ('ptb', 'VGG16', 16, 11, 'zipstats') 55,659,211
+ done ('ptb', 'VGG16', 16, 12, 'zipstats') 56,021,831
+ done ('ptb', 'VGG16', 16, 13, 'zipstats') 56,055,335
+ done ('sato', 'ResNet18', 1, 0, 'zipstats') 22,108,434.0
+ done ('prosperity', 'VGG16', 1, 0, 'zipstats') 7,101,394
+ done ('ptb', 'VGG16', 16, 14, 'zipstats') 56,029,851
+ done ('ptb', 'VGG16', 16, 15, 'zipstats') 56,300,451
+ done ('sato', 'ResNet18', 16, 0, 'zipstats') 348,871,614.0
+ done ('ptb', 'ResNet18', 1, 0, 'zipstats') 88,084,164
+ done ('ptb', 'ResNet18', 16, 0, 'zipstats') 88,151,436
+ done ('ptb', 'ResNet18', 16, 1, 'zipstats') 88,065,780
+ done ('ptb', 'ResNet18', 16, 2, 'zipstats') 88,064,808
+ done ('ptb', 'ResNet18', 16, 3, 'zipstats') 88,757,364
+ done ('ptb', 'ResNet18', 16, 4, 'zipstats') 88,304,892
+ done ('prosperity', 'ResNet18', 1, 0, 'zipstats') 12,357,121
+ done ('ptb', 'ResNet18', 16, 5, 'zipstats') 88,412,760
+ done ('ptb', 'ResNet18', 16, 6, 'zipstats') 88,408,828
+ done ('ptb', 'ResNet18', 16, 7, 'zipstats') 88,335,972
+ done ('ptb', 'ResNet18', 16, 8, 'zipstats') 88,356,044
+ done ('ptb', 'ResNet18', 16, 9, 'zipstats') 88,435,132
+ done ('ptb', 'ResNet18', 16, 10, 'zipstats') 88,686,728
+ done ('ptb', 'ResNet18', 16, 11, 'zipstats') 88,480,964
+ done ('ptb', 'ResNet18', 16, 12, 'zipstats') 88,321,160
+ done ('ptb', 'ResNet18', 16, 13, 'zipstats') 88,280,892
+ done ('ptb', 'ResNet18', 16, 14, 'zipstats') 88,259,668
+ done ('ptb', 'ResNet18', 16, 15, 'zipstats') 88,393,336
+ done ('prosperity', 'VGG16', 16, 0, 'sparse90') 54,535,283
+ done ('prosperity', 'VGG16', 16, 0, 'zipstats') 111,481,476
+ done ('prosperity', 'ResNet18', 16, 0, 'sparse90') 97,851,925
+ done ('prosperity', 'ResNet18', 16, 0, 'zipstats') 196,935,791
+### v3: all designs with 16 PEs, workload `sparse90` (T=8, 800 MHz)
+
+| Network | Design | Latency b=1 (ms) | Speed-up vs LoAS | Throughput b=16 (img/s) | Throughput vs LoAS |
+|---|---|---:|---:|---:|---:|
+| VGG16 | LoAS (16 TPPE) | 11.217 | 1.00x | 89 | 1.00x |
+| VGG16 | SpikeX (4x4) | 13.126 | 0.85x | 76 | 0.85x |
+| VGG16 | PTB (2x8) | 32.386 | 0.35x | 31 | 0.34x |
+| VGG16 | SATO (16 PE) | 7.103 | 1.58x | 152 | 1.71x |
+| VGG16 | SpikeFlow (4x4) | 13.133 | 0.85x | 76 | 0.85x |
+| VGG16 | Prosperity (16 PE) | 4.288 | 2.62x | 235 | 2.63x |
+| VGG16 | Ours (4x4) | 0.507 | 22.15x | 2,762 | 30.98x |
+| ResNet18 | LoAS (16 TPPE) | 18.846 | 1.00x | 53 | 1.00x |
+| ResNet18 | SpikeX (4x4) | 23.599 | 0.80x | 42 | 0.79x |
+| ResNet18 | PTB (2x8) | 53.322 | 0.35x | 19 | 0.35x |
+| ResNet18 | SATO (16 PE) | 12.447 | 1.51x | 81 | 1.52x |
+| ResNet18 | SpikeFlow (4x4) | 23.610 | 0.80x | 42 | 0.79x |
+| ResNet18 | Prosperity (16 PE) | 7.616 | 2.47x | 131 | 2.47x |
+| ResNet18 | Ours (4x4) | 0.688 | 27.38x | 1,596 | 30.08x |
+
+### v3: all designs with 16 PEs, workload `zipstats` (T=8, 800 MHz)
+
+| Network | Design | Latency b=1 (ms) | Speed-up vs LoAS | Throughput b=16 (img/s) | Throughput vs LoAS |
+|---|---|---:|---:|---:|---:|
+| VGG16 | LoAS (16 TPPE) | 11.217 | 1.00x | 89 | 1.00x |
+| VGG16 | SpikeX (4x4) | 34.214 | 0.33x | 29 | 0.33x |
+| VGG16 | PTB (2x8) | 69.754 | 0.16x | 14 | 0.16x |
+| VGG16 | SATO (16 PE) | 16.267 | 0.69x | 67 | 0.76x |
+| VGG16 | SpikeFlow (4x4) | 34.217 | 0.33x | 29 | 0.33x |
+| VGG16 | Prosperity (16 PE) | 8.877 | 1.26x | 115 | 1.29x |
+| VGG16 | Ours (4x4) | 5.779 | 1.94x | 219 | 2.46x |
+| ResNet18 | LoAS (16 TPPE) | 18.846 | 1.00x | 53 | 1.00x |
+| ResNet18 | SpikeX (4x4) | 61.855 | 0.30x | 16 | 0.30x |
+| ResNet18 | PTB (2x8) | 110.105 | 0.17x | 9 | 0.17x |
+| ResNet18 | SATO (16 PE) | 27.636 | 0.68x | 37 | 0.69x |
+| ResNet18 | SpikeFlow (4x4) | 61.856 | 0.30x | 16 | 0.30x |
+| ResNet18 | Prosperity (16 PE) | 15.446 | 1.22x | 65 | 1.22x |
+| ResNet18 | Ours (4x4) | 8.493 | 2.22x | 126 | 2.37x |
+
+PE = 8 adders for Ours and LoAS, 1 adder for the others: at 16 PEs Ours and LoAS have 128 adders, the others 16. The equal-adder (128) comparison is v1 (main_tables.md).
