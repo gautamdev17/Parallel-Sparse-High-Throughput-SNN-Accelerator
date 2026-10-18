@@ -98,37 +98,38 @@ def compute():
     return out
 
 
-def _stacked(out, comps, getter, ylab, fname, fmt, hatch_of=None, extra_legend=()):
+def _stacked(out, comps, getter, ylab, fname):
+    """PTB-style (PTB Fig. 10) normalized stacked bars: one panel per network, half text width each, every bar
+    normalized to PTB's total; comps listed bottom to top."""
     import plot_ptb_style as PS
     from matplotlib.patches import Patch
     plt, FS = PS.plt, PS.FS
-    fig, ax = plt.subplots(figsize=(FS.TEXT, 2.3))
-    xs, labels, top = [], [], 0.0
-    for gi, n in enumerate(NETS):
+    fig, axes = plt.subplots(1, 2, figsize=(FS.TEXT, 2.05))
+    top = 0.0
+    for ax, n, tag in ((axes[0], NETS[0], "(a) VGG16"), (axes[1], NETS[1], "(b) ResNet18")):
+        ref = sum(getter(out[f"{n}|ptb"], k) for k, *_ in comps)
         for i, d in enumerate(ORDER):
-            x = gi * (len(ORDER) + 1.2) + i
-            xs.append(x); labels.append(NAME[d])
             bot = 0.0
-            for key, _, c, co in comps:
-                parts = getter(out[f"{n}|{d}"], key)          # list of (value, hatched)
-                for v, hat in parts:
-                    ax.bar(x, v, 0.72, bottom=bot, color=co if d == "ours" else c, edgecolor=PS.EDGE,
-                           linewidth=0.5, hatch="////" if hat else "", zorder=3)
-                    bot += v
+            for key, _, c, co, hat in comps:
+                v = getter(out[f"{n}|{d}"], key) / ref
+                ax.bar(i, v, 0.6, bottom=bot, color=co if d == "ours" else c, edgecolor=PS.EDGE, linewidth=0.5,
+                       hatch=hat, zorder=3)
+                bot += v
             top = max(top, bot)
             if d == "ours":
-                ax.annotate(fmt(bot), (x, bot), xytext=(0, 2), textcoords="offset points", ha="center",
+                ax.annotate(f"{bot:.2f}", (i, bot), xytext=(0, 2), textcoords="offset points", ha="center",
                             va="bottom", fontsize=6.8, color=FS.OURS_TEXT, zorder=5)
-        ax.text(gi * (len(ORDER) + 1.2) + (len(ORDER) - 1) / 2, -0.27, n, transform=ax.get_xaxis_transform(),
-                ha="center", va="top", fontsize=8)
-    ax.set_xticks(xs, labels, rotation=35, ha="right", fontsize=6.8)
-    ax.set_ylim(0, top * 1.28)
-    ax.set_ylabel(ylab)
-    ax.yaxis.grid(True, zorder=0)
-    h = [Patch(facecolor=c, edgecolor=PS.EDGE, linewidth=0.5, label=l) for _, l, c, _ in comps]
-    h += [Patch(facecolor="white", edgecolor=PS.EDGE, linewidth=0.5, hatch="////", label=l) for l in extra_legend]
-    FS.inside_legend(ax, h, [x.get_label() for x in h], ncol=len(h), loc="upper right")
-    fig.subplots_adjust(left=0.07, right=0.995, top=0.985, bottom=0.27)
+        ax.axhline(1.0, color=PS.EDGE, lw=0.6, ls=(0, (4, 2)), zorder=4)
+        ax.set_xticks(range(len(ORDER)), [NAME[d] for d in ORDER], rotation=40, ha="right", fontsize=6.6)
+        ax.set_xlim(-0.6, len(ORDER) - 0.4)
+        ax.set_ylabel(ylab)
+        ax.yaxis.grid(True, zorder=0)
+        FS.panel_tag(ax, tag, y=-0.42)
+    for ax in axes:
+        ax.set_ylim(0, top * 1.3)
+    h = [Patch(facecolor=c, edgecolor=PS.EDGE, linewidth=0.5, hatch=hat, label=l) for _, l, c, _, hat in comps][::-1]
+    FS.inside_legend(axes[0], h[::-1], [x.get_label() for x in h[::-1]], ncol=3, loc="upper center", fontsize=6.5)
+    fig.subplots_adjust(left=0.07, right=0.995, top=0.985, bottom=0.33, wspace=0.24)
     for ext in ("png", "pdf"):
         fig.savefig(os.path.join(R, f"{fname}{SFX}.{ext}"))
     plt.close(fig)
@@ -137,16 +138,13 @@ def _stacked(out, comps, getter, ylab, fname, fmt, hatch_of=None, extra_legend=(
 def plots(out):
     import plot_ptb_style as PS
     plt, FS = PS.plt, PS.FS
-    comps = (("core", "Core", "#4d4d4d", "#a0520a"), ("sram", "SRAM", "#9a9a9a", "#e8871e"),
-             ("dram", "DRAM", "#dcdcdc", "#f6c48e"))
-    _stacked(out, comps, lambda x, k: [(x["power_W"][k] * 1e3, False)], "Power (mW)", "power_breakdown",
-             lambda v: f"{v:.0f}")
-    _stacked(out, comps, lambda x, k: [(x["energy_J"][k] * 1e6, False)], "Energy (µJ)", "energy_breakdown",
-             lambda v: f"{v:.0f}")
-    lv = (("off", "Off-chip", "#dcdcdc", "#f6c48e"), ("on", "On-chip", "#9a9a9a", "#e8871e"),
-          ("pe", "PE", "#4d4d4d", "#a0520a"))
-    _stacked(out, lv, lambda x, k: [(sum(x["traffic_MB"][k].values()), False)],
-             "Traffic (MB)", "traffic_levels", lambda v: f"{v:.0f}")
+    comps = (("dram", "DRAM", "#2f2f2f", "#a0520a", ""), ("sram", "SRAM", "#9a9a9a", "#e8871e", ""),
+             ("core", "Core", "#ffffff", "#f6c48e", "////"))
+    _stacked(out, comps, lambda x, k: x["power_W"][k], "Normalized power", "power_breakdown")
+    _stacked(out, comps, lambda x, k: x["energy_J"][k], "Normalized energy", "energy_breakdown")
+    lv = (("off", "Off-chip", "#2f2f2f", "#a0520a", ""), ("on", "On-chip", "#9a9a9a", "#e8871e", ""),
+          ("pe", "PE", "#ffffff", "#f6c48e", "////"))
+    _stacked(out, lv, lambda x, k: sum(x["traffic_MB"][k].values()), "Normalized traffic", "traffic_levels")
     # EDP: totals, log scale (spans > 100x), designs in their usual styles
     import numpy as np
     fig, ax = plt.subplots(figsize=(FS.COL, 2.0))

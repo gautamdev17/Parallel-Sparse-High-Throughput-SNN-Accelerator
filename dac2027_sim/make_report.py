@@ -191,8 +191,8 @@ gate-level power with OpenSTA; SRAM with CACTI 7 at 45 nm (LSTP cells, LOP perip
                          bold_ours(d, f"{sum(en.values()) * 1e6:.0f}"), bold_ours(d, f"{x['edp_Js'] * 1e9:.0f}")])
     H.append(table(["Network", "Design", "Latency (ms)", "Core (mW)", "SRAM (mW)", "DRAM (mW)", "Total (mW)",
                     "Core (µJ)", "SRAM (µJ)", "DRAM (µJ)", "Energy (µJ)", "EDP (µJ·ms)"], rows, "small"))
-    H.append(fig("power_breakdown_b1.png", "Fig. 4. Power per component, batch 1."))
-    H.append(fig("energy_breakdown_b1.png", "Fig. 5. Energy per image (power &times; latency) per component, batch 1."))
+    H.append(fig("power_breakdown_b1.png", "Fig. 4. Power per component (DRAM / SRAM / core), normalized to PTB = 1, batch 1."))
+    H.append(fig("energy_breakdown_b1.png", "Fig. 5. Energy per image (power &times; latency) per component, normalized to PTB = 1, batch 1."))
     H.append(fig("edp_b1.png", "Fig. 6. EDP (energy &times; latency), batch 1, log scale.", "55%"))
 
     # ---------------------------------------------------------------- 8 memory traffic
@@ -228,7 +228,7 @@ gate-level power with OpenSTA; SRAM with CACTI 7 at 45 nm (LSTP cells, LOP perip
              "prefix partial-sum buffer); the last two columns are weights and activations only.</p>")
     H.append(table(["Network", "Design", "Off-chip (MB)", "On-chip (MB)", "PE (MB)", "Total (MB)",
                     "On-chip, wgt+act", "PE, wgt+act"], rows))
-    H.append(fig("traffic_levels_b1.png", "Fig. 8. Traffic per image at three levels, batch 1."))
+    H.append(fig("traffic_levels_b1.png", "Fig. 8. Traffic per image at three levels (off-chip / on-chip / PE), normalized to PTB = 1, batch 1."))
     hd, rows = md_table_rows(os.path.join(R, "roofline.md"), "| Network |")
     rows = [[r[0], bold_ours("ours" if r[1] == "Ours" else "", r[1])] + r[2:] for r in rows]
     H.append("<p><b>Roofline</b> (batch 16, 500 MHz, DRAM 64 GB/s). Work = effectual accumulations (non-zero weight "
