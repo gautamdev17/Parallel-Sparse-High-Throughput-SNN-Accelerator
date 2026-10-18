@@ -30,7 +30,9 @@ lossless width is used (favours that baseline):
               paper; this layout reproduces its measured activation traffic (Fig 12a, ~0.49 of dense) on real
               CIFAR-10 spikes: 0.475 (VGG16), 0.466 (ResNet18). Rows = timestep x pixel.
   Prosperity  dense 8-bit weights and dense spike bits (product sparsity reduces computation, not storage).
-  SpikeX      dense 8-bit weights; dense spike bits + 1-bit activity tag per neuron per time window (TWS=4).
+  SpikeX      dense 8-bit weights; dense spike bits + one 1-bit activity tag per spatiotemporal memory block
+              (SP-MB = one input channel for a set of postsynaptic neurons over all time blocks, Sec III-D); its
+              finer TW/TB tags drive skipping and are not stored data.
   SpikeFlow   dense weights; 1-bit silence label per neuron, T bits per non-silent neuron (Sec 4.2).
   SATO        storage format not specified in the paper -> not plotted.
 
@@ -178,8 +180,8 @@ def prosperity_bits(W, S):
     return 8 * M * K, T * K * N
 
 
-def spikex_bits(W, S, tws=4):
-    return 8 * M * K, T * K * N + K * N * (T // tws)
+def spikex_bits(W, S):
+    return 8 * M * K, T * K * N + K          # one SP-MB tag per input channel (row of S)
 
 
 def spikeflow_bits(W, S):

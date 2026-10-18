@@ -76,7 +76,8 @@ def compute():
                 assert abs(onc["wgt"] + onc["act"] - sum(acc["glb"])) < 1e-3 * sum(acc["glb"])
                 pe = dict(wgt=r["pe_wgt_MB"] * MBb, act=r["pe_act_MB"] * MBb, psum=0.0)
             tr = {lvl: {k: v / MBb for k, v in x.items()} for lvl, x in (("off", offc), ("on", onc), ("pe", pe))}
-            out[f"{n}|{d}"] = dict(t_s=t, power_W=pw, energy_J=en, edp_Js=sum(en.values()) * t, traffic_MB=tr)
+            out[f"{n}|{d}"] = dict(t_s=t, power_W=pw, energy_J=en, edp_Js=sum(en.values()) * t, traffic_MB=tr,
+                                   dram_MB=dict(wgt=o["wgt_MB"], act=o["act_MB"], out=o["out_MB"]))
     json.dump(out, open(os.path.join(R, f"system_breakdown{SFX}.json"), "w"), indent=1)
     L = [f"# Power -> energy -> EDP and three-level traffic (45 nm, 500 MHz, sparse90, per image at batch {B})", "",
          "See system_breakdown.py for every rule. EDP = energy per image x time per image.", "",
@@ -98,38 +99,63 @@ def compute():
     return out
 
 
-def _stacked(out, comps, getter, ylab, fname):
-    """PTB-style (PTB Fig. 10) normalized stacked bars: one panel per network, half text width each, every bar
-    normalized to PTB's total; comps listed bottom to top."""
+PALETTES = {   # bottom, middle, top (top is hatched, PTB Fig. 10 style); same colours for every design
+    "grey": ("#111111", "#8C8C8C", "#FFFFFF"),
+    "slate": ("#2B2D42", "#8D99AE", "#EDF2F4"),
+    "teal": ("#1D3557", "#457B9D", "#A8DADC"),
+    "terracotta": ("#3D405B", "#E07A5F", "#F2CC8F"),
+    "okabe": ("#0B3C5D", "#328CC1", "#F2B134"),
+}
+PAL = os.environ.get("STACK_PAL", "grey")
+
+
+def _stacked(out, comps, getter, ylab, fname, pal=None):
+    """PTB Fig. 10 style: normalized stacked bars (PTB total = 1), one panel per network, bold axis labels, dotted
+    grid, framed legend outside on the right listing the top component first; the top component is hatched; every
+    design uses the same component colours and ours is marked by a bold label and its value."""
     import plot_ptb_style as PS
     from matplotlib.patches import Patch
     plt, FS = PS.plt, PS.FS
-    fig, axes = plt.subplots(1, 2, figsize=(FS.TEXT, 2.05))
+    cols = PALETTES[pal or PAL]
+    hatches = ("", "", "////")
+    fig, axes = plt.subplots(1, 2, figsize=(FS.TEXT, 2.1))
     top = 0.0
     for ax, n, tag in ((axes[0], NETS[0], "(a) VGG16"), (axes[1], NETS[1], "(b) ResNet18")):
-        ref = sum(getter(out[f"{n}|ptb"], k) for k, *_ in comps)
+        ref = sum(getter(out[f"{n}|ptb"], k) for k, _ in comps)
         for i, d in enumerate(ORDER):
             bot = 0.0
-            for key, _, c, co, hat in comps:
+            for j, (key, _) in enumerate(comps):
                 v = getter(out[f"{n}|{d}"], key) / ref
-                ax.bar(i, v, 0.6, bottom=bot, color=co if d == "ours" else c, edgecolor=PS.EDGE, linewidth=0.5,
-                       hatch=hat, zorder=3)
+                ax.bar(i, v, 0.5, bottom=bot, color=cols[j], edgecolor="#111111", linewidth=0.6, hatch=hatches[j],
+                       zorder=3)
                 bot += v
             top = max(top, bot)
             if d == "ours":
-                ax.annotate(f"{bot:.2f}", (i, bot), xytext=(0, 2), textcoords="offset points", ha="center",
-                            va="bottom", fontsize=6.8, color=FS.OURS_TEXT, zorder=5)
-        ax.axhline(1.0, color=PS.EDGE, lw=0.6, ls=(0, (4, 2)), zorder=4)
-        ax.set_xticks(range(len(ORDER)), [NAME[d] for d in ORDER], rotation=40, ha="right", fontsize=6.6)
+                ax.annotate(f"{bot:.3f}" if bot < 0.1 else f"{bot:.2f}", (i, bot), xytext=(0, 2),
+                            textcoords="offset points", ha="center", va="bottom", fontsize=7, fontweight="bold",
+                            color="#111111", zorder=5)
+        ax.set_xticks(range(len(ORDER)), [NAME[d] for d in ORDER], rotation=40, ha="right", fontsize=6.8,
+                      fontweight="bold")
+        ax.get_xticklabels()[ORDER.index("ours")].set_fontsize(7.6)
         ax.set_xlim(-0.6, len(ORDER) - 0.4)
-        ax.set_ylabel(ylab)
-        ax.yaxis.grid(True, zorder=0)
+        ax.set_ylabel(ylab, fontweight="bold")
+        for t in ax.get_yticklabels():
+            t.set_fontweight("bold")
+        ax.yaxis.grid(True, ls=":", lw=0.6, color="#777777", zorder=0)
+        ax.xaxis.grid(False)
         FS.panel_tag(ax, tag, y=-0.42)
     for ax in axes:
-        ax.set_ylim(0, top * 1.3)
-    h = [Patch(facecolor=c, edgecolor=PS.EDGE, linewidth=0.5, hatch=hat, label=l) for _, l, c, _, hat in comps][::-1]
-    FS.inside_legend(axes[0], h[::-1], [x.get_label() for x in h[::-1]], ncol=3, loc="upper center", fontsize=6.5)
-    fig.subplots_adjust(left=0.07, right=0.995, top=0.985, bottom=0.33, wspace=0.24)
+        ax.set_ylim(0, top * 1.08)
+    h = [Patch(facecolor=cols[j], edgecolor="#111111", linewidth=0.6, hatch=hatches[j], label=l)
+         for j, (_, l) in enumerate(comps)][::-1]
+    lg = fig.legend(h, [x.get_label() for x in h], loc="center right", frameon=True, fancybox=False,
+                    edgecolor="#111111", fontsize=7, handlelength=1.6, handleheight=1.0, borderpad=0.4,
+                    labelspacing=0.35, prop={"weight": "bold", "size": 7})
+    lg.get_frame().set_linewidth(0.6)
+    # leave exactly the legend's width (+ a gap) on the right, so the legend never overlaps a panel
+    fig.canvas.draw()
+    lw = lg.get_window_extent().width / fig.bbox.width
+    fig.subplots_adjust(left=0.065, right=0.985 - lw - 0.015, top=0.97, bottom=0.33, wspace=0.26)
     for ext in ("png", "pdf"):
         fig.savefig(os.path.join(R, f"{fname}{SFX}.{ext}"))
     plt.close(fig)
@@ -138,13 +164,14 @@ def _stacked(out, comps, getter, ylab, fname):
 def plots(out):
     import plot_ptb_style as PS
     plt, FS = PS.plt, PS.FS
-    comps = (("dram", "DRAM", "#2f2f2f", "#a0520a", ""), ("sram", "SRAM", "#9a9a9a", "#e8871e", ""),
-             ("core", "Core", "#ffffff", "#f6c48e", "////"))
+    comps = (("dram", "DRAM"), ("sram", "SRAM"), ("core", "Core"))
     _stacked(out, comps, lambda x, k: x["power_W"][k], "Normalized power", "power_breakdown")
     _stacked(out, comps, lambda x, k: x["energy_J"][k], "Normalized energy", "energy_breakdown")
-    lv = (("off", "Off-chip", "#2f2f2f", "#a0520a", ""), ("on", "On-chip", "#9a9a9a", "#e8871e", ""),
-          ("pe", "PE", "#ffffff", "#f6c48e", "////"))
-    _stacked(out, lv, lambda x, k: sum(x["traffic_MB"][k].values()), "Normalized traffic", "traffic_levels")
+    _stacked(out, (("off", "Off-chip"), ("on", "On-chip"), ("pe", "PE")),
+             lambda x, k: sum(x["traffic_MB"][k].values()), "Normalized traffic", "traffic_levels")
+    _stacked(out, comps, lambda x, k: x["energy_J"][k] * x["t_s"], "Normalized EDP", "edp_breakdown")
+    _stacked(out, (("wgt", "Weights"), ("act", "Input spikes"), ("out", "Output spikes")),
+             lambda x, k: x["dram_MB"][k], "Normalized DRAM traffic", "dram_breakdown")
     # EDP: totals, log scale (spans > 100x), designs in their usual styles
     import numpy as np
     fig, ax = plt.subplots(figsize=(FS.COL, 2.0))
@@ -174,5 +201,55 @@ def plots(out):
     plt.close(fig)
 
 
+def perf_plot():
+    """speed-up (latency, batch 1) and throughput (batch 16) over PTB, PTB greyscale style, paper array sizes."""
+    import numpy as np
+    import plot_ptb_style as PS
+    from matplotlib.patches import Patch
+    plt, FS = PS.plt, PS.FS
+    s = json.load(open(os.path.join(R, "main_summary.json")))["sparse90"]
+    own = json.load(open(os.path.join(R, "loas_own.json")))
+    cyc = lambda n, d, b: own[f"sparse90|{n}|{b}"] if d == "loas_zip" else s[f"{n}|{d}"][f"cycles_b{b}"]
+    sty = (("#111111", ""), ("#FFFFFF", "////"))
+    fig, axes = plt.subplots(1, 2, figsize=(FS.TEXT, 2.1))
+    w = 0.36
+    for ax, b, ylab, tag in ((axes[0], 1, "Speedup over PTB", "(a) Latency (batch 1)"),
+                             (axes[1], 16, "Throughput over PTB", "(b) Throughput (batch 16)")):
+        top = 0
+        for j, n in enumerate(NETS):
+            v = [cyc(n, "ptb", b) / cyc(n, d, b) for d in ORDER]
+            x = np.arange(len(ORDER)) + (j - 0.5) * w
+            ax.bar(x, v, w, color=sty[j][0], hatch=sty[j][1], edgecolor="#111111", linewidth=0.6, zorder=3)
+            top = max(top, max(v))
+            k = ORDER.index("ours")
+            ax.annotate(f"{v[k]:.1f}×", (x[k], v[k]), xytext=(0, 2), textcoords="offset points", ha="center",
+                        va="bottom", fontsize=6.6, fontweight="bold", rotation=90, zorder=5)
+        ax.axhline(1.0, color="#111111", lw=0.6, ls=(0, (4, 2)), zorder=4)
+        ax.set_xticks(range(len(ORDER)), [NAME[d] for d in ORDER], rotation=40, ha="right", fontsize=6.8,
+                      fontweight="bold")
+        ax.get_xticklabels()[ORDER.index("ours")].set_fontsize(7.6)
+        ax.set_xlim(-0.6, len(ORDER) - 0.4)
+        ax.set_ylim(0, top * 1.22)
+        ax.set_ylabel(ylab, fontweight="bold")
+        for t in ax.get_yticklabels():
+            t.set_fontweight("bold")
+        ax.yaxis.grid(True, ls=":", lw=0.6, color="#777777", zorder=0)
+        ax.xaxis.grid(False)
+        FS.panel_tag(ax, tag, y=-0.42)
+    h = [Patch(facecolor=sty[j][0], hatch=sty[j][1], edgecolor="#111111", linewidth=0.6, label=n)
+         for j, n in enumerate(NETS)]
+    lg = fig.legend(h, list(NETS), loc="center right", frameon=True, fancybox=False, edgecolor="#111111",
+                    handlelength=1.6, handleheight=1.0, borderpad=0.4, labelspacing=0.35,
+                    prop={"weight": "bold", "size": 7})
+    lg.get_frame().set_linewidth(0.6)
+    fig.canvas.draw()
+    lw = lg.get_window_extent().width / fig.bbox.width
+    fig.subplots_adjust(left=0.065, right=0.985 - lw - 0.015, top=0.97, bottom=0.33, wspace=0.26)
+    for ext in ("png", "pdf"):
+        fig.savefig(os.path.join(R, f"speedup_throughput.{ext}"))
+    plt.close(fig)
+
+
 if __name__ == "__main__":
     plots(compute())
+    perf_plot()

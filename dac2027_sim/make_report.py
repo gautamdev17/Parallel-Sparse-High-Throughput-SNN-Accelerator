@@ -104,7 +104,7 @@ gate-level power with OpenSTA; SRAM with CACTI 7 at 45 nm (LSTP cells, LOP perip
                          f"{16 * CLK / c16:,.0f}", bold_ours(d, f"{p16 / c16:.2f}x")])
     H.append(table(["Network", "Design", "Cycles (batch 1)", "Latency @500 MHz (ms)", "Latency vs PTB",
                     "Throughput, batch 16 (img/s)", "Throughput vs PTB"], rows))
-    H.append(fig("v1_fig.png", "Fig. 1. (a) Latency and (b) throughput, normalized to PTB, sparse90, paper array sizes."))
+    H.append(fig("speedup_throughput.png", "Fig. 1. (a) Speedup (latency, batch 1) and (b) throughput (batch 16) over PTB, sparse90, paper array sizes."))
     H.append("<p><b>Dense-weight workload <i>zipstats</i></b> (weights dense, 26.1% non-silent neurons): where our "
              "weight packing has nothing to skip.</p>")
     rows = []
@@ -193,7 +193,7 @@ gate-level power with OpenSTA; SRAM with CACTI 7 at 45 nm (LSTP cells, LOP perip
                     "Core (µJ)", "SRAM (µJ)", "DRAM (µJ)", "Energy (µJ)", "EDP (µJ·ms)"], rows, "small"))
     H.append(fig("power_breakdown_b1.png", "Fig. 4. Power per component (DRAM / SRAM / core), normalized to PTB = 1, batch 1."))
     H.append(fig("energy_breakdown_b1.png", "Fig. 5. Energy per image (power &times; latency) per component, normalized to PTB = 1, batch 1."))
-    H.append(fig("edp_b1.png", "Fig. 6. EDP (energy &times; latency), batch 1, log scale.", "55%"))
+    H.append(fig("edp_breakdown_b1.png", "Fig. 6. EDP (energy &times; latency) split by where the energy goes, normalized to PTB = 1, batch 1."))
 
     # ---------------------------------------------------------------- 8 memory traffic
     H.append("<h2>8. Memory traffic</h2>")
@@ -212,7 +212,7 @@ gate-level power with OpenSTA; SRAM with CACTI 7 at 45 nm (LSTP cells, LOP perip
              "spike trains.</p>")
     H.append(table(["Network", "Design", "Weights b1 (MB)", "Input spikes b1", "Output spikes b1", "Total b1",
                     "Total b16 (per image)"], rows))
-    H.append(fig("mem_traffic.png", "Fig. 7. DRAM traffic per image, batch 1: (a) weights, (b) activations."))
+    H.append(fig("dram_breakdown_b1.png", "Fig. 7. DRAM traffic per image (weights / input spikes / output spikes), normalized to PTB = 1, batch 1."))
     rows = []
     for n in NETS:
         for d in ORDER:

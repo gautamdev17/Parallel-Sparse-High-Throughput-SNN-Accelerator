@@ -4,12 +4,12 @@
 
 | Sparsity | Ours | LoAS | PTB | Phi | SpikeFlow | SpikeX | Prosperity |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| 50% | 0.71 | 1.58 | 0.94 | 1.00 | 1.23 | 0.89 | 1.00 |
-| 70% | 1.19 | 2.30 | 1.13 | 1.19 | 1.40 | 0.89 | 1.00 |
-| 80% | 1.69 | 2.99 | 1.25 | 1.32 | 1.51 | 0.89 | 1.00 |
-| 90% | 3.00 | 4.26 | 1.40 | 1.50 | 1.63 | 0.89 | 1.00 |
-| 95% | 5.41 | 5.41 | 1.49 | 1.64 | 1.70 | 0.89 | 1.00 |
-| 98% | 10.88 | 6.46 | 1.55 | 1.77 | 1.75 | 0.89 | 1.00 |
+| 50% | 0.71 | 1.58 | 0.94 | 1.00 | 1.23 | 1.00 | 1.00 |
+| 70% | 1.19 | 2.30 | 1.13 | 1.19 | 1.40 | 1.00 | 1.00 |
+| 80% | 1.69 | 2.99 | 1.25 | 1.32 | 1.51 | 1.00 | 1.00 |
+| 90% | 3.00 | 4.26 | 1.40 | 1.50 | 1.63 | 1.00 | 1.00 |
+| 95% | 5.41 | 5.41 | 1.49 | 1.64 | 1.70 | 1.00 | 1.00 |
+| 98% | 10.88 | 6.46 | 1.55 | 1.77 | 1.75 | 1.00 | 1.00 |
 
 Formats (paper sources; where a width is not given, the choice that reproduces the paper's own measured numbers, else the smallest lossless one):
 
@@ -20,7 +20,7 @@ Formats (paper sources; where a width is not given, the choice that reproduces t
 | PTB | dense 8-bit | StSAP stream: TB-tags + T bits per slot + owner bit per TW for pairs + 11-bit neuron address; best TWS | PTB Sec 4.4, Table 4; "no data compression is applied to binary input data" (Sec 6.1.1); slot layout not given |
 | Phi | dense 8-bit (precomputed pattern-weight products not counted: they are partial results, not a form of W) | pattern-index bitmask + 7-bit index per patterned segment + 6-bit units (1 partial-sum unit per corrected row + 1 per +-1 correction) | Phi Sec 3, 4.2.2, Fig 12; widths fitted to Fig 12 |
 | Prosperity | dense 8-bit | dense bits (product sparsity saves computation, not storage) | Prosperity Sec II-A, VII-A |
-| SpikeX | dense 8-bit | dense bits + 1-bit activity tag per neuron per TW (TWS=4) | SpikeX Sec III-D |
+| SpikeX | dense 8-bit | dense bits + one 1-bit activity tag per spatiotemporal memory block (one input channel; finer TW/TB tags only drive skipping) | SpikeX Sec III-D |
 | SpikeFlow | dense | 1-bit silence label per neuron + T bits per non-silent neuron | SpikeFlow Sec 4.2 |
 | SATO | not specified in the paper | not specified | not plotted |
 
