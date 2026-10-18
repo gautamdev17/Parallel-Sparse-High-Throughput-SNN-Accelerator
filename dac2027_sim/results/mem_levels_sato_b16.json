@@ -1,0 +1,14 @@
+{
+ "VGG16|sato": {
+  "onchip_wgt_MB": 65.509108,
+  "onchip_act_MB": 1.6768,
+  "pe_wgt_MB": 65.509108,
+  "pe_act_MB": 1.6768
+ },
+ "ResNet18|sato": {
+  "onchip_wgt_MB": 118.760633875,
+  "onchip_act_MB": 4.222464,
+  "pe_wgt_MB": 118.760633875,
+  "pe_act_MB": 4.222464
+ }
+}

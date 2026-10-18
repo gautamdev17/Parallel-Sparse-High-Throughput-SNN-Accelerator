@@ -1,0 +1,58 @@
+{
+ "VGG16|ours": {
+  "onchip_wgt_MB": 1.071242,
+  "onchip_act_MB": 9.4888587578125,
+  "pe_wgt_MB": 0.66952625,
+  "pe_act_MB": 12.986973,
+  "obuf_rmw_entries": 2638104.875,
+  "lif_reads_entries": 233237.1875,
+  "group_write_MB": 1.6645800703125,
+  "packer_raw_read_MB": 5.193688
+ },
+ "VGG16|spikex": {
+  "onchip_wgt_MB": 26.69441475,
+  "onchip_act_MB": 3.33710475,
+  "pe_wgt_MB": 213.555318,
+  "pe_act_MB": 26.696838
+ },
+ "VGG16|spikeflow": {
+  "onchip_wgt_MB": 25.5067355,
+  "onchip_act_MB": 3.188629,
+  "pe_wgt_MB": 408.107768,
+  "pe_act_MB": 51.018064
+ },
+ "VGG16|loas_zip": {
+  "onchip_wgt_MB": 4.7725856875,
+  "onchip_act_MB": 45.79993775,
+  "pe_wgt_MB": 76.361371,
+  "pe_act_MB": 45.79993775
+ },
+ "ResNet18|ours": {
+  "onchip_wgt_MB": 1.196328,
+  "onchip_act_MB": 16.0429405234375,
+  "pe_wgt_MB": 0.747705,
+  "pe_act_MB": 22.262967,
+  "obuf_rmw_entries": 4727427.4375,
+  "lif_reads_entries": 538329.25,
+  "group_write_MB": 2.8622357109375,
+  "packer_raw_read_MB": 8.679928
+ },
+ "ResNet18|spikex": {
+  "onchip_wgt_MB": 48.306417625,
+  "onchip_act_MB": 6.038340125,
+  "pe_wgt_MB": 386.451341,
+  "pe_act_MB": 48.306721
+ },
+ "ResNet18|spikeflow": {
+  "onchip_wgt_MB": 46.065146375,
+  "onchip_act_MB": 5.758178875,
+  "pe_wgt_MB": 737.042342,
+  "pe_act_MB": 92.130862
+ },
+ "ResNet18|loas_zip": {
+  "onchip_wgt_MB": 8.682876,
+  "onchip_act_MB": 77.176862375,
+  "pe_wgt_MB": 128.016576,
+  "pe_act_MB": 77.668382375
+ }
+}

@@ -401,3 +401,35 @@ def gen_prosperity(W, S, ntiles=16, m=256, k=16, n=128, T=8):
 if __name__ == "__main__" and len(sys.argv) > 1 and sys.argv[1] == "prosperity":
     layer, W, S = tensors()
     gen_prosperity(W, S)
+
+
+def gen_loas(W, S, nout=256, chunk=128, T=8):
+    """LoAS TPPE chunks of the same layer: output (channel n, pixel p), p = 0..nout-1 with n = 7p mod M, every
+    128-wide chunk of K in order. One line per chunk, fields MSB->LSB: fibre-A (compressed spike trains of the
+    non-silent inputs, 128 x T), fibre-B (compressed non-zero int8 weights, two's complement, 128 x 8), bm-B, bm-A."""
+    M, K = W.shape
+    lines, nm = [], []
+    for p in range(nout):
+        n = (7 * p) % M
+        for c0 in range(0, K, chunk):
+            s = S[c0:c0 + chunk, p].astype(int)
+            w = W[n, c0:c0 + chunk].astype(int)
+            fa = [int(x) for x in s if x]
+            fb = [int(x) & 0xff for x in w if x]
+            bma = sum(1 << k for k in range(len(s)) if s[k])
+            bmb = sum(1 << k for k in range(len(w)) if w[k])
+            fa += [0] * (chunk - len(fa)); fb += [0] * (chunk - len(fb))
+            lines.append(pack_fields([(x, T) for x in reversed(fa)] + [(x, 8) for x in reversed(fb)]
+                                     + [(bmb, chunk), (bma, chunk)]))
+            nm.append(bin(bma & bmb).count("1"))
+    d = os.path.join(OUT, "loas")
+    os.makedirs(d, exist_ok=True)
+    hexrows(os.path.join(d, "chunks.hex"), lines, chunk * (T + 8 + 2))
+    json.dump(dict(nchunk=len(lines), matches=nm), open(os.path.join(d, "meta.json"), "w"))
+    print(f"loas: {len(lines)} chunks, {sum(nm)} matches ({sum(nm) / len(lines):.2f}/chunk), "
+          f"weight density {float((W != 0).mean()):.3f}, input density {float((S != 0).mean()):.3f}")
+
+
+if __name__ == "__main__" and len(sys.argv) > 1 and sys.argv[1] == "loas":
+    layer, W, S = tensors()
+    gen_loas(W, S)

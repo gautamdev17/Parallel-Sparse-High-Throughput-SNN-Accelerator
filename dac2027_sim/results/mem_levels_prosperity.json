@@ -1,0 +1,16 @@
+{
+ "VGG16|prosperity": {
+  "onchip_wgt_MB": 52.338688,
+  "onchip_act_MB": 2.907136,
+  "pe_wgt_MB": 52.338688,
+  "pe_act_MB": 0.0,
+  "cycles": 666778
+ },
+ "ResNet18|prosperity": {
+  "onchip_wgt_MB": 92.82226,
+  "onchip_act_MB": 5.533184,
+  "pe_wgt_MB": 92.82226,
+  "pe_act_MB": 0.0,
+  "cycles": 1025513
+ }
+}

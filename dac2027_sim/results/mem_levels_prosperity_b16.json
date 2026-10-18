@@ -1,0 +1,40 @@
+{
+ "VGG16|prosperity": {
+  "onchip_wgt_MB": 52.38424575,
+  "onchip_act_MB": 2.907136,
+  "pe_wgt_MB": 52.38424575,
+  "pe_act_MB": 0.0,
+  "cycles": 7797229,
+  "reads_bits": {
+   "dram": 90976496.0,
+   "g_act": 23257088.0,
+   "g_wgt": 419073966.0,
+   "g_psum": 1347977856.0
+  },
+  "writes_bits": {
+   "dram": 2277376.0,
+   "g_act": 23257168.0,
+   "g_wgt": 87315296.0,
+   "g_psum": 1329758208.0
+  }
+ },
+ "ResNet18|prosperity": {
+  "onchip_wgt_MB": 93.755496,
+  "onchip_act_MB": 5.533184,
+  "pe_wgt_MB": 93.755496,
+  "pe_act_MB": 0.0,
+  "cycles": 15926377,
+  "reads_bits": {
+   "dram": 143685792.0,
+   "g_act": 44265472.0,
+   "g_wgt": 750043968.0,
+   "g_psum": 2262323840.0
+  },
+  "writes_bits": {
+   "dram": 4915200.0,
+   "g_act": 44265552.0,
+   "g_wgt": 138415456.0,
+   "g_psum": 2223001600.0
+  }
+ }
+}
