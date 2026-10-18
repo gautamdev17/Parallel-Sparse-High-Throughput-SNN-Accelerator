@@ -1,0 +1,11 @@
+read_verilog -sv ../rtl/loas_plus/tppe_plus.v ../rtl/loas/lif_model.v
+hierarchy -top tppe_plus
+synth -top tppe_plus -flatten
+delete t:$print t:$check
+opt_clean
+dfflibmap -liberty ../lib/NangateOpenCellLibrary_typical.lib
+abc -liberty ../lib/NangateOpenCellLibrary_typical.lib -D 1250
+opt_clean -purge
+hilomap -hicell LOGIC1_X1 Z -locell LOGIC0_X1 Z
+stat -liberty ../lib/NangateOpenCellLibrary_typical.lib
+write_verilog -noattr -noexpr loas_plus_netlist.v

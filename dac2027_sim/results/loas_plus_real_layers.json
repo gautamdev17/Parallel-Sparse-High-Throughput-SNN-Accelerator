@@ -5,98 +5,98 @@
    "density": 0.2213863796657986,
    "LoAS": 351711,
    "LoAS-overlap": 308306,
-   "+C1+C2+C3": 97538
+   "+C1+C2+C3": 121517
   },
   {
    "layer": "conv2d_2",
    "density": 0.3190714518229167,
    "LoAS": 190231,
    "LoAS-overlap": 168681,
-   "+C1+C2+C3": 56632
+   "+C1+C2+C3": 65993
   },
   {
    "layer": "conv2d_3",
    "density": 0.2526211208767361,
    "LoAS": 335293,
    "LoAS-overlap": 295391,
-   "+C1+C2+C3": 93656
+   "+C1+C2+C3": 112922
   },
   {
    "layer": "conv2d_4",
    "density": 0.4796413845486111,
    "LoAS": 200599,
    "LoAS-overlap": 180871,
-   "+C1+C2+C3": 65815
+   "+C1+C2+C3": 67594
   },
   {
    "layer": "conv2d_5",
    "density": 0.2095947265625,
    "LoAS": 322125,
    "LoAS-overlap": 282851,
-   "+C1+C2+C3": 83384
+   "+C1+C2+C3": 105027
   },
   {
    "layer": "conv2d_6",
    "density": 0.2101982964409722,
    "LoAS": 322860,
    "LoAS-overlap": 283120,
-   "+C1+C2+C3": 83631
+   "+C1+C2+C3": 105705
   },
   {
    "layer": "conv2d_7",
    "density": 0.2467719184027778,
    "LoAS": 667492,
    "LoAS-overlap": 588478,
-   "+C1+C2+C3": 180428
+   "+C1+C2+C3": 221205
   },
   {
    "layer": "conv2d_8",
    "density": 0.2117648654513889,
    "LoAS": 1286223,
    "LoAS-overlap": 1129001,
-   "+C1+C2+C3": 330303
+   "+C1+C2+C3": 419170
   },
   {
    "layer": "conv2d_9",
    "density": 0.2560255262586806,
    "LoAS": 1327116,
    "LoAS-overlap": 1169697,
-   "+C1+C2+C3": 361613
+   "+C1+C2+C3": 443605
   },
   {
    "layer": "conv2d_10",
    "density": 0.24554443359375,
    "LoAS": 1306410,
    "LoAS-overlap": 1148677,
-   "+C1+C2+C3": 355755
+   "+C1+C2+C3": 438235
   },
   {
    "layer": "conv2d_11",
    "density": 0.3424750434027778,
    "LoAS": 1408971,
    "LoAS-overlap": 1251433,
-   "+C1+C2+C3": 422824
+   "+C1+C2+C3": 478277
   },
   {
    "layer": "conv2d_12",
    "density": 0.1726447211371528,
    "LoAS": 1201720,
    "LoAS-overlap": 1043814,
-   "+C1+C2+C3": 304147
+   "+C1+C2+C3": 400719
   },
   {
    "layer": "fc_0",
    "density": 0.29071044921875,
    "LoAS": 1289176,
    "LoAS-overlap": 1121933,
-   "+C1+C2+C3": 336897
+   "+C1+C2+C3": 417776
   },
   {
    "layer": "fc_1",
    "density": 0.172607421875,
    "LoAS": 142940,
    "LoAS-overlap": 122562,
-   "+C1+C2+C3": 34649
+   "+C1+C2+C3": 45146
   }
  ],
  "ResNet18": [
@@ -105,112 +105,112 @@
    "density": 0.4096950954861111,
    "LoAS": 26167,
    "LoAS-overlap": 23475,
-   "+C1+C2+C3": 8142
+   "+C1+C2+C3": 9182
   },
   {
    "layer": "conv2d_2",
    "density": 0.0966525607638889,
    "LoAS": 17823,
    "LoAS-overlap": 15161,
-   "+C1+C2+C3": 4141
+   "+C1+C2+C3": 5464
   },
   {
    "layer": "conv2d_3",
    "density": 0.4159071180555556,
    "LoAS": 26021,
    "LoAS-overlap": 23321,
-   "+C1+C2+C3": 8178
+   "+C1+C2+C3": 9149
   },
   {
    "layer": "conv2d_4",
    "density": 0.09000651041666667,
    "LoAS": 19170,
    "LoAS-overlap": 16502,
-   "+C1+C2+C3": 4364
+   "+C1+C2+C3": 6035
   },
   {
    "layer": "conv2d_5",
    "density": 0.4430067274305556,
    "LoAS": 52417,
    "LoAS-overlap": 47069,
-   "+C1+C2+C3": 16863
+   "+C1+C2+C3": 18952
   },
   {
    "layer": "conv2d_6",
    "density": 0.18358018663194445,
    "LoAS": 78824,
    "LoAS-overlap": 68952,
-   "+C1+C2+C3": 20275
+   "+C1+C2+C3": 26066
   },
   {
    "layer": "conv2d_7",
    "density": 0.3172064887152778,
    "LoAS": 88659,
    "LoAS-overlap": 78843,
-   "+C1+C2+C3": 25855
+   "+C1+C2+C3": 29463
   },
   {
    "layer": "conv2d_8",
    "density": 0.1648627387152778,
    "LoAS": 77544,
    "LoAS-overlap": 67649,
-   "+C1+C2+C3": 19492
+   "+C1+C2+C3": 25497
   },
   {
    "layer": "conv2d_9",
    "density": 0.4430338541666667,
    "LoAS": 197469,
    "LoAS-overlap": 177685,
-   "+C1+C2+C3": 62860
+   "+C1+C2+C3": 66255
   },
   {
    "layer": "conv2d_10",
    "density": 0.1270751953125,
    "LoAS": 296730,
    "LoAS-overlap": 257319,
-   "+C1+C2+C3": 68032
+   "+C1+C2+C3": 92617
   },
   {
    "layer": "conv2d_11",
    "density": 0.3610297309027778,
    "LoAS": 364568,
    "LoAS-overlap": 325154,
-   "+C1+C2+C3": 109035
+   "+C1+C2+C3": 118922
   },
   {
    "layer": "conv2d_12",
    "density": 0.10887993706597222,
    "LoAS": 287723,
    "LoAS-overlap": 248542,
-   "+C1+C2+C3": 64387
+   "+C1+C2+C3": 88585
   },
   {
    "layer": "conv2d_13",
    "density": 0.4694892035590278,
    "LoAS": 788301,
    "LoAS-overlap": 709725,
-   "+C1+C2+C3": 254531
+   "+C1+C2+C3": 262050
   },
   {
    "layer": "conv2d_14",
    "density": 0.07539198133680555,
    "LoAS": 1083557,
    "LoAS-overlap": 926452,
-   "+C1+C2+C3": 221271
+   "+C1+C2+C3": 315647
   },
   {
    "layer": "conv2d_15",
    "density": 0.3369818793402778,
    "LoAS": 1397225,
    "LoAS-overlap": 1240004,
-   "+C1+C2+C3": 412688
+   "+C1+C2+C3": 456781
   },
   {
    "layer": "conv2d_16",
    "density": 0.19991048177083334,
    "LoAS": 1229215,
    "LoAS-overlap": 1071663,
-   "+C1+C2+C3": 323169
+   "+C1+C2+C3": 417038
   }
  ]
 }

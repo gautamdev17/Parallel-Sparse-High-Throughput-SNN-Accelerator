@@ -13,12 +13,12 @@ C1  prefix-free inner join.  Weights are static, so the offset of every non-zero
     power, 67 % of TPPE area in LoAS Tbl. IV), the laggy prefix-sum, the pseudo-accumulator speculation,
     FIFO-mp/FIFO-B and the correction accumulators are all removed: the fiber-A value of a match is known one
     cycle after the match (cache latency), so the T gated accumulators add directly.
-      compute = m + 1          (if m > 0)
-C2  multi-match join.  With per-segment offsets every 32-bit quarter of the AND result has its own priority
-    encoder + popcount, so a TPPE retires up to L = 4 matches per cycle (T lanes of (L+1)-input adders, the
-    128-B weight buffer as 4 banks). The fiber-A values are packed contiguously (LoAS Sec. IV-A), 16 per
-    16-B cache line, and a TPPE reads one line per cycle, so
-      compute = max(ceil(m / L), lines of fiber-A touched) + 1,  lines <= min(m, ceil(nnzA_chunk / 16) + 1)
+      compute = m + DRAIN      (if m > 0; DRAIN = 3, the pipeline of hw/rtl/loas_plus/tppe_plus.v)
+C2  multi-match join.  Every 32-bit quarter of the AND result has its own priority encoder + popcount, so a
+    TPPE retires one match per quarter per cycle (T lanes of 5-input gated adders; the offline packer stores each
+    quarter's weights in its own 32 slots of the 128-B weight buffer, so each lane's weight mux is 32:1). Four
+    fiber-A reads per TPPE per cycle (the global cache must serve 4 ports per TPPE).
+      compute = max over quarters of m_q + DRAIN         (exactly the RTL: hw/tb/tb_loas_plus.v)
 C3  decoupled, skipping chunk pipeline.
     a) chunk skip: a 1-bit "chunk non-empty" summary per fiber chunk. Weight chunks that are empty are never
        broadcast (mapping A); spike chunks that are empty are never broadcast (mapping B). If no TPPE matches,
@@ -44,7 +44,7 @@ sys.path.insert(0, HERE)
 import workload as wl
 from loas_model import loas_layer_cycles_own, TPPES, CHUNK, LAGGY, BUS
 
-L_MATCH, A_LINE, QDEPTH = 4, 16, 4
+NQ, DRAIN, QDEPTH = 4, 3, 4
 
 VARIANTS = {   # name: (compute rule, double-buffered load, chunk skip, elastic queue depth or None = lock step)
     "LoAS":          ("orig", False, False, None),
@@ -56,21 +56,22 @@ VARIANTS = {   # name: (compute rule, double-buffered load, chunk skip, elastic 
 
 
 def _chunk_stats(W, S, chunk):
-    """per chunk: matches m (M, N), weight non-zeros (M,), non-silent neurons (N,)."""
-    wnz, snz = (W != 0), (S != 0)
+    """per chunk: matches m (M, N), max matches in one quarter (M, N), weight non-zeros (M,), non-silent (N,)."""
+    wnz, snz = (W != 0).astype(np.float32), (S != 0).astype(np.float32)
+    q = chunk // NQ
     for c0 in range(0, W.shape[1], chunk):
-        wc, sc = wnz[:, c0:c0 + chunk], snz[c0:c0 + chunk, :]
-        m = np.rint(wc.astype(np.float32) @ sc.astype(np.float32)).astype(np.int64)
-        yield m, wc.sum(1).astype(np.int64), sc.sum(0).astype(np.int64)
+        mq = [np.rint(wnz[:, a:a + q] @ snz[a:a + q, :]).astype(np.int64)
+              for a in range(c0, min(c0 + chunk, W.shape[1]), q)]
+        yield sum(mq), np.max(mq, axis=0), wnz[:, c0:c0 + chunk].sum(1).astype(np.int64), \
+            snz[c0:c0 + chunk, :].sum(0).astype(np.int64)
 
 
-def _compute(rule, m, nnzA):
+def _compute(rule, m, mqmax):
     if rule == "orig":
         return np.where(m > 0, LAGGY + m + 1, 0)
     if rule == "c1":
-        return np.where(m > 0, m + 1, 0)
-    lines = np.minimum(m, -(-nnzA // A_LINE) + 1)
-    return np.where(m > 0, np.maximum(-(-m // L_MATCH), lines) + 1, 0)
+        return np.where(m > 0, m + DRAIN, 0)
+    return np.where(m > 0, mqmax + DRAIN, 0)
 
 
 def _stream(bc, c, keep, Q, lockstep):
@@ -114,11 +115,10 @@ def layer_cycles(W, S, variant, tppes=TPPES, chunk=CHUNK, bus=BUS):
         c = np.zeros((I, nb, tppes), np.int64)
         keep = np.zeros((I, nb), bool)
         valid = np.concatenate([np.ones(C, bool), np.zeros(pad, bool)]).reshape(nb, tppes)
-        for ci, (m, wnz, snz) in enumerate(stats):
+        for ci, (m, mqm, wnz, snz) in enumerate(stats):
             mm = m if axis == 1 else m.T                  # (R, C)
-            nnzA = np.broadcast_to(snz[None, :] if axis == 1 else snz[:, None], mm.shape)
             load = 1 + -(-wnz // bus)                     # (M,) bitmask + weights of each channel's chunk
-            comp = _compute(rule, mm, nnzA)
+            comp = _compute(rule, mm, mqm if axis == 1 else mqm.T)
             mm_p = np.pad(mm, ((0, 0), (0, pad))).reshape(R, nb, tppes)
             comp_p = np.pad(comp, ((0, 0), (0, pad))).reshape(R, nb, tppes)
             last = 1 if ci == nch - 1 else 0              # P-LIF cycle on each output's last chunk

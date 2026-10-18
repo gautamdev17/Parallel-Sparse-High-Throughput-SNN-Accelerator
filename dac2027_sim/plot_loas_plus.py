@@ -54,7 +54,7 @@ def speedup_fig():
     ax.axhline(1, color=EDGE, lw=0.6, ls=(0, (3, 2)), zorder=2, label=r"LoAS = 1$\times$")
     ax.set_xticks(xs); ax.set_xticklabels([g[1] for g in groups])
     ax.set_xlim(xs[0] - 0.55, xs[-1] + 0.55)
-    ax.set_ylim(0, 5.9); ax.set_yticks(range(0, 6))
+    ax.set_ylim(0, 4.4); ax.set_yticks(range(0, 5))
     ax.set_ylabel(r"Speedup over LoAS ($\times$)")
     ax.grid(axis="y", zorder=0)
     for si, (title, _, _) in enumerate(sections):
@@ -111,7 +111,7 @@ def layers_fig():
         ax.set_xticks(x)
         ax.set_xticklabels([r["layer"].replace("conv2d_", "c").replace("fc_", "fc") for r in rows], rotation=90)
         ax.set_xlim(-0.6, len(rows) - 0.4)
-        ax.set_ylim(0, 6.3); ax.set_yticks(range(0, 7, 2))
+        ax.set_ylim(0, 5.2); ax.set_yticks(range(0, 6))
         ax.grid(axis="y", zorder=0)
         FS.panel_tag(ax, tag, y=-0.3)
     axes[0].set_ylabel(r"Speedup over LoAS ($\times$)")

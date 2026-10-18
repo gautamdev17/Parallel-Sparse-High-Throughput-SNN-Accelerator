@@ -1,0 +1,162 @@
+{
+ "power": {
+  "LoAS": {
+   "tppe_mw": 5.6404000000000005,
+   "tppe_area_mm2": 0.02312604,
+   "core_mw": 90.24640000000001,
+   "total_mw": 389.82640000000004
+  },
+  "LoAS+": {
+   "tppe_mw": 6.9045,
+   "tppe_area_mm2": 0.011742304,
+   "core_mw": 110.472,
+   "total_mw": 410.052
+  }
+ },
+ "rows": {
+  "sparse90|VGG16": {
+   "LoAS": {
+    "cycles_b1": 2548501,
+    "latency_ms": 3.18562625,
+    "energy_core_mj": 0.287491300808,
+    "energy_mj": 1.241841212783,
+    "edp": 3.9560419657733603,
+    "energy_img_b16_mj": 1.239144162288375
+   },
+   "LoAS+": {
+    "cycles_b1": 739903,
+    "latency_ms": 0.92487875,
+    "energy_core_mj": 0.10217320527,
+    "energy_mj": 0.37924838119500004,
+    "edp": 0.3507587687391551,
+    "energy_img_b16_mj": 0.375991222831875
+   }
+  },
+  "sparse90|ResNet18": {
+   "LoAS": {
+    "cycles_b1": 4336311,
+    "latency_ms": 5.420388750000001,
+    "energy_core_mj": 0.48917057128800007,
+    "energy_mj": 2.1130106330130003,
+    "edp": 11.453339063814045,
+    "energy_img_b16_mj": 2.1114641185917504
+   },
+   "LoAS+": {
+    "cycles_b1": 1274339,
+    "latency_ms": 1.59292375,
+    "energy_core_mj": 0.17597347251,
+    "energy_mj": 0.6531815695350001,
+    "edp": 1.040468435174578,
+    "energy_img_b16_mj": 0.6526219126256251
+   }
+  },
+  "zipstats|VGG16": {
+   "LoAS": {
+    "cycles_b1": 7498876,
+    "latency_ms": 9.373595,
+    "energy_core_mj": 0.8459332038080001,
+    "energy_mj": 3.6540747939080003,
+    "edp": 34.25181721780206,
+    "energy_img_b16_mj": 3.6600809832556256
+   },
+   "LoAS+": {
+    "cycles_b1": 2197045,
+    "latency_ms": 2.74630625,
+    "energy_core_mj": 0.30338994404999997,
+    "energy_mj": 1.126128370425,
+    "edp": 3.0926933820004927,
+    "energy_img_b16_mj": 1.1283314068303125
+   }
+  },
+  "zipstats|ResNet18": {
+   "LoAS": {
+    "cycles_b1": 13196528,
+    "latency_ms": 16.495659999999997,
+    "energy_core_mj": 1.488673930624,
+    "energy_mj": 6.430443753424,
+    "edp": 106.07441380560613,
+    "energy_img_b16_mj": 6.432491864783375
+   },
+   "LoAS+": {
+    "cycles_b1": 3900541,
+    "latency_ms": 4.87567625,
+    "energy_core_mj": 0.53862570669,
+    "energy_mj": 1.999280797665,
+    "edp": 9.747845902256296,
+    "energy_img_b16_mj": 1.9998812355271876
+   }
+  },
+  "real-spikes wd=0.1|VGG16": {
+   "LoAS": {
+    "cycles_b1": 10352867,
+    "latency_ms": 12.94108375,
+    "energy_core_mj": 1.167886220536,
+    "energy_mj": 5.044776090361001,
+    "edp": 65.28486988535929,
+    "energy_img_b16_mj": null
+   },
+   "LoAS+": {
+    "cycles_b1": 3442891,
+    "latency_ms": 4.30361375,
+    "energy_core_mj": 0.47542881819,
+    "energy_mj": 1.764705425415,
+    "edp": 7.594610533515594,
+    "energy_img_b16_mj": null
+   }
+  },
+  "real-spikes wd=0.1|ResNet18": {
+   "LoAS": {
+    "cycles_b1": 6031413,
+    "latency_ms": 7.53926625,
+    "energy_core_mj": 0.680391637704,
+    "energy_mj": 2.939005020879,
+    "edp": 22.15794136249359,
+    "energy_img_b16_mj": null
+   },
+   "LoAS+": {
+    "cycles_b1": 1947703,
+    "latency_ms": 2.43462875,
+    "energy_core_mj": 0.26895830727,
+    "energy_mj": 0.998324388195,
+    "edp": 2.430549257325708,
+    "energy_img_b16_mj": null
+   }
+  },
+  "real-spikes wd=0.02|VGG16": {
+   "LoAS": {
+    "cycles_b1": 7026352,
+    "latency_ms": 8.78294,
+    "energy_core_mj": 0.7926287164160001,
+    "energy_mj": 3.423821881616,
+    "edp": 30.07122215692043,
+    "energy_img_b16_mj": null
+   },
+   "LoAS+": {
+    "cycles_b1": 2029197,
+    "latency_ms": 2.53649625,
+    "energy_core_mj": 0.28021181373,
+    "energy_mj": 1.040095360305,
+    "edp": 2.6381979810560314,
+    "energy_img_b16_mj": null
+   }
+  },
+  "real-spikes wd=0.02|ResNet18": {
+   "LoAS": {
+    "cycles_b1": 3895036,
+    "latency_ms": 4.868795,
+    "energy_core_mj": 0.4393912210880001,
+    "energy_mj": 1.8979848271880004,
+    "edp": 9.240899036688802,
+    "energy_img_b16_mj": null
+   },
+   "LoAS+": {
+    "cycles_b1": 1133533,
+    "latency_ms": 1.4169162499999999,
+    "energy_core_mj": 0.15652957196999998,
+    "energy_mj": 0.581009342145,
+    "edp": 0.8232415782870603,
+    "energy_img_b16_mj": null
+   }
+  }
+ }
+}
