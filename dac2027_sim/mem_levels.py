@@ -72,7 +72,8 @@ def ours_layer(W, S):
     Sp = np.zeros((plan.nK * R, N), dtype=np.uint8)
     Sp[:K] = S
     oc_w = oc_a = pe_w = pe_a = 0
-    rmw = lifr = gw = rawr = 0
+    rmw = lifr = gw = rawr = pe_s = 0
+    SW = 10                                              # in-array running-sum width (ours_core.v SW)
     gbits = R * T + R * T * 2 + G * 7 + 3
     cache = {}
     for bi, (m0, m1) in enumerate(plan.mblocks):
@@ -101,8 +102,11 @@ def ours_layer(W, S):
                     pe_w += len(pas) * R * 10
                     oc_a += P * gbits
                     pe_a += P * R * C * 3 * T
+                    # running-sum bundle (F x G x T sums of SW bits + F x G touch bits) passed down each loaded
+                    # column into rows 1..R-1 (row 0 starts from zero), once per group (ours_pe b_sum / b_tch)
+                    pe_s += len(pas) * P * (R - 1) * (F * G * T * SW + F * G)
             lifr += int(dirty.sum())
-    return oc_w, oc_a, pe_w, pe_a, rmw, lifr, gw, rawr
+    return oc_w, oc_a, pe_w, pe_a, rmw, lifr, gw, rawr, pe_s
 
 
 # ------------------------------------------------------------------------------------------------ SpikeX
@@ -184,7 +188,7 @@ def base():
                       pe_act_MB=v[3] / MB / B)
         if len(v) > 4:
             res[k].update(obuf_rmw_entries=v[4] / B, lif_reads_entries=v[5] / B, group_write_MB=v[6] / MB / B,
-                          packer_raw_read_MB=v[7] / MB / B)
+                          packer_raw_read_MB=v[7] / MB / B, pe_psum_MB=v[8] / MB / B)
     out = res
     json.dump(out, open(os.path.join(R_, f"mem_levels_base{SFX}.json"), "w"), indent=1)
     for k, v in out.items():

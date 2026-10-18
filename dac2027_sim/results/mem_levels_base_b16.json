@@ -7,7 +7,8 @@
   "obuf_rmw_entries": 2638104.875,
   "lif_reads_entries": 233237.1875,
   "group_write_MB": 1.6645800703125,
-  "packer_raw_read_MB": 5.193688
+  "packer_raw_read_MB": 5.193688,
+  "pe_psum_MB": 452.737704375
  },
  "VGG16|spikex": {
   "onchip_wgt_MB": 26.69441475,
@@ -35,7 +36,8 @@
   "obuf_rmw_entries": 4727427.4375,
   "lif_reads_entries": 538329.25,
   "group_write_MB": 2.8622357109375,
-  "packer_raw_read_MB": 8.679928
+  "packer_raw_read_MB": 8.679928,
+  "pe_psum_MB": 772.164849375
  },
  "ResNet18|spikex": {
   "onchip_wgt_MB": 48.306417625,

@@ -58,7 +58,7 @@ def breakdown():
     comp = (("e_core_J", "Core", "#4d4d4d", "#a0520a"), ("e_sram_J", "SRAM", "#9a9a9a", "#e8871e"),
             ("e_dram_J", "DRAM", "#dcdcdc", "#f6c48e"))
     fig, ax = plt.subplots(figsize=(FS.TEXT, 2.3))
-    cap = 3600.0
+    cap = 1e12                                       # no clipping: full scale, no axis break
     xs, labels = [], []
     for gi, n in enumerate(NETS):
         for i, k in enumerate(ORDER):
@@ -72,17 +72,15 @@ def breakdown():
                        zorder=3)
                 bot += v
             tot = bot
-            if tot > cap:
-                ax.text(x, cap * 1.01, f"{tot / 1e3:.1f} mJ", ha="center", va="bottom", fontsize=6.3, color="#333333")
-                ax.plot([x - 0.36, x + 0.36], [cap * 0.965, cap * 0.985], color="white", lw=2.2, zorder=4)
-            elif k == "ours":
+            if k == "ours":
                 ax.annotate(f"{tot:.0f}", (x, tot), xytext=(0, 2), textcoords="offset points", ha="center", va="bottom",
                             fontsize=6.8, color=FS.OURS_TEXT, zorder=5)
         ax.text(gi * (len(ORDER) + 1.2) + (len(ORDER) - 1) / 2, -0.27, n, transform=ax.get_xaxis_transform(),
                 ha="center", va="top", fontsize=8)
     ax.set_xticks(xs, labels, rotation=35, ha="right", fontsize=6.8)
-    ax.set_ylim(0, cap * 1.12)
-    ax.set_ylabel("Energy per image (µJ)")
+    top = max(sum(d[k][n][key] for key, *_ in comp) for k in ORDER for n in NETS) * 1e6
+    ax.set_ylim(0, top * 1.08)
+    ax.set_ylabel("Energy (µJ)")
     ax.yaxis.grid(True, zorder=0)
     h = [Patch(facecolor=c, edgecolor=PS.EDGE, linewidth=0.5, label=l) for _, l, c, _ in comp]
     FS.inside_legend(ax, h, [x.get_label() for x in h], ncol=3, loc="upper right")
