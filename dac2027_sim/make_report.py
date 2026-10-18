@@ -237,7 +237,35 @@ gate-level power with OpenSTA; SRAM with CACTI 7 at 45 nm (LSTP cells, LOP perip
     H.append(fig("roofline.png", "Fig. 9. Roofline, (a) VGG16, (b) ResNet18."))
 
     # ---------------------------------------------------------------- 9 notes
-    H.append("<h2>9. Notes and limits</h2>")
+    # ---------------------------------------------------------------- 9 dataflow ablation
+    H.append("<h2>9. Dataflow ablation: WS vs IS vs OS</h2>")
+    H.append("<p>Same array (4 x 4 PEs, 8 adders per PE), same dual-side packing in all three, same workload (sparse90, "
+             "batch 1). WS = our design (cycles RTL-verified); IS keeps packed pixel groups stationary and streams "
+             "packed weight columns; OS gives each PE 4 filters x 4 pixels x 8 accumulators and processes one "
+             "non-zero weight and one pixel group per cycle per input. IS and OS are analytical models with the same "
+             "overheads. Energy: same core power for all, SRAM from CACTI per bit, same DRAM traffic.</p>")
+    ab = J("ablation_dataflow.json")
+    rows = []
+    for n in NETS:
+        o = ab[n]
+        for d, nm in (("ws", "WS (ours)"), ("is_", "IS"), ("os", "OS")):
+            x = o[d]
+            e = sum(x["E"].values())
+            rows.append([n, bold_ours("ours" if d == "ws" else d, nm), f"{x['cyc_real']:,}",
+                         f"{x['cyc_real'] / o['ws']['cyc_real']:.2f}x",
+                         f"{100 * o['work'] / (x['cyc_real'] * 128):.1f}%", f"{x['w'] / 8e6:.1f}",
+                         f"{(x['a'] + x['r']) / 8e6:.1f}", f"{x['p'] / 8e6:.1f}", f"{e / x['t'] * 1e3:.0f}",
+                         f"{e * 1e6:.0f}", f"{x['edp'] / o['ws']['edp']:.2f}x"])
+    H.append(table(["Network", "Dataflow", "Cycles", "Latency vs WS", "Adder util.", "Weight reads (MB)",
+                    "Spike reads (MB)", "Partial sums (MB)", "Power (mW)", "Energy (uJ)", "EDP vs WS"], rows, "small"))
+    H.append(fig("ablation_dataflow.png", "Fig. 10. Dataflow ablation: (a) latency, (b) adder utilization, (c) EDP, "
+                 "(d) on-chip traffic by type (log scale), (e) energy by component."))
+    H.append(fig("ablation_power.png", "Fig. 11. Average power (energy / runtime) by component.", "55%"))
+    H.append("<p>WS is the fastest (1.3-1.9x vs IS, 3.2-3.5x vs OS) and has the lowest EDP. Its cost is partial-sum "
+             "traffic to the output buffer (about 90% of its on-chip traffic, 4.5-5x more than OS) and the highest "
+             "average power, because the same DRAM and SRAM energy is spent in a shorter runtime.</p>")
+
+    H.append("<h2>10. Notes and limits</h2>")
     H.append("""<ul>
 <li>Our timing is synthesis-level (no placement or wiring). The baselines' RTL was not timing-closed and is evaluated at
 the same 500 MHz; LoAS's TPPE does not close it (3.14 ns), so its GOP/s is optimistic.</li>
