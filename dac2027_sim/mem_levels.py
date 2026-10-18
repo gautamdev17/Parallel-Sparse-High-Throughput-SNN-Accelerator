@@ -96,15 +96,19 @@ def ours_layer(W, S):
                 touched = ((Wt != 0).astype(np.float32) @ (St != 0).astype(np.float32)) > 0
                 rmw += int(touched.sum())                        # running-sum entries written by the edge unit
                 dirty |= touched
+                # valid running sums entering row r (1..R-1): (filter, pixel) slots already touched by rows
+                # 0..r-1; each carries T x SW bits. Empty slots (touch bit 0) carry no data and are not counted.
+                for r in range(1, R):
+                    tr = ((Wt[:, :r] != 0).astype(np.float32) @ (St[:r] != 0).astype(np.float32)) > 0
+                    pe_s += int(tr.sum()) * T * SW
                 gw += P * gbits                                  # packer writes the groups once
                 for pas in _passes(cols, C):
                     oc_w += len(pas) * (R * 10 + F * 6)
                     pe_w += len(pas) * R * 10
                     oc_a += P * gbits
                     pe_a += P * R * C * 3 * T
-                    # running-sum bundle (F x G x T sums of SW bits + F x G touch bits) passed down each loaded
-                    # column into rows 1..R-1 (row 0 starts from zero), once per group (ours_pe b_sum / b_tch)
-                    pe_s += len(pas) * P * (R - 1) * (F * G * T * SW + F * G)
+                    # touch bits (F x G) of the running-sum bundle entering rows 1..R-1 of each loaded column
+                    pe_s += len(pas) * P * (R - 1) * F * G
             lifr += int(dirty.sum())
     return oc_w, oc_a, pe_w, pe_a, rmw, lifr, gw, rawr, pe_s
 

@@ -32,6 +32,8 @@ ORDER = ["ptb", "spikex", "loas_zip", "sato", "spikeflow", "prosperity", "ours"]
 NAME = {"ptb": "PTB", "spikex": "SpikeX", "loas_zip": "LoAS", "sato": "SATO", "spikeflow": "SpikeFlow",
         "prosperity": "Prosperity", "ours": "Ours"}
 CLK = 500e6
+B = int(os.environ.get("SNB", 16))                 # 16: per image at batch 16; 1: batch-1 inference
+SFX = "" if B == 16 else f"_b{B}"
 MBb = 8e6
 
 
@@ -40,22 +42,23 @@ def compute():
     s = json.load(open(os.path.join(R, "main_summary.json")))["sparse90"]
     own = json.load(open(os.path.join(R, "loas_own.json")))
     lv = {}
-    for f in ("base_b16", "sato_b16", "prosperity_b16", "ptb"):
-        lv.update(json.load(open(os.path.join(R, f"mem_levels_{f}.json"))))
+    for f in ("base", "sato", "prosperity"):
+        lv.update(json.load(open(os.path.join(R, f"mem_levels_{f}{SN.LVS}.json"))))
+    lv.update(json.load(open(os.path.join(R, "mem_levels_ptb.json"))))
     off = json.load(open(os.path.join(R, "mem_traffic_base.json")))
     off.update(json.load(open(os.path.join(R, "mem_traffic_prosperity.json"))))
     out = {}
     for d in ORDER:
         _, p_core = SN.core(d)
         for n in NETS:
-            c16 = own[f"sparse90|{n}|16"] if d == "loas_zip" else s[f"{n}|{d}"]["cycles_b16"]
-            t = c16 / CLK / 16
+            cyc = own[f"sparse90|{n}|{B}"] if d == "loas_zip" else s[f"{n}|{d}"][f"cycles_b{B}"]
+            t = cyc / CLK / B
             _, leak, edyn = SN.sram(d, n)
             edram = SN.dram_J(d, n)
             pw = dict(core=p_core, sram=leak + edyn / t, dram=edram / t)
             en = {k: v * t for k, v in pw.items()}
             # traffic, bits per image
-            o = off[f"{n}|16|{d}"]
+            o = off[f"{n}|{B}|{d}"]
             offc = dict(wgt=o["wgt_MB"] * MBb, act=(o["act_MB"] + o["out_MB"]) * MBb, psum=0.0)
             r = lv[f"{n}|{d}"]
             acc = SN.sram_access_bits(d, n)
@@ -74,8 +77,8 @@ def compute():
                 pe = dict(wgt=r["pe_wgt_MB"] * MBb, act=r["pe_act_MB"] * MBb, psum=0.0)
             tr = {lvl: {k: v / MBb for k, v in x.items()} for lvl, x in (("off", offc), ("on", onc), ("pe", pe))}
             out[f"{n}|{d}"] = dict(t_s=t, power_W=pw, energy_J=en, edp_Js=sum(en.values()) * t, traffic_MB=tr)
-    json.dump(out, open(os.path.join(R, "system_breakdown.json"), "w"), indent=1)
-    L = ["# Power -> energy -> EDP and three-level traffic (45 nm, 500 MHz, sparse90, per image at batch 16)", "",
+    json.dump(out, open(os.path.join(R, f"system_breakdown{SFX}.json"), "w"), indent=1)
+    L = [f"# Power -> energy -> EDP and three-level traffic (45 nm, 500 MHz, sparse90, per image at batch {B})", "",
          "See system_breakdown.py for every rule. EDP = energy per image x time per image.", "",
          "| Network | Design | Time/img (ms) | Power core / SRAM / DRAM (mW) | Energy core / SRAM / DRAM (uJ) | "
          "EDP (uJ*ms) | Off-chip wgt / act (MB) | On-chip wgt / act / psum (MB) | PE wgt / act / psum (MB) |",
@@ -90,7 +93,7 @@ def compute():
                      f"{x['edp_Js'] * 1e9:.0f} | {tr['off']['wgt']:.2f} / {tr['off']['act']:.2f} | "
                      f"{tr['on']['wgt']:.1f} / {tr['on']['act']:.1f} / {tr['on']['psum']:.1f} | "
                      f"{tr['pe']['wgt']:.1f} / {tr['pe']['act']:.1f} / {tr['pe']['psum']:.1f} |")
-    open(os.path.join(R, "system_breakdown.md"), "w").write("\n".join(L) + "\n")
+    open(os.path.join(R, f"system_breakdown{SFX}.md"), "w").write("\n".join(L) + "\n")
     print("\n".join(L))
     return out
 
@@ -127,7 +130,7 @@ def _stacked(out, comps, getter, ylab, fname, fmt, hatch_of=None, extra_legend=(
     FS.inside_legend(ax, h, [x.get_label() for x in h], ncol=len(h), loc="upper right")
     fig.subplots_adjust(left=0.07, right=0.995, top=0.985, bottom=0.27)
     for ext in ("png", "pdf"):
-        fig.savefig(os.path.join(R, f"{fname}.{ext}"))
+        fig.savefig(os.path.join(R, f"{fname}{SFX}.{ext}"))
     plt.close(fig)
 
 
@@ -142,9 +145,8 @@ def plots(out):
              lambda v: f"{v:.0f}")
     lv = (("off", "Off-chip", "#dcdcdc", "#f6c48e"), ("on", "On-chip", "#9a9a9a", "#e8871e"),
           ("pe", "PE", "#4d4d4d", "#a0520a"))
-    _stacked(out, lv, lambda x, k: [(x["traffic_MB"][k]["wgt"] + x["traffic_MB"][k]["act"], False),
-                                    (x["traffic_MB"][k]["psum"], True)],
-             "Traffic (MB)", "traffic_levels", lambda v: f"{v:.0f}", extra_legend=("Partial sums",))
+    _stacked(out, lv, lambda x, k: [(sum(x["traffic_MB"][k].values()), False)],
+             "Traffic (MB)", "traffic_levels", lambda v: f"{v:.0f}")
     # EDP: totals, log scale (spans > 100x), designs in their usual styles
     import numpy as np
     fig, ax = plt.subplots(figsize=(FS.COL, 2.0))
@@ -170,7 +172,7 @@ def plots(out):
     FS.inside_legend(ax, h, l, ncol=4, loc="upper center", fontsize=6)
     fig.subplots_adjust(left=0.16, right=0.99, top=0.985, bottom=0.13)
     for ext in ("png", "pdf"):
-        fig.savefig(os.path.join(R, f"edp.{ext}"))
+        fig.savefig(os.path.join(R, f"edp{SFX}.{ext}"))
     plt.close(fig)
 
 

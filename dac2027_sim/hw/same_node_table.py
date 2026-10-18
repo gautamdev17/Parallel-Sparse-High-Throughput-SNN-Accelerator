@@ -40,20 +40,23 @@ SRAM = {"ptb": ("54 KB GLB + 2 KB L1 (Table IV)", [("glb", 16, 57344)]),
         "prosperity": ("8 + 32 + 96 KB (Table III)", [("g_act", 4, 8192), ("g_wgt", 128, 32768), ("g_psum", 128, 98304)]),
         "ours": ("192 + 64 + 4 KB", [("obuf", 24, 196608), ("staging", 16, 65536), ("group", 16, 4096)])}
 CACTI = json.load(open(os.path.join(HERE, "sram_45nm_lstp_lop.json")))
+BATCH = int(os.environ.get("SNB", 16))            # access counts / DRAM traffic per image at this batch
+LVS = "_b16" if BATCH == 16 else ""
 
 
 def sram_access_bits(d, net):
     """-> {buffer: (read bits, write bits)} per image at batch 16."""
     M = 8e6
     lv = {}
-    for f in ("base_b16", "sato_b16", "prosperity_b16", "ptb"):
-        lv.update(json.load(open(os.path.join(RES, f"mem_levels_{f}.json"))))
+    for f in ("base", "sato", "prosperity"):
+        lv.update(json.load(open(os.path.join(RES, f"mem_levels_{f}{LVS}.json"))))
+    lv.update(json.load(open(os.path.join(RES, "mem_levels_ptb.json"))))
     off = json.load(open(os.path.join(RES, "mem_traffic_base.json")))
     r = lv[f"{net}|{d}"]
     if d == "prosperity":
         rd, wr = r["reads_bits"], r["writes_bits"]
         return {b: (rd[b], wr[b]) for b in ("g_act", "g_wgt", "g_psum")}
-    o = off[f"{net}|16|{d}"]
+    o = off[f"{net}|{BATCH}|{d}"]
     fills = (o["wgt_MB"] + o["act_MB"] + o["out_MB"]) * M
     if d == "ours":
         grp_rd = (r["onchip_act_MB"] - r["packer_raw_read_MB"]) * M
@@ -69,7 +72,7 @@ DRAM_PJ_BIT = 12.45
 def dram_J(d, net):
     t = json.load(open(os.path.join(RES, "mem_traffic_base.json")))
     t.update(json.load(open(os.path.join(RES, "mem_traffic_prosperity.json"))))
-    o = t[f"{net}|16|{d}"]
+    o = t[f"{net}|{BATCH}|{d}"]
     return (o["wgt_MB"] + o["act_MB"] + o["out_MB"]) * 8e6 * DRAM_PJ_BIT * 1e-12
 
 

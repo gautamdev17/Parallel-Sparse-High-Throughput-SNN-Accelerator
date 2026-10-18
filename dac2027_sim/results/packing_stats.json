@@ -1,0 +1,18 @@
+{
+ "VGG16": {
+  "filters_per_column": 2.4642027584830304,
+  "pixels_per_group": 3.441352259992529,
+  "nonzero_filters": 2888812,
+  "columns": 1172311,
+  "nonzero_pixel_steps": 128975,
+  "groups": 37478
+ },
+ "ResNet18": {
+  "filters_per_column": 2.4659985757219727,
+  "pixels_per_group": 3.571182044359748,
+  "nonzero_filters": 959197,
+  "columns": 388969,
+  "nonzero_pixel_steps": 337316,
+  "groups": 94455
+ }
+}
