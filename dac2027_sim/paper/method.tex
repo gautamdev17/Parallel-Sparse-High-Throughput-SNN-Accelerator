@@ -1,0 +1,95 @@
+% ===================================================================================================================
+% Evaluation -> Methodology, in the structure of Phi (ISCA'25, Sec. 5.1): Models and Datasets / Implementation /
+% Baselines, Table I = architecture setup, Table II = configuration and performance of all designs on VGG16.
+% Items marked \tbd{...} wait for the pruned models (Rakshitha) and are printed in red.
+% Areas in Table II: hw/same_node_table.py -> results/same_node_45nm.json (core RTL + CACTI SRAM, 45 nm).
+% ===================================================================================================================
+\section{Evaluation}
+\label{sec:eval}
+
+In this section, we first detail our evaluation methodology. Next, we justify the weight-stationary
+dataflow over input- and output-stationary alternatives. We then evaluate the performance, energy and
+area of TIDES when applied to SNN models. Additionally, we report the compression achieved by packing
+and illustrate the reduction in memory traffic.
+
+\subsection{Methodology}
+\label{sec:method}
+
+\textbf{Evaluation Models and Datasets.} We evaluate TIDES on spiking CNNs (VGG16 and ResNet18) on
+CIFAR-10 with $T=8$ timesteps. We obtain the models from the open-source NeuroFlex
+repository~\cite{neuroflex}, which converts INT8-quantized ANNs into PASCAL SNNs whose spiking execution
+reproduces the quantized ANN exactly, and evaluate them using PyTorch; the dense VGG16 reaches 95.62\%
+test accuracy. To expose weight sparsity, we prune the weights to \tbd{90\%} sparsity with
+\tbd{magnitude pruning} and fine-tune the models, reaching \tbd{--} and \tbd{--} accuracy on VGG16 and
+ResNet18, respectively. Then, we obtain the input spike trains and INT8 weights of every convolutional
+and fully connected layer and utilize this information in our experiments. The first layer, which
+receives the analog image, is excluded for all designs, and a layer that follows average pooling is
+executed exactly on the four pre-pooling spikes of each pooled input. For sensitivity studies, we
+additionally generate synthetic layers of the same shapes with independently set weight sparsity,
+fraction of silent neurons and per-timestep firing probability.
+
+\textbf{TIDES Implementation.} We developed a cycle-level simulator that takes the spike trains and
+weights of the model as input, modeling the behavior of the packer, the PE array, the edge unit and the
+LIF units to estimate the runtime performance of TIDES. We implement all components in Verilog; in a
+closed-loop Verilator~\cite{verilator} testbench, the RTL reproduces the partial sums, output spikes
+and cycle count of the simulator exactly on every layer of both networks at batch sizes 1 and 16. The
+components are synthesized with Yosys and ABC~\cite{yosys} on the Nangate 45\,nm open cell
+library~\cite{nangate45}, and OpenSTA~\cite{opensta} provides timing and static/dynamic power from
+gate-level switching activity of real layers. We use CACTI 7.0~\cite{cacti7} to evaluate the area and
+power of the on-chip buffers in a 45\,nm process, with access counts from the simulator. We use the DRAM
+energy per bit derived with DRAMsim3~\cite{dramsim3} in~\cite{prosperity2025} to estimate the off-chip
+DRAM energy. Tbl.~\ref{tab:setup} shows the setup of the TIDES architecture.
+
+\begin{table}[t]
+  \centering
+  \caption{TIDES Architecture Setup.}
+  \label{tab:setup}
+  \small
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    Parameter & Value \\
+    \midrule
+    Tile Size           & $R=4$ inputs; output 64 filters $\times$ 128 pixels \\
+    Packing             & $F=4$ filters/column; $G=4$ positions/group \\
+    Computation Array   & $4\times4$ PEs $\times$ 8 adders; 16 LIF units \\
+    Edge Unit           & 4 FIFOs $\times$ 80 entries; 4 RMW/column/cycle \\
+    On-chip Buffer Size & 192\,KB Output; 64\,KB Staging; 4\,KB Group \\
+    DDR4 DRAM           & 4 Channels, 64\,GB/s \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table*}[t]
+  \centering
+  \caption{Comparison of TIDES with Baselines on VGG16 (CIFAR-10). Area includes the on-chip buffers.}
+  \label{tab:baselines}
+  \small
+  \begin{tabular}{@{}lcccccc@{}}
+    \toprule
+                 & Freq.  & Tech. & Area    & Throughput & Energy Efficiency & Area Efficiency \\
+                 & (MHz)  & (nm)  & (mm$^2$) & (GOP/s)   & (GOP/J)           & (GOP/s/mm$^2$) \\
+    \midrule
+    PTB~\cite{lee2022ptb}              & 500 & 45 & 1.232 & \tbd{--} (1.00$\times$) & \tbd{--} (1.00$\times$) & \tbd{--} (1.00$\times$) \\
+    SpikeX~\cite{xu2025spikex}         & 500 & 45 & 0.747 & \tbd{--} & \tbd{--} & \tbd{--} \\
+    SATO~\cite{liu2022sato}            & 500 & 45 & 0.354 & \tbd{--} & \tbd{--} & \tbd{--} \\
+    SpikeFlow~\cite{wang2025spikeflow} & 500 & 45 & 0.207 & \tbd{--} & \tbd{--} & \tbd{--} \\
+    LoAS~\cite{yin2024loas}            & 500 & 45 & 1.478 & \tbd{--} & \tbd{--} & \tbd{--} \\
+    Prosperity~\cite{prosperity2025}   & 500 & 45 & 1.035 & \tbd{--} & \tbd{--} & \tbd{--} \\
+    TIDES                              & 500 & 45 & 2.128 & \tbd{--} & \tbd{--} & \tbd{--} \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+\textbf{Baselines.} We compare with the SNN accelerators PTB~\cite{lee2022ptb},
+SpikeX~\cite{xu2025spikex}, SATO~\cite{liu2022sato}, SpikeFlow~\cite{wang2025spikeflow},
+LoAS~\cite{yin2024loas} and Prosperity~\cite{prosperity2025}, which we discussed in
+Sec.~\ref{sec:background}. We compare their configuration and performance on VGG16 with CIFAR-10 in
+Tbl.~\ref{tab:baselines}. For a fair comparison, we keep the frequency and technology the same for all
+baselines and TIDES: the core of each baseline is implemented in RTL and taken through the same
+synthesis and power flow, and its on-chip buffers, sized as in its paper, are evaluated with CACTI 7.0
+in the same process. We define operations (OP) consistently across all baselines and TIDES, where each
+OP corresponds to an accumulation for a `1' element in the spike bit matrix. We simulate PTB, SATO and
+Prosperity with the official simulators released with Prosperity~\cite{prosperity2025}, and SpikeX,
+SpikeFlow and LoAS in our framework. On our VGG16 traces, the official simulators give Prosperity a
+9.6$\times$ speedup over PTB, close to the 9.4$\times$ reported in~\cite{prosperity2025}.

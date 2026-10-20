@@ -1,0 +1,23 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{cite}
+\usepackage{xcolor,booktabs,amssymb}
+\usepackage{graphicx}
+\hyphenation{op-tical net-works semi-conduc-tor}
+\newcommand{\tbd}[1]{\textcolor{red}{#1}}   % placeholder until the pruned models arrive
+
+% Times for tectonic/XeTeX (pdflatex on Overleaf uses IEEEtran's own Times)
+\usepackage{iftex}\ifXeTeX\usepackage{fontspec}\setmainfont{texgyretermes}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]\fi
+\makeatletter\newlabel{sec:background}{{II}{1}}\makeatother  % Sec. II = Background in the full paper
+
+\begin{document}
+\title{TIDES: Time-Parallel Dual-Sparse Packing for Efficient Systolic SNN Acceleration}
+\author{\IEEEauthorblockN{Anonymous Author(s)}
+\IEEEauthorblockA{Paper under double-blind review}}
+\maketitle
+
+\setcounter{section}{4}   % follows Sections I--IV (intro, background, packing, architecture)
+\input{method}
+
+\bibliographystyle{IEEEtran}
+\bibliography{refs_method}
+\end{document}

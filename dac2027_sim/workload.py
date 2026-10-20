@@ -97,20 +97,20 @@ def im2col(X, k, s):
     p = k // 2
     Xp = np.pad(X, ((0, 0), (0, 0), (p, p), (p, p)))
     Ho, Wo = H // s, W // s
-    cols = np.empty((C, k, k, B, Ho, Wo), dtype=np.uint8)
+    cols = np.empty((C, k, k, B, Ho, Wo), dtype=X.dtype)
     for i in range(k):
         for j in range(k):
             cols[:, i, j] = Xp[:, :, i:i + s * Ho:s, j:j + s * Wo:s].transpose(1, 0, 2, 3)
     return cols.reshape(C * k * k, B * Ho * Wo)
 
 
-def layer_tensors(layer, batch, wd, ns, q, seed):
+def layer_tensors(layer, batch, wd, ns, q, seed, T=T):
     """the weights W (M,K) and im2col spike matrix S (K,N) of one layer, deterministic in `seed`."""
     rng = np.random.default_rng(seed)
     name, ci, co, k, s, h = layer
     M, K, N = gemm_shape(layer, batch)
     W = rand_weights(rng, M, K, wd)
-    X = rand_spikes(rng, (batch, ci, h, h), ns, q)
+    X = rand_spikes(rng, (batch, ci, h, h), ns, q, T)
     S = im2col(X, k, s) if k > 1 or s > 1 or h > 1 else X.reshape(batch, ci).T.copy()
     assert S.shape == (K, N)
     return W, S

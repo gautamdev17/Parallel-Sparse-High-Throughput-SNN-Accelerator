@@ -1,0 +1,7 @@
+{
+ "images": 10000,
+ "accuracy": 94.54,
+ "T": 16,
+ "L": 8,
+ "weights": "INT8 (test_quantize.py pipeline)"
+}

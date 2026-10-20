@@ -14,38 +14,48 @@ R = os.path.join(HERE, "results")
 NETS = ("VGG16", "ResNet18")
 ORDER = ["ptb", "spikex", "loas_zip", "sato", "spikeflow", "prosperity", "ours"]
 NAME = {"ptb": "PTB", "spikex": "SpikeX", "loas_zip": "LoAS", "sato": "SATO", "spikeflow": "SpikeFlow",
-        "prosperity": "Prosperity", "ours": "Ours"}
+        "prosperity": "Prosperity", "ours": "TIDES"}
 
 
 def main():
+    """GOP/s and system GOP/J per design, PTB greyscale style (VGG16 black, ResNet18 hatched), legend outside right."""
     d = json.load(open(os.path.join(R, "same_node_45nm.json")))
     import plot_ptb_style as PS
+    from matplotlib.patches import Patch
     plt, FS = PS.plt, PS.FS
-    fig, axes = plt.subplots(1, 2, figsize=(FS.TEXT, 2.05))
-    w = 0.112
-    for ax, key, ylab, tag in ((axes[0], "gops", "GOP/s", "(a)"),
-                               (axes[1], "gopj_system", "GOP/J", "(b)")):
-        top = max(d[k][n][key] for k in ORDER for n in NETS)
-        for i, k in enumerate(ORDER):
-            x = np.arange(2) + (i - (len(ORDER) - 1) / 2) * (w + 0.008)
-            v = [d[k][n][key] for n in NETS]
-            st = PS.STYLE[k]
-            ax.bar(x, v, w, color=st["color"], hatch=st["hatch"], edgecolor=PS.EDGE, linewidth=0.5, label=NAME[k],
-                   zorder=3)
-            if k == "ours":
-                for xi, vi in zip(x, v):
-                    ax.annotate(f"{vi:.0f}", (xi, vi), xytext=(0, 2), textcoords="offset points", ha="center",
-                                va="bottom", fontsize=6.8, color=FS.OURS_TEXT, zorder=5,
-                                bbox=dict(boxstyle="square,pad=0.06", fc="white", ec="none"))
-        ax.set_ylim(0, top * 1.55)
-        ax.set_xticks(range(2), NETS)
-        ax.set_xlim(-0.55, 1.55)
-        ax.set_ylabel(ylab)
-        ax.yaxis.grid(True, zorder=0)
-        FS.panel_tag(ax, tag, y=-0.15)
-    h, l = axes[0].get_legend_handles_labels()
-    FS.inside_legend(axes[0], h, l, ncol=4)
-    fig.subplots_adjust(left=0.065, right=0.995, top=0.985, bottom=0.235, wspace=0.22)
+    sty = (("#111111", ""), ("#FFFFFF", "////"))
+    fig, axes = plt.subplots(1, 2, figsize=(FS.TEXT, 2.1))
+    w = 0.36
+    for ax, key, ylab, tag in ((axes[0], "gops", "GOP/s", "(a) GOP/s"), (axes[1], "gopj_system", "GOP/J", "(b) GOP/J")):
+        top = 0
+        for j, n in enumerate(NETS):
+            v = [d[k][n][key] for k in ORDER]
+            x = np.arange(len(ORDER)) + (j - 0.5) * w
+            ax.bar(x, v, w, color=sty[j][0], hatch=sty[j][1], edgecolor="#111111", linewidth=0.6, zorder=3)
+            top = max(top, max(v))
+            k = ORDER.index("ours")
+            ax.annotate(f"{v[k]:.0f}", (x[k], v[k]), xytext=(0, 2), textcoords="offset points", ha="center",
+                        va="bottom", fontsize=6.6, fontweight="bold", rotation=90, zorder=5)
+        ax.set_xticks(range(len(ORDER)), [NAME[k] for k in ORDER], rotation=40, ha="right", fontsize=6.8,
+                      fontweight="bold")
+        ax.get_xticklabels()[ORDER.index("ours")].set_fontsize(7.6)
+        ax.set_xlim(-0.6, len(ORDER) - 0.4)
+        ax.set_ylim(0, top * 1.25)
+        ax.set_ylabel(ylab, fontweight="bold")
+        for t in ax.get_yticklabels():
+            t.set_fontweight("bold")
+        ax.yaxis.grid(True, ls=":", lw=0.6, color="#777777", zorder=0)
+        ax.xaxis.grid(False)
+        FS.panel_tag(ax, tag, y=-0.42)
+    h = [Patch(facecolor=sty[j][0], hatch=sty[j][1], edgecolor="#111111", linewidth=0.6, label=n)
+         for j, n in enumerate(NETS)]
+    lg = fig.legend(h, list(NETS), loc="center right", frameon=True, fancybox=False, edgecolor="#111111",
+                    handlelength=1.6, handleheight=1.0, borderpad=0.4, labelspacing=0.35,
+                    prop={"weight": "bold", "size": 7})
+    lg.get_frame().set_linewidth(0.6)
+    fig.canvas.draw()
+    lw = lg.get_window_extent().width / fig.bbox.width
+    fig.subplots_adjust(left=0.065, right=0.985 - lw - 0.015, top=0.97, bottom=0.33, wspace=0.26)
     for ext in ("png", "pdf"):
         fig.savefig(os.path.join(R, f"gops_gopj.{ext}"))
 

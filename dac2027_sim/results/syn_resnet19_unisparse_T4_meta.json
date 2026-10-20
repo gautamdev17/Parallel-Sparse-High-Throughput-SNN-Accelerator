@@ -1,0 +1,11 @@
+{
+ "T": 4,
+ "synthetic": {
+  "net": "ResNet19",
+  "weight_density": 0.0732,
+  "nonsilent": 0.1351,
+  "q": 0.3,
+  "weights": "INT8"
+ },
+ "title": "ResNet-19, CIFAR-10 shapes (synthetic: INT8 weights 92.68% sparse, 86.49% silent neurons, T = 4)"
+}

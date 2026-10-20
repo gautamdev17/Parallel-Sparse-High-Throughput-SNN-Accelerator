@@ -18,7 +18,7 @@ R = os.path.join(HERE, "results")
 SANS = ["Helvetica", "Arial", "DejaVu Sans"]
 
 # (key, label, colour, line width, marker)
-SERIES = [("ours", "Ours", "#E8604C", 2.2, "o"),
+SERIES = [("ours", "TIDES", "#E8604C", 2.2, "o"),
           ("loas", "LoAS", "#4A8FE0", 1.5, "o"),
           ("phi", "Phi", "#8E5BB5", 1.5, "o"),
           ("spikeflow", "SpikeFlow", "#F2A7A0", 1.5, "o"),
@@ -39,7 +39,7 @@ def main(src="compression.json", dst="compression_cool"):
     c = json.load(open(os.path.join(R, src)))
     sp = list(c)
     x = np.arange(len(sp))
-    series = [("ours", "Ours", FS.OURS, 2.4, "o", "-"),
+    series = [("ours", "TIDES", FS.OURS, 2.4, "o", "-"),
               ("loas", "LoAS", "#3F6FB5", 1.4, "o", "-"),
               ("phi", "Phi", "#7B5AA6", 1.4, "o", "-"),
               ("spikeflow", "SpikeFlow", "#2E9C8F", 1.4, "o", "-"),
@@ -95,7 +95,7 @@ def two_panel():
     plt_, FS = PS.plt, PS.FS
     c = json.load(open(os.path.join(R, "compression.json")))
     ci = json.load(open(os.path.join(R, "compression_intra.json")))
-    series = [("ours", "Ours", FS.OURS, 2.4, "o", "-"), ("loas", "LoAS", "#3F6FB5", 1.4, "o", "-"),
+    series = [("ours", "TIDES", FS.OURS, 2.4, "o", "-"), ("loas", "LoAS", "#3F6FB5", 1.4, "o", "-"),
               ("phi", "Phi", "#7B5AA6", 1.4, "o", "-"), ("spikeflow", "SpikeFlow", "#2E9C8F", 1.4, "o", "-"),
               ("ptb", "PTB", "#C8506A", 1.4, "o", "-"), ("prosperity", "Prosperity", "#8C8C8C", 1.2, None, (0, (4, 2))),
               ("spikex", "SpikeX", "#B5B5B5", 1.2, None, (0, (1.5, 1.5)))]
@@ -156,7 +156,7 @@ def intra(src="compression_intra.json", dst="compression_intra"):
     qs = [q for q in ci if 1 - ci[q]["spikes_per_active"] / 8 >= 0.49]
     x = np.array([100 * (1 - ci[q]["spikes_per_active"] / 8) for q in qs])
     o = np.argsort(x)
-    series = [("ours", "Ours", FS.OURS, 2.4, "o", "-"), ("loas", "LoAS", "#3F6FB5", 1.4, "o", "-"),
+    series = [("ours", "TIDES", FS.OURS, 2.4, "o", "-"), ("loas", "LoAS", "#3F6FB5", 1.4, "o", "-"),
               ("phi", "Phi", "#7B5AA6", 1.4, "o", "-"), ("spikeflow", "SpikeFlow", "#2E9C8F", 1.4, "o", "-"),
               ("ptb", "PTB", "#C8506A", 1.4, "o", "-"), ("prosperity", "Prosperity", "#8C8C8C", 1.2, None, (0, (4, 2))),
               ("spikex", "SpikeX", "#B5B5B5", 1.2, None, (0, (1.5, 1.5)))]

@@ -226,7 +226,7 @@ def run_layer_fast(W, S, cfg, plan=None):
     R, C, T = cfg.R, cfg.C, cfg.T
     K, N = S.shape
     nblocks = [(n0, min(n0 + cfg.Nt, N)) for n0 in range(0, N, cfg.Nt)]
-    Sp = np.zeros((plan.nK * R, N), dtype=np.uint8)
+    Sp = np.zeros((plan.nK * R, N), dtype=S.dtype)
     Sp[:K] = S
     packer = _Packer(cfg.pp, cfg.pk_lanes)
     t_start, end_all = 0, 0
@@ -306,7 +306,7 @@ def run_layer_stepped(W, S, cfg):
     M, K = W.shape
     N = S.shape[1]
     plan = LayerPlan(W, cfg)
-    Sp = np.zeros((plan.nK * R, N), dtype=np.uint8)
+    Sp = np.zeros((plan.nK * R, N), dtype=S.dtype)
     Sp[:K] = S
     nblocks = [(n0, min(n0 + cfg.Nt, N)) for n0 in range(0, N, cfg.Nt)]
     obuf = np.zeros((M, N, T), dtype=np.int64)

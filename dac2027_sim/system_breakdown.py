@@ -30,7 +30,7 @@ R = os.path.join(HERE, "results")
 NETS = ("VGG16", "ResNet18")
 ORDER = ["ptb", "spikex", "loas_zip", "sato", "spikeflow", "prosperity", "ours"]
 NAME = {"ptb": "PTB", "spikex": "SpikeX", "loas_zip": "LoAS", "sato": "SATO", "spikeflow": "SpikeFlow",
-        "prosperity": "Prosperity", "ours": "Ours"}
+        "prosperity": "Prosperity", "ours": "TIDES"}
 CLK = 500e6
 B = int(os.environ.get("SNB", 16))                 # 16: per image at batch 16; 1: batch-1 inference
 SFX = "" if B == 16 else f"_b{B}"
@@ -213,8 +213,8 @@ def perf_plot():
     sty = (("#111111", ""), ("#FFFFFF", "////"))
     fig, axes = plt.subplots(1, 2, figsize=(FS.TEXT, 2.1))
     w = 0.36
-    for ax, b, ylab, tag in ((axes[0], 1, "Speedup over PTB", "(a) Latency (batch 1)"),
-                             (axes[1], 16, "Throughput over PTB", "(b) Throughput (batch 16)")):
+    for ax, b, ylab, tag in ((axes[0], 1, "Speedup", "(a) Latency (batch 1)"),
+                             (axes[1], 16, "Speedup", "(b) Throughput (batch 16)")):
         top = 0
         for j, n in enumerate(NETS):
             v = [cyc(n, "ptb", b) / cyc(n, d, b) for d in ORDER]

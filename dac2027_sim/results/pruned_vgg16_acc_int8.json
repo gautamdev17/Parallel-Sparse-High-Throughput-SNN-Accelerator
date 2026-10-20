@@ -1,0 +1,8 @@
+{
+ "net": "vgg16",
+ "weights": "int8",
+ "images": 200,
+ "accuracy": 94.5,
+ "T": 8,
+ "L": 8
+}

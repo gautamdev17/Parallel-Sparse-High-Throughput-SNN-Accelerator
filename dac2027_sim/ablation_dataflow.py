@@ -133,7 +133,7 @@ def main():
         o["ws"]["cyc_real"] = real
         o["is_"]["cyc_real"] = round(o["is_"]["cyc"] * real / o["ws"]["cyc"])
     json.dump(out, open(os.path.join(R_, "ablation_dataflow.json"), "w"), indent=1)
-    NAME = {"ws": "WS (ours)", "is_": "IS", "os": "OS"}
+    NAME = {"ws": "WS (TIDES)", "is_": "IS", "os": "OS"}
     L = ["# Dataflow ablation: WS vs IS vs OS (4x4 PEs, T = 8 adders, sparse90, batch 1, analytical)", "",
          "| Network | Dataflow | Packing used | Ideal cycles | Cycles with overheads | vs WS | Adder utilization | "
          "Weight reads (MB) | Spike reads, raw + packed (MB) | Partial sums / outputs (MB) | On-chip total (MB) |",
@@ -183,7 +183,7 @@ def plot(out):
     plt, FS = PS.plt, PS.FS
     out = energy(out)
     D = ("ws", "is_", "os")
-    LAB = {"ws": "WS (ours)", "is_": "IS", "os": "OS"}
+    LAB = {"ws": "WS (TIDES)", "is_": "IS", "os": "OS"}
     sty = {"ws": ("#111111", ""), "is_": ("#8C8C8C", ""), "os": ("#FFFFFF", "////")}
     STK = ("#111111", "#8C8C8C", "#FFFFFF")
     HAT = ("", "", "////")
@@ -256,7 +256,7 @@ def plot(out):
                        linewidth=0.6, zorder=3)
                 bot += v
             top = max(top, bot)
-    ax.set_xticks(xs, [LAB[d].replace(" (ours)", "") for _ in NETS for d in D], fontsize=6.6, fontweight="bold")
+    ax.set_xticks(xs, [LAB[d].replace(" (TIDES)", "") for _ in NETS for d in D], fontsize=6.6, fontweight="bold")
     for j, n in enumerate(NETS):
         ax.text(j * 4 + 1, -0.2, n, transform=ax.get_xaxis_transform(), ha="center", va="top", fontsize=7,
                 fontweight="bold")
@@ -328,3 +328,101 @@ def power_plot():
 
 if __name__ == "__main__" and False:
     pass
+
+
+def plot_ordered():
+    """the five ablation panels in the paper order: latency, power, energy, EDP, on-chip traffic."""
+    import plot_ptb_style as PS
+    from matplotlib.patches import Patch
+    from matplotlib.ticker import FixedLocator, FixedFormatter, NullLocator
+    plt, FS = PS.plt, PS.FS
+    out = json.load(open(os.path.join(R_, "ablation_dataflow.json")))
+    D = ("ws", "is_", "os")
+    LAB = {"ws": "WS (TIDES)", "is_": "IS", "os": "OS"}
+    sty = {"ws": ("#111111", ""), "is_": ("#8C8C8C", ""), "os": ("#FFFFFF", "////")}
+    STK, HAT = ("#111111", "#8C8C8C", "#FFFFFF"), ("", "", "////")
+    grid = lambda ax: (ax.yaxis.grid(True, ls=":", lw=0.6, color="#777777", zorder=0), ax.xaxis.grid(False))
+    fig, axes = plt.subplots(2, 3, figsize=(FS.TEXT, 4.3))
+    x = np.arange(len(NETS))
+    w = 0.24
+
+    def grouped(ax, fn, ylab, tag):
+        top = 0
+        for i, d in enumerate(D):
+            v = [fn(n, d) for n in NETS]
+            xi = x + (i - 1) * (w + 0.02)
+            ax.bar(xi, v, w, color=sty[d][0], hatch=sty[d][1], edgecolor="#111111", linewidth=0.6, zorder=3)
+            for a_, b_ in zip(xi, v):
+                ax.annotate(f"{b_:.2f}", (a_, b_), xytext=(0, 2), textcoords="offset points", ha="center",
+                            va="bottom", fontsize=6, fontweight="bold")
+            top = max(top, max(v))
+        ax.set_xticks(x, NETS, fontweight="bold")
+        ax.set_ylim(0, top * 1.22)
+        ax.set_ylabel(ylab, fontweight="bold")
+        grid(ax)
+        FS.panel_tag(ax, tag, y=-0.3)
+
+    def stacked(ax, fn, ylab, tag):
+        top = 0
+        for j, n in enumerate(NETS):
+            for i, d in enumerate(D):
+                bot = 0
+                for k, v in enumerate(fn(out[n][d])):
+                    ax.bar(i + j * 4, v, 0.7, bottom=bot, color=STK[k], hatch=HAT[k], edgecolor="#111111",
+                           linewidth=0.6, zorder=3)
+                    bot += v
+                top = max(top, bot)
+        ax.set_xticks([i + j * 4 for j in range(len(NETS)) for i in range(3)],
+                      [LAB[d].split()[0] for _ in NETS for d in D], fontsize=6.6, fontweight="bold")
+        for j, n in enumerate(NETS):
+            ax.text(j * 4 + 1, -0.2, n, transform=ax.get_xaxis_transform(), ha="center", va="top", fontsize=7,
+                    fontweight="bold")
+        ax.set_ylim(0, top * 1.18)
+        ax.set_ylabel(ylab, fontweight="bold")
+        grid(ax)
+        FS.panel_tag(ax, tag, y=-0.36)
+
+    parts = lambda o, s: (o["E"]["dram"] * s, o["E"]["sram"] * s, o["E"]["core"] * s)
+    grouped(axes[0, 0], lambda n, d: out[n][d]["cyc_real"] / out[n]["ws"]["cyc_real"], "Normalized latency",
+            "(a) Latency")
+    stacked(axes[0, 1], lambda o: parts(o, 1e3 / o["t"]), "Power (mW)", "(b) Power")
+    stacked(axes[0, 2], lambda o: parts(o, 1e6), "Energy (µJ)", "(c) Energy")
+    grouped(axes[1, 0], lambda n, d: out[n][d]["edp"] / out[n]["ws"]["edp"], "Normalized EDP", "(d) EDP")
+    ax = axes[1, 1]
+    comp = (("w", "Wgt"), ("a", "Spk"), ("p", "Psum"))
+    xs, labs = [], []
+    for j, n in enumerate(NETS):
+        for c, (key, lab) in enumerate(comp):
+            xc = j * 3.6 + c * 1.05
+            xs.append(xc); labs.append(lab)
+            for i, d in enumerate(D):
+                o = out[n][d]
+                v = (o["a"] + o["r"]) if key == "a" else o[key]
+                ax.bar(xc + (i - 1) * 0.3, max(v / MB, 1e-3), 0.28, color=sty[d][0], hatch=sty[d][1],
+                       edgecolor="#111111", linewidth=0.5, zorder=3)
+        ax.text(j * 3.6 + 1.05, -0.2, n, transform=ax.get_xaxis_transform(), ha="center", va="top", fontsize=7,
+                fontweight="bold")
+    ax.set_yscale("log")
+    ax.set_ylim(0.1, 600)
+    ax.yaxis.set_major_locator(FixedLocator([0.1, 1, 10, 100]))
+    ax.yaxis.set_major_formatter(FixedFormatter(["0.1", "1", "10", "100"]))
+    ax.yaxis.set_minor_locator(NullLocator())
+    ax.set_xticks(xs, labs, fontsize=6.6, fontweight="bold")
+    ax.set_ylabel("On-chip traffic (MB)", fontweight="bold")
+    grid(ax)
+    FS.panel_tag(ax, "(e) On-chip traffic", y=-0.36)
+    axes[1, 2].axis("off")
+    h1 = [Patch(facecolor=sty[d][0], hatch=sty[d][1], edgecolor="#111111", linewidth=0.6, label=LAB[d]) for d in D]
+    h2 = [Patch(facecolor=STK[k], hatch=HAT[k], edgecolor="#111111", linewidth=0.6, label=nm)
+          for k, nm in enumerate(("DRAM", "SRAM", "Core"))][::-1]
+    for hs, y, title in ((h1, 0.98, "Dataflow (a), (d), (e)"), (h2, 0.45, "Component (b), (c)")):
+        lg = axes[1, 2].legend(handles=hs, loc="upper left", bbox_to_anchor=(0.12, y), frameon=True, fancybox=False,
+                               edgecolor="#111111", title=title, handlelength=1.6, handleheight=0.9,
+                               labelspacing=0.2, borderpad=0.3, prop={"weight": "bold", "size": 6.4},
+                               title_fontproperties={"weight": "bold", "size": 6.4})
+        lg._legend_box.align = "left"
+        lg.get_frame().set_linewidth(0.6)
+        axes[1, 2].add_artist(lg)
+    fig.subplots_adjust(left=0.075, right=0.99, top=0.97, bottom=0.15, wspace=0.42, hspace=0.62)
+    for ext in ("png", "pdf"):
+        fig.savefig(os.path.join(R_, f"ablation_ordered.{ext}"))
