@@ -58,7 +58,8 @@ class Cfg:
     W_open: int = 4       # packer: open groups searched per pixel
     pp: int = 8           # packer: pixel slices scanned per cycle (all lanes)
     pk_lanes: int = 8     # packer lanes, each packing its own K-tile at pp/pk_lanes slices per cycle
-    lif_lat: int = 4      # LIF result latency beyond the sweep: 1 (output-buffer read) + 3 (4-stage LIF pipeline)
+    lif_lat: int = None   # LIF result latency beyond the sweep: 1 (output-buffer read) + T/2 - 1 (ours_lif: T/2
+                          # stages of 2 timesteps) = T/2; None -> T // 2 (4 at T = 8)
     Mt: int = 64          # output tile: filters
     Nt: int = 128         # output tile: pixels
     E: int = 4            # edge unit: running-sum writes per column per cycle
@@ -69,6 +70,10 @@ class Cfg:
     lif_units: int = 16
     theta: float = 64.0
     leak: float = 0.5
+
+    def __post_init__(self):
+        if self.lif_lat is None:
+            object.__setattr__(self, "lif_lat", self.T // 2)
 
     @property
     def adders(self):
