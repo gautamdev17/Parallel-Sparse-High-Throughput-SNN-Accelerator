@@ -1,0 +1,2222 @@
+{
+ "dense": {
+  "layers": [
+   {
+    "name": "layer1.4",
+    "M": 64,
+    "K": 576,
+    "N": 1024,
+    "current": 1255681,
+    "lenient": {
+     "cycles": 548802,
+     "compute": 548780,
+     "overhead": 22,
+     "mem": 2798,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 557662,
+     "compute": 557640,
+     "overhead": 22,
+     "mem": 2798,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 713288,
+     "compute": 557640,
+     "overhead": 155648,
+     "mem": 2798,
+     "tw": 1
+    },
+    "tw4_paper_map": 3631318,
+    "official": {
+     "stsap": 1124608,
+     "cold": 32768,
+     "stall": 1,
+     "lif": 98304,
+     "total": 1255681
+    }
+   },
+   {
+    "name": "layer2.0",
+    "M": 128,
+    "K": 2304,
+    "N": 256,
+    "current": 2226593,
+    "lenient": {
+     "cycles": 1080358,
+     "compute": 1080336,
+     "overhead": 22,
+     "mem": 6553,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 1092862,
+     "compute": 1092840,
+     "overhead": 22,
+     "mem": 6553,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 1170664,
+     "compute": 1092840,
+     "overhead": 77824,
+     "mem": 6553,
+     "tw": 1
+    },
+    "tw4_paper_map": 7223158,
+    "official": {
+     "stsap": 2169248,
+     "cold": 8192,
+     "stall": 1,
+     "lif": 49152,
+     "total": 2226593
+    }
+   },
+   {
+    "name": "layer2.4",
+    "M": 128,
+    "K": 1152,
+    "N": 256,
+    "current": 930177,
+    "lenient": {
+     "cycles": 449214,
+     "compute": 449192,
+     "overhead": 22,
+     "mem": 3549,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 457958,
+     "compute": 457936,
+     "overhead": 22,
+     "mem": 3549,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 535760,
+     "compute": 457936,
+     "overhead": 77824,
+     "mem": 3549,
+     "tw": 1
+    },
+    "tw4_paper_map": 2785782,
+    "official": {
+     "stsap": 872832,
+     "cold": 8192,
+     "stall": 1,
+     "lif": 49152,
+     "total": 930177
+    }
+   },
+   {
+    "name": "layer3.0",
+    "M": 256,
+    "K": 4608,
+    "N": 64,
+    "current": 1325313,
+    "lenient": {
+     "cycles": 706422,
+     "compute": 706400,
+     "overhead": 22,
+     "mem": 20480,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 729942,
+     "compute": 729920,
+     "overhead": 22,
+     "mem": 20480,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 768832,
+     "compute": 729920,
+     "overhead": 38912,
+     "mem": 20480,
+     "tw": 1
+    },
+    "tw4_paper_map": 3697494,
+    "official": {
+     "stsap": 1298688,
+     "cold": 2048,
+     "stall": 1,
+     "lif": 24576,
+     "total": 1325313
+    }
+   },
+   {
+    "name": "layer3.4",
+    "M": 256,
+    "K": 2304,
+    "N": 64,
+    "current": 721537,
+    "lenient": {
+     "cycles": 391030,
+     "compute": 391008,
+     "overhead": 22,
+     "mem": 10376,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 403830,
+     "compute": 403808,
+     "overhead": 22,
+     "mem": 10376,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 442720,
+     "compute": 403808,
+     "overhead": 38912,
+     "mem": 10376,
+     "tw": 1
+    },
+    "tw4_paper_map": 2168534,
+    "official": {
+     "stsap": 694912,
+     "cold": 2048,
+     "stall": 1,
+     "lif": 24576,
+     "total": 721537
+    }
+   },
+   {
+    "name": "layer3.8",
+    "M": 256,
+    "K": 2304,
+    "N": 64,
+    "current": 656193,
+    "lenient": {
+     "cycles": 347734,
+     "compute": 347712,
+     "overhead": 22,
+     "mem": 10376,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 362198,
+     "compute": 362176,
+     "overhead": 22,
+     "mem": 10376,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 401088,
+     "compute": 362176,
+     "overhead": 38912,
+     "mem": 10376,
+     "tw": 1
+    },
+    "tw4_paper_map": 1728598,
+    "official": {
+     "stsap": 629568,
+     "cold": 2048,
+     "stall": 1,
+     "lif": 24576,
+     "total": 656193
+    }
+   },
+   {
+    "name": "layer4.0",
+    "M": 512,
+    "K": 9216,
+    "N": 16,
+    "current": 1063553,
+    "lenient": {
+     "cycles": 511254,
+     "compute": 511232,
+     "overhead": 22,
+     "mem": 79052,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 524470,
+     "compute": 524448,
+     "overhead": 22,
+     "mem": 79052,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 543904,
+     "compute": 524448,
+     "overhead": 19456,
+     "mem": 79052,
+     "tw": 1
+    },
+    "tw4_paper_map": 2534166,
+    "official": {
+     "stsap": 1050752,
+     "cold": 512,
+     "stall": 1,
+     "lif": 12288,
+     "total": 1063553
+    }
+   },
+   {
+    "name": "layer4.4",
+    "M": 512,
+    "K": 4608,
+    "N": 16,
+    "current": 546689,
+    "lenient": {
+     "cycles": 278646,
+     "compute": 278624,
+     "overhead": 22,
+     "mem": 39594,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 295798,
+     "compute": 295776,
+     "overhead": 22,
+     "mem": 39594,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 315232,
+     "compute": 295776,
+     "overhead": 19456,
+     "mem": 39594,
+     "tw": 1
+    },
+    "tw4_paper_map": 1542166,
+    "official": {
+     "stsap": 533888,
+     "cold": 512,
+     "stall": 1,
+     "lif": 12288,
+     "total": 546689
+    }
+   },
+   {
+    "name": "layer4.8",
+    "M": 512,
+    "K": 4608,
+    "N": 16,
+    "current": 763905,
+    "lenient": {
+     "cycles": 405590,
+     "compute": 405568,
+     "overhead": 22,
+     "mem": 39594,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 416246,
+     "compute": 416224,
+     "overhead": 22,
+     "mem": 39594,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 435680,
+     "compute": 416224,
+     "overhead": 19456,
+     "mem": 39594,
+     "tw": 1
+    },
+    "tw4_paper_map": 2159126,
+    "official": {
+     "stsap": 751104,
+     "cold": 512,
+     "stall": 1,
+     "lif": 12288,
+     "total": 763905
+    }
+   },
+   {
+    "name": "layer5.0",
+    "M": 512,
+    "K": 18432,
+    "N": 4,
+    "current": 657409,
+    "lenient": {
+     "cycles": 226198,
+     "compute": 226176,
+     "overhead": 22,
+     "mem": 157457,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 235286,
+     "compute": 235264,
+     "overhead": 22,
+     "mem": 157457,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 240128,
+     "compute": 235264,
+     "overhead": 4864,
+     "mem": 157457,
+     "tw": 1
+    },
+    "tw4_paper_map": 1216022,
+    "official": {
+     "stsap": 654208,
+     "cold": 128,
+     "stall": 1,
+     "lif": 3072,
+     "total": 657409
+    }
+   },
+   {
+    "name": "layer5.4",
+    "M": 512,
+    "K": 4608,
+    "N": 4,
+    "current": 214401,
+    "lenient": {
+     "cycles": 77590,
+     "compute": 77568,
+     "overhead": 22,
+     "mem": 39389,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 95894,
+     "compute": 95872,
+     "overhead": 22,
+     "mem": 39389,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 100736,
+     "compute": 95872,
+     "overhead": 4864,
+     "mem": 39389,
+     "tw": 1
+    },
+    "tw4_paper_map": 505366,
+    "official": {
+     "stsap": 211200,
+     "cold": 128,
+     "stall": 1,
+     "lif": 3072,
+     "total": 214401
+    }
+   },
+   {
+    "name": "layer5.8",
+    "M": 512,
+    "K": 4608,
+    "N": 4,
+    "current": 205953,
+    "lenient": {
+     "cycles": 72342,
+     "compute": 72320,
+     "overhead": 22,
+     "mem": 39389,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 93718,
+     "compute": 93696,
+     "overhead": 22,
+     "mem": 39389,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 98560,
+     "compute": 93696,
+     "overhead": 4864,
+     "mem": 39389,
+     "tw": 1
+    },
+    "tw4_paper_map": 480278,
+    "official": {
+     "stsap": 202752,
+     "cold": 128,
+     "stall": 1,
+     "lif": 3072,
+     "total": 205953
+    }
+   },
+   {
+    "name": "classifier.1",
+    "M": 4096,
+    "K": 2048,
+    "N": 1,
+    "current": 806945,
+    "lenient": {
+     "cycles": 139912,
+     "compute": 100096,
+     "overhead": 22,
+     "mem": 139912,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 139912,
+     "compute": 105984,
+     "overhead": 22,
+     "mem": 139912,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 139912,
+     "compute": 105984,
+     "overhead": 9728,
+     "mem": 139912,
+     "tw": 1
+    },
+    "tw4_paper_map": 709654,
+    "official": {
+     "stsap": 800768,
+     "cold": 32,
+     "stall": 1,
+     "lif": 6144,
+     "total": 806945
+    }
+   },
+   {
+    "name": "classifier.4",
+    "M": 4096,
+    "K": 4096,
+    "N": 1,
+    "current": 1983521,
+    "lenient": {
+     "cycles": 279756,
+     "compute": 247296,
+     "overhead": 22,
+     "mem": 279756,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 279756,
+     "compute": 255232,
+     "overhead": 22,
+     "mem": 279756,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 279756,
+     "compute": 255232,
+     "overhead": 9728,
+     "mem": 279756,
+     "tw": 1
+    },
+    "tw4_paper_map": 1716246,
+    "official": {
+     "stsap": 1977344,
+     "cold": 32,
+     "stall": 1,
+     "lif": 6144,
+     "total": 1983521
+    }
+   },
+   {
+    "name": "classifier.7",
+    "M": 10,
+    "K": 4096,
+    "N": 1,
+    "current": 9436,
+    "lenient": {
+     "cycles": 1196,
+     "compute": 1174,
+     "overhead": 22,
+     "mem": 751,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 1262,
+     "compute": 1240,
+     "overhead": 22,
+     "mem": 751,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 1278,
+     "compute": 1240,
+     "overhead": 38,
+     "mem": 751,
+     "tw": 1
+    },
+    "tw4_paper_map": 7414,
+    "official": {
+     "stsap": 9388,
+     "cold": 32,
+     "stall": 1,
+     "lif": 15,
+     "total": 9436
+    }
+   }
+  ],
+  "total": {
+   "lenient": 5516044,
+   "paper": 5686794,
+   "strict": 6187538,
+   "current": 13367306,
+   "tw4_paper_map": 32105322,
+   "off_stsap": 12981260,
+   "off_cold": 57312,
+   "off_stall": 15,
+   "off_lif": 328719
+  }
+ },
+ "sp90": {
+  "layers": [
+   {
+    "name": "layer1.4",
+    "M": 64,
+    "K": 576,
+    "N": 1024,
+    "current": 1228289,
+    "lenient": {
+     "cycles": 525218,
+     "compute": 525196,
+     "overhead": 22,
+     "mem": 2798,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 535474,
+     "compute": 535452,
+     "overhead": 22,
+     "mem": 2798,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 691100,
+     "compute": 535452,
+     "overhead": 155648,
+     "mem": 2798,
+     "tw": 1
+    },
+    "tw4_paper_map": 3509254,
+    "official": {
+     "stsap": 1097216,
+     "cold": 32768,
+     "stall": 1,
+     "lif": 98304,
+     "total": 1228289
+    }
+   },
+   {
+    "name": "layer2.0",
+    "M": 128,
+    "K": 2304,
+    "N": 256,
+    "current": 2046017,
+    "lenient": {
+     "cycles": 993334,
+     "compute": 993312,
+     "overhead": 22,
+     "mem": 6553,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 1000862,
+     "compute": 1000840,
+     "overhead": 22,
+     "mem": 6553,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 1078664,
+     "compute": 1000840,
+     "overhead": 77824,
+     "mem": 6553,
+     "tw": 1
+    },
+    "tw4_paper_map": 6814902,
+    "official": {
+     "stsap": 1988672,
+     "cold": 8192,
+     "stall": 1,
+     "lif": 49152,
+     "total": 2046017
+    }
+   },
+   {
+    "name": "layer2.4",
+    "M": 128,
+    "K": 1152,
+    "N": 256,
+    "current": 909921,
+    "lenient": {
+     "cycles": 428862,
+     "compute": 428840,
+     "overhead": 22,
+     "mem": 3549,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 436590,
+     "compute": 436568,
+     "overhead": 22,
+     "mem": 3549,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 514392,
+     "compute": 436568,
+     "overhead": 77824,
+     "mem": 3549,
+     "tw": 1
+    },
+    "tw4_paper_map": 2738262,
+    "official": {
+     "stsap": 852576,
+     "cold": 8192,
+     "stall": 1,
+     "lif": 49152,
+     "total": 909921
+    }
+   },
+   {
+    "name": "layer3.0",
+    "M": 256,
+    "K": 4608,
+    "N": 64,
+    "current": 1384961,
+    "lenient": {
+     "cycles": 755702,
+     "compute": 755680,
+     "overhead": 22,
+     "mem": 20480,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 774022,
+     "compute": 774000,
+     "overhead": 22,
+     "mem": 20480,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 812912,
+     "compute": 774000,
+     "overhead": 38912,
+     "mem": 20480,
+     "tw": 1
+    },
+    "tw4_paper_map": 4064150,
+    "official": {
+     "stsap": 1358336,
+     "cold": 2048,
+     "stall": 1,
+     "lif": 24576,
+     "total": 1384961
+    }
+   },
+   {
+    "name": "layer3.4",
+    "M": 256,
+    "K": 2304,
+    "N": 64,
+    "current": 771585,
+    "lenient": {
+     "cycles": 430358,
+     "compute": 430336,
+     "overhead": 22,
+     "mem": 10376,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 441014,
+     "compute": 440992,
+     "overhead": 22,
+     "mem": 10376,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 479904,
+     "compute": 440992,
+     "overhead": 38912,
+     "mem": 10376,
+     "tw": 1
+    },
+    "tw4_paper_map": 2424662,
+    "official": {
+     "stsap": 744960,
+     "cold": 2048,
+     "stall": 1,
+     "lif": 24576,
+     "total": 771585
+    }
+   },
+   {
+    "name": "layer3.8",
+    "M": 256,
+    "K": 2304,
+    "N": 64,
+    "current": 652161,
+    "lenient": {
+     "cycles": 359910,
+     "compute": 359888,
+     "overhead": 22,
+     "mem": 10376,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 371238,
+     "compute": 371216,
+     "overhead": 22,
+     "mem": 10376,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 410128,
+     "compute": 371216,
+     "overhead": 38912,
+     "mem": 10376,
+     "tw": 1
+    },
+    "tw4_paper_map": 1843862,
+    "official": {
+     "stsap": 625536,
+     "cold": 2048,
+     "stall": 1,
+     "lif": 24576,
+     "total": 652161
+    }
+   },
+   {
+    "name": "layer4.0",
+    "M": 512,
+    "K": 9216,
+    "N": 16,
+    "current": 1101825,
+    "lenient": {
+     "cycles": 552182,
+     "compute": 552160,
+     "overhead": 22,
+     "mem": 79052,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 568630,
+     "compute": 568608,
+     "overhead": 22,
+     "mem": 79052,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 588064,
+     "compute": 568608,
+     "overhead": 19456,
+     "mem": 79052,
+     "tw": 1
+    },
+    "tw4_paper_map": 2566550,
+    "official": {
+     "stsap": 1089024,
+     "cold": 512,
+     "stall": 1,
+     "lif": 12288,
+     "total": 1101825
+    }
+   },
+   {
+    "name": "layer4.4",
+    "M": 512,
+    "K": 4608,
+    "N": 16,
+    "current": 605569,
+    "lenient": {
+     "cycles": 311670,
+     "compute": 311648,
+     "overhead": 22,
+     "mem": 39594,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 321014,
+     "compute": 320992,
+     "overhead": 22,
+     "mem": 39594,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 340448,
+     "compute": 320992,
+     "overhead": 19456,
+     "mem": 39594,
+     "tw": 1
+    },
+    "tw4_paper_map": 1616918,
+    "official": {
+     "stsap": 592768,
+     "cold": 512,
+     "stall": 1,
+     "lif": 12288,
+     "total": 605569
+    }
+   },
+   {
+    "name": "layer4.8",
+    "M": 512,
+    "K": 4608,
+    "N": 16,
+    "current": 761473,
+    "lenient": {
+     "cycles": 405590,
+     "compute": 405568,
+     "overhead": 22,
+     "mem": 39594,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 415766,
+     "compute": 415744,
+     "overhead": 22,
+     "mem": 39594,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 435200,
+     "compute": 415744,
+     "overhead": 19456,
+     "mem": 39594,
+     "tw": 1
+    },
+    "tw4_paper_map": 2203926,
+    "official": {
+     "stsap": 748672,
+     "cold": 512,
+     "stall": 1,
+     "lif": 12288,
+     "total": 761473
+    }
+   },
+   {
+    "name": "layer5.0",
+    "M": 512,
+    "K": 18432,
+    "N": 4,
+    "current": 718465,
+    "lenient": {
+     "cycles": 255894,
+     "compute": 255872,
+     "overhead": 22,
+     "mem": 157457,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 261654,
+     "compute": 261632,
+     "overhead": 22,
+     "mem": 157457,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 266496,
+     "compute": 261632,
+     "overhead": 4864,
+     "mem": 157457,
+     "tw": 1
+    },
+    "tw4_paper_map": 1379350,
+    "official": {
+     "stsap": 715264,
+     "cold": 128,
+     "stall": 1,
+     "lif": 3072,
+     "total": 718465
+    }
+   },
+   {
+    "name": "layer5.4",
+    "M": 512,
+    "K": 4608,
+    "N": 4,
+    "current": 206849,
+    "lenient": {
+     "cycles": 73238,
+     "compute": 73216,
+     "overhead": 22,
+     "mem": 39389,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 100118,
+     "compute": 100096,
+     "overhead": 22,
+     "mem": 39389,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 104960,
+     "compute": 100096,
+     "overhead": 4864,
+     "mem": 39389,
+     "tw": 1
+    },
+    "tw4_paper_map": 498198,
+    "official": {
+     "stsap": 203648,
+     "cold": 128,
+     "stall": 1,
+     "lif": 3072,
+     "total": 206849
+    }
+   },
+   {
+    "name": "layer5.8",
+    "M": 512,
+    "K": 4608,
+    "N": 4,
+    "current": 205953,
+    "lenient": {
+     "cycles": 71830,
+     "compute": 71808,
+     "overhead": 22,
+     "mem": 39389,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 96022,
+     "compute": 96000,
+     "overhead": 22,
+     "mem": 39389,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 100864,
+     "compute": 96000,
+     "overhead": 4864,
+     "mem": 39389,
+     "tw": 1
+    },
+    "tw4_paper_map": 486422,
+    "official": {
+     "stsap": 202752,
+     "cold": 128,
+     "stall": 1,
+     "lif": 3072,
+     "total": 205953
+    }
+   },
+   {
+    "name": "classifier.1",
+    "M": 4096,
+    "K": 2048,
+    "N": 1,
+    "current": 971809,
+    "lenient": {
+     "cycles": 139912,
+     "compute": 120832,
+     "overhead": 22,
+     "mem": 139912,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 139912,
+     "compute": 128768,
+     "overhead": 22,
+     "mem": 139912,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 139912,
+     "compute": 128768,
+     "overhead": 9728,
+     "mem": 139912,
+     "tw": 1
+    },
+    "tw4_paper_map": 841750,
+    "official": {
+     "stsap": 965632,
+     "cold": 32,
+     "stall": 1,
+     "lif": 6144,
+     "total": 971809
+    }
+   },
+   {
+    "name": "classifier.4",
+    "M": 4096,
+    "K": 4096,
+    "N": 1,
+    "current": 1640481,
+    "lenient": {
+     "cycles": 279756,
+     "compute": 204288,
+     "overhead": 22,
+     "mem": 279756,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 279756,
+     "compute": 212224,
+     "overhead": 22,
+     "mem": 279756,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 279756,
+     "compute": 212224,
+     "overhead": 9728,
+     "mem": 279756,
+     "tw": 1
+    },
+    "tw4_paper_map": 1460246,
+    "official": {
+     "stsap": 1634304,
+     "cold": 32,
+     "stall": 1,
+     "lif": 6144,
+     "total": 1640481
+    }
+   },
+   {
+    "name": "classifier.7",
+    "M": 10,
+    "K": 4096,
+    "N": 1,
+    "current": 8160,
+    "lenient": {
+     "cycles": 1036,
+     "compute": 1014,
+     "overhead": 22,
+     "mem": 751,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 1062,
+     "compute": 1040,
+     "overhead": 22,
+     "mem": 751,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 1078,
+     "compute": 1040,
+     "overhead": 38,
+     "mem": 751,
+     "tw": 1
+    },
+    "tw4_paper_map": 6502,
+    "official": {
+     "stsap": 8112,
+     "cold": 32,
+     "stall": 1,
+     "lif": 15,
+     "total": 8160
+    }
+   }
+  ],
+  "total": {
+   "lenient": 5584492,
+   "paper": 5743134,
+   "strict": 6243878,
+   "current": 13213518,
+   "tw4_paper_map": 32454954,
+   "off_stsap": 12827472,
+   "off_cold": 57312,
+   "off_stall": 15,
+   "off_lif": 328719
+  }
+ },
+ "sp95": {
+  "layers": [
+   {
+    "name": "layer1.4",
+    "M": 64,
+    "K": 576,
+    "N": 1024,
+    "current": 1211041,
+    "lenient": {
+     "cycles": 525146,
+     "compute": 525124,
+     "overhead": 22,
+     "mem": 2798,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 533286,
+     "compute": 533264,
+     "overhead": 22,
+     "mem": 2798,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 688912,
+     "compute": 533264,
+     "overhead": 155648,
+     "mem": 2798,
+     "tw": 1
+    },
+    "tw4_paper_map": 3452486,
+    "official": {
+     "stsap": 1079968,
+     "cold": 32768,
+     "stall": 1,
+     "lif": 98304,
+     "total": 1211041
+    }
+   },
+   {
+    "name": "layer2.0",
+    "M": 128,
+    "K": 2304,
+    "N": 256,
+    "current": 2135073,
+    "lenient": {
+     "cycles": 1039798,
+     "compute": 1039776,
+     "overhead": 22,
+     "mem": 6553,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 1052070,
+     "compute": 1052048,
+     "overhead": 22,
+     "mem": 6553,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 1129872,
+     "compute": 1052048,
+     "overhead": 77824,
+     "mem": 6553,
+     "tw": 1
+    },
+    "tw4_paper_map": 7040118,
+    "official": {
+     "stsap": 2077728,
+     "cold": 8192,
+     "stall": 1,
+     "lif": 49152,
+     "total": 2135073
+    }
+   },
+   {
+    "name": "layer2.4",
+    "M": 128,
+    "K": 1152,
+    "N": 256,
+    "current": 919009,
+    "lenient": {
+     "cycles": 452678,
+     "compute": 452656,
+     "overhead": 22,
+     "mem": 3549,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 462134,
+     "compute": 462112,
+     "overhead": 22,
+     "mem": 3549,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 539936,
+     "compute": 462112,
+     "overhead": 77824,
+     "mem": 3549,
+     "tw": 1
+    },
+    "tw4_paper_map": 2853494,
+    "official": {
+     "stsap": 861664,
+     "cold": 8192,
+     "stall": 1,
+     "lif": 49152,
+     "total": 919009
+    }
+   },
+   {
+    "name": "layer3.0",
+    "M": 256,
+    "K": 4608,
+    "N": 64,
+    "current": 1410433,
+    "lenient": {
+     "cycles": 752374,
+     "compute": 752352,
+     "overhead": 22,
+     "mem": 20480,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 766550,
+     "compute": 766528,
+     "overhead": 22,
+     "mem": 20480,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 805440,
+     "compute": 766528,
+     "overhead": 38912,
+     "mem": 20480,
+     "tw": 1
+    },
+    "tw4_paper_map": 3950870,
+    "official": {
+     "stsap": 1383808,
+     "cold": 2048,
+     "stall": 1,
+     "lif": 24576,
+     "total": 1410433
+    }
+   },
+   {
+    "name": "layer3.4",
+    "M": 256,
+    "K": 2304,
+    "N": 64,
+    "current": 752897,
+    "lenient": {
+     "cycles": 401622,
+     "compute": 401600,
+     "overhead": 22,
+     "mem": 10376,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 409894,
+     "compute": 409872,
+     "overhead": 22,
+     "mem": 10376,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 448784,
+     "compute": 409872,
+     "overhead": 38912,
+     "mem": 10376,
+     "tw": 1
+    },
+    "tw4_paper_map": 2377622,
+    "official": {
+     "stsap": 726272,
+     "cold": 2048,
+     "stall": 1,
+     "lif": 24576,
+     "total": 752897
+    }
+   },
+   {
+    "name": "layer3.8",
+    "M": 256,
+    "K": 2304,
+    "N": 64,
+    "current": 683713,
+    "lenient": {
+     "cycles": 376118,
+     "compute": 376096,
+     "overhead": 22,
+     "mem": 10376,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 386134,
+     "compute": 386112,
+     "overhead": 22,
+     "mem": 10376,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 425024,
+     "compute": 386112,
+     "overhead": 38912,
+     "mem": 10376,
+     "tw": 1
+    },
+    "tw4_paper_map": 1926166,
+    "official": {
+     "stsap": 657088,
+     "cold": 2048,
+     "stall": 1,
+     "lif": 24576,
+     "total": 683713
+    }
+   },
+   {
+    "name": "layer4.0",
+    "M": 512,
+    "K": 9216,
+    "N": 16,
+    "current": 1109377,
+    "lenient": {
+     "cycles": 574038,
+     "compute": 574016,
+     "overhead": 22,
+     "mem": 79052,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 587766,
+     "compute": 587744,
+     "overhead": 22,
+     "mem": 79052,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 607200,
+     "compute": 587744,
+     "overhead": 19456,
+     "mem": 79052,
+     "tw": 1
+    },
+    "tw4_paper_map": 2732182,
+    "official": {
+     "stsap": 1096576,
+     "cold": 512,
+     "stall": 1,
+     "lif": 12288,
+     "total": 1109377
+    }
+   },
+   {
+    "name": "layer4.4",
+    "M": 512,
+    "K": 4608,
+    "N": 16,
+    "current": 596097,
+    "lenient": {
+     "cycles": 317654,
+     "compute": 317632,
+     "overhead": 22,
+     "mem": 39594,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 326998,
+     "compute": 326976,
+     "overhead": 22,
+     "mem": 39594,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 346432,
+     "compute": 326976,
+     "overhead": 19456,
+     "mem": 39594,
+     "tw": 1
+    },
+    "tw4_paper_map": 1626518,
+    "official": {
+     "stsap": 583296,
+     "cold": 512,
+     "stall": 1,
+     "lif": 12288,
+     "total": 596097
+    }
+   },
+   {
+    "name": "layer4.8",
+    "M": 512,
+    "K": 4608,
+    "N": 16,
+    "current": 765953,
+    "lenient": {
+     "cycles": 415158,
+     "compute": 415136,
+     "overhead": 22,
+     "mem": 39594,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 425846,
+     "compute": 425824,
+     "overhead": 22,
+     "mem": 39594,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 445280,
+     "compute": 425824,
+     "overhead": 19456,
+     "mem": 39594,
+     "tw": 1
+    },
+    "tw4_paper_map": 2278806,
+    "official": {
+     "stsap": 753152,
+     "cold": 512,
+     "stall": 1,
+     "lif": 12288,
+     "total": 765953
+    }
+   },
+   {
+    "name": "layer5.0",
+    "M": 512,
+    "K": 18432,
+    "N": 4,
+    "current": 687489,
+    "lenient": {
+     "cycles": 242326,
+     "compute": 242304,
+     "overhead": 22,
+     "mem": 157457,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 251670,
+     "compute": 251648,
+     "overhead": 22,
+     "mem": 157457,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 256512,
+     "compute": 251648,
+     "overhead": 4864,
+     "mem": 157457,
+     "tw": 1
+    },
+    "tw4_paper_map": 1280534,
+    "official": {
+     "stsap": 684288,
+     "cold": 128,
+     "stall": 1,
+     "lif": 3072,
+     "total": 687489
+    }
+   },
+   {
+    "name": "layer5.4",
+    "M": 512,
+    "K": 4608,
+    "N": 4,
+    "current": 204801,
+    "lenient": {
+     "cycles": 72982,
+     "compute": 72960,
+     "overhead": 22,
+     "mem": 39389,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 96406,
+     "compute": 96384,
+     "overhead": 22,
+     "mem": 39389,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 101248,
+     "compute": 96384,
+     "overhead": 4864,
+     "mem": 39389,
+     "tw": 1
+    },
+    "tw4_paper_map": 488982,
+    "official": {
+     "stsap": 201600,
+     "cold": 128,
+     "stall": 1,
+     "lif": 3072,
+     "total": 204801
+    }
+   },
+   {
+    "name": "layer5.8",
+    "M": 512,
+    "K": 4608,
+    "N": 4,
+    "current": 199297,
+    "lenient": {
+     "cycles": 69654,
+     "compute": 69632,
+     "overhead": 22,
+     "mem": 39389,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 93462,
+     "compute": 93440,
+     "overhead": 22,
+     "mem": 39389,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 98304,
+     "compute": 93440,
+     "overhead": 4864,
+     "mem": 39389,
+     "tw": 1
+    },
+    "tw4_paper_map": 468502,
+    "official": {
+     "stsap": 196096,
+     "cold": 128,
+     "stall": 1,
+     "lif": 3072,
+     "total": 199297
+    }
+   },
+   {
+    "name": "classifier.1",
+    "M": 4096,
+    "K": 2048,
+    "N": 1,
+    "current": 947233,
+    "lenient": {
+     "cycles": 139912,
+     "compute": 117760,
+     "overhead": 22,
+     "mem": 139912,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 139912,
+     "compute": 123392,
+     "overhead": 22,
+     "mem": 139912,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 139912,
+     "compute": 123392,
+     "overhead": 9728,
+     "mem": 139912,
+     "tw": 1
+    },
+    "tw4_paper_map": 813078,
+    "official": {
+     "stsap": 941056,
+     "cold": 32,
+     "stall": 1,
+     "lif": 6144,
+     "total": 947233
+    }
+   },
+   {
+    "name": "classifier.4",
+    "M": 4096,
+    "K": 4096,
+    "N": 1,
+    "current": 1186849,
+    "lenient": {
+     "cycles": 279756,
+     "compute": 147712,
+     "overhead": 22,
+     "mem": 279756,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 279756,
+     "compute": 150272,
+     "overhead": 22,
+     "mem": 279756,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 279756,
+     "compute": 150272,
+     "overhead": 9728,
+     "mem": 279756,
+     "tw": 1
+    },
+    "tw4_paper_map": 1109014,
+    "official": {
+     "stsap": 1180672,
+     "cold": 32,
+     "stall": 1,
+     "lif": 6144,
+     "total": 1186849
+    }
+   },
+   {
+    "name": "classifier.7",
+    "M": 10,
+    "K": 4096,
+    "N": 1,
+    "current": 8560,
+    "lenient": {
+     "cycles": 1086,
+     "compute": 1064,
+     "overhead": 22,
+     "mem": 751,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 1086,
+     "compute": 1064,
+     "overhead": 22,
+     "mem": 751,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 1102,
+     "compute": 1064,
+     "overhead": 38,
+     "mem": 751,
+     "tw": 1
+    },
+    "tw4_paper_map": 7198,
+    "official": {
+     "stsap": 8512,
+     "cold": 32,
+     "stall": 1,
+     "lif": 15,
+     "total": 8560
+    }
+   }
+  ],
+  "total": {
+   "lenient": 5660302,
+   "paper": 5812970,
+   "strict": 6313714,
+   "current": 12817822,
+   "tw4_paper_map": 32405570,
+   "off_stsap": 12431776,
+   "off_cold": 57312,
+   "off_stall": 15,
+   "off_lif": 328719
+  }
+ },
+ "sp98": {
+  "layers": [
+   {
+    "name": "layer1.4",
+    "M": 64,
+    "K": 576,
+    "N": 1024,
+    "current": 1215041,
+    "lenient": {
+     "cycles": 527002,
+     "compute": 526980,
+     "overhead": 22,
+     "mem": 2798,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 533886,
+     "compute": 533864,
+     "overhead": 22,
+     "mem": 2798,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 689512,
+     "compute": 533864,
+     "overhead": 155648,
+     "mem": 2798,
+     "tw": 1
+    },
+    "tw4_paper_map": 3542774,
+    "official": {
+     "stsap": 1083968,
+     "cold": 32768,
+     "stall": 1,
+     "lif": 98304,
+     "total": 1215041
+    }
+   },
+   {
+    "name": "layer2.0",
+    "M": 128,
+    "K": 2304,
+    "N": 256,
+    "current": 2090945,
+    "lenient": {
+     "cycles": 1010950,
+     "compute": 1010928,
+     "overhead": 22,
+     "mem": 6553,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 1019902,
+     "compute": 1019880,
+     "overhead": 22,
+     "mem": 6553,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 1097704,
+     "compute": 1019880,
+     "overhead": 77824,
+     "mem": 6553,
+     "tw": 1
+    },
+    "tw4_paper_map": 6945206,
+    "official": {
+     "stsap": 2033600,
+     "cold": 8192,
+     "stall": 1,
+     "lif": 49152,
+     "total": 2090945
+    }
+   },
+   {
+    "name": "layer2.4",
+    "M": 128,
+    "K": 1152,
+    "N": 256,
+    "current": 902305,
+    "lenient": {
+     "cycles": 434606,
+     "compute": 434584,
+     "overhead": 22,
+     "mem": 3549,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 442342,
+     "compute": 442320,
+     "overhead": 22,
+     "mem": 3549,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 520144,
+     "compute": 442320,
+     "overhead": 77824,
+     "mem": 3549,
+     "tw": 1
+    },
+    "tw4_paper_map": 2798902,
+    "official": {
+     "stsap": 844960,
+     "cold": 8192,
+     "stall": 1,
+     "lif": 49152,
+     "total": 902305
+    }
+   },
+   {
+    "name": "layer3.0",
+    "M": 256,
+    "K": 4608,
+    "N": 64,
+    "current": 1454721,
+    "lenient": {
+     "cycles": 779654,
+     "compute": 779632,
+     "overhead": 22,
+     "mem": 20480,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 811766,
+     "compute": 811744,
+     "overhead": 22,
+     "mem": 20480,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 850656,
+     "compute": 811744,
+     "overhead": 38912,
+     "mem": 20480,
+     "tw": 1
+    },
+    "tw4_paper_map": 4162006,
+    "official": {
+     "stsap": 1428096,
+     "cold": 2048,
+     "stall": 1,
+     "lif": 24576,
+     "total": 1454721
+    }
+   },
+   {
+    "name": "layer3.4",
+    "M": 256,
+    "K": 2304,
+    "N": 64,
+    "current": 780993,
+    "lenient": {
+     "cycles": 415126,
+     "compute": 415104,
+     "overhead": 22,
+     "mem": 10376,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 423558,
+     "compute": 423536,
+     "overhead": 22,
+     "mem": 10376,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 462448,
+     "compute": 423536,
+     "overhead": 38912,
+     "mem": 10376,
+     "tw": 1
+    },
+    "tw4_paper_map": 2433302,
+    "official": {
+     "stsap": 754368,
+     "cold": 2048,
+     "stall": 1,
+     "lif": 24576,
+     "total": 780993
+    }
+   },
+   {
+    "name": "layer3.8",
+    "M": 256,
+    "K": 2304,
+    "N": 64,
+    "current": 687425,
+    "lenient": {
+     "cycles": 384886,
+     "compute": 384864,
+     "overhead": 22,
+     "mem": 10376,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 395766,
+     "compute": 395744,
+     "overhead": 22,
+     "mem": 10376,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 434656,
+     "compute": 395744,
+     "overhead": 38912,
+     "mem": 10376,
+     "tw": 1
+    },
+    "tw4_paper_map": 2011286,
+    "official": {
+     "stsap": 660800,
+     "cold": 2048,
+     "stall": 1,
+     "lif": 24576,
+     "total": 687425
+    }
+   },
+   {
+    "name": "layer4.0",
+    "M": 512,
+    "K": 9216,
+    "N": 16,
+    "current": 1133825,
+    "lenient": {
+     "cycles": 597462,
+     "compute": 597440,
+     "overhead": 22,
+     "mem": 79052,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 606966,
+     "compute": 606944,
+     "overhead": 22,
+     "mem": 79052,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 626400,
+     "compute": 606944,
+     "overhead": 19456,
+     "mem": 79052,
+     "tw": 1
+    },
+    "tw4_paper_map": 2945814,
+    "official": {
+     "stsap": 1121024,
+     "cold": 512,
+     "stall": 1,
+     "lif": 12288,
+     "total": 1133825
+    }
+   },
+   {
+    "name": "layer4.4",
+    "M": 512,
+    "K": 4608,
+    "N": 16,
+    "current": 606849,
+    "lenient": {
+     "cycles": 321014,
+     "compute": 320992,
+     "overhead": 22,
+     "mem": 39594,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 333110,
+     "compute": 333088,
+     "overhead": 22,
+     "mem": 39594,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 352544,
+     "compute": 333088,
+     "overhead": 19456,
+     "mem": 39594,
+     "tw": 1
+    },
+    "tw4_paper_map": 1747606,
+    "official": {
+     "stsap": 594048,
+     "cold": 512,
+     "stall": 1,
+     "lif": 12288,
+     "total": 606849
+    }
+   },
+   {
+    "name": "layer4.8",
+    "M": 512,
+    "K": 4608,
+    "N": 16,
+    "current": 745473,
+    "lenient": {
+     "cycles": 401878,
+     "compute": 401856,
+     "overhead": 22,
+     "mem": 39594,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 412022,
+     "compute": 412000,
+     "overhead": 22,
+     "mem": 39594,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 431456,
+     "compute": 412000,
+     "overhead": 19456,
+     "mem": 39594,
+     "tw": 1
+    },
+    "tw4_paper_map": 2247446,
+    "official": {
+     "stsap": 732672,
+     "cold": 512,
+     "stall": 1,
+     "lif": 12288,
+     "total": 745473
+    }
+   },
+   {
+    "name": "layer5.0",
+    "M": 512,
+    "K": 18432,
+    "N": 4,
+    "current": 620929,
+    "lenient": {
+     "cycles": 215702,
+     "compute": 215680,
+     "overhead": 22,
+     "mem": 157457,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 221846,
+     "compute": 221824,
+     "overhead": 22,
+     "mem": 157457,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 226688,
+     "compute": 221824,
+     "overhead": 4864,
+     "mem": 157457,
+     "tw": 1
+    },
+    "tw4_paper_map": 1122326,
+    "official": {
+     "stsap": 617728,
+     "cold": 128,
+     "stall": 1,
+     "lif": 3072,
+     "total": 620929
+    }
+   },
+   {
+    "name": "layer5.4",
+    "M": 512,
+    "K": 4608,
+    "N": 4,
+    "current": 186497,
+    "lenient": {
+     "cycles": 64790,
+     "compute": 64768,
+     "overhead": 22,
+     "mem": 39389,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 87318,
+     "compute": 87296,
+     "overhead": 22,
+     "mem": 39389,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 92160,
+     "compute": 87296,
+     "overhead": 4864,
+     "mem": 39389,
+     "tw": 1
+    },
+    "tw4_paper_map": 450070,
+    "official": {
+     "stsap": 183296,
+     "cold": 128,
+     "stall": 1,
+     "lif": 3072,
+     "total": 186497
+    }
+   },
+   {
+    "name": "layer5.8",
+    "M": 512,
+    "K": 4608,
+    "N": 4,
+    "current": 168833,
+    "lenient": {
+     "cycles": 56086,
+     "compute": 56064,
+     "overhead": 22,
+     "mem": 39389,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 85014,
+     "compute": 84992,
+     "overhead": 22,
+     "mem": 39389,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 89856,
+     "compute": 84992,
+     "overhead": 4864,
+     "mem": 39389,
+     "tw": 1
+    },
+    "tw4_paper_map": 388630,
+    "official": {
+     "stsap": 165632,
+     "cold": 128,
+     "stall": 1,
+     "lif": 3072,
+     "total": 168833
+    }
+   },
+   {
+    "name": "classifier.1",
+    "M": 4096,
+    "K": 2048,
+    "N": 1,
+    "current": 829473,
+    "lenient": {
+     "cycles": 139912,
+     "compute": 102912,
+     "overhead": 22,
+     "mem": 139912,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 139912,
+     "compute": 118016,
+     "overhead": 22,
+     "mem": 139912,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 139912,
+     "compute": 118016,
+     "overhead": 9728,
+     "mem": 139912,
+     "tw": 1
+    },
+    "tw4_paper_map": 701462,
+    "official": {
+     "stsap": 823296,
+     "cold": 32,
+     "stall": 1,
+     "lif": 6144,
+     "total": 829473
+    }
+   },
+   {
+    "name": "classifier.4",
+    "M": 4096,
+    "K": 4096,
+    "N": 1,
+    "current": 588833,
+    "lenient": {
+     "cycles": 279756,
+     "compute": 72960,
+     "overhead": 22,
+     "mem": 279756,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 279756,
+     "compute": 80384,
+     "overhead": 22,
+     "mem": 279756,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 279756,
+     "compute": 80384,
+     "overhead": 9728,
+     "mem": 279756,
+     "tw": 1
+    },
+    "tw4_paper_map": 579606,
+    "official": {
+     "stsap": 582656,
+     "cold": 32,
+     "stall": 1,
+     "lif": 6144,
+     "total": 588833
+    }
+   },
+   {
+    "name": "classifier.7",
+    "M": 10,
+    "K": 4096,
+    "N": 1,
+    "current": 6220,
+    "lenient": {
+     "cycles": 794,
+     "compute": 772,
+     "overhead": 22,
+     "mem": 751,
+     "tw": 1
+    },
+    "paper": {
+     "cycles": 795,
+     "compute": 773,
+     "overhead": 22,
+     "mem": 751,
+     "tw": 1
+    },
+    "strict": {
+     "cycles": 811,
+     "compute": 773,
+     "overhead": 38,
+     "mem": 751,
+     "tw": 1
+    },
+    "tw4_paper_map": 6090,
+    "official": {
+     "stsap": 6172,
+     "cold": 32,
+     "stall": 1,
+     "lif": 15,
+     "total": 6220
+    }
+   }
+  ],
+  "total": {
+   "lenient": 5629618,
+   "paper": 5793959,
+   "strict": 6294703,
+   "current": 12018362,
+   "tw4_paper_map": 32082526,
+   "off_stsap": 11632316,
+   "off_cold": 57312,
+   "off_stall": 15,
+   "off_lif": 328719
+  }
+ }
+}

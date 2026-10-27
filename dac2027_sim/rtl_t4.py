@@ -10,7 +10,10 @@ Layer sets:
   chain  the chained-trace sweep (prune_chain.py, PC_T=4): ResNet18 / ResNet19 / VGG16 x dense / sp90 / sp95
   syn    the synthetic ResNet-19 figure (realtraces/run_real.py RR_SYN=ResNet19,0.0732,0.1351,0.3 RR_T=4), batch 1
 
-  python3 rtl_t4.py chain [net ...] | syn      -> results/rtl_t4_<set>.json (cached per layer)
+  sweep  every point of the synthetic sweep (syn_sweep_t4.py)
+
+  python3 rtl_t4.py chain [net ...] | syn | sweep   -> results/rtl_t4_<set>.json (cached per layer)
+  RT_T=8 python3 rtl_t4.py chain VGG16             -> the T = 8 chained traces -> results/rtl_t8_chain.json
 """
 import json, os, re, subprocess, sys, time, zlib
 from multiprocessing import Pool
@@ -18,10 +21,11 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 TS = os.path.join(os.path.dirname(HERE), "tsweep_synth")
-BUILD = os.path.join(HERE, "hw", "build_t4")
+T = int(os.environ.get("RT_T", 4))                # RT_T=8: the T = 8 chained traces (results/prune_chain)
+BUILD = os.path.join(HERE, "hw", f"build_t{T}")
 EXE = os.path.join(BUILD, "obj", "Vtb_ours_closed")
 R = os.path.join(HERE, "results")
-T = 4
+CHAIN = os.path.join(R, "prune_chain_T4" if T == 4 else "prune_chain" if T == 8 else f"prune_chain_T{T}")
 sys.path.insert(0, HERE)
 
 
@@ -40,11 +44,19 @@ def layers(which, nets):
     """-> [(tag, loader args)]"""
     out = []
     if which == "chain":
-        sd = os.path.join(R, "prune_chain_T4")
+        sd = CHAIN
         for n in nets:
-            for lv in ("dense", "sp90", "sp95"):
+            for lv in ("dense", "sp90", "sp95", "sp98"):
+                if not os.path.exists(os.path.join(sd, f"{n}_{lv}.json")):
+                    continue
                 meta = json.load(open(os.path.join(sd, f"{n}_{lv}.json")))["layers"]
                 out += [(f"{n}|{lv}|{li}", ("chain", n, lv, li)) for li, m in enumerate(meta) if not m["analog"]]
+    elif which == "sweep":                        # every point of syn_sweep_t4.py
+        sd = os.path.join(R, "syn_sweep_t4")
+        for f in sorted(os.listdir(sd)):
+            if f.endswith(".json"):
+                nl = len(json.load(open(os.path.join(sd, f)))["layers"])
+                out += [(f"{f[:-5]}|{li}", ("file", os.path.join(sd, f[:-5] + ".npz"), li)) for li in range(nl)]
     else:
         import workload as wl
         out = [(f"ResNet19syn|{li}", ("syn", li)) for li in range(len(wl.NETWORKS["ResNet19"]()))]
@@ -54,8 +66,11 @@ def layers(which, nets):
 def tensors(a):
     if a[0] == "chain":
         _, n, lv, li = a
-        d = np.load(os.path.join(R, "prune_chain_T4", f"{n}_{lv}.npz"))
+        d = np.load(os.path.join(CHAIN, f"{n}_{lv}.npz"))
         return d[f"W{li}"].astype(np.int16), d[f"S{li}"]
+    if a[0] == "file":
+        d = np.load(a[1])
+        return d[f"W{a[2]}"].astype(np.int16), d[f"S{a[2]}"]
     import workload as wl
     li = a[1]
     wd, ns, q = 0.0732, 0.1351, 0.3
@@ -97,7 +112,7 @@ def main():
     which = sys.argv[1]
     nets = sys.argv[2:] or ["ResNet18", "ResNet19", "VGG16"]
     build()
-    out_path = os.path.join(R, f"rtl_t4_{which}.json")
+    out_path = os.path.join(R, f"rtl_t{T}_{which}.json")
     done = json.load(open(out_path)) if os.path.exists(out_path) else {}
     todo = [it for it in layers(which, nets) if it[0] not in done or not done[it[0]]["ok"]]
     print(f"{len(done)} cached, {len(todo)} to run", flush=True)

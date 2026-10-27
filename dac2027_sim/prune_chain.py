@@ -208,6 +208,17 @@ def spikes(net, lvl):
         r = rec[n]
         xin, src = r["x"], r["src"]
         zero = float((xin == 0).double().mean())
+        # collective sparsity C as torch-pruning-unstructured/common.SparsityCounter: MACs skipped because the weight
+        # or the input is zero (zero padding counts as zero input), on the layer's actual (pooled) input
+        with torch.no_grad():
+            xi, wi = (xin != 0).double(), (m.weight != 0).double()
+            if isinstance(m, nn.Conv2d):
+                nzm = torch.nn.functional.conv2d(xi, wi, None, m.stride, m.padding, m.dilation, m.groups)
+                macs = nzm.numel() * m.in_channels // m.groups * m.kernel_size[0] * m.kernel_size[1]
+            else:
+                nzm = torch.nn.functional.linear(xi, wi)
+                macs = nzm.numel() * m.in_features
+            coll = 1 - float(nzm.sum()) / macs
         if li == 0:
             meta.append(dict(name=n, analog=True))
             continue
@@ -256,7 +267,7 @@ def spikes(net, lvl):
                          ci=int(xin.shape[1]), h=int(xin.shape[-1]) if conv else 1,
                          s=int(m.stride[0]) if conv else 1,
                          W_target=target[n]["W"], W_got=100 * float((W == 0).mean()),
-                         A_target=target[n]["A"], A_got=100 * zero,
+                         A_target=target[n]["A"], A_got=100 * zero, C_target=target[n]["C"], C_got=100 * coll,
                          bit_density=float(wl.popcount8(S).mean() / T), max_rel_err=err))
     os.makedirs(SD, exist_ok=True)
     np.savez_compressed(os.path.join(SD, f"{net}_{lvl}.npz"), **store)
@@ -399,6 +410,15 @@ def sim(nets):
                 for t in keys:
                     PE.add(acc, res[t]["counts"])
                 e.update(energy_J=PE.energy(acc, cyc), dram_MB={d: acc[d]["dram"] / 8e6 for d in DESIGNS})
+            # Prosperity with its paper's per-tile pipeline (prosperity_paper.py), next to the official simulator
+            pp = os.path.join(R, f"prosperity_paper_{n}_T{T}.json")
+            if os.path.exists(pp) and lv in (pj := json.load(open(pp))):
+                pl = pj[lv]
+                pc = sum(max(pl[str(t[2])]["paper_total"], res[t]["counts"]["prosperity"]["dram"] / BW)
+                         if BW and res[t]["counts"] else pl[str(t[2])]["paper_total"] for t in keys)
+                e["cycles_b1_prosperity_paper"] = pc
+                if T == 8:
+                    e["energy_J_prosperity_paper"] = PE.energy(acc, dict(cyc, prosperity=pc))["prosperity"]
             out[n]["levels"].append(e)
     json.dump(out, open(OUT, "w"), indent=1)
     for n in nets:

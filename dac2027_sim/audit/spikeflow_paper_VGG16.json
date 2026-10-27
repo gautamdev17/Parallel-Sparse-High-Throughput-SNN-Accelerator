@@ -1,0 +1,42 @@
+{
+ "dense": {
+  "current": 7512413,
+  "lenient": 7512413,
+  "medium": 7725113,
+  "strict": 7838793,
+  "cache": 7512413,
+  "passes": 7105,
+  "silent": 0,
+  "small": 0
+ },
+ "sp90": {
+  "current": 7468430,
+  "lenient": 7468430,
+  "medium": 7681130,
+  "strict": 7794810,
+  "cache": 7468430,
+  "passes": 7105,
+  "silent": 0,
+  "small": 0
+ },
+ "sp95": {
+  "current": 7480866,
+  "lenient": 7480866,
+  "medium": 7693566,
+  "strict": 7807246,
+  "cache": 7480866,
+  "passes": 7105,
+  "silent": 0,
+  "small": 0
+ },
+ "sp98": {
+  "current": 7240205,
+  "lenient": 7240205,
+  "medium": 7452905,
+  "strict": 7566585,
+  "cache": 7240205,
+  "passes": 7105,
+  "silent": 0,
+  "small": 0
+ }
+}
