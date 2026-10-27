@@ -1,5 +1,5 @@
 """
-prosperity_paper.py -- Prosperity's per-tile pipeline as described in its own paper (prosperity.pdf, HPCA'25, Sec. VI
+prosperity_own_correct_final.py -- Prosperity's per-tile pipeline as described in its own paper (prosperity.pdf, HPCA'25, Sec. VI
 "Pipeline Scheduling"), against the official simulator (third_party/prosperity simulator.run_fc), on the chained traces
 of prune_chain.py.
 
@@ -16,7 +16,7 @@ the two sums. Everything else (DRAM stalls at the 1024-bit interface, LIF) is ke
   variant "paper"     every row >= 1 cycle (Sec. VI-A: "for m rows ... >= m + 4")
   variant "skipzero"  all-zero rows not issued (0 cycles), still m + 4 for the ProSparsity phase
 
-  ~/torch-env/bin/python prosperity_paper.py VGG16 [T]   -> results/prosperity_paper_<net>_T<T>.json
+  ~/torch-env/bin/python prosperity_own_correct_final.py VGG16 [T]   -> results/prosperity_own_correct_final_<net>_T<T>.json
 """
 import json, math, os, sys
 from multiprocessing import Pool
@@ -80,7 +80,7 @@ def main():
         r.update(sim_total=c["prosperity"], paper_total=r["paper"] + max(0, extra),
                  skipzero_total=r["skipzero"] + max(0, extra), ours=c["ours"], ptb=c["ptb"])
         out.setdefault(lvl, {})[str(li)] = r
-    json.dump(out, open(os.path.join(R, f"prosperity_paper_{net}_T{T}.json"), "w"), indent=1)
+    json.dump(out, open(os.path.join(R, f"prosperity_own_correct_final_{net}_T{T}.json"), "w"), indent=1)
     for lvl, L in out.items():
         s = {k: sum(v[k] for v in L.values()) for k in ("sim_total", "paper_total", "skipzero_total", "ours", "ptb")}
         print(f"{net} {lvl}: Prosperity official {s['sim_total']:,} | paper pipeline {s['paper_total']:,} "

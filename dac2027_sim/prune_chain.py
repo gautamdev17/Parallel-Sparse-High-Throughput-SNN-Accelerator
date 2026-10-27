@@ -410,8 +410,8 @@ def sim(nets):
                 for t in keys:
                     PE.add(acc, res[t]["counts"])
                 e.update(energy_J=PE.energy(acc, cyc), dram_MB={d: acc[d]["dram"] / 8e6 for d in DESIGNS})
-            # Prosperity with its paper's per-tile pipeline (prosperity_paper.py), next to the official simulator
-            pp = os.path.join(R, f"prosperity_paper_{n}_T{T}.json")
+            # Prosperity with its paper's per-tile pipeline (prosperity_own_correct_final.py), next to the official simulator
+            pp = os.path.join(R, f"prosperity_own_correct_final_{n}_T{T}.json")
             if os.path.exists(pp) and lv in (pj := json.load(open(pp))):
                 pl = pj[lv]
                 pc = sum(max(pl[str(t[2])]["paper_total"], res[t]["counts"]["prosperity"]["dram"] / BW)

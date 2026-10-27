@@ -10,7 +10,7 @@ import json, os
 import figstyle as FS
 from plot_prune_sweep import ORDER as _ORDER, NAME as _NAME, MARK as _MARK, GREY as _GREY
 
-# Prosperity twice: the official simulator, and its paper's per-tile pipeline (prosperity_paper.py)
+# Prosperity twice: the official simulator, and its paper's per-tile pipeline (prosperity_own_correct_final.py)
 ORDER = _ORDER[:-1] + ["pros_paper", "ours"]
 NAME = dict(_NAME, prosperity="Prosperity (official sim.)", pros_paper="Prosperity (paper pipeline)")
 MARK = dict(_MARK, pros_paper="o")
@@ -66,7 +66,7 @@ def main():
              "0.3 pts on the heavy layers of eval.json). TIDES cycles RTL-exact (rtl_t4.py, RT_T=8). Energy = core + "
              "SRAM + DRAM (45 nm, 500 MHz). Speed-up: higher is better; energy and EDP normalized to PTB: lower is better. "
              "Prosperity is given twice: its official simulator, and the per-tile pipeline of its paper (Sec. VI: "
-             "ProSparsity phase m + 4 cycles, computation >= m + 4 cycles per tile of m rows; prosperity_paper.py), "
+             "ProSparsity phase m + 4 cycles, computation >= m + 4 cycles per tile of m rows; prosperity_own_correct_final.py), "
              "with the same memory traffic and power.",
              ""]
     for title, lv in data:

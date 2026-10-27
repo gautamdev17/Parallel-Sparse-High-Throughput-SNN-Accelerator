@@ -1,0 +1,550 @@
+{
+ "dense": {
+  "1": {
+   "cycles": 299060,
+   "compute": 296377,
+   "detect": 212420,
+   "tile_cost": 297012,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 10485760.0
+  },
+  "2": {
+   "cycles": 289985,
+   "compute": 286166,
+   "detect": 169345,
+   "tile_cost": 287937,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 19660800.0
+  },
+  "3": {
+   "cycles": 106429,
+   "compute": 103646,
+   "detect": 72811,
+   "tile_cost": 104381,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 9961472.0
+  },
+  "4": {
+   "cycles": 142610,
+   "compute": 135874,
+   "detect": 94194,
+   "tile_cost": 140562,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 19529728.0
+  },
+  "5": {
+   "cycles": 82330,
+   "compute": 79358,
+   "detect": 56166,
+   "tile_cost": 80282,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 9830400.0
+  },
+  "6": {
+   "cycles": 66512,
+   "compute": 63576,
+   "detect": 44252,
+   "tile_cost": 64464,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 9830400.0
+  },
+  "7": {
+   "cycles": 101840,
+   "compute": 95472,
+   "detect": 68628,
+   "tile_cost": 99792,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 38338560.0
+  },
+  "8": {
+   "cycles": 57964,
+   "compute": 54996,
+   "detect": 37032,
+   "tile_cost": 55916,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 19005440.0
+  },
+  "9": {
+   "cycles": 93740,
+   "compute": 91636,
+   "detect": 58684,
+   "tile_cost": 91692,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 19005440.0
+  },
+  "10": {
+   "cycles": 74832,
+   "compute": 62072,
+   "detect": 37068,
+   "tile_cost": 63096,
+   "lif": 1024,
+   "stall": 10712,
+   "dram_bits": 75579392.0
+  },
+  "11": {
+   "cycles": 34608,
+   "compute": 33584,
+   "detect": 22960,
+   "tile_cost": 33584,
+   "lif": 1024,
+   "stall": 0,
+   "dram_bits": 18907136.0
+  },
+  "12": {
+   "cycles": 34756,
+   "compute": 33716,
+   "detect": 24168,
+   "tile_cost": 33732,
+   "lif": 1024,
+   "stall": 0,
+   "dram_bits": 18907136.0
+  },
+  "13": {
+   "cycles": 67632,
+   "compute": 33056,
+   "detect": 15584,
+   "tile_cost": 33056,
+   "lif": 2048,
+   "stall": 32528,
+   "dram_bits": 67158016.0
+  },
+  "14": {
+   "cycles": 133184,
+   "compute": 102656,
+   "detect": 45952,
+   "tile_cost": 102656,
+   "lif": 2048,
+   "stall": 28480,
+   "dram_bits": 134283264.0
+  },
+  "15": {
+   "cycles": 4468,
+   "compute": 4452,
+   "detect": 1701,
+   "tile_cost": 4452,
+   "lif": 16,
+   "stall": 0,
+   "dram_bits": 360528.0
+  }
+ },
+ "sp90": {
+  "1": {
+   "cycles": 295128,
+   "compute": 292393,
+   "detect": 210998,
+   "tile_cost": 293080,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 10485760.0
+  },
+  "2": {
+   "cycles": 301621,
+   "compute": 297102,
+   "detect": 167755,
+   "tile_cost": 299573,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 19660800.0
+  },
+  "3": {
+   "cycles": 108564,
+   "compute": 105962,
+   "detect": 74062,
+   "tile_cost": 106516,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 9961472.0
+  },
+  "4": {
+   "cycles": 153470,
+   "compute": 146640,
+   "detect": 100202,
+   "tile_cost": 151422,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 19529728.0
+  },
+  "5": {
+   "cycles": 90064,
+   "compute": 87028,
+   "detect": 60660,
+   "tile_cost": 88016,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 9830400.0
+  },
+  "6": {
+   "cycles": 72472,
+   "compute": 69616,
+   "detect": 47892,
+   "tile_cost": 70424,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 9830400.0
+  },
+  "7": {
+   "cycles": 112460,
+   "compute": 106056,
+   "detect": 72460,
+   "tile_cost": 110412,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 38338560.0
+  },
+  "8": {
+   "cycles": 68724,
+   "compute": 66120,
+   "detect": 43952,
+   "tile_cost": 66676,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 19005440.0
+  },
+  "9": {
+   "cycles": 96284,
+   "compute": 94216,
+   "detect": 60836,
+   "tile_cost": 94236,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 19005440.0
+  },
+  "10": {
+   "cycles": 80820,
+   "compute": 78896,
+   "detect": 44432,
+   "tile_cost": 79796,
+   "lif": 1024,
+   "stall": 0,
+   "dram_bits": 75579392.0
+  },
+  "11": {
+   "cycles": 33012,
+   "compute": 31948,
+   "detect": 23076,
+   "tile_cost": 31988,
+   "lif": 1024,
+   "stall": 0,
+   "dram_bits": 18907136.0
+  },
+  "12": {
+   "cycles": 34636,
+   "compute": 33600,
+   "detect": 24268,
+   "tile_cost": 33612,
+   "lif": 1024,
+   "stall": 0,
+   "dram_bits": 18907136.0
+  },
+  "13": {
+   "cycles": 67632,
+   "compute": 54624,
+   "detect": 23616,
+   "tile_cost": 54624,
+   "lif": 2048,
+   "stall": 10960,
+   "dram_bits": 67158016.0
+  },
+  "14": {
+   "cycles": 133184,
+   "compute": 68288,
+   "detect": 33536,
+   "tile_cost": 68288,
+   "lif": 2048,
+   "stall": 62848,
+   "dram_bits": 134283264.0
+  },
+  "15": {
+   "cycles": 3043,
+   "compute": 3027,
+   "detect": 1337,
+   "tile_cost": 3027,
+   "lif": 16,
+   "stall": 0,
+   "dram_bits": 360528.0
+  }
+ },
+ "sp95": {
+  "1": {
+   "cycles": 291378,
+   "compute": 288088,
+   "detect": 212523,
+   "tile_cost": 289330,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 10485760.0
+  },
+  "2": {
+   "cycles": 295555,
+   "compute": 291467,
+   "detect": 168429,
+   "tile_cost": 293507,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 19660800.0
+  },
+  "3": {
+   "cycles": 109193,
+   "compute": 106541,
+   "detect": 76210,
+   "tile_cost": 107145,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 9961472.0
+  },
+  "4": {
+   "cycles": 153978,
+   "compute": 147462,
+   "detect": 99252,
+   "tile_cost": 151930,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 19529728.0
+  },
+  "5": {
+   "cycles": 90042,
+   "compute": 87202,
+   "detect": 60542,
+   "tile_cost": 87994,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 9830400.0
+  },
+  "6": {
+   "cycles": 74892,
+   "compute": 71888,
+   "detect": 48830,
+   "tile_cost": 72844,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 9830400.0
+  },
+  "7": {
+   "cycles": 115208,
+   "compute": 108780,
+   "detect": 74940,
+   "tile_cost": 113160,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 38338560.0
+  },
+  "8": {
+   "cycles": 70148,
+   "compute": 67404,
+   "detect": 46100,
+   "tile_cost": 68100,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 19005440.0
+  },
+  "9": {
+   "cycles": 98736,
+   "compute": 96436,
+   "detect": 62204,
+   "tile_cost": 96688,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 19005440.0
+  },
+  "10": {
+   "cycles": 74832,
+   "compute": 70908,
+   "detect": 41512,
+   "tile_cost": 71884,
+   "lif": 1024,
+   "stall": 1924,
+   "dram_bits": 75579392.0
+  },
+  "11": {
+   "cycles": 32688,
+   "compute": 31656,
+   "detect": 22172,
+   "tile_cost": 31664,
+   "lif": 1024,
+   "stall": 0,
+   "dram_bits": 18907136.0
+  },
+  "12": {
+   "cycles": 33316,
+   "compute": 32268,
+   "detect": 23688,
+   "tile_cost": 32292,
+   "lif": 1024,
+   "stall": 0,
+   "dram_bits": 18907136.0
+  },
+  "13": {
+   "cycles": 67632,
+   "compute": 50528,
+   "detect": 23456,
+   "tile_cost": 50528,
+   "lif": 2048,
+   "stall": 15056,
+   "dram_bits": 67158016.0
+  },
+  "14": {
+   "cycles": 133184,
+   "compute": 39104,
+   "detect": 19136,
+   "tile_cost": 39104,
+   "lif": 2048,
+   "stall": 92032,
+   "dram_bits": 134283264.0
+  },
+  "15": {
+   "cycles": 2928,
+   "compute": 2912,
+   "detect": 1207,
+   "tile_cost": 2912,
+   "lif": 16,
+   "stall": 0,
+   "dram_bits": 360528.0
+  }
+ },
+ "sp98": {
+  "1": {
+   "cycles": 297022,
+   "compute": 294155,
+   "detect": 209303,
+   "tile_cost": 294974,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 10485760.0
+  },
+  "2": {
+   "cycles": 300204,
+   "compute": 296691,
+   "detect": 168620,
+   "tile_cost": 298156,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 19660800.0
+  },
+  "3": {
+   "cycles": 111803,
+   "compute": 109092,
+   "detect": 76899,
+   "tile_cost": 109755,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 9961472.0
+  },
+  "4": {
+   "cycles": 158202,
+   "compute": 151502,
+   "detect": 101492,
+   "tile_cost": 156154,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 19529728.0
+  },
+  "5": {
+   "cycles": 91916,
+   "compute": 89376,
+   "detect": 62112,
+   "tile_cost": 89868,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 9830400.0
+  },
+  "6": {
+   "cycles": 77868,
+   "compute": 75088,
+   "detect": 51300,
+   "tile_cost": 75820,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 9830400.0
+  },
+  "7": {
+   "cycles": 124348,
+   "compute": 118092,
+   "detect": 77928,
+   "tile_cost": 122300,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 38338560.0
+  },
+  "8": {
+   "cycles": 74436,
+   "compute": 71896,
+   "detect": 49068,
+   "tile_cost": 72388,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 19005440.0
+  },
+  "9": {
+   "cycles": 96412,
+   "compute": 94220,
+   "detect": 62040,
+   "tile_cost": 94364,
+   "lif": 2048,
+   "stall": 0,
+   "dram_bits": 19005440.0
+  },
+  "10": {
+   "cycles": 74832,
+   "compute": 62736,
+   "detect": 37352,
+   "tile_cost": 63904,
+   "lif": 1024,
+   "stall": 9904,
+   "dram_bits": 75579392.0
+  },
+  "11": {
+   "cycles": 30792,
+   "compute": 29728,
+   "detect": 21608,
+   "tile_cost": 29768,
+   "lif": 1024,
+   "stall": 0,
+   "dram_bits": 18907136.0
+  },
+  "12": {
+   "cycles": 30296,
+   "compute": 29204,
+   "detect": 21500,
+   "tile_cost": 29272,
+   "lif": 1024,
+   "stall": 0,
+   "dram_bits": 18907136.0
+  },
+  "13": {
+   "cycles": 67632,
+   "compute": 47104,
+   "detect": 23840,
+   "tile_cost": 47104,
+   "lif": 2048,
+   "stall": 18480,
+   "dram_bits": 67158016.0
+  },
+  "14": {
+   "cycles": 133184,
+   "compute": 18528,
+   "detect": 11168,
+   "tile_cost": 18528,
+   "lif": 2048,
+   "stall": 112608,
+   "dram_bits": 134283264.0
+  },
+  "15": {
+   "cycles": 1957,
+   "compute": 1941,
+   "detect": 919,
+   "tile_cost": 1941,
+   "lif": 16,
+   "stall": 0,
+   "dram_bits": 360528.0
+  }
+ }
+}

@@ -20,7 +20,7 @@ Hardware facts used (sato.txt line numbers):
 
 Variants (the paper leaves these open):
   integration  L (lenient): any (t, n, m) task on any PE, perfect balance: max(ceil(M*sum(nnz)/128), max nnz)
-               S (strict) : literal Fig 2b: each neuron's T time-step rows on T PEs, 128//T neurons per wave
+               S (loop nest): literal Fig 2b: each neuron's T time-step rows on T PEs, 128//T neurons per wave
                             (the 16 output channels of one position p, which share the input rows = PE-group
                             sharing l.507-509), barrier per wave (BAST needs all T results):
                             sum_p ceil(M / (128//T)) * max_t nnz[t, p]
@@ -86,7 +86,14 @@ def sato_paper(W, S, T, theta=None):
     lg = int(math.log2(T)) + 1
     G = max(1, NPE // T)
     int_L = max(-(-M * int(nnz.sum()) // NPE), int(nnz.max()))
-    int_S = int(sum(-(-M // G) * int(nnz[:, p].max()) for p in range(N))) if T <= NPE else None
+    # loop nest (Fig. 2b; l.855-862 "each PE is responsible for ... multiple time steps"): a neuron's T rows on its PEs.
+    # T <= 128: 128 // T neurons per wave, a wave lasts its slowest row; T > 128: one neuron, its rows spread over all
+    # 128 PEs (balanced by the dispatcher) -> max(ceil(sum / 128), max row). Checked against Fig. 8 (128 -> 1024 PEs:
+    # x5.1 here vs x6.4 in the paper).
+    if T <= NPE:
+        int_S = int(sum(-(-M // G) * int(nnz[:, p].max()) for p in range(N)))
+    else:
+        int_S = int(sum(M * max(-(-int(nnz[:, p].sum()) // NPE), int(nnz[:, p].max())) for p in range(N)))
     r = dict(int_L=int_L, int_S=int_S, bast_log=M * N * lg, bast_T=M * N * T)
     if theta is not None:
         k = if_out_spikes(W, S, T, theta)
