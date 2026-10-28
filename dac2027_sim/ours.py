@@ -109,6 +109,8 @@ def pack_weights(Wt, F):
 def tile_masks(St, T):
     """St: (R, n) uint8 spike trains -> python ints, bit (r*T + t) = spike of row r at timestep t."""
     R = St.shape[0]
+    if R * T > 64:                                     # does not fit a uint64: python ints
+        return [sum(int(St[r, p]) << (r * T) for r in range(R)) for p in range(St.shape[1])]
     m = np.zeros(St.shape[1], dtype=np.uint64)
     for r in range(R):
         m |= St[r].astype(np.uint64) << np.uint64(r * T)

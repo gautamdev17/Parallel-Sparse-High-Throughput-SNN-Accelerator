@@ -94,10 +94,11 @@ def image():
 
 
 def packed(nz):
-    """(T, ...) bool -> (...) uint8 trains, bit t = timestep t."""
-    X = np.zeros(nz.shape[1:], np.uint8)
+    """(T, ...) bool -> (...) uint8 / uint16 / uint32 trains (T <= 8 / 16 / 32), bit t = timestep t."""
+    dt = np.uint8 if T <= 8 else np.uint16 if T <= 16 else np.uint32
+    X = np.zeros(nz.shape[1:], dt)
     for t in range(T):
-        X |= nz[t].astype(np.uint8) << t
+        X |= nz[t].astype(dt) << dt(t)
     return X
 
 
@@ -337,8 +338,6 @@ def layer_sim(t):
     k = meta["k"]
     pcyc, rd, wr = PE.prosperity_layer(li, (meta["name"], meta["ci"], M, k, meta["s"], meta["h"]), S, M)
     cyc["prosperity"] = int(pcyc)
-    if T != 8:
-        return t, dict(name=meta["name"], M=M, K=K, N=N, cycles=cyc, counts=None, secs=round(time.time() - t0, 1))
     # memory counts (prune_energy.layer_counts with the trace's own sizes; raw input = the (pre-pool) spike map)
     KB = 1024
     I_raw = meta["raw_n"] * T / 8
@@ -355,6 +354,9 @@ def layer_sim(t):
               "loas": split_tiled(N * fA, M * fB, N * M * T / 8, 256 * KB),
               "ptb": (I_raw, Wd, O / 8)}
     cnt = {dd: dict(dram=8 * sum(v)) for dd, v in dram_B.items()}
+    if T != 8:                    # DRAM traffic only (bounds latency at PC_BW); on-chip buffer counts are T = 8 only
+        cnt["prosperity"] = dict(dram=rd.get("dram", 0.0) + wr.get("dram", 0.0), cycles=int(pcyc))
+        return t, dict(name=meta["name"], M=M, K=K, N=N, cycles=cyc, counts=cnt, secs=round(time.time() - t0, 1))
     fills = {dd: cnt[dd]["dram"] for dd in cnt}
     oc_w, oc_a, _, _, rmw, lifr, gw, rawr, _ = ML.ours_layer(W, S)
     cnt["ours"]["bufs"] = {"staging": (oc_w + rawr, fills["ours"]), "group": (oc_a - rawr, gw),

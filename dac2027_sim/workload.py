@@ -200,6 +200,10 @@ def layer_tensors(layer, batch, wd, ns, q, seed, T=T):
 
 
 def popcount8(x):
+    x = np.asarray(x)
+    if x.dtype in (np.uint16, np.uint32, np.uint64):               # T > 8 trains: count every byte
+        b = np.ascontiguousarray(x).view(np.uint8).reshape(x.shape + (x.dtype.itemsize,))
+        return np.unpackbits(b[..., None], axis=-1).sum((-1, -2))
     return np.unpackbits(np.asarray(x, dtype=np.uint8)[..., None], axis=-1).sum(-1)
 
 

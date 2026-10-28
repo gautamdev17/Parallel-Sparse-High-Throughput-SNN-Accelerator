@@ -43,10 +43,11 @@ def loas_layer_cycles(M, K, N, p, tppes=LOAS_TPPES, chunk=LOAS_CHUNK, overhead=L
 def _tags(S, tws, T=8):
     """(K,N) uint8 trains -> (K,N) tags with T/tws bits (bit w = any spike in window w)."""
     nw = T // tws
-    tag = np.zeros(S.shape, dtype=np.uint8)
+    dt = np.uint8 if nw <= 8 else np.uint16 if nw <= 16 else np.uint32
+    tag = np.zeros(S.shape, dtype=dt)
     for w in range(nw):
         win = ((1 << tws) - 1) << (w * tws)
-        tag |= (((S & win) != 0).astype(np.uint8) << w)
+        tag |= (((S & win) != 0).astype(dt) << dt(w))
     return tag, nw
 
 
@@ -195,6 +196,7 @@ def spikeflow_layer_cycles(S, M, T=8, rows=16, pcd=16):
             nz = np.concatenate([nz, np.zeros((K, pad), dtype=bool)], 1)
         per_pass = nz.reshape(K, -1, g).any(2).sum(0)  # non-silent inputs per pixel group
         cyc = int(per_pass.sum())
-    else:
-        raise NotImplementedError("T > pcd: call spikeflow_long")
+    else:                                             # Partial Silence Cell: one pass per (pixel, time chunk)
+        S64 = S.astype(np.uint64)
+        cyc = sum(int(((S64 & np.uint64(((1 << pcd) - 1) << c)) != 0).sum()) for c in range(0, T, pcd))
     return math.ceil(M / rows) * cyc + rows + pcd - 2
