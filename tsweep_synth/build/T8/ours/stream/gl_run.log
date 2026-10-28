@@ -1,0 +1,6 @@
+VCD_ON cyc=300
+VCD_WINDOW 1000 cycles (300..1300)
+- /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/tb/tb_ours_closed.v:347: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01
+- Verilator: $finish at 3us; walltime 18.864 s; speed 138.147 ns/s
+- Verilator: cpu 18.499 s on 1 threads; allocated 447 MB

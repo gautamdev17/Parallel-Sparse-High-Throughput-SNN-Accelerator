@@ -1,0 +1,28 @@
+VGG16 L3 T=16: M128 K1152 N256, 4 tiles -> /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/build/T16/ours/stream/closed
+ResNet18 L7 T=16: M128 K64 N256, 4 tiles -> /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/build/T16/ours/lif/closed
+stream/rtl_run.log:CLOSED_DONE cycles=37072 rmw=344455 conflicts=0 overflow=0000 fifo_max=47 tiles=4 stalls=0 pred_err=0
+lif/rtl_run.log:CLOSED_DONE cycles=3548 rmw=20814 conflicts=0 overflow=0000 fifo_max=16 tiles=4 stalls=0 pred_err=0
+TIDES T=16 VGG16 L3: 32768 outputs x 16 sums checked, sums wrong 0, LIF spikes wrong 0
+TIDES T=16 ResNet18 L7: 32768 outputs x 16 sums checked, sums wrong 0, LIF spikes wrong 0
+Warning: Replacing memory \mem with list of registers. See rtl_T/ours_core.v:135
+Warning: Replacing memory \brow with list of registers. See rtl_T/ours_core.v:135, rtl_T/ours_core.v:114
+Warning: Replacing memory \bdata with list of registers. See rtl_T/ours_core.v:114
+Warning: Replacing memory \rank with list of registers. See rtl_T/ours_core.v:102
+Warning: Replacing memory \sX with list of registers. See rtl_T/ours_core.v:168
+Warning: Replacing memory \sS with list of registers. See rtl_T/ours_core.v:168
+Warning: Replacing memory \sV with list of registers. See rtl_T/ours_core.v:168
+Warning: Replacing memory \ids[3].dl with list of registers. See rtl_T/ours_core.v:434
+Warning: Replacing memory \ids[2].dl with list of registers. See rtl_T/ours_core.v:434
+Warning: Replacing memory \ids[1].dl with list of registers. See rtl_T/ours_core.v:434
+Warning: Replacing memory \ids[0].dl with list of registers. See rtl_T/ours_core.v:434
+Warning: Replacing memory \feed[3].d.sk with list of registers. See rtl_T/ours_core.v:356
+Warning: Replacing memory \feed[2].d.sk with list of registers. See rtl_T/ours_core.v:356
+Warning: Replacing memory \feed[1].d.sk with list of registers. See rtl_T/ours_core.v:356
+   Chip area for top module '\ours_core': 1867540.514001
+stream/gl_run.log:VCD_WINDOW 1000 cycles (300..1300)
+lif/gl_run.log:VCD_WINDOW 247 cycles (698..945)
+pw_stream.rpt:unannotated 23552
+pw_stream.rpt:Total                4.944713e-01 5.498449e-02 4.360041e-02 5.930561e-01 100.0%
+pw_lif.rpt:unannotated 23552
+pw_lif.rpt:Total                5.600881e-01 5.543182e-02 4.332764e-02 6.588476e-01 100.0%
+TIDES_T16_DONE

@@ -1,0 +1,4 @@
+Total                6.0259e-02 4.7143e-03 2.3627e-03 6.7336e-02 100.0%
+unannotated     0
+spikeflow_T8_DONE
+build/psf/power_t.sh spikeflow $T  48.08s user 1.06s system 95% cpu 51.274 total

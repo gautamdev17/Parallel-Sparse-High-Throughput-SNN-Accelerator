@@ -1,0 +1,2 @@
+SPIKEFLOW_DONE passes=9 cycles=642 stall_cycles=79
+/Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/tb/tb_spikeflow.v:87: $finish called at 887500 (1ps)

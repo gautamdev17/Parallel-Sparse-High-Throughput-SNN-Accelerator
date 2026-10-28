@@ -1,0 +1,4 @@
+WARNING: /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/tb/tb_sato.v:34: $readmemh(stim/sato/in.hex): Not enough words in the file for the requested range [0:19999].
+WARNING: /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/tb/tb_sato.v:35: $readmemh(stim/sato/disp.hex): Not enough words in the file for the requested range [0:19999].
+SATO_DONE cycles=4240
+/Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/tb/tb_sato.v:52: $finish called at 5311250 (1ps)

@@ -1,0 +1,145 @@
+{
+ "sweep": {
+  "ptb": {
+   "4": null,
+   "8": null,
+   "16": null,
+   "32": null
+  },
+  "spikex": {
+   "4": null,
+   "8": null,
+   "16": null,
+   "32": null
+  },
+  "loas_zip": {
+   "4": null,
+   "8": null,
+   "16": null,
+   "32": null
+  },
+  "sato": {
+   "4": null,
+   "8": null,
+   "16": null,
+   "32": null
+  },
+  "spikeflow": {
+   "4": null,
+   "8": null,
+   "16": null,
+   "32": null
+  },
+  "prosperity": {
+   "4": null,
+   "8": null,
+   "16": null,
+   "32": null
+  },
+  "ours": {
+   "4": {
+    "area_mm2": 0.529361014,
+    "power_W": 0.16485892671599997,
+    "stream_W": 0.16500716999999998,
+    "lif_W": 0.16131033,
+    "leak_W": 0.01267930701,
+    "unannotated": [
+     0,
+     0
+    ]
+   },
+   "8": {
+    "area_mm2": 0.950115026,
+    "power_W": 0.296282969132,
+    "stream_W": 0.29560675000000003,
+    "lif_W": 0.31247007,
+    "leak_W": 0.022447074831,
+    "unannotated": [
+     0,
+     0
+    ]
+   },
+   "16": null,
+   "32": null
+  }
+ },
+ "reproduction_T8_original_rtl_and_stimulus": {
+  "ptb": {
+   "area_mm2": 0.952940478,
+   "power_W": 0.38144687499999996,
+   "leak_W": 0.016325,
+   "dyn800_W": 0.584195,
+   "unannotated": 0
+  },
+  "spikex": {
+   "area_mm2": 0.468000134,
+   "power_W": 0.18778148749999998,
+   "leak_W": 0.0079378,
+   "dyn800_W": 0.2877499,
+   "unannotated": 0
+  },
+  "loas_zip": {
+   "area_mm2": 0.37001664,
+   "power_W": 0.05772504,
+   "leak_W": 0.00800944,
+   "dyn800_W": 0.07954496,
+   "unannotated": 0
+  },
+  "sato": {
+   "area_mm2": 0.07550649400000001,
+   "power_W": 0.021630325000000002,
+   "leak_W": 0.0015147,
+   "dyn800_W": 0.032185,
+   "unannotated": 0
+  },
+  "spikeflow": {
+   "area_mm2": 0.122701012,
+   "power_W": 0.0471823875,
+   "leak_W": 0.0023602,
+   "dyn800_W": 0.0717155,
+   "unannotated": 0
+  },
+  "prosperity": null,
+  "ours": {
+   "area_mm2": 0.950115026,
+   "power_W": 0.296282969132,
+   "stream_W": 0.29560675000000003,
+   "lif_W": 0.31247007,
+   "leak_W": 0.022447074831,
+   "unannotated": [
+    0,
+    0
+   ]
+  }
+ },
+ "existing_same_node_table": {
+  "ptb": {
+   "area_mm2": 0.952940478,
+   "power_W": 0.38144687499999996
+  },
+  "spikex": {
+   "area_mm2": 0.468000134,
+   "power_W": 0.18778148749999998
+  },
+  "loas_zip": {
+   "area_mm2": 0.37001664,
+   "power_W": 0.05772504
+  },
+  "sato": {
+   "area_mm2": 0.07550649400000001,
+   "power_W": 0.021630325000000002
+  },
+  "spikeflow": {
+   "area_mm2": 0.122701012,
+   "power_W": 0.0471823875
+  },
+  "prosperity": {
+   "area_mm2": 0.369073936,
+   "power_W": 0.23981529999999995
+  },
+  "ours": {
+   "area_mm2": 0.950115026,
+   "power_W": 0.296282969132
+  }
+ }
+}

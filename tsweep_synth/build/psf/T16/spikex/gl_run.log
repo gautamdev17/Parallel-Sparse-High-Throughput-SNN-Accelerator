@@ -1,0 +1,4 @@
+WARNING: /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/tb/tb_array.v:40: $readmemh(stim/spikex/in.hex): Not enough words in the file for the requested range [0:19999].
+VCD info: dumpfile spikex_gl.vcd opened for output.
+ARRAY_DONE cycles=500
+/Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/tb/tb_array.v:59: $finish called at 653750 (1ps)

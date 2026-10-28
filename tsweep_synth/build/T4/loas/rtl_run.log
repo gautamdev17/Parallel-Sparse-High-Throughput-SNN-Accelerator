@@ -1,0 +1,5415 @@
+WARNING: /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/tb/tb_loas.v:47: $readmemh(stim/loas/chunks.hex): Too many words in the file for the requested range [0:575].
+ACC-FAST: +126 -> 126
+ACC-FAST: +194 -> 320
+ACC-LAGGY: match offset=1 weight=126
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 126
+ACC: TS2 inactive -> corr[2] += 126
+ACC: TS3 inactive -> corr[3] += 126
+ACC-LAGGY: match offset=2 weight=194
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 194
+ACC: TS1 inactive -> corr[1] += 194
+ACC: TS2 inactive -> corr[2] += 194
+[LIF] START at time 49000 threshold=300
+[LIF] t=0 time=51000 next_pot=126 spike=0
+[LIF] t=1 time=52000 next_pot=126 spike=0
+[LIF] t=2 time=53000 next_pot=126 spike=0
+[LIF] t=3 time=54000 next_pot=320 spike=1
+ACC-FAST: +91 -> 91
+ACC-LAGGY: match offset=7 weight=91
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 91
+ACC: TS2 inactive -> corr[2] += 91
+ACC: TS3 inactive -> corr[3] += 91
+[LIF] START at time 102000 threshold=300
+[LIF] t=0 time=103000 next_pot=91 spike=0
+[LIF] t=1 time=104000 next_pot=91 spike=0
+[LIF] t=2 time=106000 next_pot=91 spike=0
+[LIF] t=3 time=107000 next_pot=91 spike=0
+ACC-FAST: +94 -> 94
+ACC-LAGGY: match offset=4 weight=94
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 94
+ACC: TS2 inactive -> corr[2] += 94
+ACC: TS3 inactive -> corr[3] += 94
+[LIF] START at time 142000 threshold=300
+[LIF] t=0 time=143000 next_pot=94 spike=0
+[LIF] t=1 time=144000 next_pot=94 spike=0
+[LIF] t=2 time=146000 next_pot=94 spike=0
+[LIF] t=3 time=147000 next_pot=94 spike=0
+ACC-FAST: +250 -> 250
+ACC-LAGGY: match offset=2 weight=250
+ACC: Loaded fibre-A: 0111
+ACC: TS3 inactive -> corr[3] += 250
+[LIF] START at time 189000 threshold=300
+[LIF] t=0 time=191000 next_pot=250 spike=0
+[LIF] t=1 time=192000 next_pot=500 spike=1
+[LIF] t=2 time=193000 next_pot=250 spike=0
+[LIF] t=3 time=194000 next_pot=250 spike=0
+ACC-FAST: +233 -> 233
+ACC-LAGGY: match offset=7 weight=233
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 233
+ACC: TS2 inactive -> corr[2] += 233
+[LIF] START at time 237000 threshold=300
+[LIF] t=0 time=238000 next_pot=233 spike=0
+[LIF] t=1 time=239000 next_pot=233 spike=0
+[LIF] t=2 time=241000 next_pot=233 spike=0
+[LIF] t=3 time=242000 next_pot=466 spike=1
+ACC-FAST: +250 -> 250
+ACC-LAGGY: match offset=8 weight=250
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 250
+ACC: TS2 inactive -> corr[2] += 250
+ACC: TS3 inactive -> corr[3] += 250
+[LIF] START at time 288000 threshold=300
+[LIF] t=0 time=289000 next_pot=250 spike=0
+[LIF] t=1 time=291000 next_pot=250 spike=0
+[LIF] t=2 time=292000 next_pot=250 spike=0
+[LIF] t=3 time=293000 next_pot=250 spike=0
+ACC-FAST: +215 -> 215
+ACC-LAGGY: match offset=8 weight=215
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 215
+ACC: TS3 inactive -> corr[3] += 215
+[LIF] START at time 339000 threshold=300
+[LIF] t=0 time=341000 next_pot=215 spike=0
+[LIF] t=1 time=342000 next_pot=215 spike=0
+[LIF] t=2 time=343000 next_pot=430 spike=1
+[LIF] t=3 time=344000 next_pot=0 spike=0
+ACC-FAST: +235 -> 235
+ACC-FAST: +92 -> 327
+ACC-LAGGY: match offset=3 weight=235
+ACC: Loaded fibre-A: 1101
+ACC: TS1 inactive -> corr[1] += 235
+ACC-LAGGY: match offset=6 weight=92
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 92
+ACC: TS1 inactive -> corr[1] += 92
+ACC: TS3 inactive -> corr[3] += 92
+[LIF] START at time 393000 threshold=300
+[LIF] t=0 time=394000 next_pot=235 spike=0
+[LIF] t=1 time=396000 next_pot=235 spike=0
+[LIF] t=2 time=397000 next_pot=562 spike=1
+[LIF] t=3 time=398000 next_pot=235 spike=0
+ACC-FAST: +184 -> 184
+ACC-LAGGY: match offset=7 weight=184
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 184
+ACC: TS2 inactive -> corr[2] += 184
+[LIF] START at time 433000 threshold=300
+[LIF] t=0 time=434000 next_pot=184 spike=0
+[LIF] t=1 time=436000 next_pot=184 spike=0
+[LIF] t=2 time=437000 next_pot=184 spike=0
+[LIF] t=3 time=438000 next_pot=368 spike=1
+ACC-FAST: +57 -> 57
+ACC-FAST: +116 -> 173
+ACC-LAGGY: match offset=4 weight=57
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 57
+ACC: TS2 inactive -> corr[2] += 57
+ACC: TS3 inactive -> corr[3] += 57
+ACC-LAGGY: match offset=6 weight=116
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 116
+ACC: TS1 inactive -> corr[1] += 116
+ACC: TS2 inactive -> corr[2] += 116
+[LIF] START at time 496000 threshold=300
+[LIF] t=0 time=497000 next_pot=57 spike=0
+[LIF] t=1 time=498000 next_pot=57 spike=0
+[LIF] t=2 time=499000 next_pot=57 spike=0
+[LIF] t=3 time=501000 next_pot=173 spike=0
+ACC-FAST: +65 -> 65
+ACC-LAGGY: match offset=5 weight=65
+ACC: Loaded fibre-A: 0111
+ACC: TS3 inactive -> corr[3] += 65
+[LIF] START at time 536000 threshold=300
+[LIF] t=0 time=537000 next_pot=65 spike=0
+[LIF] t=1 time=538000 next_pot=130 spike=0
+[LIF] t=2 time=539000 next_pot=195 spike=0
+[LIF] t=3 time=541000 next_pot=195 spike=0
+ACC-FAST: +57 -> 57
+ACC-FAST: +196 -> 253
+ACC-LAGGY: match offset=1 weight=57
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 57
+ACC: TS2 inactive -> corr[2] += 57
+ACC: TS3 inactive -> corr[3] += 57
+ACC-LAGGY: match offset=5 weight=196
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 196
+ACC: TS1 inactive -> corr[1] += 196
+ACC: TS3 inactive -> corr[3] += 196
+[LIF] START at time 591000 threshold=300
+[LIF] t=0 time=592000 next_pot=57 spike=0
+[LIF] t=1 time=593000 next_pot=57 spike=0
+[LIF] t=2 time=594000 next_pot=253 spike=0
+[LIF] t=3 time=596000 next_pot=253 spike=0
+ACC-FAST: +48 -> 48
+ACC-LAGGY: match offset=10 weight=48
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 48
+ACC: TS2 inactive -> corr[2] += 48
+ACC: TS3 inactive -> corr[3] += 48
+[LIF] START at time 631000 threshold=300
+[LIF] t=0 time=632000 next_pot=48 spike=0
+[LIF] t=1 time=633000 next_pot=48 spike=0
+[LIF] t=2 time=634000 next_pot=48 spike=0
+[LIF] t=3 time=636000 next_pot=48 spike=0
+ACC-FAST: +126 -> 126
+ACC-LAGGY: match offset=6 weight=126
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 126
+ACC: TS1 inactive -> corr[1] += 126
+ACC: TS3 inactive -> corr[3] += 126
+[LIF] START at time 674000 threshold=300
+[LIF] t=0 time=676000 next_pot=0 spike=0
+[LIF] t=1 time=677000 next_pot=0 spike=0
+[LIF] t=2 time=678000 next_pot=126 spike=0
+[LIF] t=3 time=679000 next_pot=126 spike=0
+ACC-FAST: +135 -> 135
+ACC-LAGGY: match offset=7 weight=135
+ACC: Loaded fibre-A: 0011
+ACC: TS2 inactive -> corr[2] += 135
+ACC: TS3 inactive -> corr[3] += 135
+[LIF] START at time 718000 threshold=300
+[LIF] t=0 time=719000 next_pot=135 spike=0
+[LIF] t=1 time=721000 next_pot=270 spike=0
+[LIF] t=2 time=722000 next_pot=270 spike=0
+[LIF] t=3 time=723000 next_pot=270 spike=0
+ACC-FAST: +16 -> 16
+ACC-LAGGY: match offset=9 weight=16
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 16
+ACC: TS2 inactive -> corr[2] += 16
+ACC: TS3 inactive -> corr[3] += 16
+[LIF] START at time 758000 threshold=300
+[LIF] t=0 time=759000 next_pot=16 spike=0
+[LIF] t=1 time=761000 next_pot=16 spike=0
+[LIF] t=2 time=762000 next_pot=16 spike=0
+[LIF] t=3 time=763000 next_pot=16 spike=0
+ACC-FAST: +54 -> 54
+ACC-LAGGY: match offset=1 weight=54
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 54
+ACC: TS2 inactive -> corr[2] += 54
+ACC: TS3 inactive -> corr[3] += 54
+[LIF] START at time 803000 threshold=300
+[LIF] t=0 time=804000 next_pot=0 spike=0
+[LIF] t=1 time=806000 next_pot=54 spike=0
+[LIF] t=2 time=807000 next_pot=54 spike=0
+[LIF] t=3 time=808000 next_pot=54 spike=0
+ACC-FAST: +221 -> 221
+ACC-LAGGY: match offset=4 weight=221
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 221
+ACC: TS2 inactive -> corr[2] += 221
+ACC: TS3 inactive -> corr[3] += 221
+[LIF] START at time 843000 threshold=300
+[LIF] t=0 time=844000 next_pot=221 spike=0
+[LIF] t=1 time=846000 next_pot=221 spike=0
+[LIF] t=2 time=847000 next_pot=221 spike=0
+[LIF] t=3 time=848000 next_pot=221 spike=0
+ACC-FAST: +143 -> 143
+ACC-FAST: +29 -> 172
+ACC-LAGGY: match offset=3 weight=143
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 143
+ACC: TS2 inactive -> corr[2] += 143
+ACC: TS3 inactive -> corr[3] += 143
+ACC-LAGGY: match offset=7 weight=29
+ACC: Loaded fibre-A: 0111
+ACC: TS3 inactive -> corr[3] += 29
+[LIF] START at time 897000 threshold=300
+[LIF] t=0 time=898000 next_pot=172 spike=0
+[LIF] t=1 time=899000 next_pot=201 spike=0
+[LIF] t=2 time=901000 next_pot=230 spike=0
+[LIF] t=3 time=902000 next_pot=230 spike=0
+ACC-FAST: +78 -> 78
+ACC-LAGGY: match offset=6 weight=78
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 78
+ACC: TS1 inactive -> corr[1] += 78
+ACC: TS2 inactive -> corr[2] += 78
+[LIF] START at time 948000 threshold=300
+[LIF] t=0 time=949000 next_pot=0 spike=0
+[LIF] t=1 time=951000 next_pot=0 spike=0
+[LIF] t=2 time=952000 next_pot=0 spike=0
+[LIF] t=3 time=953000 next_pot=78 spike=0
+ACC-FAST: +142 -> 142
+ACC-FAST: +52 -> 194
+ACC-LAGGY: match offset=2 weight=142
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 142
+ACC: TS1 inactive -> corr[1] += 142
+ACC: TS3 inactive -> corr[3] += 142
+ACC-LAGGY: match offset=5 weight=52
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 52
+ACC: TS2 inactive -> corr[2] += 52
+[LIF] START at time 1003000 threshold=300
+[LIF] t=0 time=1004000 next_pot=0 spike=0
+[LIF] t=1 time=1006000 next_pot=52 spike=0
+[LIF] t=2 time=1007000 next_pot=194 spike=0
+[LIF] t=3 time=1008000 next_pot=246 spike=0
+ACC-FAST: +47 -> 47
+ACC-FAST: +132 -> 179
+ACC-LAGGY: match offset=3 weight=47
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 47
+ACC: TS2 inactive -> corr[2] += 47
+ACC: TS3 inactive -> corr[3] += 47
+ACC-LAGGY: match offset=4 weight=132
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 132
+ACC: TS3 inactive -> corr[3] += 132
+[LIF] START at time 1057000 threshold=300
+[LIF] t=0 time=1058000 next_pot=132 spike=0
+[LIF] t=1 time=1059000 next_pot=179 spike=0
+[LIF] t=2 time=1061000 next_pot=311 spike=1
+[LIF] t=3 time=1062000 next_pot=0 spike=0
+ACC-FAST: +77 -> 77
+ACC-LAGGY: match offset=4 weight=77
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 77
+ACC: TS2 inactive -> corr[2] += 77
+ACC: TS3 inactive -> corr[3] += 77
+[LIF] START at time 1097000 threshold=300
+[LIF] t=0 time=1098000 next_pot=0 spike=0
+[LIF] t=1 time=1099000 next_pot=77 spike=0
+[LIF] t=2 time=1101000 next_pot=77 spike=0
+[LIF] t=3 time=1102000 next_pot=77 spike=0
+ACC-FAST: +49 -> 49
+ACC-LAGGY: match offset=2 weight=49
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 49
+ACC: TS2 inactive -> corr[2] += 49
+ACC: TS3 inactive -> corr[3] += 49
+[LIF] START at time 1157000 threshold=300
+[LIF] t=0 time=1158000 next_pot=0 spike=0
+[LIF] t=1 time=1159000 next_pot=49 spike=0
+[LIF] t=2 time=1161000 next_pot=49 spike=0
+[LIF] t=3 time=1162000 next_pot=49 spike=0
+ACC-FAST: +97 -> 97
+ACC-LAGGY: match offset=4 weight=97
+ACC: Loaded fibre-A: 1111
+[LIF] START at time 1207000 threshold=300
+[LIF] t=0 time=1208000 next_pot=97 spike=0
+[LIF] t=1 time=1209000 next_pot=194 spike=0
+[LIF] t=2 time=1211000 next_pot=291 spike=0
+[LIF] t=3 time=1212000 next_pot=388 spike=1
+ACC-FAST: +2 -> 2
+ACC-LAGGY: match offset=5 weight=2
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 2
+ACC: TS2 inactive -> corr[2] += 2
+ACC: TS3 inactive -> corr[3] += 2
+[LIF] START at time 1247000 threshold=300
+[LIF] t=0 time=1248000 next_pot=0 spike=0
+[LIF] t=1 time=1249000 next_pot=2 spike=0
+[LIF] t=2 time=1251000 next_pot=2 spike=0
+[LIF] t=3 time=1252000 next_pot=2 spike=0
+ACC-FAST: +254 -> 254
+ACC-FAST: +241 -> 495
+ACC-LAGGY: match offset=2 weight=254
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 254
+ACC: TS2 inactive -> corr[2] += 254
+ACC: TS3 inactive -> corr[3] += 254
+ACC-LAGGY: match offset=3 weight=241
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 241
+ACC: TS2 inactive -> corr[2] += 241
+ACC: TS3 inactive -> corr[3] += 241
+[LIF] START at time 1313000 threshold=300
+[LIF] t=0 time=1314000 next_pot=0 spike=0
+[LIF] t=1 time=1316000 next_pot=495 spike=1
+[LIF] t=2 time=1317000 next_pot=0 spike=0
+[LIF] t=3 time=1318000 next_pot=0 spike=0
+ACC-FAST: +252 -> 252
+ACC-LAGGY: match offset=3 weight=252
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 252
+ACC: TS2 inactive -> corr[2] += 252
+[LIF] START at time 1353000 threshold=300
+[LIF] t=0 time=1354000 next_pot=0 spike=0
+[LIF] t=1 time=1356000 next_pot=252 spike=0
+[LIF] t=2 time=1357000 next_pot=252 spike=0
+[LIF] t=3 time=1358000 next_pot=504 spike=1
+ACC-FAST: +75 -> 75
+ACC-LAGGY: match offset=4 weight=75
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 75
+ACC: TS3 inactive -> corr[3] += 75
+[LIF] START at time 1394000 threshold=300
+[LIF] t=0 time=1396000 next_pot=75 spike=0
+[LIF] t=1 time=1397000 next_pot=75 spike=0
+[LIF] t=2 time=1398000 next_pot=150 spike=0
+[LIF] t=3 time=1399000 next_pot=150 spike=0
+ACC-FAST: +192 -> 192
+ACC-LAGGY: match offset=6 weight=192
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 192
+ACC: TS1 inactive -> corr[1] += 192
+ACC: TS2 inactive -> corr[2] += 192
+[LIF] START at time 1446000 threshold=300
+[LIF] t=0 time=1447000 next_pot=0 spike=0
+[LIF] t=1 time=1448000 next_pot=0 spike=0
+[LIF] t=2 time=1449000 next_pot=0 spike=0
+[LIF] t=3 time=1451000 next_pot=192 spike=0
+ACC-FAST: +155 -> 155
+ACC-LAGGY: match offset=9 weight=155
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 155
+ACC: TS2 inactive -> corr[2] += 155
+ACC: TS3 inactive -> corr[3] += 155
+[LIF] START at time 1486000 threshold=300
+[LIF] t=0 time=1487000 next_pot=155 spike=0
+[LIF] t=1 time=1488000 next_pot=155 spike=0
+[LIF] t=2 time=1489000 next_pot=155 spike=0
+[LIF] t=3 time=1491000 next_pot=155 spike=0
+ACC-FAST: +136 -> 136
+ACC-FAST: +12 -> 148
+ACC-FAST: +110 -> 258
+ACC-LAGGY: match offset=2 weight=136
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 136
+ACC: TS2 inactive -> corr[2] += 136
+ACC: TS3 inactive -> corr[3] += 136
+ACC-LAGGY: match offset=4 weight=12
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 12
+ACC: TS2 inactive -> corr[2] += 12
+ACC: TS3 inactive -> corr[3] += 12
+ACC-LAGGY: match offset=6 weight=110
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 110
+ACC: TS2 inactive -> corr[2] += 110
+[LIF] START at time 1553000 threshold=300
+[LIF] t=0 time=1554000 next_pot=136 spike=0
+[LIF] t=1 time=1556000 next_pot=258 spike=0
+[LIF] t=2 time=1557000 next_pot=258 spike=0
+[LIF] t=3 time=1558000 next_pot=368 spike=1
+ACC-FAST: +211 -> 211
+ACC-FAST: +122 -> 333
+ACC-LAGGY: match offset=6 weight=211
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 211
+ACC: TS2 inactive -> corr[2] += 211
+ACC: TS3 inactive -> corr[3] += 211
+ACC-LAGGY: match offset=7 weight=122
+ACC: Loaded fibre-A: 0111
+ACC: TS3 inactive -> corr[3] += 122
+[LIF] START at time 1607000 threshold=300
+[LIF] t=0 time=1608000 next_pot=333 spike=1
+[LIF] t=1 time=1609000 next_pot=122 spike=0
+[LIF] t=2 time=1611000 next_pot=244 spike=0
+[LIF] t=3 time=1612000 next_pot=244 spike=0
+ACC-FAST: +146 -> 146
+ACC-LAGGY: match offset=1 weight=146
+ACC: Loaded fibre-A: 0011
+ACC: TS2 inactive -> corr[2] += 146
+ACC: TS3 inactive -> corr[3] += 146
+[LIF] START at time 1651000 threshold=300
+[LIF] t=0 time=1652000 next_pot=146 spike=0
+[LIF] t=1 time=1653000 next_pot=292 spike=0
+[LIF] t=2 time=1654000 next_pot=292 spike=0
+[LIF] t=3 time=1656000 next_pot=292 spike=0
+ACC-FAST: +173 -> 173
+ACC-LAGGY: match offset=1 weight=173
+ACC: Loaded fibre-A: 1100
+ACC: TS0 inactive -> corr[0] += 173
+ACC: TS1 inactive -> corr[1] += 173
+[LIF] START at time 1691000 threshold=300
+[LIF] t=0 time=1692000 next_pot=0 spike=0
+[LIF] t=1 time=1693000 next_pot=0 spike=0
+[LIF] t=2 time=1694000 next_pot=173 spike=0
+[LIF] t=3 time=1696000 next_pot=346 spike=1
+ACC-FAST: +79 -> 79
+ACC-LAGGY: match offset=6 weight=79
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 79
+ACC: TS2 inactive -> corr[2] += 79
+ACC: TS3 inactive -> corr[3] += 79
+[LIF] START at time 1731000 threshold=300
+[LIF] t=0 time=1732000 next_pot=0 spike=0
+[LIF] t=1 time=1733000 next_pot=79 spike=0
+[LIF] t=2 time=1734000 next_pot=79 spike=0
+[LIF] t=3 time=1736000 next_pot=79 spike=0
+ACC-FAST: +120 -> 120
+ACC-LAGGY: match offset=4 weight=120
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 120
+ACC: TS3 inactive -> corr[3] += 120
+[LIF] START at time 1771000 threshold=300
+[LIF] t=0 time=1772000 next_pot=120 spike=0
+[LIF] t=1 time=1773000 next_pot=120 spike=0
+[LIF] t=2 time=1774000 next_pot=240 spike=0
+[LIF] t=3 time=1776000 next_pot=240 spike=0
+ACC-FAST: +51 -> 51
+ACC-FAST: +142 -> 193
+ACC-FAST: +168 -> 361
+ACC-FAST: +188 -> 549
+ACC-LAGGY: match offset=2 weight=51
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 51
+ACC: TS2 inactive -> corr[2] += 51
+ACC: TS3 inactive -> corr[3] += 51
+ACC-LAGGY: match offset=4 weight=142
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 142
+ACC: TS1 inactive -> corr[1] += 142
+ACC: TS2 inactive -> corr[2] += 142
+ACC-LAGGY: match offset=7 weight=168
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 168
+ACC: TS2 inactive -> corr[2] += 168
+ACC: TS3 inactive -> corr[3] += 168
+ACC-LAGGY: match offset=9 weight=188
+ACC: Loaded fibre-A: 0111
+ACC: TS3 inactive -> corr[3] += 188
+[LIF] START at time 1852000 threshold=300
+[LIF] t=0 time=1853000 next_pot=188 spike=0
+[LIF] t=1 time=1854000 next_pot=595 spike=1
+[LIF] t=2 time=1856000 next_pot=188 spike=0
+[LIF] t=3 time=1857000 next_pot=330 spike=1
+ACC-FAST: +230 -> 230
+ACC-LAGGY: match offset=2 weight=230
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 230
+ACC: TS1 inactive -> corr[1] += 230
+ACC: TS3 inactive -> corr[3] += 230
+[LIF] START at time 1892000 threshold=300
+[LIF] t=0 time=1893000 next_pot=0 spike=0
+[LIF] t=1 time=1894000 next_pot=0 spike=0
+[LIF] t=2 time=1896000 next_pot=230 spike=0
+[LIF] t=3 time=1897000 next_pot=230 spike=0
+ACC-FAST: +7 -> 7
+ACC-LAGGY: match offset=3 weight=7
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 7
+ACC: TS2 inactive -> corr[2] += 7
+ACC: TS3 inactive -> corr[3] += 7
+[LIF] START at time 1949000 threshold=300
+[LIF] t=0 time=1951000 next_pot=0 spike=0
+[LIF] t=1 time=1952000 next_pot=7 spike=0
+[LIF] t=2 time=1953000 next_pot=7 spike=0
+[LIF] t=3 time=1954000 next_pot=7 spike=0
+ACC-FAST: +75 -> 75
+ACC-FAST: +94 -> 169
+ACC-LAGGY: match offset=2 weight=75
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 75
+ACC: TS3 inactive -> corr[3] += 75
+ACC-LAGGY: match offset=7 weight=94
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 94
+ACC: TS1 inactive -> corr[1] += 94
+ACC: TS2 inactive -> corr[2] += 94
+[LIF] START at time 2007000 threshold=300
+[LIF] t=0 time=2008000 next_pot=75 spike=0
+[LIF] t=1 time=2009000 next_pot=75 spike=0
+[LIF] t=2 time=2011000 next_pot=150 spike=0
+[LIF] t=3 time=2012000 next_pot=244 spike=0
+ACC-FAST: +231 -> 231
+ACC-FAST: +155 -> 386
+ACC-LAGGY: match offset=1 weight=231
+ACC: Loaded fibre-A: 1110
+ACC: TS0 inactive -> corr[0] += 231
+ACC-LAGGY: match offset=10 weight=155
+ACC: Loaded fibre-A: 0111
+ACC: TS3 inactive -> corr[3] += 155
+[LIF] START at time 2062000 threshold=300
+[LIF] t=0 time=2063000 next_pot=155 spike=0
+[LIF] t=1 time=2064000 next_pot=541 spike=1
+[LIF] t=2 time=2066000 next_pot=386 spike=1
+[LIF] t=3 time=2067000 next_pot=231 spike=0
+ACC-FAST: +237 -> 237
+ACC-LAGGY: match offset=1 weight=237
+ACC: Loaded fibre-A: 0111
+ACC: TS3 inactive -> corr[3] += 237
+[LIF] START at time 2102000 threshold=300
+[LIF] t=0 time=2103000 next_pot=237 spike=0
+[LIF] t=1 time=2104000 next_pot=474 spike=1
+[LIF] t=2 time=2106000 next_pot=237 spike=0
+[LIF] t=3 time=2107000 next_pot=237 spike=0
+ACC-FAST: +22 -> 22
+ACC-LAGGY: match offset=3 weight=22
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 22
+ACC: TS1 inactive -> corr[1] += 22
+ACC: TS3 inactive -> corr[3] += 22
+[LIF] START at time 2142000 threshold=300
+[LIF] t=0 time=2143000 next_pot=0 spike=0
+[LIF] t=1 time=2144000 next_pot=0 spike=0
+[LIF] t=2 time=2146000 next_pot=22 spike=0
+[LIF] t=3 time=2147000 next_pot=22 spike=0
+ACC-FAST: +242 -> 242
+ACC-LAGGY: match offset=7 weight=242
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 242
+ACC: TS2 inactive -> corr[2] += 242
+ACC: TS3 inactive -> corr[3] += 242
+[LIF] START at time 2182000 threshold=300
+[LIF] t=0 time=2183000 next_pot=0 spike=0
+[LIF] t=1 time=2184000 next_pot=242 spike=0
+[LIF] t=2 time=2186000 next_pot=242 spike=0
+[LIF] t=3 time=2187000 next_pot=242 spike=0
+ACC-FAST: +214 -> 214
+ACC-FAST: +252 -> 466
+ACC-LAGGY: match offset=2 weight=214
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 214
+ACC: TS2 inactive -> corr[2] += 214
+ACC: TS3 inactive -> corr[3] += 214
+ACC-LAGGY: match offset=4 weight=252
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 252
+ACC: TS2 inactive -> corr[2] += 252
+[LIF] START at time 2236000 threshold=300
+[LIF] t=0 time=2237000 next_pot=0 spike=0
+[LIF] t=1 time=2238000 next_pot=466 spike=1
+[LIF] t=2 time=2239000 next_pot=0 spike=0
+[LIF] t=3 time=2241000 next_pot=252 spike=0
+ACC-FAST: +103 -> 103
+ACC-LAGGY: match offset=6 weight=103
+ACC: Loaded fibre-A: 1100
+ACC: TS0 inactive -> corr[0] += 103
+ACC: TS1 inactive -> corr[1] += 103
+[LIF] START at time 2276000 threshold=300
+[LIF] t=0 time=2277000 next_pot=0 spike=0
+[LIF] t=1 time=2278000 next_pot=0 spike=0
+[LIF] t=2 time=2279000 next_pot=103 spike=0
+[LIF] t=3 time=2281000 next_pot=206 spike=0
+ACC-FAST: +73 -> 73
+ACC-FAST: +41 -> 114
+ACC-LAGGY: match offset=4 weight=73
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 73
+ACC: TS1 inactive -> corr[1] += 73
+ACC: TS2 inactive -> corr[2] += 73
+ACC-LAGGY: match offset=7 weight=41
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 41
+ACC: TS1 inactive -> corr[1] += 41
+ACC: TS2 inactive -> corr[2] += 41
+[LIF] START at time 2344000 threshold=300
+[LIF] t=0 time=2346000 next_pot=0 spike=0
+[LIF] t=1 time=2347000 next_pot=0 spike=0
+[LIF] t=2 time=2348000 next_pot=0 spike=0
+[LIF] t=3 time=2349000 next_pot=114 spike=0
+ACC-FAST: +13 -> 13
+ACC-FAST: +238 -> 251
+ACC-LAGGY: match offset=2 weight=13
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 13
+ACC: TS1 inactive -> corr[1] += 13
+ACC: TS3 inactive -> corr[3] += 13
+ACC-LAGGY: match offset=4 weight=238
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 238
+ACC: TS1 inactive -> corr[1] += 238
+ACC: TS2 inactive -> corr[2] += 238
+[LIF] START at time 2398000 threshold=300
+[LIF] t=0 time=2399000 next_pot=0 spike=0
+[LIF] t=1 time=2401000 next_pot=0 spike=0
+[LIF] t=2 time=2402000 next_pot=13 spike=0
+[LIF] t=3 time=2403000 next_pot=251 spike=0
+ACC-FAST: +49 -> 49
+ACC-LAGGY: match offset=8 weight=49
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 49
+ACC: TS2 inactive -> corr[2] += 49
+ACC: TS3 inactive -> corr[3] += 49
+[LIF] START at time 2438000 threshold=300
+[LIF] t=0 time=2439000 next_pot=0 spike=0
+[LIF] t=1 time=2441000 next_pot=49 spike=0
+[LIF] t=2 time=2442000 next_pot=49 spike=0
+[LIF] t=3 time=2443000 next_pot=49 spike=0
+ACC-FAST: +196 -> 196
+ACC-LAGGY: match offset=4 weight=196
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 196
+ACC: TS2 inactive -> corr[2] += 196
+ACC: TS3 inactive -> corr[3] += 196
+[LIF] START at time 2482000 threshold=300
+[LIF] t=0 time=2483000 next_pot=196 spike=0
+[LIF] t=1 time=2484000 next_pot=196 spike=0
+[LIF] t=2 time=2486000 next_pot=196 spike=0
+[LIF] t=3 time=2487000 next_pot=196 spike=0
+ACC-FAST: +220 -> 220
+ACC-LAGGY: match offset=3 weight=220
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 220
+ACC: TS2 inactive -> corr[2] += 220
+[LIF] START at time 2526000 threshold=300
+[LIF] t=0 time=2527000 next_pot=0 spike=0
+[LIF] t=1 time=2528000 next_pot=220 spike=0
+[LIF] t=2 time=2529000 next_pot=220 spike=0
+[LIF] t=3 time=2531000 next_pot=440 spike=1
+ACC-FAST: +138 -> 138
+ACC-LAGGY: match offset=3 weight=138
+ACC: Loaded fibre-A: 0110
+ACC: TS0 inactive -> corr[0] += 138
+ACC: TS3 inactive -> corr[3] += 138
+[LIF] START at time 2567000 threshold=300
+[LIF] t=0 time=2568000 next_pot=0 spike=0
+[LIF] t=1 time=2569000 next_pot=138 spike=0
+[LIF] t=2 time=2571000 next_pot=276 spike=0
+[LIF] t=3 time=2572000 next_pot=276 spike=0
+ACC-FAST: +117 -> 117
+ACC-LAGGY: match offset=10 weight=117
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 117
+ACC: TS1 inactive -> corr[1] += 117
+ACC: TS3 inactive -> corr[3] += 117
+[LIF] START at time 2607000 threshold=300
+[LIF] t=0 time=2608000 next_pot=0 spike=0
+[LIF] t=1 time=2609000 next_pot=0 spike=0
+[LIF] t=2 time=2611000 next_pot=117 spike=0
+[LIF] t=3 time=2612000 next_pot=117 spike=0
+ACC-FAST: +216 -> 216
+ACC-LAGGY: match offset=1 weight=216
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 216
+ACC: TS3 inactive -> corr[3] += 216
+[LIF] START at time 2652000 threshold=300
+[LIF] t=0 time=2653000 next_pot=216 spike=0
+[LIF] t=1 time=2654000 next_pot=216 spike=0
+[LIF] t=2 time=2656000 next_pot=432 spike=1
+[LIF] t=3 time=2657000 next_pot=0 spike=0
+ACC-FAST: +152 -> 152
+ACC-FAST: +182 -> 334
+ACC-FAST: +142 -> 476
+ACC-LAGGY: match offset=3 weight=152
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 152
+ACC: TS2 inactive -> corr[2] += 152
+ACC-LAGGY: match offset=7 weight=182
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 182
+ACC: TS3 inactive -> corr[3] += 182
+ACC-LAGGY: match offset=11 weight=142
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 142
+ACC: TS1 inactive -> corr[1] += 142
+ACC: TS2 inactive -> corr[2] += 142
+[LIF] START at time 2723000 threshold=300
+[LIF] t=0 time=2724000 next_pot=334 spike=1
+[LIF] t=1 time=2726000 next_pot=0 spike=0
+[LIF] t=2 time=2727000 next_pot=182 spike=0
+[LIF] t=3 time=2728000 next_pot=476 spike=1
+ACC-FAST: +126 -> 126
+ACC-FAST: +45 -> 171
+ACC-LAGGY: match offset=3 weight=126
+ACC: Loaded fibre-A: 1011
+ACC: TS2 inactive -> corr[2] += 126
+ACC-LAGGY: match offset=5 weight=45
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 45
+ACC: TS2 inactive -> corr[2] += 45
+ACC: TS3 inactive -> corr[3] += 45
+[LIF] START at time 2781000 threshold=300
+[LIF] t=0 time=2782000 next_pot=126 spike=0
+[LIF] t=1 time=2783000 next_pot=297 spike=0
+[LIF] t=2 time=2784000 next_pot=297 spike=0
+[LIF] t=3 time=2786000 next_pot=423 spike=1
+ACC-FAST: +225 -> 225
+ACC-LAGGY: match offset=3 weight=225
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 225
+ACC: TS2 inactive -> corr[2] += 225
+ACC: TS3 inactive -> corr[3] += 225
+[LIF] START at time 2832000 threshold=300
+[LIF] t=0 time=2833000 next_pot=225 spike=0
+[LIF] t=1 time=2834000 next_pot=225 spike=0
+[LIF] t=2 time=2836000 next_pot=225 spike=0
+[LIF] t=3 time=2837000 next_pot=225 spike=0
+ACC-FAST: +82 -> 82
+ACC-FAST: +28 -> 110
+ACC-FAST: +178 -> 288
+ACC-LAGGY: match offset=1 weight=82
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 82
+ACC: TS1 inactive -> corr[1] += 82
+ACC: TS2 inactive -> corr[2] += 82
+ACC-LAGGY: match offset=3 weight=28
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 28
+ACC: TS2 inactive -> corr[2] += 28
+ACC-LAGGY: match offset=7 weight=178
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 178
+ACC: TS1 inactive -> corr[1] += 178
+ACC: TS2 inactive -> corr[2] += 178
+[LIF] START at time 2908000 threshold=300
+[LIF] t=0 time=2909000 next_pot=28 spike=0
+[LIF] t=1 time=2911000 next_pot=28 spike=0
+[LIF] t=2 time=2912000 next_pot=28 spike=0
+[LIF] t=3 time=2913000 next_pot=316 spike=1
+ACC-FAST: +153 -> 153
+ACC-FAST: +122 -> 275
+ACC-FAST: +74 -> 349
+ACC-LAGGY: match offset=7 weight=153
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 153
+ACC: TS2 inactive -> corr[2] += 153
+ACC: TS3 inactive -> corr[3] += 153
+ACC-LAGGY: match offset=8 weight=122
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 122
+ACC: TS1 inactive -> corr[1] += 122
+ACC: TS3 inactive -> corr[3] += 122
+ACC-LAGGY: match offset=11 weight=74
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 74
+ACC: TS2 inactive -> corr[2] += 74
+ACC: TS3 inactive -> corr[3] += 74
+[LIF] START at time 2977000 threshold=300
+[LIF] t=0 time=2978000 next_pot=153 spike=0
+[LIF] t=1 time=2979000 next_pot=227 spike=0
+[LIF] t=2 time=2981000 next_pot=349 spike=1
+[LIF] t=3 time=2982000 next_pot=0 spike=0
+ACC-FAST: +209 -> 209
+ACC-LAGGY: match offset=9 weight=209
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 209
+ACC: TS1 inactive -> corr[1] += 209
+ACC: TS2 inactive -> corr[2] += 209
+[LIF] START at time 3017000 threshold=300
+[LIF] t=0 time=3018000 next_pot=0 spike=0
+[LIF] t=1 time=3019000 next_pot=0 spike=0
+[LIF] t=2 time=3021000 next_pot=0 spike=0
+[LIF] t=3 time=3022000 next_pot=209 spike=0
+ACC-FAST: +205 -> 205
+ACC-FAST: +113 -> 318
+ACC-LAGGY: match offset=3 weight=205
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 205
+ACC: TS2 inactive -> corr[2] += 205
+ACC: TS3 inactive -> corr[3] += 205
+ACC-LAGGY: match offset=5 weight=113
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 113
+ACC: TS2 inactive -> corr[2] += 113
+ACC: TS3 inactive -> corr[3] += 113
+[LIF] START at time 3082000 threshold=300
+[LIF] t=0 time=3083000 next_pot=113 spike=0
+[LIF] t=1 time=3084000 next_pot=318 spike=1
+[LIF] t=2 time=3086000 next_pot=0 spike=0
+[LIF] t=3 time=3087000 next_pot=0 spike=0
+ACC-FAST: +205 -> 205
+ACC-FAST: +53 -> 258
+ACC-LAGGY: match offset=2 weight=205
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 205
+ACC: TS2 inactive -> corr[2] += 205
+ACC: TS3 inactive -> corr[3] += 205
+ACC-LAGGY: match offset=6 weight=53
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 53
+ACC: TS2 inactive -> corr[2] += 53
+ACC: TS3 inactive -> corr[3] += 53
+[LIF] START at time 3136000 threshold=300
+[LIF] t=0 time=3137000 next_pot=0 spike=0
+[LIF] t=1 time=3138000 next_pot=258 spike=0
+[LIF] t=2 time=3139000 next_pot=258 spike=0
+[LIF] t=3 time=3141000 next_pot=258 spike=0
+ACC-FAST: +184 -> 184
+ACC-LAGGY: match offset=3 weight=184
+ACC: Loaded fibre-A: 0110
+ACC: TS0 inactive -> corr[0] += 184
+ACC: TS3 inactive -> corr[3] += 184
+[LIF] START at time 3176000 threshold=300
+[LIF] t=0 time=3177000 next_pot=0 spike=0
+[LIF] t=1 time=3178000 next_pot=184 spike=0
+[LIF] t=2 time=3179000 next_pot=368 spike=1
+[LIF] t=3 time=3181000 next_pot=0 spike=0
+ACC-FAST: +146 -> 146
+ACC-LAGGY: match offset=3 weight=146
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 146
+ACC: TS2 inactive -> corr[2] += 146
+ACC: TS3 inactive -> corr[3] += 146
+[LIF] START at time 3217000 threshold=300
+[LIF] t=0 time=3218000 next_pot=146 spike=0
+[LIF] t=1 time=3219000 next_pot=146 spike=0
+[LIF] t=2 time=3221000 next_pot=146 spike=0
+[LIF] t=3 time=3222000 next_pot=146 spike=0
+ACC-FAST: +176 -> 176
+ACC-LAGGY: match offset=4 weight=176
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 176
+ACC: TS1 inactive -> corr[1] += 176
+ACC: TS2 inactive -> corr[2] += 176
+[LIF] START at time 3282000 threshold=300
+[LIF] t=0 time=3283000 next_pot=0 spike=0
+[LIF] t=1 time=3284000 next_pot=0 spike=0
+[LIF] t=2 time=3286000 next_pot=0 spike=0
+[LIF] t=3 time=3287000 next_pot=176 spike=0
+ACC-FAST: +6 -> 6
+ACC-LAGGY: match offset=4 weight=6
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 6
+ACC: TS2 inactive -> corr[2] += 6
+ACC: TS3 inactive -> corr[3] += 6
+[LIF] START at time 3322000 threshold=300
+[LIF] t=0 time=3323000 next_pot=0 spike=0
+[LIF] t=1 time=3324000 next_pot=6 spike=0
+[LIF] t=2 time=3326000 next_pot=6 spike=0
+[LIF] t=3 time=3327000 next_pot=6 spike=0
+ACC-FAST: +19 -> 19
+ACC-LAGGY: match offset=1 weight=19
+ACC: Loaded fibre-A: 0110
+ACC: TS0 inactive -> corr[0] += 19
+ACC: TS3 inactive -> corr[3] += 19
+[LIF] START at time 3367000 threshold=300
+[LIF] t=0 time=3368000 next_pot=0 spike=0
+[LIF] t=1 time=3369000 next_pot=19 spike=0
+[LIF] t=2 time=3371000 next_pot=38 spike=0
+[LIF] t=3 time=3372000 next_pot=38 spike=0
+ACC-FAST: +146 -> 146
+ACC-FAST: +19 -> 165
+ACC-LAGGY: match offset=1 weight=146
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 146
+ACC: TS1 inactive -> corr[1] += 146
+ACC: TS2 inactive -> corr[2] += 146
+ACC-LAGGY: match offset=3 weight=19
+ACC: Loaded fibre-A: 0111
+ACC: TS3 inactive -> corr[3] += 19
+[LIF] START at time 3433000 threshold=300
+[LIF] t=0 time=3434000 next_pot=19 spike=0
+[LIF] t=1 time=3436000 next_pot=38 spike=0
+[LIF] t=2 time=3437000 next_pot=57 spike=0
+[LIF] t=3 time=3438000 next_pot=203 spike=0
+ACC-FAST: +103 -> 103
+ACC-LAGGY: match offset=2 weight=103
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 103
+ACC: TS3 inactive -> corr[3] += 103
+[LIF] START at time 3483000 threshold=300
+[LIF] t=0 time=3484000 next_pot=103 spike=0
+[LIF] t=1 time=3486000 next_pot=103 spike=0
+[LIF] t=2 time=3487000 next_pot=206 spike=0
+[LIF] t=3 time=3488000 next_pot=206 spike=0
+ACC-FAST: +94 -> 94
+ACC-LAGGY: match offset=7 weight=94
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 94
+ACC: TS3 inactive -> corr[3] += 94
+[LIF] START at time 3543000 threshold=300
+[LIF] t=0 time=3544000 next_pot=94 spike=0
+[LIF] t=1 time=3546000 next_pot=94 spike=0
+[LIF] t=2 time=3547000 next_pot=188 spike=0
+[LIF] t=3 time=3548000 next_pot=188 spike=0
+ACC-FAST: +175 -> 175
+ACC-FAST: +6 -> 181
+ACC-LAGGY: match offset=5 weight=175
+ACC: Loaded fibre-A: 1110
+ACC: TS0 inactive -> corr[0] += 175
+ACC-LAGGY: match offset=6 weight=6
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 6
+ACC: TS2 inactive -> corr[2] += 6
+ACC: TS3 inactive -> corr[3] += 6
+[LIF] START at time 3611000 threshold=300
+[LIF] t=0 time=3612000 next_pot=6 spike=0
+[LIF] t=1 time=3613000 next_pot=181 spike=0
+[LIF] t=2 time=3614000 next_pot=356 spike=1
+[LIF] t=3 time=3616000 next_pot=175 spike=0
+ACC-FAST: +5 -> 5
+ACC-FAST: +79 -> 84
+ACC-LAGGY: match offset=8 weight=5
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 5
+ACC: TS2 inactive -> corr[2] += 5
+ACC: TS3 inactive -> corr[3] += 5
+ACC-LAGGY: match offset=12 weight=79
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 79
+ACC: TS1 inactive -> corr[1] += 79
+ACC: TS3 inactive -> corr[3] += 79
+[LIF] START at time 3664000 threshold=300
+[LIF] t=0 time=3666000 next_pot=0 spike=0
+[LIF] t=1 time=3667000 next_pot=5 spike=0
+[LIF] t=2 time=3668000 next_pot=84 spike=0
+[LIF] t=3 time=3669000 next_pot=84 spike=0
+ACC-FAST: +10 -> 10
+ACC-LAGGY: match offset=1 weight=10
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 10
+ACC: TS1 inactive -> corr[1] += 10
+ACC: TS2 inactive -> corr[2] += 10
+[LIF] START at time 3709000 threshold=300
+[LIF] t=0 time=3711000 next_pot=0 spike=0
+[LIF] t=1 time=3712000 next_pot=0 spike=0
+[LIF] t=2 time=3713000 next_pot=0 spike=0
+[LIF] t=3 time=3714000 next_pot=10 spike=0
+ACC-FAST: +83 -> 83
+ACC-FAST: +82 -> 165
+ACC-FAST: +21 -> 186
+ACC-FAST: +58 -> 244
+ACC-LAGGY: match offset=2 weight=83
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 83
+ACC: TS2 inactive -> corr[2] += 83
+ACC-LAGGY: match offset=6 weight=82
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 82
+ACC: TS2 inactive -> corr[2] += 82
+ACC: TS3 inactive -> corr[3] += 82
+ACC-LAGGY: match offset=9 weight=21
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 21
+ACC: TS2 inactive -> corr[2] += 21
+ACC: TS3 inactive -> corr[3] += 21
+ACC-LAGGY: match offset=11 weight=58
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 58
+ACC: TS2 inactive -> corr[2] += 58
+ACC: TS3 inactive -> corr[3] += 58
+[LIF] START at time 3792000 threshold=300
+[LIF] t=0 time=3793000 next_pot=162 spike=0
+[LIF] t=1 time=3794000 next_pot=244 spike=0
+[LIF] t=2 time=3796000 next_pot=244 spike=0
+[LIF] t=3 time=3797000 next_pot=327 spike=1
+ACC-FAST: +198 -> 198
+ACC-LAGGY: match offset=1 weight=198
+ACC: Loaded fibre-A: 0110
+ACC: TS0 inactive -> corr[0] += 198
+ACC: TS3 inactive -> corr[3] += 198
+[LIF] START at time 3833000 threshold=300
+[LIF] t=0 time=3834000 next_pot=0 spike=0
+[LIF] t=1 time=3836000 next_pot=198 spike=0
+[LIF] t=2 time=3837000 next_pot=396 spike=1
+[LIF] t=3 time=3838000 next_pot=0 spike=0
+ACC-FAST: +12 -> 12
+ACC-LAGGY: match offset=3 weight=12
+ACC: Loaded fibre-A: 1101
+ACC: TS1 inactive -> corr[1] += 12
+[LIF] START at time 3873000 threshold=300
+[LIF] t=0 time=3874000 next_pot=12 spike=0
+[LIF] t=1 time=3876000 next_pot=12 spike=0
+[LIF] t=2 time=3877000 next_pot=24 spike=0
+[LIF] t=3 time=3878000 next_pot=36 spike=0
+ACC-FAST: +218 -> 218
+ACC-LAGGY: match offset=8 weight=218
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 218
+ACC: TS2 inactive -> corr[2] += 218
+[LIF] START at time 3913000 threshold=300
+[LIF] t=0 time=3914000 next_pot=218 spike=0
+[LIF] t=1 time=3916000 next_pot=218 spike=0
+[LIF] t=2 time=3917000 next_pot=218 spike=0
+[LIF] t=3 time=3918000 next_pot=436 spike=1
+ACC-FAST: +241 -> 241
+ACC-LAGGY: match offset=12 weight=241
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 241
+ACC: TS2 inactive -> corr[2] += 241
+ACC: TS3 inactive -> corr[3] += 241
+[LIF] START at time 3957000 threshold=300
+[LIF] t=0 time=3958000 next_pot=241 spike=0
+[LIF] t=1 time=3959000 next_pot=241 spike=0
+[LIF] t=2 time=3961000 next_pot=241 spike=0
+[LIF] t=3 time=3962000 next_pot=241 spike=0
+ACC-FAST: +246 -> 246
+ACC-FAST: +217 -> 463
+ACC-LAGGY: match offset=6 weight=246
+ACC: Loaded fibre-A: 0111
+ACC: TS3 inactive -> corr[3] += 246
+ACC-LAGGY: match offset=10 weight=217
+ACC: Loaded fibre-A: 1011
+ACC: TS2 inactive -> corr[2] += 217
+[LIF] START at time 4014000 threshold=300
+[LIF] t=0 time=4016000 next_pot=463 spike=1
+[LIF] t=1 time=4017000 next_pot=463 spike=1
+[LIF] t=2 time=4018000 next_pot=246 spike=0
+[LIF] t=3 time=4019000 next_pot=463 spike=1
+ACC-FAST: +113 -> 113
+ACC-FAST: +233 -> 346
+ACC-LAGGY: match offset=12 weight=113
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 113
+ACC: TS2 inactive -> corr[2] += 113
+ACC-LAGGY: match offset=14 weight=233
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 233
+ACC: TS2 inactive -> corr[2] += 233
+ACC: TS3 inactive -> corr[3] += 233
+[LIF] START at time 4072000 threshold=300
+[LIF] t=0 time=4073000 next_pot=346 spike=1
+[LIF] t=1 time=4074000 next_pot=0 spike=0
+[LIF] t=2 time=4076000 next_pot=0 spike=0
+[LIF] t=3 time=4077000 next_pot=113 spike=0
+ACC-FAST: +201 -> 201
+ACC-FAST: +144 -> 345
+ACC-FAST: +23 -> 368
+ACC-FAST: +19 -> 387
+ACC-LAGGY: match offset=4 weight=201
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 201
+ACC: TS2 inactive -> corr[2] += 201
+ACC-LAGGY: match offset=5 weight=144
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 144
+ACC: TS2 inactive -> corr[2] += 144
+ACC: TS3 inactive -> corr[3] += 144
+ACC-LAGGY: match offset=10 weight=23
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 23
+ACC: TS3 inactive -> corr[3] += 23
+ACC-LAGGY: match offset=11 weight=19
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 19
+ACC: TS1 inactive -> corr[1] += 19
+ACC: TS3 inactive -> corr[3] += 19
+[LIF] START at time 4153000 threshold=300
+[LIF] t=0 time=4154000 next_pot=167 spike=0
+[LIF] t=1 time=4156000 next_pot=368 spike=1
+[LIF] t=2 time=4157000 next_pot=42 spike=0
+[LIF] t=3 time=4158000 next_pot=243 spike=0
+ACC-FAST: +252 -> 252
+ACC-FAST: +84 -> 336
+ACC-FAST: +184 -> 520
+ACC-LAGGY: match offset=2 weight=252
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 252
+ACC: TS2 inactive -> corr[2] += 252
+ACC: TS3 inactive -> corr[3] += 252
+ACC-LAGGY: match offset=7 weight=84
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 84
+ACC: TS1 inactive -> corr[1] += 84
+ACC: TS3 inactive -> corr[3] += 84
+ACC-LAGGY: match offset=14 weight=184
+ACC: Loaded fibre-A: 1100
+ACC: TS0 inactive -> corr[0] += 184
+ACC: TS1 inactive -> corr[1] += 184
+[LIF] START at time 4221000 threshold=300
+[LIF] t=0 time=4222000 next_pot=252 spike=0
+[LIF] t=1 time=4223000 next_pot=252 spike=0
+[LIF] t=2 time=4224000 next_pot=520 spike=1
+[LIF] t=3 time=4226000 next_pot=184 spike=0
+ACC-FAST: +120 -> 120
+ACC-FAST: +23 -> 143
+ACC-FAST: +219 -> 362
+ACC-LAGGY: match offset=4 weight=120
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 120
+ACC: TS1 inactive -> corr[1] += 120
+ACC: TS2 inactive -> corr[2] += 120
+ACC-LAGGY: match offset=5 weight=23
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 23
+ACC: TS1 inactive -> corr[1] += 23
+ACC: TS2 inactive -> corr[2] += 23
+ACC-LAGGY: match offset=12 weight=219
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 219
+ACC: TS1 inactive -> corr[1] += 219
+ACC: TS2 inactive -> corr[2] += 219
+[LIF] START at time 4289000 threshold=300
+[LIF] t=0 time=4291000 next_pot=0 spike=0
+[LIF] t=1 time=4292000 next_pot=0 spike=0
+[LIF] t=2 time=4293000 next_pot=0 spike=0
+[LIF] t=3 time=4294000 next_pot=362 spike=1
+ACC-FAST: +140 -> 140
+ACC-FAST: +156 -> 296
+ACC-FAST: +131 -> 427
+ACC-LAGGY: match offset=7 weight=140
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 140
+ACC: TS2 inactive -> corr[2] += 140
+ACC: TS3 inactive -> corr[3] += 140
+ACC-LAGGY: match offset=12 weight=156
+ACC: Loaded fibre-A: 0110
+ACC: TS0 inactive -> corr[0] += 156
+ACC: TS3 inactive -> corr[3] += 156
+ACC-LAGGY: match offset=14 weight=131
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 131
+ACC: TS2 inactive -> corr[2] += 131
+ACC: TS3 inactive -> corr[3] += 131
+[LIF] START at time 4362000 threshold=300
+[LIF] t=0 time=4363000 next_pot=0 spike=0
+[LIF] t=1 time=4364000 next_pot=427 spike=1
+[LIF] t=2 time=4366000 next_pot=156 spike=0
+[LIF] t=3 time=4367000 next_pot=156 spike=0
+ACC-FAST: +89 -> 89
+ACC-LAGGY: match offset=7 weight=89
+ACC: Loaded fibre-A: 0011
+ACC: TS2 inactive -> corr[2] += 89
+ACC: TS3 inactive -> corr[3] += 89
+[LIF] START at time 4402000 threshold=300
+[LIF] t=0 time=4403000 next_pot=89 spike=0
+[LIF] t=1 time=4404000 next_pot=178 spike=0
+[LIF] t=2 time=4406000 next_pot=178 spike=0
+[LIF] t=3 time=4407000 next_pot=178 spike=0
+ACC-FAST: +175 -> 175
+ACC-LAGGY: match offset=7 weight=175
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 175
+ACC: TS1 inactive -> corr[1] += 175
+ACC: TS3 inactive -> corr[3] += 175
+[LIF] START at time 4443000 threshold=300
+[LIF] t=0 time=4444000 next_pot=0 spike=0
+[LIF] t=1 time=4446000 next_pot=0 spike=0
+[LIF] t=2 time=4447000 next_pot=175 spike=0
+[LIF] t=3 time=4448000 next_pot=175 spike=0
+ACC-FAST: +222 -> 222
+ACC-LAGGY: match offset=5 weight=222
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 222
+ACC: TS2 inactive -> corr[2] += 222
+ACC: TS3 inactive -> corr[3] += 222
+[LIF] START at time 4484000 threshold=300
+[LIF] t=0 time=4486000 next_pot=0 spike=0
+[LIF] t=1 time=4487000 next_pot=222 spike=0
+[LIF] t=2 time=4488000 next_pot=222 spike=0
+[LIF] t=3 time=4489000 next_pot=222 spike=0
+ACC-FAST: +22 -> 22
+ACC-LAGGY: match offset=1 weight=22
+ACC: Loaded fibre-A: 0110
+ACC: TS0 inactive -> corr[0] += 22
+ACC: TS3 inactive -> corr[3] += 22
+[LIF] START at time 4528000 threshold=300
+[LIF] t=0 time=4529000 next_pot=0 spike=0
+[LIF] t=1 time=4531000 next_pot=22 spike=0
+[LIF] t=2 time=4532000 next_pot=44 spike=0
+[LIF] t=3 time=4533000 next_pot=44 spike=0
+ACC-FAST: +46 -> 46
+ACC-FAST: +145 -> 191
+ACC-FAST: +220 -> 411
+ACC-LAGGY: match offset=1 weight=46
+ACC: Loaded fibre-A: 1101
+ACC: TS1 inactive -> corr[1] += 46
+ACC-LAGGY: match offset=10 weight=145
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 145
+ACC: TS2 inactive -> corr[2] += 145
+ACC: TS3 inactive -> corr[3] += 145
+ACC-LAGGY: match offset=12 weight=220
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 220
+ACC: TS2 inactive -> corr[2] += 220
+[LIF] START at time 4596000 threshold=300
+[LIF] t=0 time=4597000 next_pot=191 spike=0
+[LIF] t=1 time=4598000 next_pot=411 spike=1
+[LIF] t=2 time=4599000 next_pot=46 spike=0
+[LIF] t=3 time=4601000 next_pot=312 spike=1
+ACC-FAST: +89 -> 89
+ACC-FAST: +118 -> 207
+ACC-LAGGY: match offset=1 weight=89
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 89
+ACC: TS2 inactive -> corr[2] += 89
+ACC-LAGGY: match offset=11 weight=118
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 118
+ACC: TS2 inactive -> corr[2] += 118
+[LIF] START at time 4649000 threshold=300
+[LIF] t=0 time=4651000 next_pot=118 spike=0
+[LIF] t=1 time=4652000 next_pot=207 spike=0
+[LIF] t=2 time=4653000 next_pot=207 spike=0
+[LIF] t=3 time=4654000 next_pot=414 spike=1
+ACC-FAST: +31 -> 31
+ACC-FAST: +229 -> 260
+ACC-LAGGY: match offset=2 weight=31
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 31
+ACC: TS1 inactive -> corr[1] += 31
+ACC: TS3 inactive -> corr[3] += 31
+ACC-LAGGY: match offset=3 weight=229
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 229
+ACC: TS2 inactive -> corr[2] += 229
+[LIF] START at time 4703000 threshold=300
+[LIF] t=0 time=4704000 next_pot=0 spike=0
+[LIF] t=1 time=4706000 next_pot=229 spike=0
+[LIF] t=2 time=4707000 next_pot=260 spike=0
+[LIF] t=3 time=4708000 next_pot=489 spike=1
+ACC-FAST: +2 -> 2
+ACC-LAGGY: match offset=10 weight=2
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 2
+ACC: TS1 inactive -> corr[1] += 2
+ACC: TS2 inactive -> corr[2] += 2
+[LIF] START at time 4751000 threshold=300
+[LIF] t=0 time=4752000 next_pot=0 spike=0
+[LIF] t=1 time=4753000 next_pot=0 spike=0
+[LIF] t=2 time=4754000 next_pot=0 spike=0
+[LIF] t=3 time=4756000 next_pot=2 spike=0
+ACC-FAST: +27 -> 27
+ACC-FAST: +124 -> 151
+ACC-LAGGY: match offset=7 weight=27
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 27
+ACC: TS1 inactive -> corr[1] += 27
+ACC: TS3 inactive -> corr[3] += 27
+ACC-LAGGY: match offset=14 weight=124
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 124
+ACC: TS2 inactive -> corr[2] += 124
+[LIF] START at time 4808000 threshold=300
+[LIF] t=0 time=4809000 next_pot=0 spike=0
+[LIF] t=1 time=4811000 next_pot=124 spike=0
+[LIF] t=2 time=4812000 next_pot=151 spike=0
+[LIF] t=3 time=4813000 next_pot=275 spike=0
+ACC-FAST: +48 -> 48
+ACC-FAST: +206 -> 254
+ACC-FAST: +192 -> 446
+ACC-LAGGY: match offset=1 weight=48
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 48
+ACC: TS1 inactive -> corr[1] += 48
+ACC: TS2 inactive -> corr[2] += 48
+ACC-LAGGY: match offset=2 weight=206
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 206
+ACC: TS3 inactive -> corr[3] += 206
+ACC-LAGGY: match offset=3 weight=192
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 192
+ACC: TS1 inactive -> corr[1] += 192
+ACC: TS2 inactive -> corr[2] += 192
+[LIF] START at time 4877000 threshold=300
+[LIF] t=0 time=4878000 next_pot=206 spike=0
+[LIF] t=1 time=4879000 next_pot=206 spike=0
+[LIF] t=2 time=4881000 next_pot=412 spike=1
+[LIF] t=3 time=4882000 next_pot=240 spike=0
+ACC-FAST: +24 -> 24
+ACC-LAGGY: match offset=12 weight=24
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 24
+ACC: TS2 inactive -> corr[2] += 24
+[LIF] START at time 4918000 threshold=300
+[LIF] t=0 time=4919000 next_pot=0 spike=0
+[LIF] t=1 time=4921000 next_pot=24 spike=0
+[LIF] t=2 time=4922000 next_pot=24 spike=0
+[LIF] t=3 time=4923000 next_pot=48 spike=0
+ACC-FAST: +164 -> 164
+ACC-FAST: +193 -> 357
+ACC-LAGGY: match offset=2 weight=164
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 164
+ACC: TS1 inactive -> corr[1] += 164
+ACC: TS2 inactive -> corr[2] += 164
+ACC-LAGGY: match offset=10 weight=193
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 193
+ACC: TS2 inactive -> corr[2] += 193
+[LIF] START at time 4972000 threshold=300
+[LIF] t=0 time=4973000 next_pot=193 spike=0
+[LIF] t=1 time=4974000 next_pot=193 spike=0
+[LIF] t=2 time=4976000 next_pot=193 spike=0
+[LIF] t=3 time=4977000 next_pot=550 spike=1
+ACC-FAST: +103 -> 103
+ACC-LAGGY: match offset=5 weight=103
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 103
+ACC: TS2 inactive -> corr[2] += 103
+ACC: TS3 inactive -> corr[3] += 103
+[LIF] START at time 5012000 threshold=300
+[LIF] t=0 time=5013000 next_pot=0 spike=0
+[LIF] t=1 time=5014000 next_pot=103 spike=0
+[LIF] t=2 time=5016000 next_pot=103 spike=0
+[LIF] t=3 time=5017000 next_pot=103 spike=0
+ACC-FAST: +247 -> 247
+ACC-FAST: +114 -> 361
+ACC-FAST: +94 -> 455
+ACC-LAGGY: match offset=7 weight=247
+ACC: Loaded fibre-A: 0011
+ACC: TS2 inactive -> corr[2] += 247
+ACC: TS3 inactive -> corr[3] += 247
+ACC-LAGGY: match offset=8 weight=114
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 114
+ACC: TS2 inactive -> corr[2] += 114
+ACC: TS3 inactive -> corr[3] += 114
+ACC-LAGGY: match offset=14 weight=94
+ACC: Loaded fibre-A: 0110
+ACC: TS0 inactive -> corr[0] += 94
+ACC: TS3 inactive -> corr[3] += 94
+[LIF] START at time 5083000 threshold=300
+[LIF] t=0 time=5084000 next_pot=247 spike=0
+[LIF] t=1 time=5086000 next_pot=702 spike=1
+[LIF] t=2 time=5087000 next_pot=94 spike=0
+[LIF] t=3 time=5088000 next_pot=94 spike=0
+ACC-FAST: +118 -> 118
+ACC-FAST: +77 -> 195
+ACC-FAST: +107 -> 302
+ACC-LAGGY: match offset=5 weight=118
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 118
+ACC: TS3 inactive -> corr[3] += 118
+ACC-LAGGY: match offset=7 weight=77
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 77
+ACC: TS2 inactive -> corr[2] += 77
+ACC: TS3 inactive -> corr[3] += 77
+ACC-LAGGY: match offset=9 weight=107
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 107
+ACC: TS2 inactive -> corr[2] += 107
+[LIF] START at time 5156000 threshold=300
+[LIF] t=0 time=5157000 next_pot=118 spike=0
+[LIF] t=1 time=5158000 next_pot=302 spike=1
+[LIF] t=2 time=5159000 next_pot=118 spike=0
+[LIF] t=3 time=5161000 next_pot=225 spike=0
+ACC-FAST: +176 -> 176
+ACC-FAST: +225 -> 401
+ACC-LAGGY: match offset=1 weight=176
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 176
+ACC: TS1 inactive -> corr[1] += 176
+ACC: TS2 inactive -> corr[2] += 176
+ACC-LAGGY: match offset=5 weight=225
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 225
+ACC: TS1 inactive -> corr[1] += 225
+ACC: TS2 inactive -> corr[2] += 225
+[LIF] START at time 5213000 threshold=300
+[LIF] t=0 time=5214000 next_pot=0 spike=0
+[LIF] t=1 time=5216000 next_pot=0 spike=0
+[LIF] t=2 time=5217000 next_pot=0 spike=0
+[LIF] t=3 time=5218000 next_pot=401 spike=1
+ACC-FAST: +108 -> 108
+ACC-FAST: +80 -> 188
+ACC-LAGGY: match offset=2 weight=108
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 108
+ACC: TS1 inactive -> corr[1] += 108
+ACC: TS3 inactive -> corr[3] += 108
+ACC-LAGGY: match offset=7 weight=80
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 80
+ACC: TS2 inactive -> corr[2] += 80
+[LIF] START at time 5271000 threshold=300
+[LIF] t=0 time=5272000 next_pot=0 spike=0
+[LIF] t=1 time=5273000 next_pot=80 spike=0
+[LIF] t=2 time=5274000 next_pot=188 spike=0
+[LIF] t=3 time=5276000 next_pot=268 spike=0
+ACC-FAST: +218 -> 218
+ACC-LAGGY: match offset=11 weight=218
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 218
+ACC: TS1 inactive -> corr[1] += 218
+ACC: TS2 inactive -> corr[2] += 218
+[LIF] START at time 5311000 threshold=300
+[LIF] t=0 time=5312000 next_pot=0 spike=0
+[LIF] t=1 time=5313000 next_pot=0 spike=0
+[LIF] t=2 time=5314000 next_pot=0 spike=0
+[LIF] t=3 time=5316000 next_pot=218 spike=0
+ACC-FAST: +94 -> 94
+ACC-FAST: +226 -> 320
+ACC-LAGGY: match offset=11 weight=94
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 94
+ACC: TS1 inactive -> corr[1] += 94
+ACC: TS3 inactive -> corr[3] += 94
+ACC-LAGGY: match offset=13 weight=226
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 226
+ACC: TS2 inactive -> corr[2] += 226
+ACC: TS3 inactive -> corr[3] += 226
+[LIF] START at time 5368000 threshold=300
+[LIF] t=0 time=5369000 next_pot=0 spike=0
+[LIF] t=1 time=5371000 next_pot=226 spike=0
+[LIF] t=2 time=5372000 next_pot=320 spike=1
+[LIF] t=3 time=5373000 next_pot=0 spike=0
+ACC-FAST: +138 -> 138
+ACC-LAGGY: match offset=6 weight=138
+ACC: Loaded fibre-A: 0110
+ACC: TS0 inactive -> corr[0] += 138
+ACC: TS3 inactive -> corr[3] += 138
+[LIF] START at time 5408000 threshold=300
+[LIF] t=0 time=5409000 next_pot=0 spike=0
+[LIF] t=1 time=5411000 next_pot=138 spike=0
+[LIF] t=2 time=5412000 next_pot=276 spike=0
+[LIF] t=3 time=5413000 next_pot=276 spike=0
+ACC-FAST: +219 -> 219
+ACC-FAST: +203 -> 422
+ACC-LAGGY: match offset=2 weight=219
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 219
+ACC: TS2 inactive -> corr[2] += 219
+ACC: TS3 inactive -> corr[3] += 219
+ACC-LAGGY: match offset=5 weight=203
+ACC: Loaded fibre-A: 1111
+[LIF] START at time 5462000 threshold=300
+[LIF] t=0 time=5463000 next_pot=203 spike=0
+[LIF] t=1 time=5464000 next_pot=625 spike=1
+[LIF] t=2 time=5466000 next_pot=203 spike=0
+[LIF] t=3 time=5467000 next_pot=406 spike=1
+ACC-FAST: +54 -> 54
+ACC-LAGGY: match offset=12 weight=54
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 54
+ACC: TS2 inactive -> corr[2] += 54
+ACC: TS3 inactive -> corr[3] += 54
+[LIF] START at time 5502000 threshold=300
+[LIF] t=0 time=5503000 next_pot=54 spike=0
+[LIF] t=1 time=5504000 next_pot=54 spike=0
+[LIF] t=2 time=5506000 next_pot=54 spike=0
+[LIF] t=3 time=5507000 next_pot=54 spike=0
+ACC-FAST: +120 -> 120
+ACC-LAGGY: match offset=8 weight=120
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 120
+ACC: TS1 inactive -> corr[1] += 120
+ACC: TS2 inactive -> corr[2] += 120
+[LIF] START at time 5542000 threshold=300
+[LIF] t=0 time=5543000 next_pot=0 spike=0
+[LIF] t=1 time=5544000 next_pot=0 spike=0
+[LIF] t=2 time=5546000 next_pot=0 spike=0
+[LIF] t=3 time=5547000 next_pot=120 spike=0
+ACC-FAST: +168 -> 168
+ACC-FAST: +242 -> 410
+ACC-FAST: +156 -> 566
+ACC-FAST: +185 -> 751
+ACC-LAGGY: match offset=1 weight=168
+ACC-FAST: +106 -> 857
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 168
+ACC: TS2 inactive -> corr[2] += 168
+ACC: TS3 inactive -> corr[3] += 168
+ACC-LAGGY: match offset=5 weight=242
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 242
+ACC: TS2 inactive -> corr[2] += 242
+ACC: TS3 inactive -> corr[3] += 242
+ACC-LAGGY: match offset=7 weight=156
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 156
+ACC: TS2 inactive -> corr[2] += 156
+ACC: TS3 inactive -> corr[3] += 156
+ACC-LAGGY: match offset=11 weight=185
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 185
+ACC: TS2 inactive -> corr[2] += 185
+ACC: TS3 inactive -> corr[3] += 185
+ACC-LAGGY: match offset=13 weight=106
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 106
+ACC: TS1 inactive -> corr[1] += 106
+ACC: TS3 inactive -> corr[3] += 106
+[LIF] START at time 5638000 threshold=300
+[LIF] t=0 time=5639000 next_pot=324 spike=1
+[LIF] t=1 time=5641000 next_pot=427 spike=1
+[LIF] t=2 time=5642000 next_pot=106 spike=0
+[LIF] t=3 time=5643000 next_pot=106 spike=0
+ACC-FAST: +122 -> 122
+ACC-LAGGY: match offset=6 weight=122
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 122
+ACC: TS2 inactive -> corr[2] += 122
+[LIF] START at time 5686000 threshold=300
+[LIF] t=0 time=5687000 next_pot=0 spike=0
+[LIF] t=1 time=5688000 next_pot=122 spike=0
+[LIF] t=2 time=5689000 next_pot=122 spike=0
+[LIF] t=3 time=5691000 next_pot=244 spike=0
+ACC-FAST: +57 -> 57
+ACC-FAST: +167 -> 224
+ACC-FAST: +191 -> 415
+ACC-LAGGY: match offset=4 weight=57
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 57
+ACC: TS1 inactive -> corr[1] += 57
+ACC: TS2 inactive -> corr[2] += 57
+ACC-LAGGY: match offset=5 weight=167
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 167
+ACC: TS3 inactive -> corr[3] += 167
+ACC-LAGGY: match offset=8 weight=191
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 191
+ACC: TS1 inactive -> corr[1] += 191
+ACC: TS2 inactive -> corr[2] += 191
+[LIF] START at time 5753000 threshold=300
+[LIF] t=0 time=5754000 next_pot=167 spike=0
+[LIF] t=1 time=5756000 next_pot=167 spike=0
+[LIF] t=2 time=5757000 next_pot=334 spike=1
+[LIF] t=3 time=5758000 next_pot=248 spike=0
+ACC-FAST: +126 -> 126
+ACC-LAGGY: match offset=1 weight=126
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 126
+ACC: TS2 inactive -> corr[2] += 126
+ACC: TS3 inactive -> corr[3] += 126
+[LIF] START at time 5793000 threshold=300
+[LIF] t=0 time=5794000 next_pot=126 spike=0
+[LIF] t=1 time=5796000 next_pot=126 spike=0
+[LIF] t=2 time=5797000 next_pot=126 spike=0
+[LIF] t=3 time=5798000 next_pot=126 spike=0
+ACC-FAST: +249 -> 249
+ACC-LAGGY: match offset=12 weight=249
+ACC: Loaded fibre-A: 0011
+ACC: TS2 inactive -> corr[2] += 249
+ACC: TS3 inactive -> corr[3] += 249
+[LIF] START at time 5833000 threshold=300
+[LIF] t=0 time=5834000 next_pot=249 spike=0
+[LIF] t=1 time=5836000 next_pot=498 spike=1
+[LIF] t=2 time=5837000 next_pot=0 spike=0
+[LIF] t=3 time=5838000 next_pot=0 spike=0
+ACC-FAST: +208 -> 208
+ACC-FAST: +27 -> 235
+ACC-FAST: +222 -> 457
+ACC-LAGGY: match offset=3 weight=208
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 208
+ACC: TS2 inactive -> corr[2] += 208
+ACC: TS3 inactive -> corr[3] += 208
+ACC-LAGGY: match offset=9 weight=27
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 27
+ACC: TS3 inactive -> corr[3] += 27
+ACC-LAGGY: match offset=13 weight=222
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 222
+ACC: TS2 inactive -> corr[2] += 222
+ACC: TS3 inactive -> corr[3] += 222
+[LIF] START at time 5901000 threshold=300
+[LIF] t=0 time=5902000 next_pot=457 spike=1
+[LIF] t=1 time=5903000 next_pot=0 spike=0
+[LIF] t=2 time=5904000 next_pot=27 spike=0
+[LIF] t=3 time=5906000 next_pot=27 spike=0
+ACC-FAST: +25 -> 25
+ACC-FAST: +215 -> 240
+ACC-LAGGY: match offset=9 weight=25
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 25
+ACC: TS1 inactive -> corr[1] += 25
+ACC: TS3 inactive -> corr[3] += 25
+ACC-LAGGY: match offset=15 weight=215
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 215
+ACC: TS2 inactive -> corr[2] += 215
+ACC: TS3 inactive -> corr[3] += 215
+[LIF] START at time 5958000 threshold=300
+[LIF] t=0 time=5959000 next_pot=215 spike=0
+[LIF] t=1 time=5961000 next_pot=215 spike=0
+[LIF] t=2 time=5962000 next_pot=240 spike=0
+[LIF] t=3 time=5963000 next_pot=240 spike=0
+ACC-FAST: +132 -> 132
+ACC-FAST: +143 -> 275
+ACC-FAST: +255 -> 530
+ACC-FAST: +109 -> 639
+ACC-LAGGY: match offset=4 weight=132
+ACC: Loaded fibre-A: 1011
+ACC: TS2 inactive -> corr[2] += 132
+ACC-LAGGY: match offset=10 weight=143
+ACC: Loaded fibre-A: 0111
+ACC: TS3 inactive -> corr[3] += 143
+ACC-LAGGY: match offset=11 weight=255
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 255
+ACC: TS2 inactive -> corr[2] += 255
+ACC: TS3 inactive -> corr[3] += 255
+ACC-LAGGY: match offset=12 weight=109
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 109
+ACC: TS2 inactive -> corr[2] += 109
+ACC: TS3 inactive -> corr[3] += 109
+[LIF] START at time 6046000 threshold=300
+[LIF] t=0 time=6047000 next_pot=639 spike=1
+[LIF] t=1 time=6048000 next_pot=275 spike=0
+[LIF] t=2 time=6049000 next_pot=418 spike=1
+[LIF] t=3 time=6051000 next_pot=132 spike=0
+ACC-FAST: +68 -> 68
+ACC-LAGGY: match offset=6 weight=68
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 68
+ACC: TS2 inactive -> corr[2] += 68
+[LIF] START at time 6089000 threshold=300
+[LIF] t=0 time=6091000 next_pot=68 spike=0
+[LIF] t=1 time=6092000 next_pot=68 spike=0
+[LIF] t=2 time=6093000 next_pot=68 spike=0
+[LIF] t=3 time=6094000 next_pot=136 spike=0
+ACC-FAST: +211 -> 211
+ACC-FAST: +56 -> 267
+ACC-FAST: +232 -> 499
+ACC-LAGGY: match offset=2 weight=211
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 211
+ACC: TS1 inactive -> corr[1] += 211
+ACC: TS2 inactive -> corr[2] += 211
+ACC-LAGGY: match offset=12 weight=56
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 56
+ACC: TS2 inactive -> corr[2] += 56
+ACC: TS3 inactive -> corr[3] += 56
+ACC-LAGGY: match offset=13 weight=232
+ACC: Loaded fibre-A: 0111
+ACC: TS3 inactive -> corr[3] += 232
+[LIF] START at time 6162000 threshold=300
+[LIF] t=0 time=6163000 next_pot=288 spike=0
+[LIF] t=1 time=6164000 next_pot=520 spike=1
+[LIF] t=2 time=6166000 next_pot=232 spike=0
+[LIF] t=3 time=6167000 next_pot=443 spike=1
+ACC-FAST: +139 -> 139
+ACC-FAST: +55 -> 194
+ACC-LAGGY: match offset=7 weight=139
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 139
+ACC: TS3 inactive -> corr[3] += 139
+ACC-LAGGY: match offset=14 weight=55
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 55
+ACC: TS1 inactive -> corr[1] += 55
+ACC: TS2 inactive -> corr[2] += 55
+[LIF] START at time 6216000 threshold=300
+[LIF] t=0 time=6217000 next_pot=139 spike=0
+[LIF] t=1 time=6218000 next_pot=139 spike=0
+[LIF] t=2 time=6219000 next_pot=278 spike=0
+[LIF] t=3 time=6221000 next_pot=333 spike=1
+ACC-FAST: +56 -> 56
+ACC-FAST: +56 -> 112
+ACC-LAGGY: match offset=1 weight=56
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 56
+ACC: TS2 inactive -> corr[2] += 56
+ACC-LAGGY: match offset=5 weight=56
+ACC: Loaded fibre-A: 0011
+ACC: TS2 inactive -> corr[2] += 56
+ACC: TS3 inactive -> corr[3] += 56
+[LIF] START at time 6277000 threshold=300
+[LIF] t=0 time=6278000 next_pot=56 spike=0
+[LIF] t=1 time=6279000 next_pot=168 spike=0
+[LIF] t=2 time=6281000 next_pot=168 spike=0
+[LIF] t=3 time=6282000 next_pot=224 spike=0
+ACC-FAST: +227 -> 227
+ACC-FAST: +212 -> 439
+ACC-LAGGY: match offset=4 weight=227
+ACC: Loaded fibre-A: 1011
+ACC: TS2 inactive -> corr[2] += 227
+ACC-LAGGY: match offset=7 weight=212
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 212
+ACC: TS2 inactive -> corr[2] += 212
+[LIF] START at time 6331000 threshold=300
+[LIF] t=0 time=6332000 next_pot=227 spike=0
+[LIF] t=1 time=6333000 next_pot=666 spike=1
+[LIF] t=2 time=6334000 next_pot=0 spike=0
+[LIF] t=3 time=6336000 next_pot=439 spike=1
+ACC-FAST: +225 -> 225
+ACC-LAGGY: match offset=2 weight=225
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 225
+ACC: TS2 inactive -> corr[2] += 225
+ACC: TS3 inactive -> corr[3] += 225
+[LIF] START at time 6371000 threshold=300
+[LIF] t=0 time=6372000 next_pot=225 spike=0
+[LIF] t=1 time=6373000 next_pot=225 spike=0
+[LIF] t=2 time=6374000 next_pot=225 spike=0
+[LIF] t=3 time=6376000 next_pot=225 spike=0
+ACC-FAST: +88 -> 88
+ACC-LAGGY: match offset=1 weight=88
+ACC: Loaded fibre-A: 0110
+ACC: TS0 inactive -> corr[0] += 88
+ACC: TS3 inactive -> corr[3] += 88
+[LIF] START at time 6411000 threshold=300
+[LIF] t=0 time=6412000 next_pot=0 spike=0
+[LIF] t=1 time=6413000 next_pot=88 spike=0
+[LIF] t=2 time=6414000 next_pot=176 spike=0
+[LIF] t=3 time=6416000 next_pot=176 spike=0
+ACC-FAST: +196 -> 196
+ACC-LAGGY: match offset=10 weight=196
+ACC: Loaded fibre-A: 1011
+ACC: TS2 inactive -> corr[2] += 196
+[LIF] START at time 6451000 threshold=300
+[LIF] t=0 time=6452000 next_pot=196 spike=0
+[LIF] t=1 time=6453000 next_pot=392 spike=1
+[LIF] t=2 time=6454000 next_pot=0 spike=0
+[LIF] t=3 time=6456000 next_pot=196 spike=0
+ACC-FAST: +173 -> 173
+ACC-FAST: +34 -> 207
+ACC-LAGGY: match offset=8 weight=173
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 173
+ACC: TS2 inactive -> corr[2] += 173
+ACC: TS3 inactive -> corr[3] += 173
+ACC-LAGGY: match offset=9 weight=34
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 34
+ACC: TS2 inactive -> corr[2] += 34
+ACC: TS3 inactive -> corr[3] += 34
+[LIF] START at time 6504000 threshold=300
+[LIF] t=0 time=6506000 next_pot=173 spike=0
+[LIF] t=1 time=6507000 next_pot=207 spike=0
+[LIF] t=2 time=6508000 next_pot=207 spike=0
+[LIF] t=3 time=6509000 next_pot=207 spike=0
+ACC-FAST: +47 -> 47
+ACC-FAST: +251 -> 298
+ACC-LAGGY: match offset=5 weight=47
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 47
+ACC: TS1 inactive -> corr[1] += 47
+ACC: TS3 inactive -> corr[3] += 47
+ACC-LAGGY: match offset=11 weight=251
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 251
+ACC: TS1 inactive -> corr[1] += 251
+ACC: TS2 inactive -> corr[2] += 251
+[LIF] START at time 6558000 threshold=300
+[LIF] t=0 time=6559000 next_pot=0 spike=0
+[LIF] t=1 time=6561000 next_pot=0 spike=0
+[LIF] t=2 time=6562000 next_pot=47 spike=0
+[LIF] t=3 time=6563000 next_pot=298 spike=0
+ACC-FAST: +146 -> 146
+ACC-FAST: +174 -> 320
+ACC-LAGGY: match offset=6 weight=146
+ACC: Loaded fibre-A: 0011
+ACC: TS2 inactive -> corr[2] += 146
+ACC: TS3 inactive -> corr[3] += 146
+ACC-LAGGY: match offset=8 weight=174
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 174
+ACC: TS1 inactive -> corr[1] += 174
+ACC: TS2 inactive -> corr[2] += 174
+[LIF] START at time 6612000 threshold=300
+[LIF] t=0 time=6613000 next_pot=146 spike=0
+[LIF] t=1 time=6614000 next_pot=292 spike=0
+[LIF] t=2 time=6616000 next_pot=292 spike=0
+[LIF] t=3 time=6617000 next_pot=466 spike=1
+ACC-FAST: +111 -> 111
+ACC-LAGGY: match offset=2 weight=111
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 111
+ACC: TS1 inactive -> corr[1] += 111
+ACC: TS3 inactive -> corr[3] += 111
+[LIF] START at time 6661000 threshold=300
+[LIF] t=0 time=6662000 next_pot=0 spike=0
+[LIF] t=1 time=6663000 next_pot=0 spike=0
+[LIF] t=2 time=6664000 next_pot=111 spike=0
+[LIF] t=3 time=6666000 next_pot=111 spike=0
+ACC-FAST: +140 -> 140
+ACC-LAGGY: match offset=1 weight=140
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 140
+ACC: TS3 inactive -> corr[3] += 140
+[LIF] START at time 6701000 threshold=300
+[LIF] t=0 time=6702000 next_pot=140 spike=0
+[LIF] t=1 time=6703000 next_pot=140 spike=0
+[LIF] t=2 time=6704000 next_pot=280 spike=0
+[LIF] t=3 time=6706000 next_pot=280 spike=0
+ACC-FAST: +239 -> 239
+ACC-LAGGY: match offset=1 weight=239
+ACC: Loaded fibre-A: 0110
+ACC: TS0 inactive -> corr[0] += 239
+ACC: TS3 inactive -> corr[3] += 239
+[LIF] START at time 6741000 threshold=300
+[LIF] t=0 time=6742000 next_pot=0 spike=0
+[LIF] t=1 time=6743000 next_pot=239 spike=0
+[LIF] t=2 time=6744000 next_pot=478 spike=1
+[LIF] t=3 time=6746000 next_pot=0 spike=0
+ACC-FAST: +61 -> 61
+ACC-LAGGY: match offset=3 weight=61
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 61
+ACC: TS2 inactive -> corr[2] += 61
+ACC: TS3 inactive -> corr[3] += 61
+[LIF] START at time 6781000 threshold=300
+[LIF] t=0 time=6782000 next_pot=0 spike=0
+[LIF] t=1 time=6783000 next_pot=61 spike=0
+[LIF] t=2 time=6784000 next_pot=61 spike=0
+[LIF] t=3 time=6786000 next_pot=61 spike=0
+ACC-FAST: +152 -> 152
+ACC-FAST: +72 -> 224
+ACC-LAGGY: match offset=3 weight=152
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 152
+ACC: TS2 inactive -> corr[2] += 152
+ACC-LAGGY: match offset=4 weight=72
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 72
+ACC: TS1 inactive -> corr[1] += 72
+ACC: TS3 inactive -> corr[3] += 72
+[LIF] START at time 6838000 threshold=300
+[LIF] t=0 time=6839000 next_pot=152 spike=0
+[LIF] t=1 time=6841000 next_pot=152 spike=0
+[LIF] t=2 time=6842000 next_pot=224 spike=0
+[LIF] t=3 time=6843000 next_pot=376 spike=1
+ACC-FAST: +198 -> 198
+ACC-FAST: +251 -> 449
+ACC-LAGGY: match offset=6 weight=198
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 198
+ACC: TS3 inactive -> corr[3] += 198
+ACC-LAGGY: match offset=9 weight=251
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 251
+ACC: TS1 inactive -> corr[1] += 251
+ACC: TS2 inactive -> corr[2] += 251
+[LIF] START at time 6897000 threshold=300
+[LIF] t=0 time=6898000 next_pot=198 spike=0
+[LIF] t=1 time=6899000 next_pot=198 spike=0
+[LIF] t=2 time=6901000 next_pot=396 spike=1
+[LIF] t=3 time=6902000 next_pot=251 spike=0
+ACC-FAST: +155 -> 155
+ACC-FAST: +236 -> 391
+ACC-LAGGY: match offset=7 weight=155
+ACC: Loaded fibre-A: 1100
+ACC: TS0 inactive -> corr[0] += 155
+ACC: TS1 inactive -> corr[1] += 155
+ACC-LAGGY: match offset=8 weight=236
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 236
+ACC: TS2 inactive -> corr[2] += 236
+ACC: TS3 inactive -> corr[3] += 236
+[LIF] START at time 6954000 threshold=300
+[LIF] t=0 time=6956000 next_pot=236 spike=0
+[LIF] t=1 time=6957000 next_pot=236 spike=0
+[LIF] t=2 time=6958000 next_pot=391 spike=1
+[LIF] t=3 time=6959000 next_pot=155 spike=0
+ACC-FAST: +204 -> 204
+ACC-FAST: +182 -> 386
+ACC-LAGGY: match offset=1 weight=204
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 204
+ACC: TS3 inactive -> corr[3] += 204
+ACC-LAGGY: match offset=12 weight=182
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 182
+ACC: TS1 inactive -> corr[1] += 182
+ACC: TS3 inactive -> corr[3] += 182
+[LIF] START at time 7009000 threshold=300
+[LIF] t=0 time=7011000 next_pot=204 spike=0
+[LIF] t=1 time=7012000 next_pot=204 spike=0
+[LIF] t=2 time=7013000 next_pot=590 spike=1
+[LIF] t=3 time=7014000 next_pot=0 spike=0
+ACC-FAST: +181 -> 181
+ACC-FAST: +23 -> 204
+ACC-LAGGY: match offset=7 weight=181
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 181
+ACC: TS2 inactive -> corr[2] += 181
+ACC: TS3 inactive -> corr[3] += 181
+ACC-LAGGY: match offset=11 weight=23
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 23
+ACC: TS2 inactive -> corr[2] += 23
+ACC: TS3 inactive -> corr[3] += 23
+[LIF] START at time 7063000 threshold=300
+[LIF] t=0 time=7064000 next_pot=0 spike=0
+[LIF] t=1 time=7066000 next_pot=204 spike=0
+[LIF] t=2 time=7067000 next_pot=204 spike=0
+[LIF] t=3 time=7068000 next_pot=204 spike=0
+ACC-FAST: +208 -> 208
+ACC-LAGGY: match offset=1 weight=208
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 208
+ACC: TS1 inactive -> corr[1] += 208
+ACC: TS2 inactive -> corr[2] += 208
+[LIF] START at time 7103000 threshold=300
+[LIF] t=0 time=7104000 next_pot=0 spike=0
+[LIF] t=1 time=7106000 next_pot=0 spike=0
+[LIF] t=2 time=7107000 next_pot=0 spike=0
+[LIF] t=3 time=7108000 next_pot=208 spike=0
+ACC-FAST: +101 -> 101
+ACC-FAST: +150 -> 251
+ACC-FAST: +71 -> 322
+ACC-LAGGY: match offset=6 weight=101
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 101
+ACC: TS1 inactive -> corr[1] += 101
+ACC: TS3 inactive -> corr[3] += 101
+ACC-LAGGY: match offset=7 weight=150
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 150
+ACC: TS2 inactive -> corr[2] += 150
+ACC: TS3 inactive -> corr[3] += 150
+ACC-LAGGY: match offset=11 weight=71
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 71
+ACC: TS1 inactive -> corr[1] += 71
+ACC: TS3 inactive -> corr[3] += 71
+[LIF] START at time 7171000 threshold=300
+[LIF] t=0 time=7172000 next_pot=0 spike=0
+[LIF] t=1 time=7173000 next_pot=150 spike=0
+[LIF] t=2 time=7174000 next_pot=322 spike=1
+[LIF] t=3 time=7176000 next_pot=0 spike=0
+ACC-FAST: +65 -> 65
+ACC-LAGGY: match offset=7 weight=65
+ACC: Loaded fibre-A: 0011
+ACC: TS2 inactive -> corr[2] += 65
+ACC: TS3 inactive -> corr[3] += 65
+[LIF] START at time 7211000 threshold=300
+[LIF] t=0 time=7212000 next_pot=65 spike=0
+[LIF] t=1 time=7213000 next_pot=130 spike=0
+[LIF] t=2 time=7214000 next_pot=130 spike=0
+[LIF] t=3 time=7216000 next_pot=130 spike=0
+ACC-FAST: +122 -> 122
+ACC-LAGGY: match offset=6 weight=122
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 122
+ACC: TS2 inactive -> corr[2] += 122
+[LIF] START at time 7251000 threshold=300
+[LIF] t=0 time=7252000 next_pot=122 spike=0
+[LIF] t=1 time=7253000 next_pot=122 spike=0
+[LIF] t=2 time=7254000 next_pot=122 spike=0
+[LIF] t=3 time=7256000 next_pot=244 spike=0
+ACC-FAST: +36 -> 36
+ACC-FAST: +105 -> 141
+ACC-LAGGY: match offset=3 weight=36
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 36
+ACC: TS1 inactive -> corr[1] += 36
+ACC: TS3 inactive -> corr[3] += 36
+ACC-LAGGY: match offset=10 weight=105
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 105
+ACC: TS2 inactive -> corr[2] += 105
+ACC: TS3 inactive -> corr[3] += 105
+[LIF] START at time 7304000 threshold=300
+[LIF] t=0 time=7306000 next_pot=0 spike=0
+[LIF] t=1 time=7307000 next_pot=105 spike=0
+[LIF] t=2 time=7308000 next_pot=141 spike=0
+[LIF] t=3 time=7309000 next_pot=141 spike=0
+ACC-FAST: +186 -> 186
+ACC-FAST: +49 -> 235
+ACC-LAGGY: match offset=7 weight=186
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 186
+ACC: TS2 inactive -> corr[2] += 186
+ACC-LAGGY: match offset=9 weight=49
+ACC: Loaded fibre-A: 1011
+ACC: TS2 inactive -> corr[2] += 49
+[LIF] START at time 7358000 threshold=300
+[LIF] t=0 time=7359000 next_pot=49 spike=0
+[LIF] t=1 time=7361000 next_pot=284 spike=0
+[LIF] t=2 time=7362000 next_pot=284 spike=0
+[LIF] t=3 time=7363000 next_pot=519 spike=1
+ACC-FAST: +218 -> 218
+ACC-LAGGY: match offset=1 weight=218
+ACC: Loaded fibre-A: 0110
+ACC: TS0 inactive -> corr[0] += 218
+ACC: TS3 inactive -> corr[3] += 218
+[LIF] START at time 7398000 threshold=300
+[LIF] t=0 time=7399000 next_pot=0 spike=0
+[LIF] t=1 time=7401000 next_pot=218 spike=0
+[LIF] t=2 time=7402000 next_pot=436 spike=1
+[LIF] t=3 time=7403000 next_pot=0 spike=0
+ACC-FAST: +166 -> 166
+ACC-FAST: +149 -> 315
+ACC-LAGGY: match offset=2 weight=166
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 166
+ACC: TS2 inactive -> corr[2] += 166
+ACC: TS3 inactive -> corr[3] += 166
+ACC-LAGGY: match offset=10 weight=149
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 149
+ACC: TS2 inactive -> corr[2] += 149
+ACC: TS3 inactive -> corr[3] += 149
+[LIF] START at time 7457000 threshold=300
+[LIF] t=0 time=7458000 next_pot=166 spike=0
+[LIF] t=1 time=7459000 next_pot=315 spike=1
+[LIF] t=2 time=7461000 next_pot=0 spike=0
+[LIF] t=3 time=7462000 next_pot=0 spike=0
+ACC-FAST: +174 -> 174
+ACC-LAGGY: match offset=13 weight=174
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 174
+ACC: TS1 inactive -> corr[1] += 174
+ACC: TS2 inactive -> corr[2] += 174
+[LIF] START at time 7497000 threshold=300
+[LIF] t=0 time=7498000 next_pot=0 spike=0
+[LIF] t=1 time=7499000 next_pot=0 spike=0
+[LIF] t=2 time=7501000 next_pot=0 spike=0
+[LIF] t=3 time=7502000 next_pot=174 spike=0
+ACC-FAST: +145 -> 145
+ACC-FAST: +188 -> 333
+ACC-FAST: +92 -> 425
+ACC-LAGGY: match offset=2 weight=145
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 145
+ACC: TS3 inactive -> corr[3] += 145
+ACC-LAGGY: match offset=3 weight=188
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 188
+ACC: TS2 inactive -> corr[2] += 188
+ACC: TS3 inactive -> corr[3] += 188
+ACC-LAGGY: match offset=10 weight=92
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 92
+ACC: TS1 inactive -> corr[1] += 92
+ACC: TS3 inactive -> corr[3] += 92
+[LIF] START at time 7564000 threshold=300
+[LIF] t=0 time=7566000 next_pot=333 spike=1
+[LIF] t=1 time=7567000 next_pot=0 spike=0
+[LIF] t=2 time=7568000 next_pot=237 spike=0
+[LIF] t=3 time=7569000 next_pot=237 spike=0
+ACC-FAST: +222 -> 222
+ACC-LAGGY: match offset=6 weight=222
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 222
+ACC: TS2 inactive -> corr[2] += 222
+ACC: TS3 inactive -> corr[3] += 222
+[LIF] START at time 7604000 threshold=300
+[LIF] t=0 time=7606000 next_pot=222 spike=0
+[LIF] t=1 time=7607000 next_pot=222 spike=0
+[LIF] t=2 time=7608000 next_pot=222 spike=0
+[LIF] t=3 time=7609000 next_pot=222 spike=0
+ACC-FAST: +40 -> 40
+ACC-LAGGY: match offset=12 weight=40
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 40
+ACC: TS1 inactive -> corr[1] += 40
+ACC: TS3 inactive -> corr[3] += 40
+[LIF] START at time 7644000 threshold=300
+[LIF] t=0 time=7646000 next_pot=0 spike=0
+[LIF] t=1 time=7647000 next_pot=0 spike=0
+[LIF] t=2 time=7648000 next_pot=40 spike=0
+[LIF] t=3 time=7649000 next_pot=40 spike=0
+ACC-FAST: +170 -> 170
+ACC-LAGGY: match offset=7 weight=170
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 170
+ACC: TS1 inactive -> corr[1] += 170
+ACC: TS3 inactive -> corr[3] += 170
+[LIF] START at time 7684000 threshold=300
+[LIF] t=0 time=7686000 next_pot=0 spike=0
+[LIF] t=1 time=7687000 next_pot=0 spike=0
+[LIF] t=2 time=7688000 next_pot=170 spike=0
+[LIF] t=3 time=7689000 next_pot=170 spike=0
+ACC-FAST: +113 -> 113
+ACC-FAST: +11 -> 124
+ACC-LAGGY: match offset=2 weight=113
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 113
+ACC: TS2 inactive -> corr[2] += 113
+ACC: TS3 inactive -> corr[3] += 113
+ACC-LAGGY: match offset=9 weight=11
+ACC: Loaded fibre-A: 1011
+ACC: TS2 inactive -> corr[2] += 11
+[LIF] START at time 7739000 threshold=300
+[LIF] t=0 time=7741000 next_pot=124 spike=0
+[LIF] t=1 time=7742000 next_pot=135 spike=0
+[LIF] t=2 time=7743000 next_pot=135 spike=0
+[LIF] t=3 time=7744000 next_pot=146 spike=0
+ACC-FAST: +154 -> 154
+ACC-FAST: +10 -> 164
+ACC-LAGGY: match offset=5 weight=154
+ACC: Loaded fibre-A: 1110
+ACC: TS0 inactive -> corr[0] += 154
+ACC-LAGGY: match offset=10 weight=10
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 10
+ACC: TS1 inactive -> corr[1] += 10
+ACC: TS3 inactive -> corr[3] += 10
+[LIF] START at time 7801000 threshold=300
+[LIF] t=0 time=7802000 next_pot=0 spike=0
+[LIF] t=1 time=7803000 next_pot=154 spike=0
+[LIF] t=2 time=7804000 next_pot=318 spike=1
+[LIF] t=3 time=7806000 next_pot=154 spike=0
+ACC-FAST: +199 -> 199
+ACC-FAST: +39 -> 238
+ACC-FAST: +192 -> 430
+ACC-LAGGY: match offset=5 weight=199
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 199
+ACC: TS1 inactive -> corr[1] += 199
+ACC: TS2 inactive -> corr[2] += 199
+ACC-LAGGY: match offset=7 weight=39
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 39
+ACC: TS2 inactive -> corr[2] += 39
+ACC: TS3 inactive -> corr[3] += 39
+ACC-LAGGY: match offset=13 weight=192
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 192
+ACC: TS2 inactive -> corr[2] += 192
+ACC: TS3 inactive -> corr[3] += 192
+[LIF] START at time 7868000 threshold=300
+[LIF] t=0 time=7869000 next_pot=0 spike=0
+[LIF] t=1 time=7871000 next_pot=231 spike=0
+[LIF] t=2 time=7872000 next_pot=231 spike=0
+[LIF] t=3 time=7873000 next_pot=430 spike=1
+ACC-FAST: +163 -> 163
+ACC-LAGGY: match offset=8 weight=163
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 163
+ACC: TS2 inactive -> corr[2] += 163
+[LIF] START at time 7908000 threshold=300
+[LIF] t=0 time=7909000 next_pot=0 spike=0
+[LIF] t=1 time=7911000 next_pot=163 spike=0
+[LIF] t=2 time=7912000 next_pot=163 spike=0
+[LIF] t=3 time=7913000 next_pot=326 spike=1
+ACC-FAST: +226 -> 226
+ACC-LAGGY: match offset=1 weight=226
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 226
+ACC: TS1 inactive -> corr[1] += 226
+ACC: TS3 inactive -> corr[3] += 226
+[LIF] START at time 7948000 threshold=300
+[LIF] t=0 time=7949000 next_pot=0 spike=0
+[LIF] t=1 time=7951000 next_pot=0 spike=0
+[LIF] t=2 time=7952000 next_pot=226 spike=0
+[LIF] t=3 time=7953000 next_pot=226 spike=0
+ACC-FAST: +126 -> 126
+ACC-LAGGY: match offset=3 weight=126
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 126
+ACC: TS2 inactive -> corr[2] += 126
+ACC: TS3 inactive -> corr[3] += 126
+[LIF] START at time 7988000 threshold=300
+[LIF] t=0 time=7989000 next_pot=0 spike=0
+[LIF] t=1 time=7991000 next_pot=126 spike=0
+[LIF] t=2 time=7992000 next_pot=126 spike=0
+[LIF] t=3 time=7993000 next_pot=126 spike=0
+ACC-FAST: +41 -> 41
+ACC-FAST: +230 -> 271
+ACC-LAGGY: match offset=7 weight=41
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 41
+ACC: TS1 inactive -> corr[1] += 41
+ACC: TS3 inactive -> corr[3] += 41
+ACC-LAGGY: match offset=11 weight=230
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 230
+ACC: TS1 inactive -> corr[1] += 230
+ACC: TS3 inactive -> corr[3] += 230
+[LIF] START at time 8042000 threshold=300
+[LIF] t=0 time=8043000 next_pot=0 spike=0
+[LIF] t=1 time=8044000 next_pot=0 spike=0
+[LIF] t=2 time=8046000 next_pot=271 spike=0
+[LIF] t=3 time=8047000 next_pot=271 spike=0
+ACC-FAST: +38 -> 38
+ACC-FAST: +225 -> 263
+ACC-FAST: +206 -> 469
+ACC-LAGGY: match offset=5 weight=38
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 38
+ACC: TS2 inactive -> corr[2] += 38
+ACC-LAGGY: match offset=6 weight=225
+ACC: Loaded fibre-A: 1100
+ACC: TS0 inactive -> corr[0] += 225
+ACC: TS1 inactive -> corr[1] += 225
+ACC-LAGGY: match offset=8 weight=206
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 206
+ACC: TS1 inactive -> corr[1] += 206
+ACC: TS3 inactive -> corr[3] += 206
+[LIF] START at time 8109000 threshold=300
+[LIF] t=0 time=8111000 next_pot=0 spike=0
+[LIF] t=1 time=8112000 next_pot=38 spike=0
+[LIF] t=2 time=8113000 next_pot=469 spike=1
+[LIF] t=3 time=8114000 next_pot=263 spike=0
+ACC-FAST: +131 -> 131
+ACC-LAGGY: match offset=1 weight=131
+ACC: Loaded fibre-A: 1101
+ACC: TS1 inactive -> corr[1] += 131
+[LIF] START at time 8149000 threshold=300
+[LIF] t=0 time=8151000 next_pot=131 spike=0
+[LIF] t=1 time=8152000 next_pot=131 spike=0
+[LIF] t=2 time=8153000 next_pot=262 spike=0
+[LIF] t=3 time=8154000 next_pot=393 spike=1
+ACC-FAST: +209 -> 209
+ACC-LAGGY: match offset=1 weight=209
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 209
+ACC: TS1 inactive -> corr[1] += 209
+ACC: TS3 inactive -> corr[3] += 209
+[LIF] START at time 8189000 threshold=300
+[LIF] t=0 time=8191000 next_pot=0 spike=0
+[LIF] t=1 time=8192000 next_pot=0 spike=0
+[LIF] t=2 time=8193000 next_pot=209 spike=0
+[LIF] t=3 time=8194000 next_pot=209 spike=0
+ACC-FAST: +116 -> 116
+ACC-LAGGY: match offset=10 weight=116
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 116
+ACC: TS1 inactive -> corr[1] += 116
+ACC: TS2 inactive -> corr[2] += 116
+[LIF] START at time 8234000 threshold=300
+[LIF] t=0 time=8236000 next_pot=0 spike=0
+[LIF] t=1 time=8237000 next_pot=0 spike=0
+[LIF] t=2 time=8238000 next_pot=0 spike=0
+[LIF] t=3 time=8239000 next_pot=116 spike=0
+ACC-FAST: +178 -> 178
+ACC-LAGGY: match offset=9 weight=178
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 178
+ACC: TS2 inactive -> corr[2] += 178
+ACC: TS3 inactive -> corr[3] += 178
+[LIF] START at time 8278000 threshold=300
+[LIF] t=0 time=8279000 next_pot=178 spike=0
+[LIF] t=1 time=8281000 next_pot=178 spike=0
+[LIF] t=2 time=8282000 next_pot=178 spike=0
+[LIF] t=3 time=8283000 next_pot=178 spike=0
+ACC-FAST: +26 -> 26
+ACC-LAGGY: match offset=15 weight=26
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 26
+ACC: TS3 inactive -> corr[3] += 26
+[LIF] START at time 8319000 threshold=300
+[LIF] t=0 time=8321000 next_pot=26 spike=0
+[LIF] t=1 time=8322000 next_pot=26 spike=0
+[LIF] t=2 time=8323000 next_pot=52 spike=0
+[LIF] t=3 time=8324000 next_pot=52 spike=0
+ACC-FAST: +56 -> 56
+ACC-FAST: +37 -> 93
+ACC-LAGGY: match offset=3 weight=56
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 56
+ACC: TS2 inactive -> corr[2] += 56
+ACC: TS3 inactive -> corr[3] += 56
+ACC-LAGGY: match offset=5 weight=37
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 37
+ACC: TS1 inactive -> corr[1] += 37
+ACC: TS3 inactive -> corr[3] += 37
+[LIF] START at time 8373000 threshold=300
+[LIF] t=0 time=8374000 next_pot=56 spike=0
+[LIF] t=1 time=8376000 next_pot=56 spike=0
+[LIF] t=2 time=8377000 next_pot=93 spike=0
+[LIF] t=3 time=8378000 next_pot=93 spike=0
+ACC-FAST: +156 -> 156
+ACC-LAGGY: match offset=6 weight=156
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 156
+ACC: TS1 inactive -> corr[1] += 156
+ACC: TS2 inactive -> corr[2] += 156
+[LIF] START at time 8413000 threshold=300
+[LIF] t=0 time=8414000 next_pot=0 spike=0
+[LIF] t=1 time=8416000 next_pot=0 spike=0
+[LIF] t=2 time=8417000 next_pot=0 spike=0
+[LIF] t=3 time=8418000 next_pot=156 spike=0
+ACC-FAST: +221 -> 221
+ACC-FAST: +80 -> 301
+ACC-LAGGY: match offset=3 weight=221
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 221
+ACC: TS3 inactive -> corr[3] += 221
+ACC-LAGGY: match offset=8 weight=80
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 80
+ACC: TS1 inactive -> corr[1] += 80
+ACC: TS3 inactive -> corr[3] += 80
+[LIF] START at time 8467000 threshold=300
+[LIF] t=0 time=8468000 next_pot=221 spike=0
+[LIF] t=1 time=8469000 next_pot=221 spike=0
+[LIF] t=2 time=8471000 next_pot=522 spike=1
+[LIF] t=3 time=8472000 next_pot=0 spike=0
+ACC-FAST: +124 -> 124
+ACC-LAGGY: match offset=6 weight=124
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 124
+ACC: TS3 inactive -> corr[3] += 124
+[LIF] START at time 8523000 threshold=300
+[LIF] t=0 time=8524000 next_pot=124 spike=0
+[LIF] t=1 time=8526000 next_pot=124 spike=0
+[LIF] t=2 time=8527000 next_pot=248 spike=0
+[LIF] t=3 time=8528000 next_pot=248 spike=0
+ACC-FAST: +78 -> 78
+ACC-FAST: +60 -> 138
+ACC-LAGGY: match offset=1 weight=78
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 78
+ACC: TS2 inactive -> corr[2] += 78
+ACC: TS3 inactive -> corr[3] += 78
+ACC-LAGGY: match offset=6 weight=60
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 60
+ACC: TS2 inactive -> corr[2] += 60
+ACC: TS3 inactive -> corr[3] += 60
+[LIF] START at time 8582000 threshold=300
+[LIF] t=0 time=8583000 next_pot=78 spike=0
+[LIF] t=1 time=8584000 next_pot=138 spike=0
+[LIF] t=2 time=8586000 next_pot=138 spike=0
+[LIF] t=3 time=8587000 next_pot=138 spike=0
+ACC-FAST: +203 -> 203
+ACC-FAST: +93 -> 296
+ACC-LAGGY: match offset=8 weight=203
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 203
+ACC: TS1 inactive -> corr[1] += 203
+ACC: TS2 inactive -> corr[2] += 203
+ACC-LAGGY: match offset=9 weight=93
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 93
+ACC: TS2 inactive -> corr[2] += 93
+ACC: TS3 inactive -> corr[3] += 93
+[LIF] START at time 8637000 threshold=300
+[LIF] t=0 time=8638000 next_pot=0 spike=0
+[LIF] t=1 time=8639000 next_pot=93 spike=0
+[LIF] t=2 time=8641000 next_pot=93 spike=0
+[LIF] t=3 time=8642000 next_pot=296 spike=0
+ACC-FAST: +71 -> 71
+ACC-LAGGY: match offset=4 weight=71
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 71
+ACC: TS1 inactive -> corr[1] += 71
+ACC: TS3 inactive -> corr[3] += 71
+[LIF] START at time 8682000 threshold=300
+[LIF] t=0 time=8683000 next_pot=0 spike=0
+[LIF] t=1 time=8684000 next_pot=0 spike=0
+[LIF] t=2 time=8686000 next_pot=71 spike=0
+[LIF] t=3 time=8687000 next_pot=71 spike=0
+ACC-FAST: +100 -> 100
+ACC-LAGGY: match offset=7 weight=100
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 100
+ACC: TS2 inactive -> corr[2] += 100
+ACC: TS3 inactive -> corr[3] += 100
+[LIF] START at time 8733000 threshold=300
+[LIF] t=0 time=8734000 next_pot=100 spike=0
+[LIF] t=1 time=8736000 next_pot=100 spike=0
+[LIF] t=2 time=8737000 next_pot=100 spike=0
+[LIF] t=3 time=8738000 next_pot=100 spike=0
+ACC-FAST: +179 -> 179
+ACC-LAGGY: match offset=4 weight=179
+ACC: Loaded fibre-A: 0011
+ACC: TS2 inactive -> corr[2] += 179
+ACC: TS3 inactive -> corr[3] += 179
+[LIF] START at time 8777000 threshold=300
+[LIF] t=0 time=8778000 next_pot=179 spike=0
+[LIF] t=1 time=8779000 next_pot=358 spike=1
+[LIF] t=2 time=8781000 next_pot=0 spike=0
+[LIF] t=3 time=8782000 next_pot=0 spike=0
+ACC-FAST: +163 -> 163
+ACC-FAST: +177 -> 340
+ACC-LAGGY: match offset=1 weight=163
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 163
+ACC: TS1 inactive -> corr[1] += 163
+ACC: TS3 inactive -> corr[3] += 163
+ACC-LAGGY: match offset=3 weight=177
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 177
+ACC: TS1 inactive -> corr[1] += 177
+ACC: TS2 inactive -> corr[2] += 177
+[LIF] START at time 8851000 threshold=300
+[LIF] t=0 time=8852000 next_pot=0 spike=0
+[LIF] t=1 time=8853000 next_pot=0 spike=0
+[LIF] t=2 time=8854000 next_pot=163 spike=0
+[LIF] t=3 time=8856000 next_pot=340 spike=1
+ACC-FAST: +33 -> 33
+ACC-FAST: +38 -> 71
+ACC-FAST: +179 -> 250
+ACC-LAGGY: match offset=7 weight=33
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 33
+ACC: TS2 inactive -> corr[2] += 33
+ACC: TS3 inactive -> corr[3] += 33
+ACC-LAGGY: match offset=9 weight=38
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 38
+ACC: TS2 inactive -> corr[2] += 38
+ACC: TS3 inactive -> corr[3] += 38
+ACC-LAGGY: match offset=11 weight=179
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 179
+ACC: TS1 inactive -> corr[1] += 179
+ACC: TS2 inactive -> corr[2] += 179
+[LIF] START at time 8918000 threshold=300
+[LIF] t=0 time=8919000 next_pot=0 spike=0
+[LIF] t=1 time=8921000 next_pot=71 spike=0
+[LIF] t=2 time=8922000 next_pot=71 spike=0
+[LIF] t=3 time=8923000 next_pot=250 spike=0
+ACC-FAST: +22 -> 22
+ACC-FAST: +222 -> 244
+ACC-LAGGY: match offset=7 weight=22
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 22
+ACC: TS1 inactive -> corr[1] += 22
+ACC: TS3 inactive -> corr[3] += 22
+ACC-LAGGY: match offset=17 weight=222
+ACC: Loaded fibre-A: 1101
+ACC: TS1 inactive -> corr[1] += 222
+[LIF] START at time 8972000 threshold=300
+[LIF] t=0 time=8973000 next_pot=222 spike=0
+[LIF] t=1 time=8974000 next_pot=222 spike=0
+[LIF] t=2 time=8976000 next_pot=466 spike=1
+[LIF] t=3 time=8977000 next_pot=222 spike=0
+ACC-FAST: +233 -> 233
+ACC-FAST: +62 -> 295
+ACC-LAGGY: match offset=2 weight=233
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 233
+ACC: TS2 inactive -> corr[2] += 233
+ACC-LAGGY: match offset=5 weight=62
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 62
+ACC: TS2 inactive -> corr[2] += 62
+ACC: TS3 inactive -> corr[3] += 62
+[LIF] START at time 9026000 threshold=300
+[LIF] t=0 time=9027000 next_pot=62 spike=0
+[LIF] t=1 time=9028000 next_pot=295 spike=0
+[LIF] t=2 time=9029000 next_pot=295 spike=0
+[LIF] t=3 time=9031000 next_pot=528 spike=1
+ACC-FAST: +60 -> 60
+ACC-LAGGY: match offset=13 weight=60
+ACC: Loaded fibre-A: 0111
+ACC: TS3 inactive -> corr[3] += 60
+[LIF] START at time 9066000 threshold=300
+[LIF] t=0 time=9067000 next_pot=60 spike=0
+[LIF] t=1 time=9068000 next_pot=120 spike=0
+[LIF] t=2 time=9069000 next_pot=180 spike=0
+[LIF] t=3 time=9071000 next_pot=180 spike=0
+ACC-FAST: +112 -> 112
+ACC-FAST: +212 -> 324
+ACC-LAGGY: match offset=3 weight=112
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 112
+ACC: TS2 inactive -> corr[2] += 112
+ACC: TS3 inactive -> corr[3] += 112
+ACC-LAGGY: match offset=14 weight=212
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 212
+ACC: TS2 inactive -> corr[2] += 212
+[LIF] START at time 9119000 threshold=300
+[LIF] t=0 time=9121000 next_pot=112 spike=0
+[LIF] t=1 time=9122000 next_pot=324 spike=1
+[LIF] t=2 time=9123000 next_pot=0 spike=0
+[LIF] t=3 time=9124000 next_pot=212 spike=0
+ACC-FAST: +197 -> 197
+ACC-FAST: +137 -> 334
+ACC-LAGGY: match offset=8 weight=197
+ACC: Loaded fibre-A: 1100
+ACC: TS0 inactive -> corr[0] += 197
+ACC: TS1 inactive -> corr[1] += 197
+ACC-LAGGY: match offset=12 weight=137
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 137
+ACC: TS2 inactive -> corr[2] += 137
+ACC: TS3 inactive -> corr[3] += 137
+[LIF] START at time 9177000 threshold=300
+[LIF] t=0 time=9178000 next_pot=137 spike=0
+[LIF] t=1 time=9179000 next_pot=137 spike=0
+[LIF] t=2 time=9181000 next_pot=334 spike=1
+[LIF] t=3 time=9182000 next_pot=197 spike=0
+ACC-FAST: +143 -> 143
+ACC-LAGGY: match offset=17 weight=143
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 143
+ACC: TS1 inactive -> corr[1] += 143
+ACC: TS3 inactive -> corr[3] += 143
+[LIF] START at time 9224000 threshold=300
+[LIF] t=0 time=9226000 next_pot=0 spike=0
+[LIF] t=1 time=9227000 next_pot=0 spike=0
+[LIF] t=2 time=9228000 next_pot=143 spike=0
+[LIF] t=3 time=9229000 next_pot=143 spike=0
+ACC-FAST: +134 -> 134
+ACC-FAST: +31 -> 165
+ACC-LAGGY: match offset=4 weight=134
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 134
+ACC: TS2 inactive -> corr[2] += 134
+ACC-LAGGY: match offset=14 weight=31
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 31
+ACC: TS2 inactive -> corr[2] += 31
+ACC: TS3 inactive -> corr[3] += 31
+[LIF] START at time 9278000 threshold=300
+[LIF] t=0 time=9279000 next_pot=31 spike=0
+[LIF] t=1 time=9281000 next_pot=165 spike=0
+[LIF] t=2 time=9282000 next_pot=165 spike=0
+[LIF] t=3 time=9283000 next_pot=299 spike=0
+ACC-FAST: +180 -> 180
+ACC-FAST: +234 -> 414
+ACC-LAGGY: match offset=3 weight=180
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 180
+ACC: TS1 inactive -> corr[1] += 180
+ACC: TS3 inactive -> corr[3] += 180
+ACC-LAGGY: match offset=6 weight=234
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 234
+ACC: TS1 inactive -> corr[1] += 234
+ACC: TS3 inactive -> corr[3] += 234
+[LIF] START at time 9339000 threshold=300
+[LIF] t=0 time=9341000 next_pot=0 spike=0
+[LIF] t=1 time=9342000 next_pot=0 spike=0
+[LIF] t=2 time=9343000 next_pot=414 spike=1
+[LIF] t=3 time=9344000 next_pot=0 spike=0
+ACC-FAST: +152 -> 152
+ACC-FAST: +253 -> 405
+ACC-LAGGY: match offset=5 weight=152
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 152
+ACC: TS1 inactive -> corr[1] += 152
+ACC: TS2 inactive -> corr[2] += 152
+ACC-LAGGY: match offset=6 weight=253
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 253
+ACC: TS2 inactive -> corr[2] += 253
+ACC: TS3 inactive -> corr[3] += 253
+[LIF] START at time 9393000 threshold=300
+[LIF] t=0 time=9394000 next_pot=253 spike=0
+[LIF] t=1 time=9396000 next_pot=253 spike=0
+[LIF] t=2 time=9397000 next_pot=253 spike=0
+[LIF] t=3 time=9398000 next_pot=405 spike=1
+ACC-FAST: +104 -> 104
+ACC-FAST: +91 -> 195
+ACC-LAGGY: match offset=1 weight=104
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 104
+ACC: TS2 inactive -> corr[2] += 104
+ACC-LAGGY: match offset=12 weight=91
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 91
+ACC: TS1 inactive -> corr[1] += 91
+ACC: TS3 inactive -> corr[3] += 91
+[LIF] START at time 9447000 threshold=300
+[LIF] t=0 time=9448000 next_pot=104 spike=0
+[LIF] t=1 time=9449000 next_pot=104 spike=0
+[LIF] t=2 time=9451000 next_pot=195 spike=0
+[LIF] t=3 time=9452000 next_pot=299 spike=0
+ACC-FAST: +28 -> 28
+ACC-FAST: +44 -> 72
+ACC-FAST: +224 -> 296
+ACC-LAGGY: match offset=1 weight=28
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 28
+ACC: TS1 inactive -> corr[1] += 28
+ACC: TS3 inactive -> corr[3] += 28
+ACC-LAGGY: match offset=7 weight=44
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 44
+ACC: TS2 inactive -> corr[2] += 44
+ACC: TS3 inactive -> corr[3] += 44
+ACC-LAGGY: match offset=8 weight=224
+ACC: Loaded fibre-A: 0111
+ACC: TS3 inactive -> corr[3] += 224
+[LIF] START at time 9516000 threshold=300
+[LIF] t=0 time=9517000 next_pot=268 spike=0
+[LIF] t=1 time=9518000 next_pot=492 spike=1
+[LIF] t=2 time=9519000 next_pot=252 spike=0
+[LIF] t=3 time=9521000 next_pot=252 spike=0
+ACC-FAST: +163 -> 163
+ACC-FAST: +156 -> 319
+ACC-LAGGY: match offset=3 weight=163
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 163
+ACC: TS2 inactive -> corr[2] += 163
+ACC: TS3 inactive -> corr[3] += 163
+ACC-LAGGY: match offset=6 weight=156
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 156
+ACC: TS2 inactive -> corr[2] += 156
+ACC: TS3 inactive -> corr[3] += 156
+[LIF] START at time 9569000 threshold=300
+[LIF] t=0 time=9571000 next_pot=0 spike=0
+[LIF] t=1 time=9572000 next_pot=319 spike=1
+[LIF] t=2 time=9573000 next_pot=0 spike=0
+[LIF] t=3 time=9574000 next_pot=0 spike=0
+ACC-FAST: +246 -> 246
+ACC-FAST: +4 -> 250
+ACC-LAGGY: match offset=10 weight=246
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 246
+ACC: TS2 inactive -> corr[2] += 246
+ACC: TS3 inactive -> corr[3] += 246
+ACC-LAGGY: match offset=11 weight=4
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 4
+ACC: TS2 inactive -> corr[2] += 4
+[LIF] START at time 9623000 threshold=300
+[LIF] t=0 time=9624000 next_pot=250 spike=0
+[LIF] t=1 time=9626000 next_pot=250 spike=0
+[LIF] t=2 time=9627000 next_pot=250 spike=0
+[LIF] t=3 time=9628000 next_pot=254 spike=0
+ACC-FAST: +58 -> 58
+ACC-LAGGY: match offset=1 weight=58
+ACC: Loaded fibre-A: 0110
+ACC: TS0 inactive -> corr[0] += 58
+ACC: TS3 inactive -> corr[3] += 58
+[LIF] START at time 9664000 threshold=300
+[LIF] t=0 time=9666000 next_pot=0 spike=0
+[LIF] t=1 time=9667000 next_pot=58 spike=0
+[LIF] t=2 time=9668000 next_pot=116 spike=0
+[LIF] t=3 time=9669000 next_pot=116 spike=0
+ACC-FAST: +136 -> 136
+ACC-FAST: +19 -> 155
+ACC-LAGGY: match offset=1 weight=136
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 136
+ACC: TS2 inactive -> corr[2] += 136
+ACC: TS3 inactive -> corr[3] += 136
+ACC-LAGGY: match offset=4 weight=19
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 19
+ACC: TS1 inactive -> corr[1] += 19
+ACC: TS3 inactive -> corr[3] += 19
+[LIF] START at time 9718000 threshold=300
+[LIF] t=0 time=9719000 next_pot=136 spike=0
+[LIF] t=1 time=9721000 next_pot=136 spike=0
+[LIF] t=2 time=9722000 next_pot=155 spike=0
+[LIF] t=3 time=9723000 next_pot=155 spike=0
+ACC-FAST: +77 -> 77
+ACC-FAST: +97 -> 174
+ACC-FAST: +156 -> 330
+ACC-FAST: +195 -> 525
+ACC-LAGGY: match offset=3 weight=77
+ACC: Loaded fibre-A: 1101
+ACC: TS1 inactive -> corr[1] += 77
+ACC-LAGGY: match offset=5 weight=97
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 97
+ACC: TS1 inactive -> corr[1] += 97
+ACC: TS2 inactive -> corr[2] += 97
+ACC-LAGGY: match offset=6 weight=156
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 156
+ACC: TS2 inactive -> corr[2] += 156
+ACC-LAGGY: match offset=7 weight=195
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 195
+ACC: TS2 inactive -> corr[2] += 195
+ACC: TS3 inactive -> corr[3] += 195
+[LIF] START at time 9808000 threshold=300
+[LIF] t=0 time=9809000 next_pot=77 spike=0
+[LIF] t=1 time=9811000 next_pot=428 spike=1
+[LIF] t=2 time=9812000 next_pot=77 spike=0
+[LIF] t=3 time=9813000 next_pot=407 spike=1
+ACC-FAST: +70 -> 70
+ACC-LAGGY: match offset=5 weight=70
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 70
+ACC: TS2 inactive -> corr[2] += 70
+ACC: TS3 inactive -> corr[3] += 70
+[LIF] START at time 9849000 threshold=300
+[LIF] t=0 time=9851000 next_pot=70 spike=0
+[LIF] t=1 time=9852000 next_pot=70 spike=0
+[LIF] t=2 time=9853000 next_pot=70 spike=0
+[LIF] t=3 time=9854000 next_pot=70 spike=0
+ACC-FAST: +78 -> 78
+ACC-FAST: +69 -> 147
+ACC-LAGGY: match offset=1 weight=78
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 78
+ACC: TS1 inactive -> corr[1] += 78
+ACC: TS3 inactive -> corr[3] += 78
+ACC-LAGGY: match offset=11 weight=69
+ACC: Loaded fibre-A: 1011
+ACC: TS2 inactive -> corr[2] += 69
+[LIF] START at time 9903000 threshold=300
+[LIF] t=0 time=9904000 next_pot=69 spike=0
+[LIF] t=1 time=9906000 next_pot=138 spike=0
+[LIF] t=2 time=9907000 next_pot=216 spike=0
+[LIF] t=3 time=9908000 next_pot=285 spike=0
+ACC-FAST: +215 -> 215
+ACC-FAST: +25 -> 240
+ACC-LAGGY: match offset=10 weight=215
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 215
+ACC: TS2 inactive -> corr[2] += 215
+ACC: TS3 inactive -> corr[3] += 215
+ACC-LAGGY: match offset=13 weight=25
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 25
+ACC: TS2 inactive -> corr[2] += 25
+[LIF] START at time 9957000 threshold=300
+[LIF] t=0 time=9958000 next_pot=0 spike=0
+[LIF] t=1 time=9959000 next_pot=240 spike=0
+[LIF] t=2 time=9961000 next_pot=240 spike=0
+[LIF] t=3 time=9962000 next_pot=265 spike=0
+ACC-FAST: +150 -> 150
+ACC-FAST: +119 -> 269
+ACC-LAGGY: match offset=3 weight=150
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 150
+ACC: TS1 inactive -> corr[1] += 150
+ACC: TS3 inactive -> corr[3] += 150
+ACC-LAGGY: match offset=13 weight=119
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 119
+ACC: TS2 inactive -> corr[2] += 119
+[LIF] START at time 10019000 threshold=300
+[LIF] t=0 time=10021000 next_pot=0 spike=0
+[LIF] t=1 time=10022000 next_pot=119 spike=0
+[LIF] t=2 time=10023000 next_pot=269 spike=0
+[LIF] t=3 time=10024000 next_pot=388 spike=1
+ACC-FAST: +126 -> 126
+ACC-FAST: +160 -> 286
+ACC-FAST: +49 -> 335
+ACC-LAGGY: match offset=1 weight=126
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 126
+ACC: TS1 inactive -> corr[1] += 126
+ACC: TS2 inactive -> corr[2] += 126
+ACC-LAGGY: match offset=5 weight=160
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 160
+ACC: TS2 inactive -> corr[2] += 160
+ACC: TS3 inactive -> corr[3] += 160
+ACC-LAGGY: match offset=12 weight=49
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 49
+ACC: TS1 inactive -> corr[1] += 49
+ACC: TS2 inactive -> corr[2] += 49
+[LIF] START at time 10087000 threshold=300
+[LIF] t=0 time=10088000 next_pot=0 spike=0
+[LIF] t=1 time=10089000 next_pot=160 spike=0
+[LIF] t=2 time=10091000 next_pot=160 spike=0
+[LIF] t=3 time=10092000 next_pot=335 spike=1
+ACC-FAST: +89 -> 89
+ACC-FAST: +95 -> 184
+ACC-FAST: +98 -> 282
+ACC-FAST: +50 -> 332
+ACC-LAGGY: match offset=3 weight=89
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 89
+ACC: TS1 inactive -> corr[1] += 89
+ACC: TS2 inactive -> corr[2] += 89
+ACC-LAGGY: match offset=4 weight=95
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 95
+ACC: TS1 inactive -> corr[1] += 95
+ACC: TS3 inactive -> corr[3] += 95
+ACC-LAGGY: match offset=7 weight=98
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 98
+ACC: TS2 inactive -> corr[2] += 98
+ACC: TS3 inactive -> corr[3] += 98
+ACC-LAGGY: match offset=8 weight=50
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 50
+ACC: TS1 inactive -> corr[1] += 50
+ACC: TS3 inactive -> corr[3] += 50
+[LIF] START at time 10168000 threshold=300
+[LIF] t=0 time=10169000 next_pot=0 spike=0
+[LIF] t=1 time=10171000 next_pot=98 spike=0
+[LIF] t=2 time=10172000 next_pot=243 spike=0
+[LIF] t=3 time=10173000 next_pot=332 spike=1
+ACC-FAST: +232 -> 232
+ACC-FAST: +238 -> 470
+ACC-LAGGY: match offset=4 weight=232
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 232
+ACC: TS2 inactive -> corr[2] += 232
+ACC-LAGGY: match offset=6 weight=238
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 238
+ACC: TS2 inactive -> corr[2] += 238
+[LIF] START at time 10222000 threshold=300
+[LIF] t=0 time=10223000 next_pot=0 spike=0
+[LIF] t=1 time=10224000 next_pot=470 spike=1
+[LIF] t=2 time=10226000 next_pot=0 spike=0
+[LIF] t=3 time=10227000 next_pot=470 spike=1
+ACC-FAST: +184 -> 184
+ACC-FAST: +80 -> 264
+ACC-FAST: +112 -> 376
+ACC-FAST: +111 -> 487
+ACC-LAGGY: match offset=1 weight=184
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 184
+ACC: TS1 inactive -> corr[1] += 184
+ACC: TS3 inactive -> corr[3] += 184
+ACC-LAGGY: match offset=6 weight=80
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 80
+ACC: TS3 inactive -> corr[3] += 80
+ACC-LAGGY: match offset=10 weight=112
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 112
+ACC: TS1 inactive -> corr[1] += 112
+ACC: TS3 inactive -> corr[3] += 112
+ACC-LAGGY: match offset=15 weight=111
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 111
+ACC: TS2 inactive -> corr[2] += 111
+ACC: TS3 inactive -> corr[3] += 111
+[LIF] START at time 10303000 threshold=300
+[LIF] t=0 time=10304000 next_pot=191 spike=0
+[LIF] t=1 time=10306000 next_pot=191 spike=0
+[LIF] t=2 time=10307000 next_pot=567 spike=1
+[LIF] t=3 time=10308000 next_pot=0 spike=0
+ACC-FAST: +117 -> 117
+ACC-FAST: +39 -> 156
+ACC-FAST: +200 -> 356
+ACC-FAST: +61 -> 417
+ACC-LAGGY: match offset=1 weight=117
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 117
+ACC: TS1 inactive -> corr[1] += 117
+ACC: TS3 inactive -> corr[3] += 117
+ACC-LAGGY: match offset=7 weight=39
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 39
+ACC: TS2 inactive -> corr[2] += 39
+ACC: TS3 inactive -> corr[3] += 39
+ACC-LAGGY: match offset=8 weight=200
+ACC: Loaded fibre-A: 0111
+ACC: TS3 inactive -> corr[3] += 200
+ACC-LAGGY: match offset=14 weight=61
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 61
+ACC: TS2 inactive -> corr[2] += 61
+ACC: TS3 inactive -> corr[3] += 61
+[LIF] START at time 10386000 threshold=300
+[LIF] t=0 time=10387000 next_pot=261 spike=0
+[LIF] t=1 time=10388000 next_pot=500 spike=1
+[LIF] t=2 time=10389000 next_pot=317 spike=1
+[LIF] t=3 time=10391000 next_pot=0 spike=0
+ACC-FAST: +141 -> 141
+ACC-FAST: +21 -> 162
+ACC-LAGGY: match offset=2 weight=141
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 141
+ACC: TS2 inactive -> corr[2] += 141
+ACC: TS3 inactive -> corr[3] += 141
+ACC-LAGGY: match offset=10 weight=21
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 21
+ACC: TS1 inactive -> corr[1] += 21
+ACC: TS2 inactive -> corr[2] += 21
+[LIF] START at time 10439000 threshold=300
+[LIF] t=0 time=10441000 next_pot=0 spike=0
+[LIF] t=1 time=10442000 next_pot=141 spike=0
+[LIF] t=2 time=10443000 next_pot=141 spike=0
+[LIF] t=3 time=10444000 next_pot=162 spike=0
+ACC-FAST: +61 -> 61
+ACC-LAGGY: match offset=4 weight=61
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 61
+ACC: TS1 inactive -> corr[1] += 61
+ACC: TS3 inactive -> corr[3] += 61
+[LIF] START at time 10479000 threshold=300
+[LIF] t=0 time=10481000 next_pot=0 spike=0
+[LIF] t=1 time=10482000 next_pot=0 spike=0
+[LIF] t=2 time=10483000 next_pot=61 spike=0
+[LIF] t=3 time=10484000 next_pot=61 spike=0
+ACC-FAST: +21 -> 21
+ACC-LAGGY: match offset=9 weight=21
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 21
+ACC: TS1 inactive -> corr[1] += 21
+ACC: TS3 inactive -> corr[3] += 21
+[LIF] START at time 10523000 threshold=300
+[LIF] t=0 time=10524000 next_pot=0 spike=0
+[LIF] t=1 time=10526000 next_pot=0 spike=0
+[LIF] t=2 time=10527000 next_pot=21 spike=0
+[LIF] t=3 time=10528000 next_pot=21 spike=0
+ACC-FAST: +220 -> 220
+ACC-LAGGY: match offset=12 weight=220
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 220
+ACC: TS2 inactive -> corr[2] += 220
+[LIF] START at time 10563000 threshold=300
+[LIF] t=0 time=10564000 next_pot=220 spike=0
+[LIF] t=1 time=10566000 next_pot=220 spike=0
+[LIF] t=2 time=10567000 next_pot=220 spike=0
+[LIF] t=3 time=10568000 next_pot=440 spike=1
+ACC-FAST: +55 -> 55
+ACC-FAST: +221 -> 276
+ACC-LAGGY: match offset=6 weight=55
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 55
+ACC: TS2 inactive -> corr[2] += 55
+ACC: TS3 inactive -> corr[3] += 55
+ACC-LAGGY: match offset=10 weight=221
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 221
+ACC: TS2 inactive -> corr[2] += 221
+ACC: TS3 inactive -> corr[3] += 221
+[LIF] START at time 10617000 threshold=300
+[LIF] t=0 time=10618000 next_pot=55 spike=0
+[LIF] t=1 time=10619000 next_pot=276 spike=0
+[LIF] t=2 time=10621000 next_pot=276 spike=0
+[LIF] t=3 time=10622000 next_pot=276 spike=0
+ACC-FAST: +77 -> 77
+ACC-FAST: +188 -> 265
+ACC-LAGGY: match offset=3 weight=77
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 77
+ACC: TS1 inactive -> corr[1] += 77
+ACC: TS3 inactive -> corr[3] += 77
+ACC-LAGGY: match offset=14 weight=188
+ACC: Loaded fibre-A: 1101
+ACC: TS1 inactive -> corr[1] += 188
+[LIF] START at time 10671000 threshold=300
+[LIF] t=0 time=10672000 next_pot=188 spike=0
+[LIF] t=1 time=10673000 next_pot=188 spike=0
+[LIF] t=2 time=10674000 next_pot=453 spike=1
+[LIF] t=3 time=10676000 next_pot=188 spike=0
+ACC-FAST: +96 -> 96
+ACC-FAST: +55 -> 151
+ACC-FAST: +48 -> 199
+ACC-LAGGY: match offset=6 weight=96
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 96
+ACC: TS2 inactive -> corr[2] += 96
+ACC: TS3 inactive -> corr[3] += 96
+ACC-LAGGY: match offset=7 weight=55
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 55
+ACC: TS3 inactive -> corr[3] += 55
+ACC-LAGGY: match offset=13 weight=48
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 48
+ACC: TS2 inactive -> corr[2] += 48
+ACC: TS3 inactive -> corr[3] += 48
+[LIF] START at time 10738000 threshold=300
+[LIF] t=0 time=10739000 next_pot=199 spike=0
+[LIF] t=1 time=10741000 next_pot=199 spike=0
+[LIF] t=2 time=10742000 next_pot=254 spike=0
+[LIF] t=3 time=10743000 next_pot=254 spike=0
+ACC-FAST: +129 -> 129
+ACC-FAST: +205 -> 334
+ACC-LAGGY: match offset=5 weight=129
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 129
+ACC: TS2 inactive -> corr[2] += 129
+ACC: TS3 inactive -> corr[3] += 129
+ACC-LAGGY: match offset=8 weight=205
+ACC: Loaded fibre-A: 0111
+ACC: TS3 inactive -> corr[3] += 205
+[LIF] START at time 10793000 threshold=300
+[LIF] t=0 time=10794000 next_pot=205 spike=0
+[LIF] t=1 time=10796000 next_pot=539 spike=1
+[LIF] t=2 time=10797000 next_pot=205 spike=0
+[LIF] t=3 time=10798000 next_pot=205 spike=0
+ACC-FAST: +190 -> 190
+ACC-LAGGY: match offset=4 weight=190
+ACC: Loaded fibre-A: 1110
+ACC: TS0 inactive -> corr[0] += 190
+[LIF] START at time 10833000 threshold=300
+[LIF] t=0 time=10834000 next_pot=0 spike=0
+[LIF] t=1 time=10836000 next_pot=190 spike=0
+[LIF] t=2 time=10837000 next_pot=380 spike=1
+[LIF] t=3 time=10838000 next_pot=190 spike=0
+ACC-FAST: +95 -> 95
+ACC-FAST: +193 -> 288
+ACC-FAST: +190 -> 478
+ACC-LAGGY: match offset=2 weight=95
+ACC: Loaded fibre-A: 0011
+ACC: TS2 inactive -> corr[2] += 95
+ACC: TS3 inactive -> corr[3] += 95
+ACC-LAGGY: match offset=8 weight=193
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 193
+ACC: TS2 inactive -> corr[2] += 193
+ACC: TS3 inactive -> corr[3] += 193
+ACC-LAGGY: match offset=9 weight=190
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 190
+ACC: TS1 inactive -> corr[1] += 190
+ACC: TS2 inactive -> corr[2] += 190
+[LIF] START at time 10902000 threshold=300
+[LIF] t=0 time=10903000 next_pot=95 spike=0
+[LIF] t=1 time=10904000 next_pot=383 spike=1
+[LIF] t=2 time=10906000 next_pot=0 spike=0
+[LIF] t=3 time=10907000 next_pot=190 spike=0
+ACC-FAST: +232 -> 232
+ACC-FAST: +225 -> 457
+ACC-FAST: +160 -> 617
+ACC-LAGGY: match offset=2 weight=232
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 232
+ACC: TS3 inactive -> corr[3] += 232
+ACC-LAGGY: match offset=6 weight=225
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 225
+ACC: TS1 inactive -> corr[1] += 225
+ACC: TS2 inactive -> corr[2] += 225
+ACC-LAGGY: match offset=8 weight=160
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 160
+ACC: TS1 inactive -> corr[1] += 160
+ACC: TS3 inactive -> corr[3] += 160
+[LIF] START at time 10969000 threshold=300
+[LIF] t=0 time=10971000 next_pot=232 spike=0
+[LIF] t=1 time=10972000 next_pot=232 spike=0
+[LIF] t=2 time=10973000 next_pot=624 spike=1
+[LIF] t=3 time=10974000 next_pot=225 spike=0
+ACC-FAST: +82 -> 82
+ACC-FAST: +166 -> 248
+ACC-LAGGY: match offset=3 weight=82
+ACC: Loaded fibre-A: 1011
+ACC: TS2 inactive -> corr[2] += 82
+ACC-LAGGY: match offset=6 weight=166
+ACC: Loaded fibre-A: 0111
+ACC: TS3 inactive -> corr[3] += 166
+[LIF] START at time 11031000 threshold=300
+[LIF] t=0 time=11032000 next_pot=248 spike=0
+[LIF] t=1 time=11033000 next_pot=496 spike=1
+[LIF] t=2 time=11034000 next_pot=166 spike=0
+[LIF] t=3 time=11036000 next_pot=248 spike=0
+ACC-FAST: +188 -> 188
+ACC-FAST: +51 -> 239
+ACC-FAST: +140 -> 379
+ACC-LAGGY: match offset=7 weight=188
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 188
+ACC: TS2 inactive -> corr[2] += 188
+ACC: TS3 inactive -> corr[3] += 188
+ACC-LAGGY: match offset=8 weight=51
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 51
+ACC: TS1 inactive -> corr[1] += 51
+ACC: TS2 inactive -> corr[2] += 51
+ACC-LAGGY: match offset=10 weight=140
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 140
+ACC: TS2 inactive -> corr[2] += 140
+ACC: TS3 inactive -> corr[3] += 140
+[LIF] START at time 11102000 threshold=300
+[LIF] t=0 time=11103000 next_pot=140 spike=0
+[LIF] t=1 time=11104000 next_pot=328 spike=1
+[LIF] t=2 time=11106000 next_pot=0 spike=0
+[LIF] t=3 time=11107000 next_pot=51 spike=0
+ACC-FAST: +142 -> 142
+ACC-LAGGY: match offset=12 weight=142
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 142
+ACC: TS1 inactive -> corr[1] += 142
+ACC: TS3 inactive -> corr[3] += 142
+[LIF] START at time 11142000 threshold=300
+[LIF] t=0 time=11143000 next_pot=0 spike=0
+[LIF] t=1 time=11144000 next_pot=0 spike=0
+[LIF] t=2 time=11146000 next_pot=142 spike=0
+[LIF] t=3 time=11147000 next_pot=142 spike=0
+ACC-FAST: +167 -> 167
+ACC-LAGGY: match offset=4 weight=167
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 167
+ACC: TS1 inactive -> corr[1] += 167
+ACC: TS3 inactive -> corr[3] += 167
+[LIF] START at time 11182000 threshold=300
+[LIF] t=0 time=11183000 next_pot=0 spike=0
+[LIF] t=1 time=11184000 next_pot=0 spike=0
+[LIF] t=2 time=11186000 next_pot=167 spike=0
+[LIF] t=3 time=11187000 next_pot=167 spike=0
+ACC-FAST: +160 -> 160
+ACC-FAST: +110 -> 270
+ACC-LAGGY: match offset=1 weight=160
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 160
+ACC: TS2 inactive -> corr[2] += 160
+ACC: TS3 inactive -> corr[3] += 160
+ACC-LAGGY: match offset=2 weight=110
+ACC: Loaded fibre-A: 0110
+ACC: TS0 inactive -> corr[0] += 110
+ACC: TS3 inactive -> corr[3] += 110
+[LIF] START at time 11241000 threshold=300
+[LIF] t=0 time=11242000 next_pot=0 spike=0
+[LIF] t=1 time=11243000 next_pot=270 spike=0
+[LIF] t=2 time=11244000 next_pot=380 spike=1
+[LIF] t=3 time=11246000 next_pot=0 spike=0
+ACC-FAST: +21 -> 21
+ACC-LAGGY: match offset=5 weight=21
+ACC: Loaded fibre-A: 1100
+ACC: TS0 inactive -> corr[0] += 21
+ACC: TS1 inactive -> corr[1] += 21
+[LIF] START at time 11281000 threshold=300
+[LIF] t=0 time=11282000 next_pot=0 spike=0
+[LIF] t=1 time=11283000 next_pot=0 spike=0
+[LIF] t=2 time=11284000 next_pot=21 spike=0
+[LIF] t=3 time=11286000 next_pot=42 spike=0
+ACC-FAST: +41 -> 41
+ACC-FAST: +191 -> 232
+ACC-LAGGY: match offset=8 weight=41
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 41
+ACC: TS3 inactive -> corr[3] += 41
+ACC-LAGGY: match offset=13 weight=191
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 191
+ACC: TS2 inactive -> corr[2] += 191
+ACC: TS3 inactive -> corr[3] += 191
+[LIF] START at time 11338000 threshold=300
+[LIF] t=0 time=11339000 next_pot=41 spike=0
+[LIF] t=1 time=11341000 next_pot=232 spike=0
+[LIF] t=2 time=11342000 next_pot=273 spike=0
+[LIF] t=3 time=11343000 next_pot=273 spike=0
+ACC-FAST: +164 -> 164
+ACC-FAST: +158 -> 322
+ACC-LAGGY: match offset=2 weight=164
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 164
+ACC: TS2 inactive -> corr[2] += 164
+ACC: TS3 inactive -> corr[3] += 164
+ACC-LAGGY: match offset=9 weight=158
+ACC: Loaded fibre-A: 1011
+ACC: TS2 inactive -> corr[2] += 158
+[LIF] START at time 11399000 threshold=300
+[LIF] t=0 time=11401000 next_pot=322 spike=1
+[LIF] t=1 time=11402000 next_pot=158 spike=0
+[LIF] t=2 time=11403000 next_pot=158 spike=0
+[LIF] t=3 time=11404000 next_pot=316 spike=1
+ACC-FAST: +69 -> 69
+ACC-FAST: +11 -> 80
+ACC-LAGGY: match offset=5 weight=69
+ACC: Loaded fibre-A: 1100
+ACC: TS0 inactive -> corr[0] += 69
+ACC: TS1 inactive -> corr[1] += 69
+ACC-LAGGY: match offset=11 weight=11
+ACC: Loaded fibre-A: 0011
+ACC: TS2 inactive -> corr[2] += 11
+ACC: TS3 inactive -> corr[3] += 11
+[LIF] START at time 11453000 threshold=300
+[LIF] t=0 time=11454000 next_pot=11 spike=0
+[LIF] t=1 time=11456000 next_pot=22 spike=0
+[LIF] t=2 time=11457000 next_pot=91 spike=0
+[LIF] t=3 time=11458000 next_pot=160 spike=0
+ACC-FAST: +130 -> 130
+ACC-LAGGY: match offset=11 weight=130
+ACC: Loaded fibre-A: 1111
+[LIF] START at time 11492000 threshold=300
+[LIF] t=0 time=11493000 next_pot=130 spike=0
+[LIF] t=1 time=11494000 next_pot=260 spike=0
+[LIF] t=2 time=11496000 next_pot=390 spike=1
+[LIF] t=3 time=11497000 next_pot=130 spike=0
+ACC-FAST: +62 -> 62
+ACC-LAGGY: match offset=9 weight=62
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 62
+ACC: TS1 inactive -> corr[1] += 62
+ACC: TS2 inactive -> corr[2] += 62
+[LIF] START at time 11532000 threshold=300
+[LIF] t=0 time=11533000 next_pot=0 spike=0
+[LIF] t=1 time=11534000 next_pot=0 spike=0
+[LIF] t=2 time=11536000 next_pot=0 spike=0
+[LIF] t=3 time=11537000 next_pot=62 spike=0
+ACC-FAST: +89 -> 89
+ACC-LAGGY: match offset=2 weight=89
+ACC: Loaded fibre-A: 1100
+ACC: TS0 inactive -> corr[0] += 89
+ACC: TS1 inactive -> corr[1] += 89
+[LIF] START at time 11576000 threshold=300
+[LIF] t=0 time=11577000 next_pot=0 spike=0
+[LIF] t=1 time=11578000 next_pot=0 spike=0
+[LIF] t=2 time=11579000 next_pot=89 spike=0
+[LIF] t=3 time=11581000 next_pot=178 spike=0
+ACC-FAST: +206 -> 206
+ACC-FAST: +201 -> 407
+ACC-FAST: +4 -> 411
+ACC-FAST: +169 -> 580
+ACC-LAGGY: match offset=4 weight=206
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 206
+ACC: TS1 inactive -> corr[1] += 206
+ACC: TS3 inactive -> corr[3] += 206
+ACC-LAGGY: match offset=6 weight=201
+ACC: Loaded fibre-A: 1011
+ACC: TS2 inactive -> corr[2] += 201
+ACC-LAGGY: match offset=8 weight=4
+ACC: Loaded fibre-A: 1110
+ACC: TS0 inactive -> corr[0] += 4
+ACC-LAGGY: match offset=12 weight=169
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 169
+ACC: TS2 inactive -> corr[2] += 169
+ACC: TS3 inactive -> corr[3] += 169
+[LIF] START at time 11658000 threshold=300
+[LIF] t=0 time=11659000 next_pot=201 spike=0
+[LIF] t=1 time=11661000 next_pot=575 spike=1
+[LIF] t=2 time=11662000 next_pot=210 spike=0
+[LIF] t=3 time=11663000 next_pot=415 spike=1
+ACC-FAST: +5 -> 5
+ACC-LAGGY: match offset=6 weight=5
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 5
+ACC: TS1 inactive -> corr[1] += 5
+ACC: TS3 inactive -> corr[3] += 5
+[LIF] START at time 11698000 threshold=300
+[LIF] t=0 time=11699000 next_pot=0 spike=0
+[LIF] t=1 time=11701000 next_pot=0 spike=0
+[LIF] t=2 time=11702000 next_pot=5 spike=0
+[LIF] t=3 time=11703000 next_pot=5 spike=0
+ACC-FAST: +136 -> 136
+ACC-LAGGY: match offset=6 weight=136
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 136
+ACC: TS3 inactive -> corr[3] += 136
+[LIF] START at time 11738000 threshold=300
+[LIF] t=0 time=11739000 next_pot=136 spike=0
+[LIF] t=1 time=11741000 next_pot=136 spike=0
+[LIF] t=2 time=11742000 next_pot=272 spike=0
+[LIF] t=3 time=11743000 next_pot=272 spike=0
+ACC-FAST: +80 -> 80
+ACC-LAGGY: match offset=4 weight=80
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 80
+ACC: TS2 inactive -> corr[2] += 80
+ACC: TS3 inactive -> corr[3] += 80
+[LIF] START at time 11778000 threshold=300
+[LIF] t=0 time=11779000 next_pot=0 spike=0
+[LIF] t=1 time=11781000 next_pot=80 spike=0
+[LIF] t=2 time=11782000 next_pot=80 spike=0
+[LIF] t=3 time=11783000 next_pot=80 spike=0
+ACC-FAST: +245 -> 245
+ACC-FAST: +132 -> 377
+ACC-FAST: +44 -> 421
+ACC-LAGGY: match offset=4 weight=245
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 245
+ACC: TS2 inactive -> corr[2] += 245
+ACC-LAGGY: match offset=7 weight=132
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 132
+ACC: TS2 inactive -> corr[2] += 132
+ACC: TS3 inactive -> corr[3] += 132
+ACC-LAGGY: match offset=12 weight=44
+ACC: Loaded fibre-A: 0011
+ACC: TS2 inactive -> corr[2] += 44
+ACC: TS3 inactive -> corr[3] += 44
+[LIF] START at time 11846000 threshold=300
+[LIF] t=0 time=11847000 next_pot=421 spike=1
+[LIF] t=1 time=11848000 next_pot=44 spike=0
+[LIF] t=2 time=11849000 next_pot=44 spike=0
+[LIF] t=3 time=11851000 next_pot=289 spike=0
+ACC-FAST: +62 -> 62
+ACC-LAGGY: match offset=4 weight=62
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 62
+ACC: TS1 inactive -> corr[1] += 62
+ACC: TS3 inactive -> corr[3] += 62
+[LIF] START at time 11886000 threshold=300
+[LIF] t=0 time=11887000 next_pot=0 spike=0
+[LIF] t=1 time=11888000 next_pot=0 spike=0
+[LIF] t=2 time=11889000 next_pot=62 spike=0
+[LIF] t=3 time=11891000 next_pot=62 spike=0
+ACC-FAST: +229 -> 229
+ACC-LAGGY: match offset=1 weight=229
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 229
+ACC: TS2 inactive -> corr[2] += 229
+ACC: TS3 inactive -> corr[3] += 229
+[LIF] START at time 11933000 threshold=300
+[LIF] t=0 time=11934000 next_pot=229 spike=0
+[LIF] t=1 time=11936000 next_pot=229 spike=0
+[LIF] t=2 time=11937000 next_pot=229 spike=0
+[LIF] t=3 time=11938000 next_pot=229 spike=0
+ACC-FAST: +232 -> 232
+ACC-FAST: +40 -> 272
+ACC-LAGGY: match offset=6 weight=232
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 232
+ACC: TS2 inactive -> corr[2] += 232
+ACC-LAGGY: match offset=10 weight=40
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 40
+ACC: TS1 inactive -> corr[1] += 40
+ACC: TS2 inactive -> corr[2] += 40
+[LIF] START at time 11991000 threshold=300
+[LIF] t=0 time=11992000 next_pot=232 spike=0
+[LIF] t=1 time=11993000 next_pot=232 spike=0
+[LIF] t=2 time=11994000 next_pot=232 spike=0
+[LIF] t=3 time=11996000 next_pot=504 spike=1
+ACC-FAST: +199 -> 199
+ACC-LAGGY: match offset=5 weight=199
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 199
+ACC: TS3 inactive -> corr[3] += 199
+[LIF] START at time 12031000 threshold=300
+[LIF] t=0 time=12032000 next_pot=199 spike=0
+[LIF] t=1 time=12033000 next_pot=199 spike=0
+[LIF] t=2 time=12034000 next_pot=398 spike=1
+[LIF] t=3 time=12036000 next_pot=0 spike=0
+ACC-FAST: +131 -> 131
+ACC-FAST: +178 -> 309
+ACC-FAST: +112 -> 421
+ACC-LAGGY: match offset=3 weight=131
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 131
+ACC: TS2 inactive -> corr[2] += 131
+ACC: TS3 inactive -> corr[3] += 131
+ACC-LAGGY: match offset=6 weight=178
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 178
+ACC: TS1 inactive -> corr[1] += 178
+ACC: TS2 inactive -> corr[2] += 178
+ACC-LAGGY: match offset=7 weight=112
+ACC: Loaded fibre-A: 0111
+ACC: TS3 inactive -> corr[3] += 112
+[LIF] START at time 12098000 threshold=300
+[LIF] t=0 time=12099000 next_pot=112 spike=0
+[LIF] t=1 time=12101000 next_pot=355 spike=1
+[LIF] t=2 time=12102000 next_pot=112 spike=0
+[LIF] t=3 time=12103000 next_pot=290 spike=0
+ACC-FAST: +137 -> 137
+ACC-LAGGY: match offset=4 weight=137
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 137
+ACC: TS2 inactive -> corr[2] += 137
+ACC: TS3 inactive -> corr[3] += 137
+[LIF] START at time 12138000 threshold=300
+[LIF] t=0 time=12139000 next_pot=137 spike=0
+[LIF] t=1 time=12141000 next_pot=137 spike=0
+[LIF] t=2 time=12142000 next_pot=137 spike=0
+[LIF] t=3 time=12143000 next_pot=137 spike=0
+ACC-FAST: +64 -> 64
+ACC-LAGGY: match offset=5 weight=64
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 64
+ACC: TS2 inactive -> corr[2] += 64
+ACC: TS3 inactive -> corr[3] += 64
+[LIF] START at time 12178000 threshold=300
+[LIF] t=0 time=12179000 next_pot=0 spike=0
+[LIF] t=1 time=12181000 next_pot=64 spike=0
+[LIF] t=2 time=12182000 next_pot=64 spike=0
+[LIF] t=3 time=12183000 next_pot=64 spike=0
+ACC-FAST: +74 -> 74
+ACC-FAST: +89 -> 163
+ACC-FAST: +96 -> 259
+ACC-LAGGY: match offset=1 weight=74
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 74
+ACC: TS3 inactive -> corr[3] += 74
+ACC-LAGGY: match offset=7 weight=89
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 89
+ACC: TS1 inactive -> corr[1] += 89
+ACC: TS2 inactive -> corr[2] += 89
+ACC-LAGGY: match offset=8 weight=96
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 96
+ACC: TS1 inactive -> corr[1] += 96
+ACC: TS2 inactive -> corr[2] += 96
+[LIF] START at time 12253000 threshold=300
+[LIF] t=0 time=12254000 next_pot=74 spike=0
+[LIF] t=1 time=12256000 next_pot=74 spike=0
+[LIF] t=2 time=12257000 next_pot=148 spike=0
+[LIF] t=3 time=12258000 next_pot=333 spike=1
+ACC-FAST: +67 -> 67
+ACC-FAST: +136 -> 203
+ACC-LAGGY: match offset=13 weight=67
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 67
+ACC: TS2 inactive -> corr[2] += 67
+ACC: TS3 inactive -> corr[3] += 67
+ACC-LAGGY: match offset=15 weight=136
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 136
+ACC: TS1 inactive -> corr[1] += 136
+ACC: TS3 inactive -> corr[3] += 136
+[LIF] START at time 12308000 threshold=300
+[LIF] t=0 time=12309000 next_pot=0 spike=0
+[LIF] t=1 time=12311000 next_pot=67 spike=0
+[LIF] t=2 time=12312000 next_pot=203 spike=0
+[LIF] t=3 time=12313000 next_pot=203 spike=0
+ACC-FAST: +134 -> 134
+ACC-LAGGY: match offset=7 weight=134
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 134
+ACC: TS2 inactive -> corr[2] += 134
+[LIF] START at time 12349000 threshold=300
+[LIF] t=0 time=12351000 next_pot=134 spike=0
+[LIF] t=1 time=12352000 next_pot=134 spike=0
+[LIF] t=2 time=12353000 next_pot=134 spike=0
+[LIF] t=3 time=12354000 next_pot=268 spike=0
+ACC-FAST: +74 -> 74
+ACC-FAST: +124 -> 198
+ACC-LAGGY: match offset=3 weight=74
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 74
+ACC: TS1 inactive -> corr[1] += 74
+ACC: TS3 inactive -> corr[3] += 74
+ACC-LAGGY: match offset=8 weight=124
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 124
+ACC: TS1 inactive -> corr[1] += 124
+ACC: TS3 inactive -> corr[3] += 124
+[LIF] START at time 12403000 threshold=300
+[LIF] t=0 time=12404000 next_pot=0 spike=0
+[LIF] t=1 time=12406000 next_pot=0 spike=0
+[LIF] t=2 time=12407000 next_pot=198 spike=0
+[LIF] t=3 time=12408000 next_pot=198 spike=0
+ACC-FAST: +78 -> 78
+ACC-LAGGY: match offset=2 weight=78
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 78
+ACC: TS2 inactive -> corr[2] += 78
+ACC: TS3 inactive -> corr[3] += 78
+[LIF] START at time 12443000 threshold=300
+[LIF] t=0 time=12444000 next_pot=0 spike=0
+[LIF] t=1 time=12446000 next_pot=78 spike=0
+[LIF] t=2 time=12447000 next_pot=78 spike=0
+[LIF] t=3 time=12448000 next_pot=78 spike=0
+ACC-FAST: +188 -> 188
+ACC-LAGGY: match offset=7 weight=188
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 188
+ACC: TS2 inactive -> corr[2] += 188
+[LIF] START at time 12483000 threshold=300
+[LIF] t=0 time=12484000 next_pot=0 spike=0
+[LIF] t=1 time=12486000 next_pot=188 spike=0
+[LIF] t=2 time=12487000 next_pot=188 spike=0
+[LIF] t=3 time=12488000 next_pot=376 spike=1
+ACC-FAST: +66 -> 66
+ACC-FAST: +19 -> 85
+ACC-LAGGY: match offset=2 weight=66
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 66
+ACC: TS1 inactive -> corr[1] += 66
+ACC: TS3 inactive -> corr[3] += 66
+ACC-LAGGY: match offset=5 weight=19
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 19
+ACC: TS2 inactive -> corr[2] += 19
+ACC: TS3 inactive -> corr[3] += 19
+[LIF] START at time 12537000 threshold=300
+[LIF] t=0 time=12538000 next_pot=19 spike=0
+[LIF] t=1 time=12539000 next_pot=19 spike=0
+[LIF] t=2 time=12541000 next_pot=85 spike=0
+[LIF] t=3 time=12542000 next_pot=85 spike=0
+ACC-FAST: +112 -> 112
+ACC-FAST: +194 -> 306
+ACC-FAST: +60 -> 366
+ACC-LAGGY: match offset=5 weight=112
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 112
+ACC: TS2 inactive -> corr[2] += 112
+ACC: TS3 inactive -> corr[3] += 112
+ACC-LAGGY: match offset=10 weight=194
+ACC: Loaded fibre-A: 1100
+ACC: TS0 inactive -> corr[0] += 194
+ACC: TS1 inactive -> corr[1] += 194
+ACC-LAGGY: match offset=12 weight=60
+ACC: Loaded fibre-A: 0011
+ACC: TS2 inactive -> corr[2] += 60
+ACC: TS3 inactive -> corr[3] += 60
+[LIF] START at time 12604000 threshold=300
+[LIF] t=0 time=12606000 next_pot=172 spike=0
+[LIF] t=1 time=12607000 next_pot=232 spike=0
+[LIF] t=2 time=12608000 next_pot=426 spike=1
+[LIF] t=3 time=12609000 next_pot=194 spike=0
+ACC-FAST: +19 -> 19
+ACC-FAST: +79 -> 98
+ACC-LAGGY: match offset=8 weight=19
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 19
+ACC: TS1 inactive -> corr[1] += 19
+ACC: TS2 inactive -> corr[2] += 19
+ACC-LAGGY: match offset=10 weight=79
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 79
+ACC: TS2 inactive -> corr[2] += 79
+ACC: TS3 inactive -> corr[3] += 79
+[LIF] START at time 12658000 threshold=300
+[LIF] t=0 time=12659000 next_pot=0 spike=0
+[LIF] t=1 time=12661000 next_pot=79 spike=0
+[LIF] t=2 time=12662000 next_pot=79 spike=0
+[LIF] t=3 time=12663000 next_pot=98 spike=0
+ACC-FAST: +110 -> 110
+ACC-FAST: +203 -> 313
+ACC-FAST: +138 -> 451
+ACC-LAGGY: match offset=8 weight=110
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 110
+ACC: TS2 inactive -> corr[2] += 110
+ACC: TS3 inactive -> corr[3] += 110
+ACC-LAGGY: match offset=10 weight=203
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 203
+ACC: TS2 inactive -> corr[2] += 203
+ACC: TS3 inactive -> corr[3] += 203
+ACC-LAGGY: match offset=11 weight=138
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 138
+ACC: TS2 inactive -> corr[2] += 138
+[LIF] START at time 12731000 threshold=300
+[LIF] t=0 time=12732000 next_pot=138 spike=0
+[LIF] t=1 time=12733000 next_pot=451 spike=1
+[LIF] t=2 time=12734000 next_pot=0 spike=0
+[LIF] t=3 time=12736000 next_pot=138 spike=0
+ACC-FAST: +43 -> 43
+ACC-LAGGY: match offset=5 weight=43
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 43
+ACC: TS2 inactive -> corr[2] += 43
+ACC: TS3 inactive -> corr[3] += 43
+[LIF] START at time 12771000 threshold=300
+[LIF] t=0 time=12772000 next_pot=43 spike=0
+[LIF] t=1 time=12773000 next_pot=43 spike=0
+[LIF] t=2 time=12774000 next_pot=43 spike=0
+[LIF] t=3 time=12776000 next_pot=43 spike=0
+ACC-FAST: +174 -> 174
+ACC-LAGGY: match offset=2 weight=174
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 174
+ACC: TS2 inactive -> corr[2] += 174
+ACC: TS3 inactive -> corr[3] += 174
+[LIF] START at time 12811000 threshold=300
+[LIF] t=0 time=12812000 next_pot=174 spike=0
+[LIF] t=1 time=12813000 next_pot=174 spike=0
+[LIF] t=2 time=12814000 next_pot=174 spike=0
+[LIF] t=3 time=12816000 next_pot=174 spike=0
+ACC-FAST: +136 -> 136
+ACC-LAGGY: match offset=8 weight=136
+ACC: Loaded fibre-A: 1110
+ACC: TS0 inactive -> corr[0] += 136
+[LIF] START at time 12851000 threshold=300
+[LIF] t=0 time=12852000 next_pot=0 spike=0
+[LIF] t=1 time=12853000 next_pot=136 spike=0
+[LIF] t=2 time=12854000 next_pot=272 spike=0
+[LIF] t=3 time=12856000 next_pot=408 spike=1
+ACC-FAST: +102 -> 102
+ACC-LAGGY: match offset=2 weight=102
+ACC: Loaded fibre-A: 1100
+ACC: TS0 inactive -> corr[0] += 102
+ACC: TS1 inactive -> corr[1] += 102
+[LIF] START at time 12891000 threshold=300
+[LIF] t=0 time=12892000 next_pot=0 spike=0
+[LIF] t=1 time=12893000 next_pot=0 spike=0
+[LIF] t=2 time=12894000 next_pot=102 spike=0
+[LIF] t=3 time=12896000 next_pot=204 spike=0
+ACC-FAST: +46 -> 46
+ACC-FAST: +112 -> 158
+ACC-LAGGY: match offset=2 weight=46
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 46
+ACC: TS1 inactive -> corr[1] += 46
+ACC: TS3 inactive -> corr[3] += 46
+ACC-LAGGY: match offset=10 weight=112
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 112
+ACC: TS2 inactive -> corr[2] += 112
+ACC: TS3 inactive -> corr[3] += 112
+[LIF] START at time 12944000 threshold=300
+[LIF] t=0 time=12946000 next_pot=0 spike=0
+[LIF] t=1 time=12947000 next_pot=112 spike=0
+[LIF] t=2 time=12948000 next_pot=158 spike=0
+[LIF] t=3 time=12949000 next_pot=158 spike=0
+ACC-FAST: +32 -> 32
+ACC-LAGGY: match offset=13 weight=32
+ACC: Loaded fibre-A: 1111
+[LIF] START at time 12983000 threshold=300
+[LIF] t=0 time=12984000 next_pot=32 spike=0
+[LIF] t=1 time=12986000 next_pot=64 spike=0
+[LIF] t=2 time=12987000 next_pot=96 spike=0
+[LIF] t=3 time=12988000 next_pot=128 spike=0
+ACC-FAST: +50 -> 50
+ACC-LAGGY: match offset=5 weight=50
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 50
+ACC: TS1 inactive -> corr[1] += 50
+ACC: TS3 inactive -> corr[3] += 50
+[LIF] START at time 13023000 threshold=300
+[LIF] t=0 time=13024000 next_pot=0 spike=0
+[LIF] t=1 time=13026000 next_pot=0 spike=0
+[LIF] t=2 time=13027000 next_pot=50 spike=0
+[LIF] t=3 time=13028000 next_pot=50 spike=0
+ACC-FAST: +149 -> 149
+ACC-LAGGY: match offset=8 weight=149
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 149
+ACC: TS1 inactive -> corr[1] += 149
+ACC: TS2 inactive -> corr[2] += 149
+[LIF] START at time 13063000 threshold=300
+[LIF] t=0 time=13064000 next_pot=0 spike=0
+[LIF] t=1 time=13066000 next_pot=0 spike=0
+[LIF] t=2 time=13067000 next_pot=0 spike=0
+[LIF] t=3 time=13068000 next_pot=149 spike=0
+ACC-FAST: +63 -> 63
+ACC-FAST: +131 -> 194
+ACC-LAGGY: match offset=13 weight=63
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 63
+ACC: TS1 inactive -> corr[1] += 63
+ACC: TS3 inactive -> corr[3] += 63
+ACC-LAGGY: match offset=14 weight=131
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 131
+ACC: TS2 inactive -> corr[2] += 131
+ACC: TS3 inactive -> corr[3] += 131
+[LIF] START at time 13124000 threshold=300
+[LIF] t=0 time=13126000 next_pot=0 spike=0
+[LIF] t=1 time=13127000 next_pot=131 spike=0
+[LIF] t=2 time=13128000 next_pot=194 spike=0
+[LIF] t=3 time=13129000 next_pot=194 spike=0
+ACC-FAST: +112 -> 112
+ACC-LAGGY: match offset=11 weight=112
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 112
+ACC: TS1 inactive -> corr[1] += 112
+ACC: TS3 inactive -> corr[3] += 112
+[LIF] START at time 13164000 threshold=300
+[LIF] t=0 time=13166000 next_pot=0 spike=0
+[LIF] t=1 time=13167000 next_pot=0 spike=0
+[LIF] t=2 time=13168000 next_pot=112 spike=0
+[LIF] t=3 time=13169000 next_pot=112 spike=0
+ACC-FAST: +183 -> 183
+ACC-LAGGY: match offset=7 weight=183
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 183
+ACC: TS2 inactive -> corr[2] += 183
+[LIF] START at time 13208000 threshold=300
+[LIF] t=0 time=13209000 next_pot=0 spike=0
+[LIF] t=1 time=13211000 next_pot=183 spike=0
+[LIF] t=2 time=13212000 next_pot=183 spike=0
+[LIF] t=3 time=13213000 next_pot=366 spike=1
+ACC-FAST: +69 -> 69
+ACC-FAST: +21 -> 90
+ACC-FAST: +238 -> 328
+ACC-LAGGY: match offset=5 weight=69
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 69
+ACC: TS2 inactive -> corr[2] += 69
+ACC: TS3 inactive -> corr[3] += 69
+ACC-LAGGY: match offset=6 weight=21
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 21
+ACC: TS2 inactive -> corr[2] += 21
+ACC: TS3 inactive -> corr[3] += 21
+ACC-LAGGY: match offset=10 weight=238
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 238
+ACC: TS1 inactive -> corr[1] += 238
+ACC: TS3 inactive -> corr[3] += 238
+[LIF] START at time 13279000 threshold=300
+[LIF] t=0 time=13281000 next_pot=69 spike=0
+[LIF] t=1 time=13282000 next_pot=90 spike=0
+[LIF] t=2 time=13283000 next_pot=328 spike=1
+[LIF] t=3 time=13284000 next_pot=0 spike=0
+ACC-FAST: +126 -> 126
+ACC-FAST: +221 -> 347
+ACC-LAGGY: match offset=4 weight=126
+ACC: Loaded fibre-A: 0110
+ACC: TS0 inactive -> corr[0] += 126
+ACC: TS3 inactive -> corr[3] += 126
+ACC-LAGGY: match offset=11 weight=221
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 221
+ACC: TS2 inactive -> corr[2] += 221
+ACC: TS3 inactive -> corr[3] += 221
+[LIF] START at time 13339000 threshold=300
+[LIF] t=0 time=13341000 next_pot=0 spike=0
+[LIF] t=1 time=13342000 next_pot=347 spike=1
+[LIF] t=2 time=13343000 next_pot=126 spike=0
+[LIF] t=3 time=13344000 next_pot=126 spike=0
+ACC-FAST: +247 -> 247
+ACC-LAGGY: match offset=14 weight=247
+ACC: Loaded fibre-A: 0111
+ACC: TS3 inactive -> corr[3] += 247
+[LIF] START at time 13383000 threshold=300
+[LIF] t=0 time=13384000 next_pot=247 spike=0
+[LIF] t=1 time=13386000 next_pot=494 spike=1
+[LIF] t=2 time=13387000 next_pot=247 spike=0
+[LIF] t=3 time=13388000 next_pot=247 spike=0
+ACC-FAST: +75 -> 75
+ACC-FAST: +222 -> 297
+ACC-LAGGY: match offset=7 weight=75
+ACC: Loaded fibre-A: 1100
+ACC: TS0 inactive -> corr[0] += 75
+ACC: TS1 inactive -> corr[1] += 75
+ACC-LAGGY: match offset=14 weight=222
+ACC: Loaded fibre-A: 1110
+ACC: TS0 inactive -> corr[0] += 222
+[LIF] START at time 13437000 threshold=300
+[LIF] t=0 time=13438000 next_pot=0 spike=0
+[LIF] t=1 time=13439000 next_pot=222 spike=0
+[LIF] t=2 time=13441000 next_pot=519 spike=1
+[LIF] t=3 time=13442000 next_pot=297 spike=0
+ACC-FAST: +43 -> 43
+ACC-FAST: +222 -> 265
+ACC-LAGGY: match offset=4 weight=43
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 43
+ACC: TS3 inactive -> corr[3] += 43
+ACC-LAGGY: match offset=5 weight=222
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 222
+ACC: TS2 inactive -> corr[2] += 222
+ACC: TS3 inactive -> corr[3] += 222
+[LIF] START at time 13491000 threshold=300
+[LIF] t=0 time=13492000 next_pot=43 spike=0
+[LIF] t=1 time=13493000 next_pot=265 spike=0
+[LIF] t=2 time=13494000 next_pot=308 spike=1
+[LIF] t=3 time=13496000 next_pot=0 spike=0
+ACC-FAST: +193 -> 193
+ACC-LAGGY: match offset=3 weight=193
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 193
+ACC: TS1 inactive -> corr[1] += 193
+ACC: TS2 inactive -> corr[2] += 193
+[LIF] START at time 13531000 threshold=300
+[LIF] t=0 time=13532000 next_pot=0 spike=0
+[LIF] t=1 time=13533000 next_pot=0 spike=0
+[LIF] t=2 time=13534000 next_pot=0 spike=0
+[LIF] t=3 time=13536000 next_pot=193 spike=0
+ACC-FAST: +99 -> 99
+ACC-LAGGY: match offset=8 weight=99
+ACC: Loaded fibre-A: 1011
+ACC: TS2 inactive -> corr[2] += 99
+[LIF] START at time 13571000 threshold=300
+[LIF] t=0 time=13572000 next_pot=99 spike=0
+[LIF] t=1 time=13573000 next_pot=198 spike=0
+[LIF] t=2 time=13574000 next_pot=198 spike=0
+[LIF] t=3 time=13576000 next_pot=297 spike=0
+ACC-FAST: +73 -> 73
+ACC-LAGGY: match offset=4 weight=73
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 73
+ACC: TS2 inactive -> corr[2] += 73
+ACC: TS3 inactive -> corr[3] += 73
+[LIF] START at time 13614000 threshold=300
+[LIF] t=0 time=13616000 next_pot=73 spike=0
+[LIF] t=1 time=13617000 next_pot=73 spike=0
+[LIF] t=2 time=13618000 next_pot=73 spike=0
+[LIF] t=3 time=13619000 next_pot=73 spike=0
+ACC-FAST: +95 -> 95
+ACC-FAST: +57 -> 152
+ACC-LAGGY: match offset=1 weight=95
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 95
+ACC: TS2 inactive -> corr[2] += 95
+ACC: TS3 inactive -> corr[3] += 95
+ACC-LAGGY: match offset=10 weight=57
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 57
+ACC: TS2 inactive -> corr[2] += 57
+ACC: TS3 inactive -> corr[3] += 57
+[LIF] START at time 13668000 threshold=300
+[LIF] t=0 time=13669000 next_pot=95 spike=0
+[LIF] t=1 time=13671000 next_pot=152 spike=0
+[LIF] t=2 time=13672000 next_pot=152 spike=0
+[LIF] t=3 time=13673000 next_pot=152 spike=0
+ACC-FAST: +244 -> 244
+ACC-FAST: +188 -> 432
+ACC-LAGGY: match offset=1 weight=244
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 244
+ACC: TS1 inactive -> corr[1] += 244
+ACC: TS3 inactive -> corr[3] += 244
+ACC-LAGGY: match offset=6 weight=188
+ACC: Loaded fibre-A: 1110
+ACC: TS0 inactive -> corr[0] += 188
+[LIF] START at time 13722000 threshold=300
+[LIF] t=0 time=13723000 next_pot=0 spike=0
+[LIF] t=1 time=13724000 next_pot=188 spike=0
+[LIF] t=2 time=13726000 next_pot=620 spike=1
+[LIF] t=3 time=13727000 next_pot=188 spike=0
+ACC-FAST: +49 -> 49
+ACC-FAST: +8 -> 57
+ACC-FAST: +178 -> 235
+ACC-FAST: +102 -> 337
+ACC-LAGGY: match offset=5 weight=49
+ACC-FAST: +130 -> 467
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 49
+ACC: TS2 inactive -> corr[2] += 49
+ACC: TS3 inactive -> corr[3] += 49
+ACC-LAGGY: match offset=6 weight=8
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 8
+ACC: TS2 inactive -> corr[2] += 8
+ACC: TS3 inactive -> corr[3] += 8
+ACC-LAGGY: match offset=9 weight=178
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 178
+ACC: TS1 inactive -> corr[1] += 178
+ACC: TS2 inactive -> corr[2] += 178
+ACC-LAGGY: match offset=11 weight=102
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 102
+ACC: TS2 inactive -> corr[2] += 102
+ACC: TS3 inactive -> corr[3] += 102
+ACC-LAGGY: match offset=14 weight=130
+ACC: Loaded fibre-A: 0111
+ACC: TS3 inactive -> corr[3] += 130
+[LIF] START at time 13818000 threshold=300
+[LIF] t=0 time=13819000 next_pot=187 spike=0
+[LIF] t=1 time=13821000 next_pot=419 spike=1
+[LIF] t=2 time=13822000 next_pot=130 spike=0
+[LIF] t=3 time=13823000 next_pot=308 spike=1
+ACC-FAST: +222 -> 222
+ACC-FAST: +251 -> 473
+ACC-LAGGY: match offset=5 weight=222
+ACC: Loaded fibre-A: 1100
+ACC: TS0 inactive -> corr[0] += 222
+ACC: TS1 inactive -> corr[1] += 222
+ACC-LAGGY: match offset=8 weight=251
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 251
+ACC: TS1 inactive -> corr[1] += 251
+ACC: TS3 inactive -> corr[3] += 251
+[LIF] START at time 13872000 threshold=300
+[LIF] t=0 time=13873000 next_pot=0 spike=0
+[LIF] t=1 time=13874000 next_pot=0 spike=0
+[LIF] t=2 time=13876000 next_pot=473 spike=1
+[LIF] t=3 time=13877000 next_pot=222 spike=0
+ACC-FAST: +86 -> 86
+ACC-LAGGY: match offset=4 weight=86
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 86
+ACC: TS1 inactive -> corr[1] += 86
+ACC: TS3 inactive -> corr[3] += 86
+[LIF] START at time 13912000 threshold=300
+[LIF] t=0 time=13913000 next_pot=0 spike=0
+[LIF] t=1 time=13914000 next_pot=0 spike=0
+[LIF] t=2 time=13916000 next_pot=86 spike=0
+[LIF] t=3 time=13917000 next_pot=86 spike=0
+ACC-FAST: +156 -> 156
+ACC-LAGGY: match offset=2 weight=156
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 156
+ACC: TS1 inactive -> corr[1] += 156
+ACC: TS3 inactive -> corr[3] += 156
+[LIF] START at time 13956000 threshold=300
+[LIF] t=0 time=13957000 next_pot=0 spike=0
+[LIF] t=1 time=13958000 next_pot=0 spike=0
+[LIF] t=2 time=13959000 next_pot=156 spike=0
+[LIF] t=3 time=13961000 next_pot=156 spike=0
+ACC-FAST: +184 -> 184
+ACC-LAGGY: match offset=4 weight=184
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 184
+ACC: TS2 inactive -> corr[2] += 184
+ACC: TS3 inactive -> corr[3] += 184
+[LIF] START at time 13999000 threshold=300
+[LIF] t=0 time=14001000 next_pot=184 spike=0
+[LIF] t=1 time=14002000 next_pot=184 spike=0
+[LIF] t=2 time=14003000 next_pot=184 spike=0
+[LIF] t=3 time=14004000 next_pot=184 spike=0
+ACC-FAST: +156 -> 156
+ACC-LAGGY: match offset=4 weight=156
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 156
+ACC: TS1 inactive -> corr[1] += 156
+ACC: TS3 inactive -> corr[3] += 156
+[LIF] START at time 14052000 threshold=300
+[LIF] t=0 time=14053000 next_pot=0 spike=0
+[LIF] t=1 time=14054000 next_pot=0 spike=0
+[LIF] t=2 time=14056000 next_pot=156 spike=0
+[LIF] t=3 time=14057000 next_pot=156 spike=0
+ACC-FAST: +33 -> 33
+ACC-LAGGY: match offset=2 weight=33
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 33
+ACC: TS2 inactive -> corr[2] += 33
+ACC: TS3 inactive -> corr[3] += 33
+[LIF] START at time 14092000 threshold=300
+[LIF] t=0 time=14093000 next_pot=0 spike=0
+[LIF] t=1 time=14094000 next_pot=33 spike=0
+[LIF] t=2 time=14096000 next_pot=33 spike=0
+[LIF] t=3 time=14097000 next_pot=33 spike=0
+ACC-FAST: +202 -> 202
+ACC-FAST: +138 -> 340
+ACC-LAGGY: match offset=2 weight=202
+ACC: Loaded fibre-A: 1011
+ACC: TS2 inactive -> corr[2] += 202
+ACC-LAGGY: match offset=5 weight=138
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 138
+ACC: TS2 inactive -> corr[2] += 138
+ACC: TS3 inactive -> corr[3] += 138
+[LIF] START at time 14146000 threshold=300
+[LIF] t=0 time=14147000 next_pot=202 spike=0
+[LIF] t=1 time=14148000 next_pot=542 spike=1
+[LIF] t=2 time=14149000 next_pot=0 spike=0
+[LIF] t=3 time=14151000 next_pot=202 spike=0
+ACC-FAST: +223 -> 223
+ACC-LAGGY: match offset=9 weight=223
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 223
+ACC: TS2 inactive -> corr[2] += 223
+ACC: TS3 inactive -> corr[3] += 223
+[LIF] START at time 14186000 threshold=300
+[LIF] t=0 time=14187000 next_pot=0 spike=0
+[LIF] t=1 time=14188000 next_pot=223 spike=0
+[LIF] t=2 time=14189000 next_pot=223 spike=0
+[LIF] t=3 time=14191000 next_pot=223 spike=0
+ACC-FAST: +50 -> 50
+ACC-LAGGY: match offset=9 weight=50
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 50
+ACC: TS1 inactive -> corr[1] += 50
+ACC: TS3 inactive -> corr[3] += 50
+[LIF] START at time 14234000 threshold=300
+[LIF] t=0 time=14236000 next_pot=0 spike=0
+[LIF] t=1 time=14237000 next_pot=0 spike=0
+[LIF] t=2 time=14238000 next_pot=50 spike=0
+[LIF] t=3 time=14239000 next_pot=50 spike=0
+ACC-FAST: +171 -> 171
+ACC-FAST: +199 -> 370
+ACC-FAST: +20 -> 390
+ACC-FAST: +168 -> 558
+ACC-LAGGY: match offset=3 weight=171
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 171
+ACC: TS1 inactive -> corr[1] += 171
+ACC: TS2 inactive -> corr[2] += 171
+ACC-LAGGY: match offset=5 weight=199
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 199
+ACC: TS1 inactive -> corr[1] += 199
+ACC: TS2 inactive -> corr[2] += 199
+ACC-LAGGY: match offset=6 weight=20
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 20
+ACC: TS2 inactive -> corr[2] += 20
+ACC: TS3 inactive -> corr[3] += 20
+ACC-LAGGY: match offset=9 weight=168
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 168
+ACC: TS2 inactive -> corr[2] += 168
+ACC: TS3 inactive -> corr[3] += 168
+[LIF] START at time 14319000 threshold=300
+[LIF] t=0 time=14321000 next_pot=168 spike=0
+[LIF] t=1 time=14322000 next_pot=188 spike=0
+[LIF] t=2 time=14323000 next_pot=188 spike=0
+[LIF] t=3 time=14324000 next_pot=558 spike=1
+ACC-FAST: +202 -> 202
+ACC-FAST: +134 -> 336
+ACC-LAGGY: match offset=2 weight=202
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 202
+ACC: TS2 inactive -> corr[2] += 202
+ACC: TS3 inactive -> corr[3] += 202
+ACC-LAGGY: match offset=3 weight=134
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 134
+ACC: TS1 inactive -> corr[1] += 134
+ACC: TS3 inactive -> corr[3] += 134
+[LIF] START at time 14377000 threshold=300
+[LIF] t=0 time=14378000 next_pot=202 spike=0
+[LIF] t=1 time=14379000 next_pot=202 spike=0
+[LIF] t=2 time=14381000 next_pot=336 spike=1
+[LIF] t=3 time=14382000 next_pot=0 spike=0
+ACC-FAST: +141 -> 141
+ACC-FAST: +84 -> 225
+ACC-FAST: +94 -> 319
+ACC-FAST: +1 -> 320
+ACC-LAGGY: match offset=1 weight=141
+ACC-FAST: +176 -> 496
+ACC: Loaded fibre-A: 0110
+ACC: TS0 inactive -> corr[0] += 141
+ACC: TS3 inactive -> corr[3] += 141
+ACC-LAGGY: match offset=3 weight=84
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 84
+ACC: TS2 inactive -> corr[2] += 84
+ACC: TS3 inactive -> corr[3] += 84
+ACC-LAGGY: match offset=8 weight=94
+ACC: Loaded fibre-A: 1111
+ACC-LAGGY: match offset=13 weight=1
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 1
+ACC: TS1 inactive -> corr[1] += 1
+ACC: TS2 inactive -> corr[2] += 1
+ACC-LAGGY: match offset=14 weight=176
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 176
+ACC: TS2 inactive -> corr[2] += 176
+ACC: TS3 inactive -> corr[3] += 176
+[LIF] START at time 14476000 threshold=300
+[LIF] t=0 time=14477000 next_pot=270 spike=0
+[LIF] t=1 time=14478000 next_pot=589 spike=1
+[LIF] t=2 time=14479000 next_pot=235 spike=0
+[LIF] t=3 time=14481000 next_pot=330 spike=1
+ACC-FAST: +164 -> 164
+ACC-FAST: +115 -> 279
+ACC-FAST: +215 -> 494
+ACC-LAGGY: match offset=5 weight=164
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 164
+ACC: TS2 inactive -> corr[2] += 164
+ACC: TS3 inactive -> corr[3] += 164
+ACC-LAGGY: match offset=7 weight=115
+ACC: Loaded fibre-A: 0011
+ACC: TS2 inactive -> corr[2] += 115
+ACC: TS3 inactive -> corr[3] += 115
+ACC-LAGGY: match offset=14 weight=215
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 215
+ACC: TS2 inactive -> corr[2] += 215
+ACC: TS3 inactive -> corr[3] += 215
+[LIF] START at time 14543000 threshold=300
+[LIF] t=0 time=14544000 next_pot=279 spike=0
+[LIF] t=1 time=14546000 next_pot=609 spike=1
+[LIF] t=2 time=14547000 next_pot=0 spike=0
+[LIF] t=3 time=14548000 next_pot=0 spike=0
+ACC-FAST: +183 -> 183
+ACC-LAGGY: match offset=15 weight=183
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 183
+ACC: TS2 inactive -> corr[2] += 183
+[LIF] START at time 14593000 threshold=300
+[LIF] t=0 time=14594000 next_pot=183 spike=0
+[LIF] t=1 time=14596000 next_pot=183 spike=0
+[LIF] t=2 time=14597000 next_pot=183 spike=0
+[LIF] t=3 time=14598000 next_pot=366 spike=1
+ACC-FAST: +191 -> 191
+ACC-FAST: +67 -> 258
+ACC-FAST: +55 -> 313
+ACC-LAGGY: match offset=7 weight=191
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 191
+ACC: TS2 inactive -> corr[2] += 191
+ACC: TS3 inactive -> corr[3] += 191
+ACC-LAGGY: match offset=8 weight=67
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 67
+ACC: TS2 inactive -> corr[2] += 67
+ACC-LAGGY: match offset=9 weight=55
+ACC: Loaded fibre-A: 1110
+ACC: TS0 inactive -> corr[0] += 55
+[LIF] START at time 14662000 threshold=300
+[LIF] t=0 time=14663000 next_pot=0 spike=0
+[LIF] t=1 time=14664000 next_pot=313 spike=1
+[LIF] t=2 time=14666000 next_pot=55 spike=0
+[LIF] t=3 time=14667000 next_pot=177 spike=0
+ACC-FAST: +168 -> 168
+ACC-LAGGY: match offset=9 weight=168
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 168
+ACC: TS2 inactive -> corr[2] += 168
+ACC: TS3 inactive -> corr[3] += 168
+[LIF] START at time 14702000 threshold=300
+[LIF] t=0 time=14703000 next_pot=168 spike=0
+[LIF] t=1 time=14704000 next_pot=168 spike=0
+[LIF] t=2 time=14706000 next_pot=168 spike=0
+[LIF] t=3 time=14707000 next_pot=168 spike=0
+ACC-FAST: +124 -> 124
+ACC-FAST: +209 -> 333
+ACC-LAGGY: match offset=7 weight=124
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 124
+ACC: TS1 inactive -> corr[1] += 124
+ACC: TS3 inactive -> corr[3] += 124
+ACC-LAGGY: match offset=13 weight=209
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 209
+ACC: TS2 inactive -> corr[2] += 209
+ACC: TS3 inactive -> corr[3] += 209
+[LIF] START at time 14756000 threshold=300
+[LIF] t=0 time=14757000 next_pot=209 spike=0
+[LIF] t=1 time=14758000 next_pot=209 spike=0
+[LIF] t=2 time=14759000 next_pot=333 spike=1
+[LIF] t=3 time=14761000 next_pot=0 spike=0
+ACC-FAST: +7 -> 7
+ACC-FAST: +3 -> 10
+ACC-FAST: +226 -> 236
+ACC-LAGGY: match offset=4 weight=7
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 7
+ACC: TS2 inactive -> corr[2] += 7
+ACC: TS3 inactive -> corr[3] += 7
+ACC-LAGGY: match offset=10 weight=3
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 3
+ACC: TS1 inactive -> corr[1] += 3
+ACC: TS3 inactive -> corr[3] += 3
+ACC-LAGGY: match offset=11 weight=226
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 226
+ACC: TS2 inactive -> corr[2] += 226
+ACC: TS3 inactive -> corr[3] += 226
+[LIF] START at time 14823000 threshold=300
+[LIF] t=0 time=14824000 next_pot=226 spike=0
+[LIF] t=1 time=14826000 next_pot=233 spike=0
+[LIF] t=2 time=14827000 next_pot=236 spike=0
+[LIF] t=3 time=14828000 next_pot=236 spike=0
+ACC-FAST: +174 -> 174
+ACC-LAGGY: match offset=4 weight=174
+ACC: Loaded fibre-A: 1101
+ACC: TS1 inactive -> corr[1] += 174
+[LIF] START at time 14863000 threshold=300
+[LIF] t=0 time=14864000 next_pot=174 spike=0
+[LIF] t=1 time=14866000 next_pot=174 spike=0
+[LIF] t=2 time=14867000 next_pot=348 spike=1
+[LIF] t=3 time=14868000 next_pot=174 spike=0
+ACC-FAST: +49 -> 49
+ACC-LAGGY: match offset=7 weight=49
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 49
+ACC: TS1 inactive -> corr[1] += 49
+ACC: TS3 inactive -> corr[3] += 49
+[LIF] START at time 14907000 threshold=300
+[LIF] t=0 time=14908000 next_pot=0 spike=0
+[LIF] t=1 time=14909000 next_pot=0 spike=0
+[LIF] t=2 time=14911000 next_pot=49 spike=0
+[LIF] t=3 time=14912000 next_pot=49 spike=0
+ACC-FAST: +146 -> 146
+ACC-LAGGY: match offset=8 weight=146
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 146
+ACC: TS1 inactive -> corr[1] += 146
+ACC: TS3 inactive -> corr[3] += 146
+[LIF] START at time 14947000 threshold=300
+[LIF] t=0 time=14948000 next_pot=0 spike=0
+[LIF] t=1 time=14949000 next_pot=0 spike=0
+[LIF] t=2 time=14951000 next_pot=146 spike=0
+[LIF] t=3 time=14952000 next_pot=146 spike=0
+ACC-FAST: +83 -> 83
+ACC-FAST: +214 -> 297
+ACC-FAST: +7 -> 304
+ACC-FAST: +47 -> 351
+ACC-LAGGY: match offset=2 weight=83
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 83
+ACC: TS2 inactive -> corr[2] += 83
+ACC: TS3 inactive -> corr[3] += 83
+ACC-LAGGY: match offset=9 weight=214
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 214
+ACC: TS1 inactive -> corr[1] += 214
+ACC: TS3 inactive -> corr[3] += 214
+ACC-LAGGY: match offset=13 weight=7
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 7
+ACC: TS2 inactive -> corr[2] += 7
+ACC: TS3 inactive -> corr[3] += 7
+ACC-LAGGY: match offset=15 weight=47
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 47
+ACC: TS2 inactive -> corr[2] += 47
+[LIF] START at time 15029000 threshold=300
+[LIF] t=0 time=15031000 next_pot=137 spike=0
+[LIF] t=1 time=15032000 next_pot=137 spike=0
+[LIF] t=2 time=15033000 next_pot=351 spike=1
+[LIF] t=3 time=15034000 next_pot=47 spike=0
+ACC-FAST: +215 -> 215
+ACC-FAST: +72 -> 287
+ACC-LAGGY: match offset=10 weight=215
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 215
+ACC: TS2 inactive -> corr[2] += 215
+ACC-LAGGY: match offset=12 weight=72
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 72
+ACC: TS1 inactive -> corr[1] += 72
+ACC: TS3 inactive -> corr[3] += 72
+[LIF] START at time 15083000 threshold=300
+[LIF] t=0 time=15084000 next_pot=0 spike=0
+[LIF] t=1 time=15086000 next_pot=215 spike=0
+[LIF] t=2 time=15087000 next_pot=287 spike=0
+[LIF] t=3 time=15088000 next_pot=502 spike=1
+ACC-FAST: +185 -> 185
+ACC-LAGGY: match offset=10 weight=185
+ACC: Loaded fibre-A: 0011
+ACC: TS2 inactive -> corr[2] += 185
+ACC: TS3 inactive -> corr[3] += 185
+[LIF] START at time 15123000 threshold=300
+[LIF] t=0 time=15124000 next_pot=185 spike=0
+[LIF] t=1 time=15126000 next_pot=370 spike=1
+[LIF] t=2 time=15127000 next_pot=0 spike=0
+[LIF] t=3 time=15128000 next_pot=0 spike=0
+ACC-FAST: +152 -> 152
+ACC-LAGGY: match offset=5 weight=152
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 152
+ACC: TS1 inactive -> corr[1] += 152
+ACC: TS2 inactive -> corr[2] += 152
+[LIF] START at time 15174000 threshold=300
+[LIF] t=0 time=15176000 next_pot=0 spike=0
+[LIF] t=1 time=15177000 next_pot=0 spike=0
+[LIF] t=2 time=15178000 next_pot=0 spike=0
+[LIF] t=3 time=15179000 next_pot=152 spike=0
+ACC-FAST: +82 -> 82
+ACC-LAGGY: match offset=6 weight=82
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 82
+ACC: TS1 inactive -> corr[1] += 82
+ACC: TS3 inactive -> corr[3] += 82
+[LIF] START at time 15218000 threshold=300
+[LIF] t=0 time=15219000 next_pot=0 spike=0
+[LIF] t=1 time=15221000 next_pot=0 spike=0
+[LIF] t=2 time=15222000 next_pot=82 spike=0
+[LIF] t=3 time=15223000 next_pot=82 spike=0
+ACC-FAST: +21 -> 21
+ACC-FAST: +255 -> 276
+ACC-LAGGY: match offset=2 weight=21
+ACC: Loaded fibre-A: 0011
+ACC: TS2 inactive -> corr[2] += 21
+ACC: TS3 inactive -> corr[3] += 21
+ACC-LAGGY: match offset=17 weight=255
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 255
+ACC: TS2 inactive -> corr[2] += 255
+ACC: TS3 inactive -> corr[3] += 255
+[LIF] START at time 15272000 threshold=300
+[LIF] t=0 time=15273000 next_pot=276 spike=0
+[LIF] t=1 time=15274000 next_pot=297 spike=0
+[LIF] t=2 time=15276000 next_pot=297 spike=0
+[LIF] t=3 time=15277000 next_pot=297 spike=0
+ACC-FAST: +113 -> 113
+ACC-FAST: +160 -> 273
+ACC-FAST: +96 -> 369
+ACC-LAGGY: match offset=8 weight=113
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 113
+ACC: TS1 inactive -> corr[1] += 113
+ACC: TS3 inactive -> corr[3] += 113
+ACC-LAGGY: match offset=10 weight=160
+ACC: Loaded fibre-A: 1110
+ACC: TS0 inactive -> corr[0] += 160
+ACC-LAGGY: match offset=13 weight=96
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 96
+ACC: TS1 inactive -> corr[1] += 96
+ACC: TS3 inactive -> corr[3] += 96
+[LIF] START at time 15339000 threshold=300
+[LIF] t=0 time=15341000 next_pot=0 spike=0
+[LIF] t=1 time=15342000 next_pot=160 spike=0
+[LIF] t=2 time=15343000 next_pot=529 spike=1
+[LIF] t=3 time=15344000 next_pot=160 spike=0
+ACC-FAST: +174 -> 174
+ACC-LAGGY: match offset=7 weight=174
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 174
+ACC: TS2 inactive -> corr[2] += 174
+ACC: TS3 inactive -> corr[3] += 174
+[LIF] START at time 15383000 threshold=300
+[LIF] t=0 time=15384000 next_pot=174 spike=0
+[LIF] t=1 time=15386000 next_pot=174 spike=0
+[LIF] t=2 time=15387000 next_pot=174 spike=0
+[LIF] t=3 time=15388000 next_pot=174 spike=0
+ACC-FAST: +58 -> 58
+ACC-LAGGY: match offset=7 weight=58
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 58
+ACC: TS2 inactive -> corr[2] += 58
+ACC: TS3 inactive -> corr[3] += 58
+[LIF] START at time 15423000 threshold=300
+[LIF] t=0 time=15424000 next_pot=58 spike=0
+[LIF] t=1 time=15426000 next_pot=58 spike=0
+[LIF] t=2 time=15427000 next_pot=58 spike=0
+[LIF] t=3 time=15428000 next_pot=58 spike=0
+ACC-FAST: +203 -> 203
+ACC-FAST: +9 -> 212
+ACC-FAST: +172 -> 384
+ACC-LAGGY: match offset=4 weight=203
+ACC: Loaded fibre-A: 1110
+ACC: TS0 inactive -> corr[0] += 203
+ACC-LAGGY: match offset=8 weight=9
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 9
+ACC: TS1 inactive -> corr[1] += 9
+ACC: TS3 inactive -> corr[3] += 9
+ACC-LAGGY: match offset=9 weight=172
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 172
+ACC: TS1 inactive -> corr[1] += 172
+ACC: TS3 inactive -> corr[3] += 172
+[LIF] START at time 15494000 threshold=300
+[LIF] t=0 time=15496000 next_pot=0 spike=0
+[LIF] t=1 time=15497000 next_pot=203 spike=0
+[LIF] t=2 time=15498000 next_pot=587 spike=1
+[LIF] t=3 time=15499000 next_pot=203 spike=0
+ACC-FAST: +149 -> 149
+ACC-FAST: +55 -> 204
+ACC-FAST: +59 -> 263
+ACC-FAST: +223 -> 486
+ACC-LAGGY: match offset=3 weight=149
+ACC-FAST: +47 -> 533
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 149
+ACC: TS2 inactive -> corr[2] += 149
+ACC: TS3 inactive -> corr[3] += 149
+ACC-LAGGY: match offset=4 weight=55
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 55
+ACC: TS2 inactive -> corr[2] += 55
+ACC: TS3 inactive -> corr[3] += 55
+ACC-LAGGY: match offset=8 weight=59
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 59
+ACC: TS1 inactive -> corr[1] += 59
+ACC: TS3 inactive -> corr[3] += 59
+ACC-LAGGY: match offset=13 weight=223
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 223
+ACC: TS2 inactive -> corr[2] += 223
+ACC: TS3 inactive -> corr[3] += 223
+ACC-LAGGY: match offset=15 weight=47
+ACC: Loaded fibre-A: 1101
+ACC: TS1 inactive -> corr[1] += 47
+[LIF] START at time 15598000 threshold=300
+[LIF] t=0 time=15599000 next_pot=419 spike=1
+[LIF] t=1 time=15601000 next_pot=55 spike=0
+[LIF] t=2 time=15602000 next_pot=161 spike=0
+[LIF] t=3 time=15603000 next_pot=208 spike=0
+ACC-FAST: +234 -> 234
+ACC-FAST: +173 -> 407
+ACC-FAST: +240 -> 647
+ACC-LAGGY: match offset=5 weight=234
+ACC: Loaded fibre-A: 1011
+ACC: TS2 inactive -> corr[2] += 234
+ACC-LAGGY: match offset=16 weight=173
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 173
+ACC: TS2 inactive -> corr[2] += 173
+ACC: TS3 inactive -> corr[3] += 173
+ACC-LAGGY: match offset=18 weight=240
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 240
+ACC: TS2 inactive -> corr[2] += 240
+ACC: TS3 inactive -> corr[3] += 240
+[LIF] START at time 15666000 threshold=300
+[LIF] t=0 time=15667000 next_pot=407 spike=1
+[LIF] t=1 time=15668000 next_pot=474 spike=1
+[LIF] t=2 time=15669000 next_pot=0 spike=0
+[LIF] t=3 time=15671000 next_pot=234 spike=0
+ACC-FAST: +212 -> 212
+ACC-FAST: +144 -> 356
+ACC-FAST: +39 -> 395
+ACC-LAGGY: match offset=4 weight=212
+ACC: Loaded fibre-A: 0011
+ACC: TS2 inactive -> corr[2] += 212
+ACC: TS3 inactive -> corr[3] += 212
+ACC-LAGGY: match offset=7 weight=144
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 144
+ACC: TS1 inactive -> corr[1] += 144
+ACC: TS3 inactive -> corr[3] += 144
+ACC-LAGGY: match offset=9 weight=39
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 39
+ACC: TS1 inactive -> corr[1] += 39
+ACC: TS2 inactive -> corr[2] += 39
+[LIF] START at time 15733000 threshold=300
+[LIF] t=0 time=15734000 next_pot=212 spike=0
+[LIF] t=1 time=15736000 next_pot=424 spike=1
+[LIF] t=2 time=15737000 next_pot=144 spike=0
+[LIF] t=3 time=15738000 next_pot=183 spike=0
+ACC-FAST: +71 -> 71
+ACC-FAST: +93 -> 164
+ACC-FAST: +207 -> 371
+ACC-LAGGY: match offset=8 weight=71
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 71
+ACC: TS1 inactive -> corr[1] += 71
+ACC: TS2 inactive -> corr[2] += 71
+ACC-LAGGY: match offset=10 weight=93
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 93
+ACC: TS2 inactive -> corr[2] += 93
+ACC: TS3 inactive -> corr[3] += 93
+ACC-LAGGY: match offset=13 weight=207
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 207
+ACC: TS2 inactive -> corr[2] += 207
+ACC: TS3 inactive -> corr[3] += 207
+[LIF] START at time 15802000 threshold=300
+[LIF] t=0 time=15803000 next_pot=0 spike=0
+[LIF] t=1 time=15804000 next_pot=300 spike=0
+[LIF] t=2 time=15806000 next_pot=300 spike=0
+[LIF] t=3 time=15807000 next_pot=371 spike=1
+ACC-FAST: +23 -> 23
+ACC-LAGGY: match offset=7 weight=23
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 23
+ACC: TS2 inactive -> corr[2] += 23
+ACC: TS3 inactive -> corr[3] += 23
+[LIF] START at time 15842000 threshold=300
+[LIF] t=0 time=15843000 next_pot=0 spike=0
+[LIF] t=1 time=15844000 next_pot=23 spike=0
+[LIF] t=2 time=15846000 next_pot=23 spike=0
+[LIF] t=3 time=15847000 next_pot=23 spike=0
+ACC-FAST: +164 -> 164
+ACC-LAGGY: match offset=4 weight=164
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 164
+ACC: TS2 inactive -> corr[2] += 164
+ACC: TS3 inactive -> corr[3] += 164
+[LIF] START at time 15882000 threshold=300
+[LIF] t=0 time=15883000 next_pot=164 spike=0
+[LIF] t=1 time=15884000 next_pot=164 spike=0
+[LIF] t=2 time=15886000 next_pot=164 spike=0
+[LIF] t=3 time=15887000 next_pot=164 spike=0
+ACC-FAST: +24 -> 24
+ACC-FAST: +74 -> 98
+ACC-FAST: +44 -> 142
+ACC-LAGGY: match offset=4 weight=24
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 24
+ACC: TS2 inactive -> corr[2] += 24
+ACC: TS3 inactive -> corr[3] += 24
+ACC-LAGGY: match offset=6 weight=74
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 74
+ACC: TS1 inactive -> corr[1] += 74
+ACC: TS3 inactive -> corr[3] += 74
+ACC-LAGGY: match offset=9 weight=44
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 44
+ACC: TS1 inactive -> corr[1] += 44
+ACC: TS3 inactive -> corr[3] += 44
+[LIF] START at time 15949000 threshold=300
+[LIF] t=0 time=15951000 next_pot=0 spike=0
+[LIF] t=1 time=15952000 next_pot=24 spike=0
+[LIF] t=2 time=15953000 next_pot=142 spike=0
+[LIF] t=3 time=15954000 next_pot=142 spike=0
+ACC-FAST: +224 -> 224
+ACC-LAGGY: match offset=9 weight=224
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 224
+ACC: TS2 inactive -> corr[2] += 224
+ACC: TS3 inactive -> corr[3] += 224
+[LIF] START at time 15993000 threshold=300
+[LIF] t=0 time=15994000 next_pot=0 spike=0
+[LIF] t=1 time=15996000 next_pot=224 spike=0
+[LIF] t=2 time=15997000 next_pot=224 spike=0
+[LIF] t=3 time=15998000 next_pot=224 spike=0
+ACC-FAST: +158 -> 158
+ACC-FAST: +19 -> 177
+ACC-LAGGY: match offset=1 weight=158
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 158
+ACC: TS1 inactive -> corr[1] += 158
+ACC: TS3 inactive -> corr[3] += 158
+ACC-LAGGY: match offset=4 weight=19
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 19
+ACC: TS2 inactive -> corr[2] += 19
+ACC: TS3 inactive -> corr[3] += 19
+[LIF] START at time 16047000 threshold=300
+[LIF] t=0 time=16048000 next_pot=0 spike=0
+[LIF] t=1 time=16049000 next_pot=19 spike=0
+[LIF] t=2 time=16051000 next_pot=177 spike=0
+[LIF] t=3 time=16052000 next_pot=177 spike=0
+ACC-FAST: +4 -> 4
+ACC-LAGGY: match offset=13 weight=4
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 4
+ACC: TS2 inactive -> corr[2] += 4
+ACC: TS3 inactive -> corr[3] += 4
+[LIF] START at time 16087000 threshold=300
+[LIF] t=0 time=16088000 next_pot=0 spike=0
+[LIF] t=1 time=16089000 next_pot=4 spike=0
+[LIF] t=2 time=16091000 next_pot=4 spike=0
+[LIF] t=3 time=16092000 next_pot=4 spike=0
+ACC-FAST: +65 -> 65
+ACC-FAST: +112 -> 177
+ACC-LAGGY: match offset=11 weight=65
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 65
+ACC: TS1 inactive -> corr[1] += 65
+ACC: TS3 inactive -> corr[3] += 65
+ACC-LAGGY: match offset=21 weight=112
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 112
+ACC: TS1 inactive -> corr[1] += 112
+ACC: TS3 inactive -> corr[3] += 112
+[LIF] START at time 16141000 threshold=300
+[LIF] t=0 time=16142000 next_pot=0 spike=0
+[LIF] t=1 time=16143000 next_pot=0 spike=0
+[LIF] t=2 time=16144000 next_pot=177 spike=0
+[LIF] t=3 time=16146000 next_pot=177 spike=0
+ACC-FAST: +168 -> 168
+ACC-LAGGY: match offset=13 weight=168
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 168
+ACC: TS2 inactive -> corr[2] += 168
+ACC: TS3 inactive -> corr[3] += 168
+[LIF] START at time 16181000 threshold=300
+[LIF] t=0 time=16182000 next_pot=0 spike=0
+[LIF] t=1 time=16183000 next_pot=168 spike=0
+[LIF] t=2 time=16184000 next_pot=168 spike=0
+[LIF] t=3 time=16186000 next_pot=168 spike=0
+ACC-FAST: +115 -> 115
+ACC-LAGGY: match offset=13 weight=115
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 115
+ACC: TS2 inactive -> corr[2] += 115
+ACC: TS3 inactive -> corr[3] += 115
+[LIF] START at time 16224000 threshold=300
+[LIF] t=0 time=16226000 next_pot=115 spike=0
+[LIF] t=1 time=16227000 next_pot=115 spike=0
+[LIF] t=2 time=16228000 next_pot=115 spike=0
+[LIF] t=3 time=16229000 next_pot=115 spike=0
+ACC-FAST: +97 -> 97
+ACC-FAST: +107 -> 204
+ACC-FAST: +127 -> 331
+ACC-LAGGY: match offset=4 weight=97
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 97
+ACC: TS1 inactive -> corr[1] += 97
+ACC: TS3 inactive -> corr[3] += 97
+ACC-LAGGY: match offset=7 weight=107
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 107
+ACC: TS1 inactive -> corr[1] += 107
+ACC: TS3 inactive -> corr[3] += 107
+ACC-LAGGY: match offset=11 weight=127
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 127
+ACC: TS1 inactive -> corr[1] += 127
+ACC: TS3 inactive -> corr[3] += 127
+[LIF] START at time 16296000 threshold=300
+[LIF] t=0 time=16297000 next_pot=0 spike=0
+[LIF] t=1 time=16298000 next_pot=0 spike=0
+[LIF] t=2 time=16299000 next_pot=331 spike=1
+[LIF] t=3 time=16301000 next_pot=0 spike=0
+ACC-FAST: +216 -> 216
+ACC-FAST: +96 -> 312
+ACC-FAST: +187 -> 499
+ACC-LAGGY: match offset=1 weight=216
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 216
+ACC: TS1 inactive -> corr[1] += 216
+ACC: TS3 inactive -> corr[3] += 216
+ACC-LAGGY: match offset=3 weight=96
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 96
+ACC: TS2 inactive -> corr[2] += 96
+ACC: TS3 inactive -> corr[3] += 96
+ACC-LAGGY: match offset=9 weight=187
+ACC: Loaded fibre-A: 1111
+[LIF] START at time 16362000 threshold=300
+[LIF] t=0 time=16363000 next_pot=187 spike=0
+[LIF] t=1 time=16364000 next_pot=470 spike=1
+[LIF] t=2 time=16366000 next_pot=403 spike=1
+[LIF] t=3 time=16367000 next_pot=187 spike=0
+ACC-FAST: +59 -> 59
+ACC-FAST: +102 -> 161
+ACC-LAGGY: match offset=1 weight=59
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 59
+ACC: TS1 inactive -> corr[1] += 59
+ACC: TS3 inactive -> corr[3] += 59
+ACC-LAGGY: match offset=6 weight=102
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 102
+ACC: TS2 inactive -> corr[2] += 102
+[LIF] START at time 16416000 threshold=300
+[LIF] t=0 time=16417000 next_pot=102 spike=0
+[LIF] t=1 time=16418000 next_pot=102 spike=0
+[LIF] t=2 time=16419000 next_pot=161 spike=0
+[LIF] t=3 time=16421000 next_pot=263 spike=0
+ACC-FAST: +234 -> 234
+ACC-FAST: +144 -> 378
+ACC-LAGGY: match offset=4 weight=234
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 234
+ACC: TS1 inactive -> corr[1] += 234
+ACC: TS3 inactive -> corr[3] += 234
+ACC-LAGGY: match offset=5 weight=144
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 144
+ACC: TS1 inactive -> corr[1] += 144
+ACC: TS3 inactive -> corr[3] += 144
+[LIF] START at time 16469000 threshold=300
+[LIF] t=0 time=16471000 next_pot=0 spike=0
+[LIF] t=1 time=16472000 next_pot=0 spike=0
+[LIF] t=2 time=16473000 next_pot=378 spike=1
+[LIF] t=3 time=16474000 next_pot=0 spike=0
+ACC-FAST: +22 -> 22
+ACC-FAST: +89 -> 111
+ACC-LAGGY: match offset=6 weight=22
+ACC: Loaded fibre-A: 0110
+ACC: TS0 inactive -> corr[0] += 22
+ACC: TS3 inactive -> corr[3] += 22
+ACC-LAGGY: match offset=20 weight=89
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 89
+ACC: TS1 inactive -> corr[1] += 89
+ACC: TS3 inactive -> corr[3] += 89
+[LIF] START at time 16523000 threshold=300
+[LIF] t=0 time=16524000 next_pot=0 spike=0
+[LIF] t=1 time=16526000 next_pot=22 spike=0
+[LIF] t=2 time=16527000 next_pot=133 spike=0
+[LIF] t=3 time=16528000 next_pot=133 spike=0
+ACC-FAST: +227 -> 227
+ACC-LAGGY: match offset=3 weight=227
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 227
+ACC: TS1 inactive -> corr[1] += 227
+ACC: TS3 inactive -> corr[3] += 227
+[LIF] START at time 16563000 threshold=300
+[LIF] t=0 time=16564000 next_pot=0 spike=0
+[LIF] t=1 time=16566000 next_pot=0 spike=0
+[LIF] t=2 time=16567000 next_pot=227 spike=0
+[LIF] t=3 time=16568000 next_pot=227 spike=0
+ACC-FAST: +191 -> 191
+ACC-LAGGY: match offset=8 weight=191
+ACC: Loaded fibre-A: 1100
+ACC: TS0 inactive -> corr[0] += 191
+ACC: TS1 inactive -> corr[1] += 191
+[LIF] START at time 16603000 threshold=300
+[LIF] t=0 time=16604000 next_pot=0 spike=0
+[LIF] t=1 time=16606000 next_pot=0 spike=0
+[LIF] t=2 time=16607000 next_pot=191 spike=0
+[LIF] t=3 time=16608000 next_pot=382 spike=1
+ACC-FAST: +176 -> 176
+ACC-LAGGY: match offset=10 weight=176
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 176
+ACC: TS1 inactive -> corr[1] += 176
+ACC: TS2 inactive -> corr[2] += 176
+[LIF] START at time 16643000 threshold=300
+[LIF] t=0 time=16644000 next_pot=0 spike=0
+[LIF] t=1 time=16646000 next_pot=0 spike=0
+[LIF] t=2 time=16647000 next_pot=0 spike=0
+[LIF] t=3 time=16648000 next_pot=176 spike=0
+ACC-FAST: +216 -> 216
+ACC-FAST: +254 -> 470
+ACC-LAGGY: match offset=10 weight=216
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 216
+ACC: TS2 inactive -> corr[2] += 216
+ACC: TS3 inactive -> corr[3] += 216
+ACC-LAGGY: match offset=12 weight=254
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 254
+ACC: TS1 inactive -> corr[1] += 254
+ACC: TS2 inactive -> corr[2] += 254
+[LIF] START at time 16697000 threshold=300
+[LIF] t=0 time=16698000 next_pot=0 spike=0
+[LIF] t=1 time=16699000 next_pot=216 spike=0
+[LIF] t=2 time=16701000 next_pot=216 spike=0
+[LIF] t=3 time=16702000 next_pot=470 spike=1
+ACC-FAST: +213 -> 213
+ACC-LAGGY: match offset=3 weight=213
+ACC: Loaded fibre-A: 1100
+ACC: TS0 inactive -> corr[0] += 213
+ACC: TS1 inactive -> corr[1] += 213
+[LIF] START at time 16737000 threshold=300
+[LIF] t=0 time=16738000 next_pot=0 spike=0
+[LIF] t=1 time=16739000 next_pot=0 spike=0
+[LIF] t=2 time=16741000 next_pot=213 spike=0
+[LIF] t=3 time=16742000 next_pot=426 spike=1
+ACC-FAST: +115 -> 115
+ACC-LAGGY: match offset=10 weight=115
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 115
+ACC: TS3 inactive -> corr[3] += 115
+[LIF] START at time 16777000 threshold=300
+[LIF] t=0 time=16778000 next_pot=115 spike=0
+[LIF] t=1 time=16779000 next_pot=115 spike=0
+[LIF] t=2 time=16781000 next_pot=230 spike=0
+[LIF] t=3 time=16782000 next_pot=230 spike=0
+ACC-FAST: +162 -> 162
+ACC-LAGGY: match offset=5 weight=162
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 162
+ACC: TS3 inactive -> corr[3] += 162
+[LIF] START at time 16824000 threshold=300
+[LIF] t=0 time=16826000 next_pot=162 spike=0
+[LIF] t=1 time=16827000 next_pot=162 spike=0
+[LIF] t=2 time=16828000 next_pot=324 spike=1
+[LIF] t=3 time=16829000 next_pot=0 spike=0
+ACC-FAST: +115 -> 115
+ACC-LAGGY: match offset=14 weight=115
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 115
+ACC: TS1 inactive -> corr[1] += 115
+ACC: TS2 inactive -> corr[2] += 115
+[LIF] START at time 16864000 threshold=300
+[LIF] t=0 time=16866000 next_pot=0 spike=0
+[LIF] t=1 time=16867000 next_pot=0 spike=0
+[LIF] t=2 time=16868000 next_pot=0 spike=0
+[LIF] t=3 time=16869000 next_pot=115 spike=0
+ACC-FAST: +243 -> 243
+ACC-FAST: +101 -> 344
+ACC-FAST: +138 -> 482
+ACC-FAST: +126 -> 608
+ACC-LAGGY: match offset=2 weight=243
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 243
+ACC: TS3 inactive -> corr[3] += 243
+ACC-LAGGY: match offset=8 weight=101
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 101
+ACC: TS3 inactive -> corr[3] += 101
+ACC-LAGGY: match offset=10 weight=138
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 138
+ACC: TS1 inactive -> corr[1] += 138
+ACC: TS2 inactive -> corr[2] += 138
+ACC-LAGGY: match offset=11 weight=126
+ACC: Loaded fibre-A: 1111
+[LIF] START at time 16944000 threshold=300
+[LIF] t=0 time=16946000 next_pot=470 spike=1
+[LIF] t=1 time=16947000 next_pot=126 spike=0
+[LIF] t=2 time=16948000 next_pot=596 spike=1
+[LIF] t=3 time=16949000 next_pot=264 spike=0
+ACC-FAST: +120 -> 120
+ACC-FAST: +233 -> 353
+ACC-LAGGY: match offset=4 weight=120
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 120
+ACC: TS2 inactive -> corr[2] += 120
+ACC: TS3 inactive -> corr[3] += 120
+ACC-LAGGY: match offset=10 weight=233
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 233
+ACC: TS1 inactive -> corr[1] += 233
+ACC: TS2 inactive -> corr[2] += 233
+[LIF] START at time 16998000 threshold=300
+[LIF] t=0 time=16999000 next_pot=120 spike=0
+[LIF] t=1 time=17001000 next_pot=120 spike=0
+[LIF] t=2 time=17002000 next_pot=120 spike=0
+[LIF] t=3 time=17003000 next_pot=353 spike=1
+ACC-FAST: +161 -> 161
+ACC-LAGGY: match offset=6 weight=161
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 161
+ACC: TS1 inactive -> corr[1] += 161
+ACC: TS3 inactive -> corr[3] += 161
+[LIF] START at time 17038000 threshold=300
+[LIF] t=0 time=17039000 next_pot=0 spike=0
+[LIF] t=1 time=17041000 next_pot=0 spike=0
+[LIF] t=2 time=17042000 next_pot=161 spike=0
+[LIF] t=3 time=17043000 next_pot=161 spike=0
+ACC-FAST: +248 -> 248
+ACC-LAGGY: match offset=3 weight=248
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 248
+ACC: TS1 inactive -> corr[1] += 248
+ACC: TS2 inactive -> corr[2] += 248
+[LIF] START at time 17078000 threshold=300
+[LIF] t=0 time=17079000 next_pot=0 spike=0
+[LIF] t=1 time=17081000 next_pot=0 spike=0
+[LIF] t=2 time=17082000 next_pot=0 spike=0
+[LIF] t=3 time=17083000 next_pot=248 spike=0
+ACC-FAST: +123 -> 123
+ACC-LAGGY: match offset=12 weight=123
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 123
+ACC: TS2 inactive -> corr[2] += 123
+[LIF] START at time 17118000 threshold=300
+[LIF] t=0 time=17119000 next_pot=0 spike=0
+[LIF] t=1 time=17121000 next_pot=123 spike=0
+[LIF] t=2 time=17122000 next_pot=123 spike=0
+[LIF] t=3 time=17123000 next_pot=246 spike=0
+ACC-FAST: +36 -> 36
+ACC-FAST: +223 -> 259
+ACC-LAGGY: match offset=2 weight=36
+ACC: Loaded fibre-A: 1110
+ACC: TS0 inactive -> corr[0] += 36
+ACC-LAGGY: match offset=5 weight=223
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 223
+ACC: TS2 inactive -> corr[2] += 223
+ACC: TS3 inactive -> corr[3] += 223
+[LIF] START at time 17172000 threshold=300
+[LIF] t=0 time=17173000 next_pot=223 spike=0
+[LIF] t=1 time=17174000 next_pot=259 spike=0
+[LIF] t=2 time=17176000 next_pot=295 spike=0
+[LIF] t=3 time=17177000 next_pot=331 spike=1
+ACC-FAST: +240 -> 240
+ACC-FAST: +4 -> 244
+ACC-FAST: +80 -> 324
+ACC-FAST: +119 -> 443
+ACC-LAGGY: match offset=2 weight=240
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 240
+ACC: TS1 inactive -> corr[1] += 240
+ACC: TS3 inactive -> corr[3] += 240
+ACC-LAGGY: match offset=3 weight=4
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 4
+ACC: TS1 inactive -> corr[1] += 4
+ACC: TS3 inactive -> corr[3] += 4
+ACC-LAGGY: match offset=10 weight=80
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 80
+ACC: TS2 inactive -> corr[2] += 80
+ACC: TS3 inactive -> corr[3] += 80
+ACC-LAGGY: match offset=12 weight=119
+ACC: Loaded fibre-A: 1100
+ACC: TS0 inactive -> corr[0] += 119
+ACC: TS1 inactive -> corr[1] += 119
+[LIF] START at time 17254000 threshold=300
+[LIF] t=0 time=17256000 next_pot=80 spike=0
+[LIF] t=1 time=17257000 next_pot=80 spike=0
+[LIF] t=2 time=17258000 next_pot=443 spike=1
+[LIF] t=3 time=17259000 next_pot=119 spike=0
+ACC-FAST: +113 -> 113
+ACC-LAGGY: match offset=8 weight=113
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 113
+ACC: TS1 inactive -> corr[1] += 113
+ACC: TS3 inactive -> corr[3] += 113
+[LIF] START at time 17294000 threshold=300
+[LIF] t=0 time=17296000 next_pot=0 spike=0
+[LIF] t=1 time=17297000 next_pot=0 spike=0
+[LIF] t=2 time=17298000 next_pot=113 spike=0
+[LIF] t=3 time=17299000 next_pot=113 spike=0
+ACC-FAST: +12 -> 12
+ACC-FAST: +18 -> 30
+ACC-FAST: +69 -> 99
+ACC-LAGGY: match offset=4 weight=12
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 12
+ACC: TS2 inactive -> corr[2] += 12
+ACC-LAGGY: match offset=12 weight=18
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 18
+ACC: TS1 inactive -> corr[1] += 18
+ACC: TS3 inactive -> corr[3] += 18
+ACC-LAGGY: match offset=13 weight=69
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 69
+ACC: TS1 inactive -> corr[1] += 69
+ACC: TS2 inactive -> corr[2] += 69
+[LIF] START at time 17362000 threshold=300
+[LIF] t=0 time=17363000 next_pot=12 spike=0
+[LIF] t=1 time=17364000 next_pot=12 spike=0
+[LIF] t=2 time=17366000 next_pot=30 spike=0
+[LIF] t=3 time=17367000 next_pot=111 spike=0
+ACC-FAST: +114 -> 114
+ACC-LAGGY: match offset=3 weight=114
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 114
+ACC: TS1 inactive -> corr[1] += 114
+ACC: TS2 inactive -> corr[2] += 114
+[LIF] START at time 17406000 threshold=300
+[LIF] t=0 time=17407000 next_pot=0 spike=0
+[LIF] t=1 time=17408000 next_pot=0 spike=0
+[LIF] t=2 time=17409000 next_pot=0 spike=0
+[LIF] t=3 time=17411000 next_pot=114 spike=0
+ACC-FAST: +46 -> 46
+ACC-FAST: +60 -> 106
+ACC-LAGGY: match offset=2 weight=46
+ACC: Loaded fibre-A: 1101
+ACC: TS1 inactive -> corr[1] += 46
+ACC-LAGGY: match offset=7 weight=60
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 60
+ACC: TS1 inactive -> corr[1] += 60
+ACC: TS3 inactive -> corr[3] += 60
+[LIF] START at time 17459000 threshold=300
+[LIF] t=0 time=17461000 next_pot=46 spike=0
+[LIF] t=1 time=17462000 next_pot=46 spike=0
+[LIF] t=2 time=17463000 next_pot=152 spike=0
+[LIF] t=3 time=17464000 next_pot=198 spike=0
+ACC-FAST: +233 -> 233
+ACC-LAGGY: match offset=7 weight=233
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 233
+ACC: TS2 inactive -> corr[2] += 233
+ACC: TS3 inactive -> corr[3] += 233
+[LIF] START at time 17499000 threshold=300
+[LIF] t=0 time=17501000 next_pot=233 spike=0
+[LIF] t=1 time=17502000 next_pot=233 spike=0
+[LIF] t=2 time=17503000 next_pot=233 spike=0
+[LIF] t=3 time=17504000 next_pot=233 spike=0
+ACC-FAST: +97 -> 97
+ACC-FAST: +216 -> 313
+ACC-FAST: +158 -> 471
+ACC-LAGGY: match offset=6 weight=97
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 97
+ACC: TS1 inactive -> corr[1] += 97
+ACC: TS2 inactive -> corr[2] += 97
+ACC-LAGGY: match offset=13 weight=216
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 216
+ACC: TS1 inactive -> corr[1] += 216
+ACC: TS3 inactive -> corr[3] += 216
+ACC-LAGGY: match offset=15 weight=158
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 158
+ACC: TS1 inactive -> corr[1] += 158
+ACC: TS3 inactive -> corr[3] += 158
+[LIF] START at time 17568000 threshold=300
+[LIF] t=0 time=17569000 next_pot=0 spike=0
+[LIF] t=1 time=17571000 next_pot=0 spike=0
+[LIF] t=2 time=17572000 next_pot=374 spike=1
+[LIF] t=3 time=17573000 next_pot=97 spike=0
+ACC-FAST: +30 -> 30
+ACC-LAGGY: match offset=10 weight=30
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 30
+ACC: TS2 inactive -> corr[2] += 30
+ACC: TS3 inactive -> corr[3] += 30
+[LIF] START at time 17608000 threshold=300
+[LIF] t=0 time=17609000 next_pot=30 spike=0
+[LIF] t=1 time=17611000 next_pot=30 spike=0
+[LIF] t=2 time=17612000 next_pot=30 spike=0
+[LIF] t=3 time=17613000 next_pot=30 spike=0
+ACC-FAST: +60 -> 60
+ACC-LAGGY: match offset=8 weight=60
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 60
+ACC: TS2 inactive -> corr[2] += 60
+ACC: TS3 inactive -> corr[3] += 60
+[LIF] START at time 17652000 threshold=300
+[LIF] t=0 time=17653000 next_pot=0 spike=0
+[LIF] t=1 time=17654000 next_pot=60 spike=0
+[LIF] t=2 time=17656000 next_pot=60 spike=0
+[LIF] t=3 time=17657000 next_pot=60 spike=0
+ACC-FAST: +175 -> 175
+ACC-FAST: +153 -> 328
+ACC-LAGGY: match offset=7 weight=175
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 175
+ACC: TS1 inactive -> corr[1] += 175
+ACC: TS3 inactive -> corr[3] += 175
+ACC-LAGGY: match offset=12 weight=153
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 153
+ACC: TS1 inactive -> corr[1] += 153
+ACC: TS2 inactive -> corr[2] += 153
+[LIF] START at time 17711000 threshold=300
+[LIF] t=0 time=17712000 next_pot=0 spike=0
+[LIF] t=1 time=17713000 next_pot=0 spike=0
+[LIF] t=2 time=17714000 next_pot=175 spike=0
+[LIF] t=3 time=17716000 next_pot=328 spike=1
+ACC-FAST: +229 -> 229
+ACC-LAGGY: match offset=2 weight=229
+ACC: Loaded fibre-A: 0011
+ACC: TS2 inactive -> corr[2] += 229
+ACC: TS3 inactive -> corr[3] += 229
+[LIF] START at time 17751000 threshold=300
+[LIF] t=0 time=17752000 next_pot=229 spike=0
+[LIF] t=1 time=17753000 next_pot=458 spike=1
+[LIF] t=2 time=17754000 next_pot=0 spike=0
+[LIF] t=3 time=17756000 next_pot=0 spike=0
+ACC-FAST: +179 -> 179
+ACC-FAST: +32 -> 211
+ACC-LAGGY: match offset=9 weight=179
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 179
+ACC: TS2 inactive -> corr[2] += 179
+ACC: TS3 inactive -> corr[3] += 179
+ACC-LAGGY: match offset=11 weight=32
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 32
+ACC: TS1 inactive -> corr[1] += 32
+ACC: TS2 inactive -> corr[2] += 32
+[LIF] START at time 17804000 threshold=300
+[LIF] t=0 time=17806000 next_pot=0 spike=0
+[LIF] t=1 time=17807000 next_pot=179 spike=0
+[LIF] t=2 time=17808000 next_pot=179 spike=0
+[LIF] t=3 time=17809000 next_pot=211 spike=0
+ACC-FAST: +110 -> 110
+ACC-LAGGY: match offset=8 weight=110
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 110
+ACC: TS2 inactive -> corr[2] += 110
+ACC: TS3 inactive -> corr[3] += 110
+[LIF] START at time 17844000 threshold=300
+[LIF] t=0 time=17846000 next_pot=0 spike=0
+[LIF] t=1 time=17847000 next_pot=110 spike=0
+[LIF] t=2 time=17848000 next_pot=110 spike=0
+[LIF] t=3 time=17849000 next_pot=110 spike=0
+ACC-FAST: +203 -> 203
+ACC-FAST: +177 -> 380
+ACC-FAST: +83 -> 463
+ACC-LAGGY: match offset=3 weight=203
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 203
+ACC: TS1 inactive -> corr[1] += 203
+ACC: TS3 inactive -> corr[3] += 203
+ACC-LAGGY: match offset=4 weight=177
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 177
+ACC: TS2 inactive -> corr[2] += 177
+ACC: TS3 inactive -> corr[3] += 177
+ACC-LAGGY: match offset=7 weight=83
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 83
+ACC: TS2 inactive -> corr[2] += 83
+ACC: TS3 inactive -> corr[3] += 83
+[LIF] START at time 17917000 threshold=300
+[LIF] t=0 time=17918000 next_pot=260 spike=0
+[LIF] t=1 time=17919000 next_pot=260 spike=0
+[LIF] t=2 time=17921000 next_pot=463 spike=1
+[LIF] t=3 time=17922000 next_pot=0 spike=0
+ACC-FAST: +184 -> 184
+ACC-LAGGY: match offset=4 weight=184
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 184
+ACC: TS2 inactive -> corr[2] += 184
+ACC: TS3 inactive -> corr[3] += 184
+[LIF] START at time 17957000 threshold=300
+[LIF] t=0 time=17958000 next_pot=184 spike=0
+[LIF] t=1 time=17959000 next_pot=184 spike=0
+[LIF] t=2 time=17961000 next_pot=184 spike=0
+[LIF] t=3 time=17962000 next_pot=184 spike=0
+ACC-FAST: +205 -> 205
+ACC-FAST: +175 -> 380
+ACC-FAST: +181 -> 561
+ACC-LAGGY: match offset=3 weight=205
+ACC: Loaded fibre-A: 1100
+ACC: TS0 inactive -> corr[0] += 205
+ACC: TS1 inactive -> corr[1] += 205
+ACC-LAGGY: match offset=5 weight=175
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 175
+ACC: TS1 inactive -> corr[1] += 175
+ACC: TS3 inactive -> corr[3] += 175
+ACC-LAGGY: match offset=7 weight=181
+ACC: Loaded fibre-A: 0111
+ACC: TS3 inactive -> corr[3] += 181
+[LIF] START at time 18029000 threshold=300
+[LIF] t=0 time=18031000 next_pot=181 spike=0
+[LIF] t=1 time=18032000 next_pot=362 spike=1
+[LIF] t=2 time=18033000 next_pot=561 spike=1
+[LIF] t=3 time=18034000 next_pot=205 spike=0
+ACC-FAST: +19 -> 19
+ACC-LAGGY: match offset=1 weight=19
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 19
+ACC: TS1 inactive -> corr[1] += 19
+ACC: TS3 inactive -> corr[3] += 19
+[LIF] START at time 18069000 threshold=300
+[LIF] t=0 time=18071000 next_pot=0 spike=0
+[LIF] t=1 time=18072000 next_pot=0 spike=0
+[LIF] t=2 time=18073000 next_pot=19 spike=0
+[LIF] t=3 time=18074000 next_pot=19 spike=0
+ACC-FAST: +203 -> 203
+ACC-LAGGY: match offset=11 weight=203
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 203
+ACC: TS2 inactive -> corr[2] += 203
+ACC: TS3 inactive -> corr[3] += 203
+[LIF] START at time 18109000 threshold=300
+[LIF] t=0 time=18111000 next_pot=203 spike=0
+[LIF] t=1 time=18112000 next_pot=203 spike=0
+[LIF] t=2 time=18113000 next_pot=203 spike=0
+[LIF] t=3 time=18114000 next_pot=203 spike=0
+ACC-FAST: +231 -> 231
+ACC-FAST: +61 -> 292
+ACC-LAGGY: match offset=5 weight=231
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 231
+ACC: TS2 inactive -> corr[2] += 231
+ACC: TS3 inactive -> corr[3] += 231
+ACC-LAGGY: match offset=11 weight=61
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 61
+ACC: TS2 inactive -> corr[2] += 61
+ACC: TS3 inactive -> corr[3] += 61
+[LIF] START at time 18177000 threshold=300
+[LIF] t=0 time=18178000 next_pot=292 spike=0
+[LIF] t=1 time=18179000 next_pot=292 spike=0
+[LIF] t=2 time=18181000 next_pot=292 spike=0
+[LIF] t=3 time=18182000 next_pot=292 spike=0
+ACC-FAST: +97 -> 97
+ACC-FAST: +178 -> 275
+ACC-FAST: +146 -> 421
+ACC-LAGGY: match offset=3 weight=97
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 97
+ACC: TS1 inactive -> corr[1] += 97
+ACC: TS3 inactive -> corr[3] += 97
+ACC-LAGGY: match offset=5 weight=178
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 178
+ACC: TS1 inactive -> corr[1] += 178
+ACC: TS2 inactive -> corr[2] += 178
+ACC-LAGGY: match offset=14 weight=146
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 146
+ACC: TS2 inactive -> corr[2] += 146
+ACC: TS3 inactive -> corr[3] += 146
+[LIF] START at time 18248000 threshold=300
+[LIF] t=0 time=18249000 next_pot=0 spike=0
+[LIF] t=1 time=18251000 next_pot=146 spike=0
+[LIF] t=2 time=18252000 next_pot=243 spike=0
+[LIF] t=3 time=18253000 next_pot=421 spike=1
+ACC-FAST: +187 -> 187
+ACC-FAST: +74 -> 261
+ACC-LAGGY: match offset=3 weight=187
+ACC: Loaded fibre-A: 1110
+ACC: TS0 inactive -> corr[0] += 187
+ACC-LAGGY: match offset=8 weight=74
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 74
+ACC: TS2 inactive -> corr[2] += 74
+ACC: TS3 inactive -> corr[3] += 74
+[LIF] START at time 18307000 threshold=300
+[LIF] t=0 time=18308000 next_pot=74 spike=0
+[LIF] t=1 time=18309000 next_pot=261 spike=0
+[LIF] t=2 time=18311000 next_pot=448 spike=1
+[LIF] t=3 time=18312000 next_pot=187 spike=0
+ACC-FAST: +210 -> 210
+ACC-FAST: +88 -> 298
+ACC-FAST: +236 -> 534
+ACC-LAGGY: match offset=2 weight=210
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 210
+ACC: TS1 inactive -> corr[1] += 210
+ACC: TS2 inactive -> corr[2] += 210
+ACC-LAGGY: match offset=13 weight=88
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 88
+ACC: TS1 inactive -> corr[1] += 88
+ACC: TS3 inactive -> corr[3] += 88
+ACC-LAGGY: match offset=15 weight=236
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 236
+ACC: TS2 inactive -> corr[2] += 236
+ACC: TS3 inactive -> corr[3] += 236
+[LIF] START at time 18374000 threshold=300
+[LIF] t=0 time=18376000 next_pot=0 spike=0
+[LIF] t=1 time=18377000 next_pot=236 spike=0
+[LIF] t=2 time=18378000 next_pot=324 spike=1
+[LIF] t=3 time=18379000 next_pot=210 spike=0
+ACC-FAST: +146 -> 146
+ACC-FAST: +15 -> 161
+ACC-FAST: +43 -> 204
+ACC-FAST: +170 -> 374
+ACC-LAGGY: match offset=1 weight=146
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 146
+ACC: TS3 inactive -> corr[3] += 146
+ACC-LAGGY: match offset=3 weight=15
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 15
+ACC: TS2 inactive -> corr[2] += 15
+ACC: TS3 inactive -> corr[3] += 15
+ACC-LAGGY: match offset=16 weight=43
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 43
+ACC: TS1 inactive -> corr[1] += 43
+ACC: TS3 inactive -> corr[3] += 43
+ACC-LAGGY: match offset=18 weight=170
+ACC: Loaded fibre-A: 1110
+ACC: TS0 inactive -> corr[0] += 170
+[LIF] START at time 18456000 threshold=300
+[LIF] t=0 time=18457000 next_pot=146 spike=0
+[LIF] t=1 time=18458000 next_pot=331 spike=1
+[LIF] t=2 time=18459000 next_pot=359 spike=1
+[LIF] t=3 time=18461000 next_pot=170 spike=0
+ACC-FAST: +92 -> 92
+ACC-FAST: +76 -> 168
+ACC-LAGGY: match offset=4 weight=92
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 92
+ACC: TS2 inactive -> corr[2] += 92
+ACC: TS3 inactive -> corr[3] += 92
+ACC-LAGGY: match offset=12 weight=76
+ACC: Loaded fibre-A: 1011
+ACC: TS2 inactive -> corr[2] += 76
+[LIF] START at time 18511000 threshold=300
+[LIF] t=0 time=18512000 next_pot=168 spike=0
+[LIF] t=1 time=18513000 next_pot=244 spike=0
+[LIF] t=2 time=18514000 next_pot=244 spike=0
+[LIF] t=3 time=18516000 next_pot=320 spike=1
+ACC-FAST: +46 -> 46
+ACC-LAGGY: match offset=12 weight=46
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 46
+ACC: TS2 inactive -> corr[2] += 46
+ACC: TS3 inactive -> corr[3] += 46
+[LIF] START at time 18551000 threshold=300
+[LIF] t=0 time=18552000 next_pot=0 spike=0
+[LIF] t=1 time=18553000 next_pot=46 spike=0
+[LIF] t=2 time=18554000 next_pot=46 spike=0
+[LIF] t=3 time=18556000 next_pot=46 spike=0
+ACC-FAST: +144 -> 144
+ACC-LAGGY: match offset=8 weight=144
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 144
+ACC: TS2 inactive -> corr[2] += 144
+ACC: TS3 inactive -> corr[3] += 144
+[LIF] START at time 18598000 threshold=300
+[LIF] t=0 time=18599000 next_pot=144 spike=0
+[LIF] t=1 time=18601000 next_pot=144 spike=0
+[LIF] t=2 time=18602000 next_pot=144 spike=0
+[LIF] t=3 time=18603000 next_pot=144 spike=0
+ACC-FAST: +6 -> 6
+ACC-LAGGY: match offset=9 weight=6
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 6
+ACC: TS2 inactive -> corr[2] += 6
+ACC: TS3 inactive -> corr[3] += 6
+[LIF] START at time 18638000 threshold=300
+[LIF] t=0 time=18639000 next_pot=0 spike=0
+[LIF] t=1 time=18641000 next_pot=6 spike=0
+[LIF] t=2 time=18642000 next_pot=6 spike=0
+[LIF] t=3 time=18643000 next_pot=6 spike=0
+ACC-FAST: +207 -> 207
+ACC-FAST: +107 -> 314
+ACC-LAGGY: match offset=3 weight=207
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 207
+ACC: TS2 inactive -> corr[2] += 207
+ACC: TS3 inactive -> corr[3] += 207
+ACC-LAGGY: match offset=4 weight=107
+ACC: Loaded fibre-A: 1100
+ACC: TS0 inactive -> corr[0] += 107
+ACC: TS1 inactive -> corr[1] += 107
+[LIF] START at time 18697000 threshold=300
+[LIF] t=0 time=18698000 next_pot=0 spike=0
+[LIF] t=1 time=18699000 next_pot=207 spike=0
+[LIF] t=2 time=18701000 next_pot=314 spike=1
+[LIF] t=3 time=18702000 next_pot=107 spike=0
+ACC-FAST: +220 -> 220
+ACC-LAGGY: match offset=8 weight=220
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 220
+ACC: TS1 inactive -> corr[1] += 220
+ACC: TS3 inactive -> corr[3] += 220
+[LIF] START at time 18742000 threshold=300
+[LIF] t=0 time=18743000 next_pot=0 spike=0
+[LIF] t=1 time=18744000 next_pot=0 spike=0
+[LIF] t=2 time=18746000 next_pot=220 spike=0
+[LIF] t=3 time=18747000 next_pot=220 spike=0
+ACC-FAST: +156 -> 156
+ACC-LAGGY: match offset=4 weight=156
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 156
+ACC: TS2 inactive -> corr[2] += 156
+ACC: TS3 inactive -> corr[3] += 156
+[LIF] START at time 18782000 threshold=300
+[LIF] t=0 time=18783000 next_pot=156 spike=0
+[LIF] t=1 time=18784000 next_pot=156 spike=0
+[LIF] t=2 time=18786000 next_pot=156 spike=0
+[LIF] t=3 time=18787000 next_pot=156 spike=0
+ACC-FAST: +123 -> 123
+ACC-FAST: +15 -> 138
+ACC-LAGGY: match offset=6 weight=123
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 123
+ACC: TS1 inactive -> corr[1] += 123
+ACC: TS2 inactive -> corr[2] += 123
+ACC-LAGGY: match offset=9 weight=15
+ACC: Loaded fibre-A: 0110
+ACC: TS0 inactive -> corr[0] += 15
+ACC: TS3 inactive -> corr[3] += 15
+[LIF] START at time 18844000 threshold=300
+[LIF] t=0 time=18846000 next_pot=0 spike=0
+[LIF] t=1 time=18847000 next_pot=15 spike=0
+[LIF] t=2 time=18848000 next_pot=30 spike=0
+[LIF] t=3 time=18849000 next_pot=153 spike=0
+ACC-FAST: +5 -> 5
+ACC-FAST: +105 -> 110
+ACC-FAST: +60 -> 170
+ACC-FAST: +45 -> 215
+ACC-LAGGY: match offset=1 weight=5
+ACC: Loaded fibre-A: 1001
+ACC: TS1 inactive -> corr[1] += 5
+ACC: TS2 inactive -> corr[2] += 5
+ACC-LAGGY: match offset=5 weight=105
+ACC: Loaded fibre-A: 0100
+ACC: TS0 inactive -> corr[0] += 105
+ACC: TS1 inactive -> corr[1] += 105
+ACC: TS3 inactive -> corr[3] += 105
+ACC-LAGGY: match offset=10 weight=60
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 60
+ACC: TS1 inactive -> corr[1] += 60
+ACC: TS2 inactive -> corr[2] += 60
+ACC-LAGGY: match offset=12 weight=45
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 45
+ACC: TS2 inactive -> corr[2] += 45
+ACC: TS3 inactive -> corr[3] += 45
+[LIF] START at time 18926000 threshold=300
+[LIF] t=0 time=18927000 next_pot=5 spike=0
+[LIF] t=1 time=18928000 next_pot=50 spike=0
+[LIF] t=2 time=18929000 next_pot=155 spike=0
+[LIF] t=3 time=18931000 next_pot=220 spike=0
+ACC-FAST: +180 -> 180
+ACC-LAGGY: match offset=5 weight=180
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 180
+ACC: TS1 inactive -> corr[1] += 180
+ACC: TS2 inactive -> corr[2] += 180
+[LIF] START at time 18967000 threshold=300
+[LIF] t=0 time=18968000 next_pot=0 spike=0
+[LIF] t=1 time=18969000 next_pot=0 spike=0
+[LIF] t=2 time=18971000 next_pot=0 spike=0
+[LIF] t=3 time=18972000 next_pot=180 spike=0
+ACC-FAST: +170 -> 170
+ACC-FAST: +62 -> 232
+ACC-FAST: +242 -> 474
+ACC-FAST: +227 -> 701
+ACC-LAGGY: match offset=4 weight=170
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 170
+ACC: TS2 inactive -> corr[2] += 170
+ACC: TS3 inactive -> corr[3] += 170
+ACC-LAGGY: match offset=12 weight=62
+ACC: Loaded fibre-A: 0001
+ACC: TS1 inactive -> corr[1] += 62
+ACC: TS2 inactive -> corr[2] += 62
+ACC: TS3 inactive -> corr[3] += 62
+ACC-LAGGY: match offset=15 weight=242
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 242
+ACC: TS3 inactive -> corr[3] += 242
+ACC-LAGGY: match offset=17 weight=227
+ACC: Loaded fibre-A: 1011
+ACC: TS2 inactive -> corr[2] += 227
+[LIF] START at time 19048000 threshold=300
+[LIF] t=0 time=19049000 next_pot=701 spike=1
+[LIF] t=1 time=19051000 next_pot=227 spike=0
+[LIF] t=2 time=19052000 next_pot=469 spike=1
+[LIF] t=3 time=19053000 next_pot=227 spike=0
+ACC-FAST: +209 -> 209
+ACC-FAST: +48 -> 257
+ACC-LAGGY: match offset=6 weight=209
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 209
+ACC: TS1 inactive -> corr[1] += 209
+ACC: TS2 inactive -> corr[2] += 209
+ACC-LAGGY: match offset=8 weight=48
+ACC: Loaded fibre-A: 1110
+ACC: TS0 inactive -> corr[0] += 48
+[LIF] START at time 19111000 threshold=300
+[LIF] t=0 time=19112000 next_pot=0 spike=0
+[LIF] t=1 time=19113000 next_pot=48 spike=0
+[LIF] t=2 time=19114000 next_pot=96 spike=0
+[LIF] t=3 time=19116000 next_pot=353 spike=1
+ACC-FAST: +140 -> 140
+ACC-FAST: +101 -> 241
+ACC-LAGGY: match offset=1 weight=140
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 140
+ACC: TS1 inactive -> corr[1] += 140
+ACC: TS2 inactive -> corr[2] += 140
+ACC-LAGGY: match offset=11 weight=101
+ACC: Loaded fibre-A: 0101
+ACC: TS1 inactive -> corr[1] += 101
+ACC: TS3 inactive -> corr[3] += 101
+[LIF] START at time 19172000 threshold=300
+[LIF] t=0 time=19173000 next_pot=101 spike=0
+[LIF] t=1 time=19174000 next_pot=101 spike=0
+[LIF] t=2 time=19176000 next_pot=202 spike=0
+[LIF] t=3 time=19177000 next_pot=342 spike=1
+ACC-FAST: +142 -> 142
+ACC-LAGGY: match offset=13 weight=142
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 142
+ACC: TS2 inactive -> corr[2] += 142
+ACC: TS3 inactive -> corr[3] += 142
+[LIF] START at time 19213000 threshold=300
+[LIF] t=0 time=19214000 next_pot=0 spike=0
+[LIF] t=1 time=19216000 next_pot=142 spike=0
+[LIF] t=2 time=19217000 next_pot=142 spike=0
+[LIF] t=3 time=19218000 next_pot=142 spike=0
+ACC-FAST: +187 -> 187
+ACC-LAGGY: match offset=1 weight=187
+ACC: Loaded fibre-A: 1010
+ACC: TS0 inactive -> corr[0] += 187
+ACC: TS2 inactive -> corr[2] += 187
+[LIF] START at time 19257000 threshold=300
+[LIF] t=0 time=19258000 next_pot=0 spike=0
+[LIF] t=1 time=19259000 next_pot=187 spike=0
+[LIF] t=2 time=19261000 next_pot=187 spike=0
+[LIF] t=3 time=19262000 next_pot=374 spike=1
+ACC-FAST: +146 -> 146
+ACC-LAGGY: match offset=6 weight=146
+ACC: Loaded fibre-A: 0110
+ACC: TS0 inactive -> corr[0] += 146
+ACC: TS3 inactive -> corr[3] += 146
+[LIF] START at time 19297000 threshold=300
+[LIF] t=0 time=19298000 next_pot=0 spike=0
+[LIF] t=1 time=19299000 next_pot=146 spike=0
+[LIF] t=2 time=19301000 next_pot=292 spike=0
+[LIF] t=3 time=19302000 next_pot=292 spike=0
+ACC-FAST: +66 -> 66
+ACC-LAGGY: match offset=2 weight=66
+ACC: Loaded fibre-A: 0110
+ACC: TS0 inactive -> corr[0] += 66
+ACC: TS3 inactive -> corr[3] += 66
+[LIF] START at time 19341000 threshold=300
+[LIF] t=0 time=19342000 next_pot=0 spike=0
+[LIF] t=1 time=19343000 next_pot=66 spike=0
+[LIF] t=2 time=19344000 next_pot=132 spike=0
+[LIF] t=3 time=19346000 next_pot=132 spike=0
+ACC-FAST: +217 -> 217
+ACC-FAST: +62 -> 279
+ACC-LAGGY: match offset=4 weight=217
+ACC: Loaded fibre-A: 1000
+ACC: TS0 inactive -> corr[0] += 217
+ACC: TS1 inactive -> corr[1] += 217
+ACC: TS2 inactive -> corr[2] += 217
+ACC-LAGGY: match offset=8 weight=62
+ACC: Loaded fibre-A: 0010
+ACC: TS0 inactive -> corr[0] += 62
+ACC: TS2 inactive -> corr[2] += 62
+ACC: TS3 inactive -> corr[3] += 62
+[LIF] START at time 19406000 threshold=300
+[LIF] t=0 time=19407000 next_pot=0 spike=0
+[LIF] t=1 time=19408000 next_pot=62 spike=0
+[LIF] t=2 time=19409000 next_pot=62 spike=0
+[LIF] t=3 time=19411000 next_pot=279 spike=0
+LOAS_WINDOW cycles=15482 chunk_active=13669 (88.3%) join_accumulate=1278 (8.3%)
+LOAS_RESULT chunks=576 matches=643 cycles=13340 cycles_per_chunk=23.2 cycles_per_match=20.75 errors=0
+/Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/tb/tb_loas.v:149: $finish called at 19413750 (1ps)

@@ -1,0 +1,13 @@
+Vtb_ours_closed__main.o: \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/SDKSettings.json \
+  /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/dac2027_sim/hw/build_t8/obj/Vtb_ours_closed__pch.h \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated.h \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_config.h \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilatedos.h \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_types.h \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_funcs.h \
+  /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/dac2027_sim/hw/build_t8/obj/Vtb_ours_closed__Syms.h \
+  /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/dac2027_sim/hw/build_t8/obj/Vtb_ours_closed.h \
+  /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/dac2027_sim/hw/build_t8/obj/Vtb_ours_closed___024root.h \
+  /opt/homebrew/Cellar/verilator/5.050/share/verilator/include/verilated_timing.h \
+  Vtb_ours_closed__main.cpp Vtb_ours_closed.h

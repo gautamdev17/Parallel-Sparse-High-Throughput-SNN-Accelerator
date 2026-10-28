@@ -1,0 +1,42 @@
+{
+ "0.9": {
+  "tokens": 25,
+  "rows": 200,
+  "bits": 7065,
+  "pattern_bits": 4274,
+  "em": 115,
+  "ntiles": 24,
+  "steps": 105336,
+  "pros_cycles": 107403,
+  "pros_useful": 1311765,
+  "nnz_w": 235931,
+  "packed_cols": 81980,
+  "ktiles": 9216,
+  "passes": 23896,
+  "group_steps": 183839,
+  "ours_cycles": 189268,
+  "ours_useful": 2168601,
+  "nonsilent": 6131,
+  "trains": 19200
+ },
+ "0.99": {
+  "tokens": 25,
+  "rows": 200,
+  "bits": 3822,
+  "pattern_bits": 2614,
+  "em": 198,
+  "ntiles": 24,
+  "steps": 67488,
+  "pros_cycles": 69555,
+  "pros_useful": 80859,
+  "nnz_w": 23594,
+  "packed_cols": 13595,
+  "ktiles": 8417,
+  "passes": 8436,
+  "group_steps": 38396,
+  "ours_cycles": 41608,
+  "ours_useful": 118226,
+  "nonsilent": 2049,
+  "trains": 19200
+ }
+}

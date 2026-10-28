@@ -1,0 +1,1 @@
+scripts/queue.sh: line 17: 30032 Terminated: 15          scripts/run_base.sh $d $T build/T$T rtl > build/T$T/$d.log 2>&1

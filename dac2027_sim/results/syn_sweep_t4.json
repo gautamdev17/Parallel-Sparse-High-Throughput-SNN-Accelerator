@@ -1,0 +1,208 @@
+{
+ "net": "ResNet19",
+ "T": 4,
+ "q": 0.3,
+ "batch": 1,
+ "figure_point": [
+  0.0732,
+  0.1351
+ ],
+ "points": [
+  {
+   "sweep": "wgt",
+   "weight_density": 1.0,
+   "nonsilent": 0.1351,
+   "cycles_b1": {
+    "ptb": 6783827,
+    "spikex": 9283812,
+    "loas": 10613611,
+    "sato": 2990026,
+    "spikeflow": 3839958,
+    "prosperity": 832882,
+    "ours": 4318801
+   }
+  },
+  {
+   "sweep": "wgt",
+   "weight_density": 0.5,
+   "nonsilent": 0.1351,
+   "cycles_b1": {
+    "ptb": 6797615,
+    "spikex": 9280994,
+    "loas": 8359176,
+    "sato": 2989480,
+    "spikeflow": 3832413,
+    "prosperity": 828316,
+    "ours": 2599520
+   }
+  },
+  {
+   "sweep": "wgt",
+   "weight_density": 0.3,
+   "nonsilent": 0.1351,
+   "cycles_b1": {
+    "ptb": 6790147,
+    "spikex": 9280236,
+    "loas": 6873519,
+    "sato": 2970324,
+    "spikeflow": 3839466,
+    "prosperity": 828790,
+    "ours": 1684285
+   }
+  },
+  {
+   "sweep": "wgt",
+   "weight_density": 0.2,
+   "nonsilent": 0.1351,
+   "cycles_b1": {
+    "ptb": 6807439,
+    "spikex": 9259666,
+    "loas": 6036249,
+    "sato": 2987588,
+    "spikeflow": 3827821,
+    "prosperity": 828510,
+    "ours": 1214038
+   }
+  },
+  {
+   "sweep": "wgt",
+   "weight_density": 0.1,
+   "nonsilent": 0.1351,
+   "cycles_b1": {
+    "ptb": 6842355,
+    "spikex": 9317652,
+    "loas": 5057356,
+    "sato": 2990720,
+    "spikeflow": 3852066,
+    "prosperity": 832068,
+    "ours": 736216
+   }
+  },
+  {
+   "sweep": "wgt",
+   "weight_density": 0.0732,
+   "nonsilent": 0.1351,
+   "cycles_b1": {
+    "ptb": 6823279,
+    "spikex": 9317074,
+    "loas": 4781123,
+    "sato": 3005904,
+    "spikeflow": 3844957,
+    "prosperity": 833513,
+    "ours": 603609
+   }
+  },
+  {
+   "sweep": "wgt",
+   "weight_density": 0.05,
+   "nonsilent": 0.1351,
+   "cycles_b1": {
+    "ptb": 6791715,
+    "spikex": 9227468,
+    "loas": 4541707,
+    "sato": 2989244,
+    "spikeflow": 3815290,
+    "prosperity": 828181,
+    "ours": 476400
+   }
+  },
+  {
+   "sweep": "wgt",
+   "weight_density": 0.02,
+   "nonsilent": 0.1351,
+   "cycles_b1": {
+    "ptb": 6766991,
+    "spikex": 9263042,
+    "loas": 3836004,
+    "sato": 2987416,
+    "spikeflow": 3824829,
+    "prosperity": 829657,
+    "ours": 340526
+   }
+  },
+  {
+   "sweep": "wgt",
+   "weight_density": 0.01,
+   "nonsilent": 0.1351,
+   "cycles_b1": {
+    "ptb": 6817671,
+    "spikex": 9310510,
+    "loas": 2985338,
+    "sato": 2995844,
+    "spikeflow": 3843627,
+    "prosperity": 833031,
+    "ours": 310321
+   }
+  },
+  {
+   "sweep": "act",
+   "weight_density": 0.0732,
+   "nonsilent": 0.3,
+   "cycles_b1": {
+    "ptb": 9346655,
+    "spikex": 20753650,
+    "loas": 5384472,
+    "sato": 4279646,
+    "spikeflow": 6764385,
+    "prosperity": 1391200,
+    "ours": 1107842
+   }
+  },
+  {
+   "sweep": "act",
+   "weight_density": 0.0732,
+   "nonsilent": 0.2,
+   "cycles_b1": {
+    "ptb": 8187439,
+    "spikex": 13707954,
+    "loas": 5034065,
+    "sato": 3483176,
+    "spikeflow": 5155901,
+    "prosperity": 1079188,
+    "ours": 805015
+   }
+  },
+  {
+   "sweep": "act",
+   "weight_density": 0.0732,
+   "nonsilent": 0.1,
+   "cycles_b1": {
+    "ptb": 5723107,
+    "spikex": 6887596,
+    "loas": 4629492,
+    "sato": 2716656,
+    "spikeflow": 2978462,
+    "prosperity": 667590,
+    "ours": 482656
+   }
+  },
+  {
+   "sweep": "act",
+   "weight_density": 0.0732,
+   "nonsilent": 0.05,
+   "cycles_b1": {
+    "ptb": 3636699,
+    "spikex": 3443912,
+    "loas": 4278573,
+    "sato": 2334422,
+    "spikeflow": 1604628,
+    "prosperity": 394795,
+    "ours": 345851
+   }
+  },
+  {
+   "sweep": "act",
+   "weight_density": 0.0732,
+   "nonsilent": 0.03,
+   "cycles_b1": {
+    "ptb": 2586191,
+    "spikex": 2056738,
+    "loas": 3902672,
+    "sato": 2169060,
+    "spikeflow": 985577,
+    "prosperity": 271810,
+    "ours": 334438
+   }
+  }
+ ]
+}

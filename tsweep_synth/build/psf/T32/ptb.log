@@ -1,0 +1,4 @@
+Total                5.8640e-01 3.0699e-03 1.6197e-02 6.0567e-01 100.0%
+unannotated     0
+ptb_T32_DONE
+VVP=$PWD/build/T8/ptb/gl.vvp build/psf/power_t.sh ptb $T  192.38s user 10.93s system 93% cpu 3:37.52 total

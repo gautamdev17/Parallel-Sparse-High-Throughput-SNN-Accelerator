@@ -1,0 +1,28 @@
+Warning: Replacing memory \tskew[7].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:110
+Warning: Replacing memory \tskew[6].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:110
+Warning: Replacing memory \tskew[5].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:110
+Warning: Replacing memory \tskew[4].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:110
+Warning: Replacing memory \tskew[3].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:110
+Warning: Replacing memory \tskew[2].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:110
+Warning: Replacing memory \tskew[1].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:110
+Warning: Replacing memory \lskew[15].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:97
+Warning: Replacing memory \lskew[14].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:97
+Warning: Replacing memory \lskew[13].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:97
+Warning: Replacing memory \lskew[12].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:97
+Warning: Replacing memory \lskew[11].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:97
+Warning: Replacing memory \lskew[10].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:97
+Warning: Replacing memory \lskew[9].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:97
+Warning: Replacing memory \lskew[8].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:97
+Warning: Replacing memory \lskew[7].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:97
+Warning: Replacing memory \lskew[6].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:97
+Warning: Replacing memory \lskew[5].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:97
+Warning: Replacing memory \lskew[4].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:97
+Warning: Replacing memory \lskew[3].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:97
+Warning: Replacing memory \lskew[2].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:97
+Warning: Replacing memory \lskew[1].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:97
+Warning: Replacing memory \sp with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v:37
+   Chip area for module '\ptb_core': 952940.478000
+     of which used for sequential elements: 564260.480000 (59.21%)
+Total                5.7870e-01 5.4950e-03 1.6325e-02 6.0052e-01 100.0%
+unannotated     0
+scripts/run_base.sh: line 114: l_run.log: command not found

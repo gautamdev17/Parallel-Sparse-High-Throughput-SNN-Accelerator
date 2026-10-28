@@ -62,7 +62,71 @@ def resnet19_layers():
     return [(n, ci, co, 3, 1, h) for n, ci, co, h in cfg] + [("fc", 512, 10, 1, 1, 1)]
 
 
-NETWORKS = {"VGG16": vgg16_layers, "ResNet18": resnet18_layers, "ResNet19": resnet19_layers}
+def cifarnet_layers():
+    """CifarNet of the PLIF paper (Fang et al., ICCV 2021): {{c256k3}*3-MP2}*2-FC2048-FC100 (then 10-way voting)."""
+    L = [_conv(f"c{i}", 3 if i == 1 else 256, 256, 3, 1, 32) for i in (1, 2, 3)]
+    L += [_conv(f"c{i}", 256, 256, 3, 1, 16) for i in (4, 5, 6)]
+    return L + [("fc1", 256 * 8 * 8, 2048, 1, 1, 1), ("fc2", 2048, 100, 1, 1, 1)]
+
+
+def resnet19_tdbn_layers():
+    """ResNet-19 of tdBN (Zheng et al., AAAI 2021), CIFAR: c128, 3x Basic(128), 3x Basic(256, s2), 2x Basic(512, s2),
+    FC256, FC10."""
+    L = [_conv("conv1", 3, 128, 3, 1, 32)]
+    ci, h = 128, 32
+    for stage, (co, nb) in enumerate([(128, 3), (256, 3), (512, 2)], start=1):
+        for blk in range(nb):
+            s = 2 if (stage > 1 and blk == 0) else 1
+            L.append(_conv(f"l{stage}.{blk}.c1", ci, co, 3, s, h))
+            ho = h // s
+            L.append(_conv(f"l{stage}.{blk}.c2", co, co, 3, 1, ho))
+            if s != 1 or ci != co:
+                L.append(_conv(f"l{stage}.{blk}.ds", ci, co, 1, s, h))
+            ci, h = co, ho
+    return L + [("fc1", 512, 256, 1, 1, 1), ("fc2", 256, 10, 1, 1, 1)]
+
+
+def vggsnn_dvs_layers():
+    """VGGSNN of TET (Deng et al., ICLR 2022) on DVS-CIFAR10 (2 x 48 x 48):
+    64C3-128C3-AP2-256C3-256C3-AP2-512C3-512C3-AP2-512C3-512C3-AP2-FC10."""
+    cfg = [(2, 64, 48), (64, 128, 48), (128, 256, 24), (256, 256, 24), (256, 512, 12), (512, 512, 12),
+           (512, 512, 6), (512, 512, 6)]
+    return [_conv(f"c{i + 1}", ci, co, 3, 1, h) for i, (ci, co, h) in enumerate(cfg)] + [("fc", 512 * 3 * 3, 10, 1, 1, 1)]
+
+
+def resnet18_imagenet_layers():
+    """the standard ImageNet ResNet-18 (224 x 224): c64k7s2, MP3s2, 4 stages x 2 BasicBlocks, FC1000."""
+    L = [_conv("conv1", 3, 64, 7, 2, 224)]
+    ci, h = 64, 56
+    for stage, co in enumerate([64, 128, 256, 512], start=1):
+        for blk in range(2):
+            s = 2 if (stage > 1 and blk == 0) else 1
+            L.append(_conv(f"l{stage}.{blk}.c1", ci, co, 3, s, h))
+            ho = h // s
+            L.append(_conv(f"l{stage}.{blk}.c2", co, co, 3, 1, ho))
+            if s != 1 or ci != co:
+                L.append(_conv(f"l{stage}.{blk}.ds", ci, co, 1, s, h))
+            ci, h = co, ho
+    return L + [("fc", 512, 1000, 1, 1, 1)]
+
+
+def spikformer_8_384_layers():
+    """Spikformer-8-384 on ImageNet (Zhou et al., ICLR 2023): SPS = 4 x (conv3x3 + max-pool 2) 3 -> 48 -> 96 -> 192 ->
+    384 (224 -> 14) + RPE conv; 8 blocks of SSA (q, k, v, proj: 384 x 384) and MLP (384 -> 1536 -> 384) over the
+    14 x 14 = 196 tokens, written as 1x1 convs on the 14 x 14 map; head FC1000. The spike-spike products of SSA
+    (Q K^T, (Q K^T) V) have no stationary weight and are not part of the GEMM workload."""
+    L = [_conv("sps0", 3, 48, 3, 1, 224), _conv("sps1", 48, 96, 3, 1, 112), _conv("sps2", 96, 192, 3, 1, 56),
+         _conv("sps3", 192, 384, 3, 1, 28), _conv("rpe", 384, 384, 3, 1, 14)]
+    for b in range(8):
+        L += [_conv(f"b{b}.{n}", ci, co, 1, 1, 14) for n, ci, co in
+              (("q", 384, 384), ("k", 384, 384), ("v", 384, 384), ("proj", 384, 384), ("fc1", 384, 1536),
+               ("fc2", 1536, 384))]
+    return L + [("head", 384, 1000, 1, 1, 1)]
+
+
+NETWORKS = {"VGG16": vgg16_layers, "ResNet18": resnet18_layers, "ResNet19": resnet19_layers,
+            "CifarNet": cifarnet_layers, "ResNet19-tdBN": resnet19_tdbn_layers, "VGGSNN-DVS": vggsnn_dvs_layers,
+            "ResNet18-ImageNet": resnet18_imagenet_layers, "Spikformer-8-384": spikformer_8_384_layers}
 
 
 def gemm_shape(layer, batch=1):
@@ -89,6 +153,25 @@ def rand_spikes(rng, shape, ns, q, T=T):
     empty = active & (v == 0)
     v = np.where(empty, (1 << rng.integers(0, T, size=shape)).astype(np.uint8), v)
     return np.where(active, v, 0).astype(np.uint8)
+
+
+def rand_spikes_rate(rng, shape, p, T=T):
+    """uint8 spike trains with every (neuron, timestep) firing independently with probability p (firing rate)."""
+    bits = rng.random(shape + (T,), dtype=np.float32) < p
+    return np.packbits(bits, axis=-1, bitorder="little")[..., 0].astype(np.uint8)
+
+
+def layer_tensors_rate(layer, batch, wd, p, seed, T=T):
+    """layer_tensors with i.i.d. spikes at firing rate p per timestep (instead of the non-silent / fire-probability
+    model): W (M,K) with weight density wd and the im2col spike matrix S (K,N)."""
+    rng = np.random.default_rng(seed)
+    name, ci, co, k, s, h = layer
+    M, K, N = gemm_shape(layer, batch)
+    W = rand_weights(rng, M, K, wd)
+    X = rand_spikes_rate(rng, (batch, ci, h, h), p, T)
+    S = im2col(X, k, s) if k > 1 or s > 1 or h > 1 else X.reshape(batch, ci).T.copy()
+    assert S.shape == (K, N)
+    return W, S
 
 
 def im2col(X, k, s):

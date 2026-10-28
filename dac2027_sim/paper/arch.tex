@@ -1,0 +1,88 @@
+% ===================================================================================================================
+% Section IV body (paste under \section{TIDES Architecture} \label{sec:arch}).
+% Every number is the RTL (hw/rtl/ours/ours_core.v) / cycle model (ours.py Cfg) configuration of Table I.
+% TODO architecture overview figure (Figures/TIDES_ppu): \ref{fig:arch}.
+% ===================================================================================================================
+TIDES executes the spiking GEMM of Eq.~\eqref{eq:gemm} layer by layer on a weight-stationary systolic array of
+$R \times C$ PEs with $T$ adders each. It consists of a spike buffer and a weight buffer, a pre-processing unit
+that applies TIP, a group buffer, the PE array, a post-processing unit at the bottom of the array, an output
+buffer and an array of LIF units. Only the pre- and post-processing units are specific to DPTP; the PEs perform
+label-indexed accumulation and nothing else. The evaluated configuration uses $R = C = 4$, $T = 8$,
+$G_{\max} = F_{\max} = Q = 4$ (Section~\ref{sec:eval-method}).
+
+\subsection{Execution Flow}
+\label{sec:arch-flow}
+A layer is split into output tiles of 64 filters and 128 output positions, whose partial sums stay in the output
+buffer until the tile is complete, and each output tile into input tiles $\mathcal{K}$ of $R$ inputs. For every
+input tile, the packed weight columns of Algorithm~\ref{alg:filter} are loaded into the PEs, the pre-processing
+unit packs the tile's spike trains with Algorithm~\ref{alg:tip}, and every group streams through the array once
+per pass over the packed columns, $C$ columns at a time. The post-processing unit adds each finished partial sum
+into the output buffer. After the last input tile, the LIF units turn the accumulated currents into the output
+spike trains of the tile, which are written back to the spike buffer as the input of the next layer. Weight
+loading, packing and streaming are pipelined, so in steady state the array receives one group per cycle.
+
+\subsection{Pre-processing Unit}
+\label{sec:arch-pre}
+The pre-processing unit implements Algorithm~\ref{alg:tip} in hardware. It reads, for each output position of an
+output tile, its $R$ spike trains on the current input tile from the spike buffer and forms the $RT$-bit mask
+$\mathit{mask}_m$; positions with an all-zero mask are dropped. A table of $Q$ open groups holds, per group, its
+accumulated mask, the IDs of its members and their count. Each incoming mask is ANDed with the $Q$ group masks in
+parallel, and a first-fit priority encoder selects the oldest group with a zero result; the mask is ORed into
+that group and the position's ID appended. A group that reaches $G_{\max}$ members, or the oldest group when no
+group fits and all $Q$ are open, is emitted to the group buffer. The unit has eight independent lanes, each
+packing a different input tile, so packing runs ahead of the array.
+
+An emitted group is one 128-bit group-buffer entry: its $RT = 32$ spike bits, a 2-bit member label per bit, the
+7-bit IDs of its up to four members, and a count. The group buffer is double-buffered (2 $\times$ 2\,KB), so the
+unit fills one half while the array drains the other.
+
+\subsection{PE Array}
+\label{sec:arch-array}
+Packed trains move right along the rows and partial sums move down the columns. Row $k$ of a group enters the
+array one cycle after row $k-1$, so a group's partial sums meet its packed train in every row. Each row word
+carries a valid bit, a pass parity bit, the $T$ spike bits of $\hat{\mathbf{s}}_{G,k}$ and their $T$ member labels
+$\ell_{G,k}[t]$; each column carries the bundle of $F_{\max} G_{\max}$ partial sums of the group, $T$ values of
+10 bits each, together with one touch bit per partial sum. Ten bits suffice because a partial sum in the array
+accumulates at most $R$ INT8 products before it leaves.
+
+\textbf{Processing element.} A PE holds one weight in an active register: an 8-bit value, its 2-bit filter label
+and a pass parity bit. A shadow register receives the weight of the next pass while the current pass streams, and
+replaces the active register when a row word with the other parity arrives, so loading new weights does not stall
+the array. The PE has one lane per timestep. Lane $t$ concatenates the filter label with $\ell_{G,k}[t]$ into a
+4-bit slot index, reads that partial sum from the incoming bundle, adds the weight, and writes the result back to
+the same slot, setting its touch bit. The write is enabled only when the row word is valid, $\hat s_{G,k}[t] = 1$
+and the weight is non-zero; all other slots pass to the PE below unchanged, and the row word passes to the PE on
+the right. Because a packed train carries at most one spike per timestep and a PE at most one weight, the $T$
+lanes write to distinct partial sums and need no arbitration. The PE contains no comparator, prefix-sum circuit or
+search logic: its datapath is $T$ adders, the slot multiplexers and the pipeline registers.
+
+\subsection{Post-processing Unit}
+\label{sec:arch-post}
+Each column ends in one lane of the post-processing unit. When a group leaves the last row, only its touched
+partial sums produce entries. A lane restores each entry's address from its labels: the filter label indexes the
+column's filter list and the member label indexes the group's member IDs, both carried in a sideband that is
+delayed to arrive with the bundle. Each entry, the 6-bit filter ID, the 7-bit position ID and the $T$ partial
+sums, enters an 80-entry FIFO. The FIFO is split into 16 banks, so the up to 16 entries of one group are written in
+the same cycle. An arbiter retires up to four entries per column per cycle with a two-stage read-modify-write: it
+reads the 24-bit sums of all $T$ timesteps of the entry's (filter, position) from the output buffer, adds the
+partial sums and writes them back, and keeps an address in flight out of the next issue slot to avoid a
+read-after-write hazard. The FIFOs absorb the burst of entries of each group, and the controller issues a group
+only if every column can accept its entries, so no entry is lost.
+
+\subsection{Output Buffer and LIF Units}
+\label{sec:arch-lif}
+The 192\,KB output buffer holds one entry of $T$ 24-bit currents per (filter, position) of the output tile. After
+the last input tile, 16 LIF units read the entries that received at least one partial sum and evaluate
+Eq.~\eqref{eq:lif} with $\lambda = 1/2$. Each unit is pipelined over the timesteps, two timesteps per stage, and
+accepts one entry per cycle, producing a $T$-bit output spike train. Entries that received no partial sum carry no
+current, emit no spike and are skipped.
+
+\subsection{Why Weight-Stationary}
+\label{sec:arch-ws}
+TIP forms groups per input tile, so a group needs to be conflict-free only on the $R$ inputs of that tile, and
+the next tile regroups the positions. A weight-stationary array realizes exactly this: weights change once per
+input tile, and partial sums leave the array after $R$ rows. In an output-stationary array, a PE keeps its outputs
+for all $K$ inputs of the layer, so a group would have to be conflict-free on every input, and two positions almost
+always collide somewhere among hundreds of inputs. The cost of weight stationarity is that partial sums of
+consecutive input tiles meet in the output buffer, which the post-processing unit accumulates; Section~\ref{sec:eval}
+compares the three mappings.

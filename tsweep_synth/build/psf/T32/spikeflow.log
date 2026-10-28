@@ -1,0 +1,4 @@
+Total                6.6049e-02 7.1979e-03 2.3649e-03 7.5612e-02 100.0%
+unannotated     0
+spikeflow_T32_DONE
+build/psf/power_t.sh spikeflow $T  124.88s user 2.63s system 95% cpu 2:13.95 total

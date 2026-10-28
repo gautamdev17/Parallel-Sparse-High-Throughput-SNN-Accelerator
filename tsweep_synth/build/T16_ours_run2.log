@@ -1,0 +1,10 @@
+VGG16 L3 T=16: M128 K1152 N256, 4 tiles -> /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/build/T16/ours/stream/closed
+ResNet18 L7 T=16: M128 K64 N256, 4 tiles -> /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/build/T16/ours/lif/closed
+   Chip area for top module '\ours_core': 1867540.514001
+stream/gl_run.log:VCD_WINDOW 1000 cycles (300..1300)
+lif/gl_run.log:VCD_WINDOW 247 cycles (698..945)
+pw_stream.rpt:unannotated     0
+pw_stream.rpt:Total                4.944713e-01 5.498449e-02 4.360041e-02 5.930561e-01 100.0%
+pw_lif.rpt:unannotated     0
+pw_lif.rpt:Total                5.600881e-01 5.543182e-02 4.332764e-02 6.588476e-01 100.0%
+TIDES_T16_DONE

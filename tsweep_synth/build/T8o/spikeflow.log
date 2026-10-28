@@ -1,0 +1,36 @@
+Warning: Replacing memory \tskew[15].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:157
+Warning: Replacing memory \tskew[14].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:157
+Warning: Replacing memory \tskew[13].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:157
+Warning: Replacing memory \tskew[12].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:157
+Warning: Replacing memory \tskew[11].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:157
+Warning: Replacing memory \tskew[10].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:157
+Warning: Replacing memory \tskew[9].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:157
+Warning: Replacing memory \tskew[8].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:157
+Warning: Replacing memory \tskew[7].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:157
+Warning: Replacing memory \tskew[6].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:157
+Warning: Replacing memory \tskew[5].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:157
+Warning: Replacing memory \tskew[4].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:157
+Warning: Replacing memory \tskew[3].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:157
+Warning: Replacing memory \tskew[2].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:157
+Warning: Replacing memory \tskew[1].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:157
+Warning: Replacing memory \lskew[15].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:144
+Warning: Replacing memory \lskew[14].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:144
+Warning: Replacing memory \lskew[13].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:144
+Warning: Replacing memory \lskew[12].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:144
+Warning: Replacing memory \lskew[11].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:144
+Warning: Replacing memory \lskew[10].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:144
+Warning: Replacing memory \lskew[9].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:144
+Warning: Replacing memory \lskew[8].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:144
+Warning: Replacing memory \lskew[7].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:144
+Warning: Replacing memory \lskew[6].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:144
+Warning: Replacing memory \lskew[5].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:144
+Warning: Replacing memory \lskew[4].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:144
+Warning: Replacing memory \lskew[3].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:144
+Warning: Replacing memory \lskew[2].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:144
+Warning: Replacing memory \lskew[1].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikeflow/spikeflow_core.v:144
+   Chip area for module '\spikeflow_core': 122701.012000
+     of which used for sequential elements: 62275.920000 (50.75%)
+Total                6.6925e-02 4.7905e-03 2.3602e-03 7.4076e-02 100.0%
+unannotated     0
+spikeflow: 4 passes x 16 rows x 16 psums checked, mismatching rows = 0
+spikeflow_T8_DONE

@@ -1,0 +1,9 @@
+%Warning-UNOPTFLAT: ours_buf_netlist.v:799105:15: Signal unoptimizable: Circular combinational logic: 'tb_ours_closed.dut.ids[0].fifo._305543_'
+                                                : ... note: In instance 'tb_ours_closed.dut.ids[0].fifo'
+799105 |   wire [27:0] _305543_;
+       |               ^~~~~~~~
+                    ... For warning description see https://verilator.org/warn/UNOPTFLAT?v=5.050
+                    ... Use "/* verilator lint_off UNOPTFLAT */" and lint_on around source to disable this message.
+                    ours_buf_netlist.v:799105:15:      Example path: tb_ours_closed.dut.ids[0].fifo._305543_
+                    ours_buf_netlist.v:2683074:310:      Example path: ASSIGNW
+                    ours_buf_netlist.v:799105:15:      Example path: tb_ours_closed.dut.ids[0].fifo._305543_

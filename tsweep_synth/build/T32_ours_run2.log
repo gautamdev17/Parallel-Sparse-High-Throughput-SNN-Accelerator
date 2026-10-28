@@ -1,0 +1,3 @@
+VGG16 L3 T=32: M128 K1152 N256, 4 tiles -> /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/build/T32/ours/stream/closed
+ResNet18 L7 T=32: M128 K64 N256, 4 tiles -> /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/build/T32/ours/lif/closed
+   Chip area for top module '\ours_core': 3898247.290003

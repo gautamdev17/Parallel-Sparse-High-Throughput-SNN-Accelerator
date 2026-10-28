@@ -1,0 +1,1 @@
+/Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/build/psf/T8o/spikeflow/spikeflow_ext_netlist.v

@@ -1,0 +1,4 @@
+stream/rtl_run.log:CLOSED_DONE cycles=40501 rmw=343574 conflicts=0 overflow=0000 fifo_max=17 tiles=4 stalls=0 pred_err=0
+lif/rtl_run.log:CLOSED_DONE cycles=3801 rmw=20029 conflicts=0 overflow=0000 fifo_max=7 tiles=4 stalls=0 pred_err=0
+TIDES T=32 VGG16 L3: 32768 outputs x 32 sums checked, sums wrong 0, LIF spikes wrong 0
+TIDES T=32 ResNet18 L7: 32768 outputs x 32 sums checked, sums wrong 0, LIF spikes wrong 0

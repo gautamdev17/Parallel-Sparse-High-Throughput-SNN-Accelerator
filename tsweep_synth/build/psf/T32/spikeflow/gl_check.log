@@ -1,0 +1,2 @@
+spikeflow: 16 passes x 16 rows x 16 psums checked, mismatching rows = 0
+spikeflow: LIF row (segment 16, carry passes 8): 16 x 16 spike words checked, mismatches = 0

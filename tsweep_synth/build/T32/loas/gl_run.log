@@ -1,0 +1,5 @@
+WARNING: /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/tb/tb_loas.v:47: $readmemh(stim/loas/chunks.hex): Too many words in the file for the requested range [0:575].
+VCD info: dumpfile loas_gl.vcd opened for output.
+LOAS_WINDOW cycles=25438 chunk_active=23625 (92.9%) join_accumulate=0 (0.0%)
+LOAS_RESULT chunks=576 matches=615 cycles=23325 cycles_per_chunk=40.5 cycles_per_match=37.93 errors=0
+/Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/tb/tb_loas.v:149: $finish called at 31893750 (1ps)

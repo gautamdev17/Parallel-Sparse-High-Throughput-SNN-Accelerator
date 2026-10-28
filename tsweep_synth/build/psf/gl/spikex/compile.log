@@ -1,0 +1,2 @@
+compile spikex exit=0
+build/psf/compile_gl.sh spikex  2380.69s user 34.86s system 94% cpu 42:24.15 total

@@ -1,0 +1,12 @@
+read_verilog -sv -defer /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/rtl/ours/ours_core.v
+chparam -set T 8 ours_core
+hierarchy -top ours_core
+synth -top ours_core
+delete t:$print t:$check
+opt_clean
+dfflibmap -liberty /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/lib/NangateOpenCellLibrary_typical.lib
+abc -liberty /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/lib/NangateOpenCellLibrary_typical.lib -D 2000 -script abc_buf.script
+opt_clean -purge
+hilomap -hicell LOGIC1_X1 Z -locell LOGIC0_X1 Z
+stat -liberty /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/lib/NangateOpenCellLibrary_typical.lib
+write_verilog -noattr -noexpr ours_buf_netlist.v.tmp

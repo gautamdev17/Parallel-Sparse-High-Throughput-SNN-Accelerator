@@ -1,0 +1,1 @@
+/Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/build/psf/gl/ptb/ptb_netlist.v

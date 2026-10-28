@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/py/collect.py", line 80, in <module>
+    out[d] = {str(T): core(d, f"T{T}") for T in TS_}
+                      ~~~~^^^^^^^^^^^^
+  File "/Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/py/collect.py", line 63, in core
+    dyn, leak = rpt_total(fs[1])
+                ~~~~~~~~~^^^^^^^
+  File "/Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/py/collect.py", line 33, in rpt_total
+    raise ValueError(path)
+ValueError: /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/build/T4/ptb/ptb_power.rpt

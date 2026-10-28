@@ -1,0 +1,1266 @@
+{
+ "BERT": {
+  "d": 768,
+  "h": 3072,
+  "blocks": 12,
+  "tokens": 128,
+  "weight_density": 0.1,
+  "q": 0.3,
+  "T": 8,
+  "points": {
+   "0.25": {
+    "cycles": {
+     "ptb": 507532848,
+     "spikex": 1020237216,
+     "loas": 128802024,
+     "sato": 206438400,
+     "spikeflow": 318598560,
+     "prosperity": 73708992,
+     "ours": 74105664
+    },
+    "gemms": {
+     "qkv": {
+      "ours": 1552758,
+      "spikex": 21248942,
+      "spikeflow": 6633390,
+      "loas": 2687684,
+      "prosperity": 1628444,
+      "sato": 4591872,
+      "ptb": 10816769,
+      "weight_density": 0.1000682689525463,
+      "nonsilent": 0.7505391438802084,
+      "secs": 5.4
+     },
+     "proj": {
+      "ours": 516267,
+      "spikex": 7093934,
+      "spikeflow": 2215566,
+      "loas": 898579,
+      "prosperity": 546500,
+      "sato": 1562880,
+      "ptb": 3631169,
+      "weight_density": 0.10053168402777778,
+      "nonsilent": 0.7516988118489584,
+      "secs": 3.1
+     },
+     "fc1": {
+      "ours": 2058169,
+      "spikex": 28358798,
+      "spikeflow": 8851230,
+      "loas": 3581124,
+      "prosperity": 1987180,
+      "sato": 6165504,
+      "ptb": 14434817,
+      "weight_density": 0.09976916842990452,
+      "nonsilent": 0.751251220703125,
+      "secs": 7.3
+     },
+     "fc2": {
+      "ours": 2048278,
+      "spikex": 28318094,
+      "spikeflow": 8849694,
+      "loas": 3566115,
+      "prosperity": 1980292,
+      "sato": 4882944,
+      "ptb": 13411649,
+      "weight_density": 0.10003874037000868,
+      "nonsilent": 0.7501729329427084,
+      "secs": 12.0
+     }
+    }
+   },
+   "0.40": {
+    "cycles": {
+     "ptb": 384526896,
+     "spikex": 815768736,
+     "loas": 121432224,
+     "sato": 174099456,
+     "spikeflow": 285342624,
+     "prosperity": 59497416,
+     "ours": 57128304
+    },
+    "gemms": {
+     "qkv": {
+      "ours": 1193690,
+      "spikex": 16994606,
+      "spikeflow": 5946366,
+      "loas": 2538553,
+      "prosperity": 1335566,
+      "sato": 3942144,
+      "ptb": 8240321,
+      "weight_density": 0.10053733543113426,
+      "nonsilent": 0.6002705891927084,
+      "secs": 5.0
+     },
+     "proj": {
+      "ours": 397377,
+      "spikex": 5666702,
+      "spikeflow": 1981422,
+      "loas": 841859,
+      "prosperity": 446462,
+      "sato": 1304832,
+      "ptb": 2772545,
+      "weight_density": 0.09932793511284722,
+      "nonsilent": 0.6004638671875,
+      "secs": 2.7
+     },
+     "fc1": {
+      "ours": 1598391,
+      "spikex": 22674062,
+      "spikeflow": 7926750,
+      "loas": 3383946,
+      "prosperity": 1587028,
+      "sato": 5277696,
+      "ptb": 11021825,
+      "weight_density": 0.10051684909396702,
+      "nonsilent": 0.6006571451822916,
+      "secs": 6.6
+     },
+     "fc2": {
+      "ours": 1571234,
+      "spikex": 22645358,
+      "spikeflow": 7924014,
+      "loas": 3354994,
+      "prosperity": 1589062,
+      "sato": 3983616,
+      "ptb": 10009217,
+      "weight_density": 0.0998395284016927,
+      "nonsilent": 0.5998967488606771,
+      "secs": 10.5
+     }
+    }
+   },
+   "0.60": {
+    "cycles": {
+     "ptb": 314245680,
+     "spikex": 541506336,
+     "loas": 108516960,
+     "sato": 130599936,
+     "spikeflow": 216803232,
+     "prosperity": 45121464,
+     "ours": 36211404
+    },
+    "gemms": {
+     "qkv": {
+      "ours": 752294,
+      "spikex": 11213870,
+      "spikeflow": 4494414,
+      "loas": 2258266,
+      "prosperity": 1033706,
+      "sato": 3013632,
+      "ptb": 6642497,
+      "weight_density": 0.09974839952256945,
+      "nonsilent": 0.396087646484375,
+      "secs": 4.1
+     },
+     "proj": {
+      "ours": 253106,
+      "spikex": 3763214,
+      "spikeflow": 1504110,
+      "loas": 756024,
+      "prosperity": 346238,
+      "sato": 1009920,
+      "ptb": 2228033,
+      "weight_density": 0.10018242730034722,
+      "nonsilent": 0.3987630208333333,
+      "secs": 2.5
+     },
+     "fc1": {
+      "ours": 1010634,
+      "spikex": 15060494,
+      "spikeflow": 6027294,
+      "loas": 3023296,
+      "prosperity": 1187692,
+      "sato": 4058112,
+      "ptb": 8899073,
+      "weight_density": 0.10003831651475695,
+      "nonsilent": 0.3989664713541667,
+      "secs": 5.6
+     },
+     "fc2": {
+      "ours": 1001583,
+      "spikex": 15087950,
+      "spikeflow": 6041118,
+      "loas": 3005494,
+      "prosperity": 1192486,
+      "sato": 2801664,
+      "ptb": 8417537,
+      "weight_density": 0.10003238254123265,
+      "nonsilent": 0.3996938069661458,
+      "secs": 9.2
+     }
+    }
+   },
+   "0.75": {
+    "cycles": {
+     "ptb": 249060912,
+     "spikex": 339849888,
+     "loas": 97354920,
+     "sato": 98528256,
+     "spikeflow": 148551840,
+     "prosperity": 34702920,
+     "ours": 23250792
+    },
+    "gemms": {
+     "qkv": {
+      "ours": 489700,
+      "spikex": 7105838,
+      "spikeflow": 3105678,
+      "loas": 2033658,
+      "prosperity": 822314,
+      "sato": 2366208,
+      "ptb": 5307905,
+      "weight_density": 0.10009256998697917,
+      "nonsilent": 0.2509867350260417,
+      "secs": 3.5
+     },
+     "proj": {
+      "ours": 163059,
+      "spikex": 2361038,
+      "spikeflow": 1038366,
+      "loas": 677335,
+      "prosperity": 274052,
+      "sato": 781824,
+      "ptb": 1770497,
+      "weight_density": 0.1001434326171875,
+      "nonsilent": 0.25018310546875,
+      "secs": 2.2
+     },
+     "fc1": {
+      "ours": 649724,
+      "spikex": 9400334,
+      "spikeflow": 4108830,
+      "loas": 2708953,
+      "prosperity": 896020,
+      "sato": 3139584,
+      "ptb": 7058945,
+      "weight_density": 0.1004121568467882,
+      "nonsilent": 0.2490234375,
+      "secs": 4.6
+     },
+     "fc2": {
+      "ours": 635083,
+      "spikex": 9453614,
+      "spikeflow": 4126446,
+      "loas": 2692964,
+      "prosperity": 899524,
+      "sato": 1923072,
+      "ptb": 6617729,
+      "weight_density": 0.10046174791124132,
+      "nonsilent": 0.25043487548828125,
+      "secs": 7.9
+     }
+    }
+   },
+   "0.90": {
+    "cycles": {
+     "ptb": 134142000,
+     "spikex": 136316832,
+     "loas": 83100516,
+     "sato": 65461248,
+     "spikeflow": 64710432,
+     "prosperity": 19382544,
+     "ours": 11317512
+    },
+    "gemms": {
+     "qkv": {
+      "ours": 239182,
+      "spikex": 2828174,
+      "spikeflow": 1344990,
+      "loas": 1734533,
+      "prosperity": 498566,
+      "sato": 1654272,
+      "ptb": 2901953,
+      "weight_density": 0.09998123734085648,
+      "nonsilent": 0.09989420572916667,
+      "secs": 2.6
+     },
+     "proj": {
+      "ours": 79865,
+      "spikex": 945230,
+      "spikeflow": 448350,
+      "loas": 579117,
+      "prosperity": 166370,
+      "sato": 554496,
+      "ptb": 966401,
+      "weight_density": 0.10007561577690972,
+      "nonsilent": 0.10015869140625,
+      "secs": 1.6
+     },
+     "fc1": {
+      "ours": 322455,
+      "spikex": 3811214,
+      "spikeflow": 1804062,
+      "loas": 2317230,
+      "prosperity": 480004,
+      "sato": 2221056,
+      "ptb": 3900929,
+      "weight_density": 0.1002701653374566,
+      "nonsilent": 0.10096232096354167,
+      "secs": 3.3
+     },
+     "fc2": {
+      "ours": 301624,
+      "spikex": 3775118,
+      "spikeflow": 1795134,
+      "loas": 2294163,
+      "prosperity": 470272,
+      "sato": 1025280,
+      "ptb": 3409217,
+      "weight_density": 0.0998569064670139,
+      "nonsilent": 0.100006103515625,
+      "secs": 5.5
+     }
+    }
+   }
+  }
+ },
+ "ViT-B": {
+  "d": 768,
+  "h": 3072,
+  "blocks": 12,
+  "tokens": 197,
+  "weight_density": 0.1,
+  "q": 0.3,
+  "T": 8,
+  "points": {
+   "0.25": {
+    "cycles": {
+     "ptb": 790894896,
+     "spikex": 1570259616,
+     "loas": 209014488,
+     "sato": 319352832,
+     "spikeflow": 492016032,
+     "prosperity": 114873624,
+     "ours": 114006036
+    },
+    "gemms": {
+     "qkv": {
+      "ours": 2384496,
+      "spikex": 32715950,
+      "spikeflow": 10257150,
+      "loas": 4363685,
+      "prosperity": 2539460,
+      "sato": 7096320,
+      "ptb": 16826753,
+      "weight_density": 0.10030110677083333,
+      "nonsilent": 0.7508261950084603,
+      "secs": 9.5
+     },
+     "proj": {
+      "ours": 794632,
+      "spikex": 10894094,
+      "spikeflow": 3417390,
+      "loas": 1453519,
+      "prosperity": 849098,
+      "sato": 2379264,
+      "ptb": 5611457,
+      "weight_density": 0.100006103515625,
+      "nonsilent": 0.7500528764805414,
+      "secs": 3.9
+     },
+     "fc1": {
+      "ours": 3178534,
+      "spikex": 43655822,
+      "spikeflow": 13661406,
+      "loas": 5811387,
+      "prosperity": 3095044,
+      "sato": 9477120,
+      "ptb": 22508801,
+      "weight_density": 0.09990353054470485,
+      "nonsilent": 0.7514210554145516,
+      "secs": 11.5
+     },
+     "fc2": {
+      "ours": 3142841,
+      "spikex": 43589102,
+      "spikeflow": 13665390,
+      "loas": 5789283,
+      "prosperity": 3089200,
+      "sato": 7660032,
+      "ptb": 20960897,
+      "weight_density": 0.10030153062608507,
+      "nonsilent": 0.7502726443527918,
+      "secs": 18.7
+     }
+    }
+   },
+   "0.40": {
+    "cycles": {
+     "ptb": 599444016,
+     "spikex": 1254877728,
+     "loas": 196379184,
+     "sato": 268296192,
+     "spikeflow": 440081568,
+     "prosperity": 92609064,
+     "ours": 87680424
+    },
+    "gemms": {
+     "qkv": {
+      "ours": 1822848,
+      "spikex": 26089070,
+      "spikeflow": 9159438,
+      "loas": 4087430,
+      "prosperity": 2074844,
+      "sato": 6013440,
+      "ptb": 12853505,
+      "weight_density": 0.09938444914641203,
+      "nonsilent": 0.5987402178510999,
+      "secs": 8.7
+     },
+     "proj": {
+      "ours": 614224,
+      "spikex": 8736398,
+      "spikeflow": 3054654,
+      "loas": 1368255,
+      "prosperity": 695264,
+      "sato": 2022912,
+      "ptb": 4322561,
+      "weight_density": 0.1000637478298611,
+      "nonsilent": 0.6014964043993232,
+      "secs": 3.2
+     },
+     "fc1": {
+      "ours": 2447386,
+      "spikex": 34885262,
+      "spikeflow": 12231774,
+      "loas": 5464786,
+      "prosperity": 2471068,
+      "sato": 8060928,
+      "ptb": 17177345,
+      "weight_density": 0.09975899590386285,
+      "nonsilent": 0.6004587034686971,
+      "secs": 10.2
+     },
+     "fc2": {
+      "ours": 2422244,
+      "spikex": 34862414,
+      "spikeflow": 12227598,
+      "loas": 5444461,
+      "prosperity": 2476246,
+      "sato": 6260736,
+      "ptb": 15600257,
+      "weight_density": 0.10023752848307292,
+      "nonsilent": 0.6000654346446701,
+      "secs": 16.4
+     }
+    }
+   },
+   "0.60": {
+    "cycles": {
+     "ptb": 489508656,
+     "spikex": 837417120,
+     "loas": 175788996,
+     "sato": 200788992,
+     "spikeflow": 335708064,
+     "prosperity": 70039944,
+     "ours": 55989852
+    },
+    "gemms": {
+     "qkv": {
+      "ours": 1170756,
+      "spikex": 17438990,
+      "spikeflow": 6994686,
+      "loas": 3667828,
+      "prosperity": 1609418,
+      "sato": 4647168,
+      "ptb": 10391681,
+      "weight_density": 0.09969188548900464,
+      "nonsilent": 0.40022208121827413,
+      "secs": 7.7
+     },
+     "proj": {
+      "ours": 391625,
+      "spikex": 5782574,
+      "spikeflow": 2322894,
+      "loas": 1224130,
+      "prosperity": 536402,
+      "sato": 1539072,
+      "ptb": 3454529,
+      "weight_density": 0.10035027398003472,
+      "nonsilent": 0.39812685067681897,
+      "secs": 2.8
+     },
+     "fc1": {
+      "ours": 1573536,
+      "spikex": 23318414,
+      "spikeflow": 9344286,
+      "loas": 4899680,
+      "prosperity": 1847884,
+      "sato": 6180864,
+      "ptb": 13869569,
+      "weight_density": 0.10006544325086805,
+      "nonsilent": 0.4013655351099831,
+      "secs": 8.7
+     },
+     "fc2": {
+      "ours": 1529904,
+      "spikex": 23244782,
+      "spikeflow": 9313806,
+      "loas": 4857445,
+      "prosperity": 1842958,
+      "sato": 4365312,
+      "ptb": 13076609,
+      "weight_density": 0.0996212429470486,
+      "nonsilent": 0.4000981519670051,
+      "secs": 14.1
+     }
+    }
+   },
+   "0.75": {
+    "cycles": {
+     "ptb": 386019888,
+     "spikex": 523272480,
+     "loas": 156055920,
+     "sato": 149760000,
+     "spikeflow": 228892896,
+     "prosperity": 53476920,
+     "ours": 36058440
+    },
+    "gemms": {
+     "qkv": {
+      "ours": 761407,
+      "spikex": 10890734,
+      "spikeflow": 4771614,
+      "loas": 3261891,
+      "prosperity": 1264466,
+      "sato": 3573504,
+      "ptb": 8207489,
+      "weight_density": 0.10024572301793981,
+      "nonsilent": 0.24994051395939088,
+      "secs": 6.3
+     },
+     "proj": {
+      "ours": 252220,
+      "spikex": 3629294,
+      "spikeflow": 1590462,
+      "loas": 1085586,
+      "prosperity": 420908,
+      "sato": 1193472,
+      "ptb": 2739329,
+      "weight_density": 0.09987555609809028,
+      "nonsilent": 0.24987441835871405,
+      "secs": 2.3
+     },
+     "fc1": {
+      "ours": 1011446,
+      "spikex": 14549390,
+      "spikeflow": 6354462,
+      "loas": 4346008,
+      "prosperity": 1386124,
+      "sato": 4764672,
+      "ptb": 10980353,
+      "weight_density": 0.10022015041775173,
+      "nonsilent": 0.25042962140439934,
+      "secs": 7.3
+     },
+     "fc2": {
+      "ours": 979797,
+      "spikex": 14536622,
+      "spikeflow": 6357870,
+      "loas": 4311175,
+      "prosperity": 1384912,
+      "sato": 2948352,
+      "ptb": 10241153,
+      "weight_density": 0.0998547871907552,
+      "nonsilent": 0.2502098535321489,
+      "secs": 12.1
+     }
+    }
+   },
+   "0.90": {
+    "cycles": {
+     "ptb": 205446192,
+     "spikex": 209433120,
+     "loas": 130419912,
+     "sato": 99652608,
+     "spikeflow": 99520992,
+     "prosperity": 29636280,
+     "ours": 17875068
+    },
+    "gemms": {
+     "qkv": {
+      "ours": 380564,
+      "spikex": 4325774,
+      "spikeflow": 2051454,
+      "loas": 2722238,
+      "prosperity": 762446,
+      "sato": 2525184,
+      "ptb": 4419137,
+      "weight_density": 0.1003384060329861,
+      "nonsilent": 0.09927559221658207,
+      "secs": 4.8
+     },
+     "proj": {
+      "ours": 126253,
+      "spikex": 1442702,
+      "spikeflow": 685518,
+      "loas": 907831,
+      "prosperity": 254042,
+      "sato": 844800,
+      "ptb": 1483649,
+      "weight_density": 0.10036553276909722,
+      "nonsilent": 0.09932846869712351,
+      "secs": 1.7
+     },
+     "fc1": {
+      "ours": 506884,
+      "spikex": 5870990,
+      "spikeflow": 2791710,
+      "loas": 3636785,
+      "prosperity": 727324,
+      "sato": 3376128,
+      "ptb": 5982209,
+      "weight_density": 0.09994422064887153,
+      "nonsilent": 0.10105356387478849,
+      "secs": 5.1
+     },
+     "fc2": {
+      "ours": 475888,
+      "spikex": 5813294,
+      "spikeflow": 2764734,
+      "loas": 3601472,
+      "prosperity": 725878,
+      "sato": 1558272,
+      "ptb": 5235521,
+      "weight_density": 0.10014512803819445,
+      "nonsilent": 0.10006047747461928,
+      "secs": 8.7
+     }
+    }
+   }
+  }
+ },
+ "GPT-2 XL": {
+  "d": 1600,
+  "h": 6400,
+  "blocks": 48,
+  "tokens": 128,
+  "weight_density": 0.1,
+  "q": 0.3,
+  "T": 8,
+  "points": {
+   "0.25": {
+    "cycles": {
+     "ptb": 8496133824,
+     "spikex": 17711503488,
+     "loas": 2261057424,
+     "sato": 3169382400,
+     "spikeflow": 5532044160,
+     "prosperity": 1282458624,
+     "ours": 1279310592
+    },
+    "gemms": {
+     "qkv": {
+      "ours": 6659518,
+      "spikex": 92302814,
+      "spikeflow": 28820730,
+      "loas": 11864439,
+      "prosperity": 6845804,
+      "sato": 17169600,
+      "ptb": 44936897,
+      "weight_density": 0.09993736979166666,
+      "nonsilent": 0.751162109375,
+      "secs": 23.8
+     },
+     "proj": {
+      "ours": 2230925,
+      "spikex": 30767014,
+      "spikeflow": 9603630,
+      "loas": 3955646,
+      "prosperity": 2335482,
+      "sato": 5713600,
+      "ptb": 14972897,
+      "weight_density": 0.100005078125,
+      "nonsilent": 0.7511474609375,
+      "secs": 9.7
+     },
+     "fc1": {
+      "ours": 8907627,
+      "spikex": 122966414,
+      "spikeflow": 38417630,
+      "loas": 15820660,
+      "prosperity": 8588168,
+      "sato": 22918400,
+      "ptb": 60015297,
+      "weight_density": 0.09996279296875,
+      "nonsilent": 0.75052734375,
+      "secs": 28.8
+     },
+     "fc2": {
+      "ours": 8854234,
+      "spikex": 122953414,
+      "spikeflow": 38408930,
+      "loas": 15464618,
+      "prosperity": 8948434,
+      "sato": 20227200,
+      "ptb": 57077697,
+      "weight_density": 0.1000078125,
+      "nonsilent": 0.750447998046875,
+      "secs": 48.2
+     }
+    }
+   },
+   "0.40": {
+    "cycles": {
+     "ptb": 6341797824,
+     "spikex": 14145535488,
+     "loas": 2131537056,
+     "sato": 2613273600,
+     "spikeflow": 4954992960,
+     "prosperity": 1031030352,
+     "ours": 983426160
+    },
+    "gemms": {
+     "qkv": {
+      "ours": 5139679,
+      "spikex": 73752014,
+      "spikeflow": 25842930,
+      "loas": 11200839,
+      "prosperity": 5547420,
+      "sato": 14232000,
+      "ptb": 33758897,
+      "weight_density": 0.10005677083333334,
+      "nonsilent": 0.6001953125,
+      "secs": 21.0
+     },
+     "proj": {
+      "ours": 1715127,
+      "spikex": 24605014,
+      "spikeflow": 8605330,
+      "loas": 3730173,
+      "prosperity": 1896693,
+      "sato": 4745600,
+      "ptb": 11293297,
+      "weight_density": 0.09970234375,
+      "nonsilent": 0.6007080078125,
+      "secs": 8.6
+     },
+     "fc1": {
+      "ours": 6826193,
+      "spikex": 98100014,
+      "spikeflow": 34376430,
+      "loas": 14918216,
+      "prosperity": 6870618,
+      "sato": 19180800,
+      "ptb": 44940097,
+      "weight_density": 0.10009609375,
+      "nonsilent": 0.5987548828125,
+      "secs": 25.5
+     },
+     "fc2": {
+      "ours": 6807046,
+      "spikex": 98241614,
+      "spikeflow": 34404330,
+      "loas": 14557794,
+      "prosperity": 7165068,
+      "sato": 16284800,
+      "ptb": 42128497,
+      "weight_density": 0.1000216796875,
+      "nonsilent": 0.599619140625,
+      "secs": 40.3
+     }
+    }
+   },
+   "0.60": {
+    "cycles": {
+     "ptb": 5297183424,
+     "spikex": 9437532288,
+     "loas": 1912326816,
+     "sato": 1865548800,
+     "spikeflow": 3776900160,
+     "prosperity": 778905696,
+     "ours": 624934944
+    },
+    "gemms": {
+     "qkv": {
+      "ours": 3282554,
+      "spikex": 49428014,
+      "spikeflow": 19761630,
+      "loas": 10072260,
+      "prosperity": 4241892,
+      "sato": 10512000,
+      "ptb": 27871697,
+      "weight_density": 0.10024817708333333,
+      "nonsilent": 0.40224609375,
+      "secs": 17.4
+     },
+     "proj": {
+      "ours": 1088163,
+      "spikex": 16400214,
+      "spikeflow": 6546230,
+      "loas": 3349004,
+      "prosperity": 1447764,
+      "sato": 3464000,
+      "ptb": 9314897,
+      "weight_density": 0.099880078125,
+      "nonsilent": 0.4003955078125,
+      "secs": 7.4
+     },
+     "fc1": {
+      "ours": 4331535,
+      "spikex": 65196014,
+      "spikeflow": 26149630,
+      "loas": 13384661,
+      "prosperity": 5149318,
+      "sato": 13760000,
+      "ptb": 37040897,
+      "weight_density": 0.09997431640625,
+      "nonsilent": 0.3979248046875,
+      "secs": 20.8
+     },
+     "fc2": {
+      "ours": 4317226,
+      "spikex": 65591014,
+      "spikeflow": 26227930,
+      "loas": 13034217,
+      "prosperity": 5388228,
+      "sato": 11129600,
+      "ptb": 36130497,
+      "weight_density": 0.10003564453125,
+      "nonsilent": 0.400335693359375,
+      "secs": 33.8
+     }
+    }
+   },
+   "0.75": {
+    "cycles": {
+     "ptb": 4176210624,
+     "spikex": 5901900288,
+     "loas": 1713112944,
+     "sato": 1311590400,
+     "spikeflow": 2581805760,
+     "prosperity": 592177872,
+     "ours": 396945792
+    },
+    "gemms": {
+     "qkv": {
+      "ours": 2083583,
+      "spikex": 30880214,
+      "spikeflow": 13489830,
+      "loas": 9024476,
+      "prosperity": 3275476,
+      "sato": 7492800,
+      "ptb": 22057697,
+      "weight_density": 0.100013671875,
+      "nonsilent": 0.2513037109375,
+      "secs": 14.2
+     },
+     "proj": {
+      "ours": 695762,
+      "spikex": 10245814,
+      "spikeflow": 4482830,
+      "loas": 3001556,
+      "prosperity": 1117278,
+      "sato": 2524800,
+      "ptb": 7335697,
+      "weight_density": 0.09970859375,
+      "nonsilent": 0.2501416015625,
+      "secs": 5.8
+     },
+     "fc1": {
+      "ours": 2769266,
+      "spikex": 41031214,
+      "spikeflow": 17946830,
+      "loas": 12021947,
+      "prosperity": 3902818,
+      "sato": 10028800,
+      "ptb": 29324097,
+      "weight_density": 0.099976953125,
+      "nonsilent": 0.2504345703125,
+      "secs": 17.1
+     },
+     "fc2": {
+      "ours": 2721093,
+      "spikex": 40799014,
+      "spikeflow": 17868130,
+      "loas": 11641874,
+      "prosperity": 4041467,
+      "sato": 7278400,
+      "ptb": 28286897,
+      "weight_density": 0.1000150390625,
+      "nonsilent": 0.249017333984375,
+      "secs": 26.9
+     }
+    }
+   },
+   "0.90": {
+    "cycles": {
+     "ptb": 2167199424,
+     "spikex": 2361055488,
+     "loas": 1467771984,
+     "sato": 744960000,
+     "spikeflow": 1122039360,
+     "prosperity": 318398784,
+     "ours": 190290480
+    },
+    "gemms": {
+     "qkv": {
+      "ours": 1003259,
+      "spikex": 12303014,
+      "spikeflow": 5852430,
+      "loas": 7736770,
+      "prosperity": 1853934,
+      "sato": 4507200,
+      "ptb": 11545697,
+      "weight_density": 0.10006588541666667,
+      "nonsilent": 0.1001220703125,
+      "secs": 10.4
+     },
+     "proj": {
+      "ours": 335253,
+      "spikex": 4112014,
+      "spikeflow": 1953430,
+      "loas": 2581429,
+      "prosperity": 632131,
+      "sato": 1500800,
+      "ptb": 3844497,
+      "weight_density": 0.099978125,
+      "nonsilent": 0.100390625,
+      "secs": 4.3
+     },
+     "fc1": {
+      "ours": 1331107,
+      "spikex": 16395214,
+      "spikeflow": 7788830,
+      "loas": 10313470,
+      "prosperity": 2034118,
+      "sato": 5996800,
+      "ptb": 15348097,
+      "weight_density": 0.099827734375,
+      "nonsilent": 0.100068359375,
+      "secs": 12.9
+     },
+     "fc2": {
+      "ours": 1294766,
+      "spikex": 16378414,
+      "spikeflow": 7781130,
+      "loas": 9946914,
+      "prosperity": 2113125,
+      "sato": 3515200,
+      "ptb": 14411697,
+      "weight_density": 0.1000166015625,
+      "nonsilent": 0.0999658203125,
+      "secs": 18.9
+     }
+    }
+   }
+  }
+ },
+ "OPT-6.7B": {
+  "d": 4096,
+  "h": 16384,
+  "blocks": 32,
+  "tokens": 128,
+  "weight_density": 0.1,
+  "q": 0.3,
+  "T": 8,
+  "points": {
+   "0.25": {
+    "cycles": {
+     "ptb": 35970384000,
+     "spikex": 77289031424,
+     "loas": 9727698368,
+     "sato": 12799180800,
+     "spikeflow": 24164937472,
+     "prosperity": 5435579904,
+     "ours": 5569094944
+    },
+    "gemms": {
+     "qkv": {
+      "ours": 43523278,
+      "spikex": 604190222,
+      "spikeflow": 188829726,
+      "loas": 76032304,
+      "prosperity": 43006292,
+      "sato": 102174720,
+      "ptb": 284078081,
+      "weight_density": 0.10000699758529663,
+      "nonsilent": 0.7502613067626953,
+      "secs": 142.1
+     },
+     "proj": {
+      "ours": 14519670,
+      "spikex": 201193486,
+      "spikeflow": 62906654,
+      "loas": 25342648,
+      "prosperity": 14337108,
+      "sato": 33710080,
+      "ptb": 94580737,
+      "weight_density": 0.1000245213508606,
+      "nonsilent": 0.7495040893554688,
+      "secs": 52.7
+     },
+     "fc1": {
+      "ours": 58005387,
+      "spikex": 804972558,
+      "spikeflow": 251806750,
+      "loas": 101352959,
+      "prosperity": 56276500,
+      "sato": 136265728,
+      "ptb": 378105857,
+      "weight_density": 0.09997224807739258,
+      "nonsilent": 0.7496891021728516,
+      "secs": 188.8
+     },
+     "fc2": {
+      "ours": 57985882,
+      "spikex": 804925966,
+      "spikeflow": 251611166,
+      "loas": 101262663,
+      "prosperity": 56241972,
+      "sato": 127823872,
+      "ptb": 367309825,
+      "weight_density": 0.10000903904438019,
+      "nonsilent": 0.7496457099914551,
+      "secs": 283.7
+     }
+    }
+   },
+   "0.40": {
+    "cycles": {
+     "ptb": 26607255680,
+     "spikex": 61821617920,
+     "loas": 9162495872,
+     "sato": 10348265472,
+     "spikeflow": 21638795008,
+     "prosperity": 4366401024,
+     "ours": 4283258016
+    },
+    "gemms": {
+     "qkv": {
+      "ours": 33448359,
+      "spikex": 483219470,
+      "spikeflow": 168824094,
+      "loas": 71610162,
+      "prosperity": 34625684,
+      "sato": 82194432,
+      "ptb": 210491393,
+      "weight_density": 0.100025475025177,
+      "nonsilent": 0.6000442504882812,
+      "secs": 127.4
+     },
+     "proj": {
+      "ours": 11179979,
+      "spikex": 160902158,
+      "spikeflow": 56396830,
+      "loas": 23879703,
+      "prosperity": 11536884,
+      "sato": 27783168,
+      "ptb": 70141953,
+      "weight_density": 0.10013186931610107,
+      "nonsilent": 0.5994071960449219,
+      "secs": 46.8
+     },
+     "fc1": {
+      "ours": 44525188,
+      "spikex": 642615310,
+      "spikeflow": 225240094,
+      "loas": 95410174,
+      "prosperity": 45062804,
+      "sato": 110297088,
+      "ptb": 280207361,
+      "weight_density": 0.1000201553106308,
+      "nonsilent": 0.5984821319580078,
+      "secs": 169.9
+     },
+     "fc2": {
+      "ours": 44698287,
+      "spikex": 645188622,
+      "spikeflow": 225751326,
+      "loas": 95427957,
+      "prosperity": 45224660,
+      "sato": 103108608,
+      "ptb": 270636033,
+      "weight_density": 0.10002930462360382,
+      "nonsilent": 0.6008787155151367,
+      "secs": 243.5
+     }
+    }
+   },
+   "0.60": {
+    "cycles": {
+     "ptb": 22757965952,
+     "spikex": 41271625472,
+     "loas": 8202006496,
+     "sato": 7143292928,
+     "spikeflow": 16498331392,
+     "prosperity": 3285676544,
+     "ours": 2718555552
+    },
+    "gemms": {
+     "qkv": {
+      "ours": 21248302,
+      "spikex": 322225166,
+      "spikeflow": 128805150,
+      "loas": 64107199,
+      "prosperity": 26163284,
+      "sato": 57569280,
+      "ptb": 178413569,
+      "weight_density": 0.10006791353225708,
+      "nonsilent": 0.4001274108886719,
+      "secs": 104.2
+     },
+     "proj": {
+      "ours": 7098163,
+      "spikex": 107440142,
+      "spikeflow": 42931998,
+      "loas": 21367031,
+      "prosperity": 8740500,
+      "sato": 19333120,
+      "ptb": 59460609,
+      "weight_density": 0.10000652074813843,
+      "nonsilent": 0.40024566650390625,
+      "secs": 39.0
+     },
+     "fc1": {
+      "ours": 28398640,
+      "spikex": 430544910,
+      "spikeflow": 171974686,
+      "loas": 85492402,
+      "prosperity": 33882516,
+      "sato": 76562432,
+      "ptb": 238034945,
+      "weight_density": 0.10001550614833832,
+      "nonsilent": 0.40097618103027344,
+      "secs": 137.7
+     },
+     "fc2": {
+      "ours": 28209756,
+      "spikex": 429528078,
+      "spikeflow": 171861022,
+      "loas": 85346071,
+      "prosperity": 33891092,
+      "sato": 69763072,
+      "ptb": 235277313,
+      "weight_density": 0.10000838339328766,
+      "nonsilent": 0.40002918243408203,
+      "secs": 202.1
+     }
+    }
+   },
+   "0.75": {
+    "cycles": {
+     "ptb": 17876287616,
+     "spikex": 25797035776,
+     "loas": 7333177184,
+     "sato": 4753588224,
+     "spikeflow": 11281952512,
+     "prosperity": 2483090944,
+     "ours": 1716610464
+    },
+    "gemms": {
+     "qkv": {
+      "ours": 13441520,
+      "spikex": 201349646,
+      "spikeflow": 88095006,
+      "loas": 57311924,
+      "prosperity": 19884980,
+      "sato": 38338560,
+      "ptb": 140207105,
+      "weight_density": 0.10001424948374431,
+      "nonsilent": 0.2500286102294922,
+      "secs": 82.8
+     },
+     "proj": {
+      "ours": 4473414,
+      "spikex": 67023886,
+      "spikeflow": 29327390,
+      "loas": 19094180,
+      "prosperity": 6632884,
+      "sato": 13082624,
+      "ptb": 46767105,
+      "weight_density": 0.0999746322631836,
+      "nonsilent": 0.24968338012695312,
+      "secs": 31.2
+     },
+     "fc1": {
+      "ours": 17916504,
+      "spikex": 269295630,
+      "spikeflow": 117646366,
+      "loas": 76438398,
+      "prosperity": 25540372,
+      "sato": 52789248,
+      "ptb": 187133953,
+      "weight_density": 0.10000824928283691,
+      "nonsilent": 0.25080108642578125,
+      "secs": 110.1
+     },
+     "fc2": {
+      "ours": 17812639,
+      "spikex": 268488206,
+      "spikeflow": 117492254,
+      "loas": 76317285,
+      "prosperity": 25538356,
+      "sato": 44339200,
+      "ptb": 184525825,
+      "weight_density": 0.10006323456764221,
+      "nonsilent": 0.2500491142272949,
+      "secs": 159.5
+     }
+    }
+   },
+   "0.90": {
+    "cycles": {
+     "ptb": 9078603904,
+     "spikex": 10270705408,
+     "loas": 6256958560,
+     "sato": 2282356736,
+     "spikeflow": 4877774592,
+     "prosperity": 1309397504,
+     "ours": 811698272
+    },
+    "gemms": {
+     "qkv": {
+      "ours": 6327227,
+      "spikex": 80024078,
+      "spikeflow": 38014494,
+      "loas": 48882190,
+      "prosperity": 10746356,
+      "sato": 19525632,
+      "ptb": 71461889,
+      "weight_density": 0.09991707404454549,
+      "nonsilent": 0.09937095642089844,
+      "secs": 59.2
+     },
+     "proj": {
+      "ours": 2127117,
+      "spikex": 26720270,
+      "spikeflow": 12706078,
+      "loas": 16302670,
+      "prosperity": 3580404,
+      "sato": 6496256,
+      "ptb": 23800833,
+      "weight_density": 0.09996235370635986,
+      "nonsilent": 0.09954071044921875,
+      "secs": 22.9
+     },
+     "fc1": {
+      "ours": 8510822,
+      "spikex": 106958862,
+      "spikeflow": 50773022,
+      "loas": 65200483,
+      "prosperity": 13285012,
+      "sato": 26083328,
+      "ptb": 95363073,
+      "weight_density": 0.09993642568588257,
+      "nonsilent": 0.09961318969726562,
+      "secs": 84.3
+     },
+     "fc2": {
+      "ours": 8400405,
+      "spikex": 107256334,
+      "spikeflow": 50936862,
+      "loas": 65144612,
+      "prosperity": 13306900,
+      "sato": 19218432,
+      "ptb": 93080577,
+      "weight_density": 0.10000675916671753,
+      "nonsilent": 0.09989023208618164,
+      "secs": 104.4
+     }
+    }
+   }
+  }
+ }
+}

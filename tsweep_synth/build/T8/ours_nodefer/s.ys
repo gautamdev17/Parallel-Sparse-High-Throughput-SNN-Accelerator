@@ -1,0 +1,11 @@
+read_verilog -sv ../../../rtl/ours/ours_core.v
+hierarchy -top ours_core
+synth -top ours_core
+delete t:$print t:$check
+opt_clean
+dfflibmap -liberty ../../../lib/NangateOpenCellLibrary_typical.lib
+abc -liberty ../../../lib/NangateOpenCellLibrary_typical.lib -D 2000 -script abc_buf.script
+opt_clean -purge
+hilomap -hicell LOGIC1_X1 Z -locell LOGIC0_X1 Z
+stat -liberty ../../../lib/NangateOpenCellLibrary_typical.lib
+write_verilog -noattr -noexpr nd_netlist.v

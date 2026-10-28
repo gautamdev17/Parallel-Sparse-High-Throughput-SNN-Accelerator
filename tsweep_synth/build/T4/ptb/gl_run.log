@@ -1,0 +1,2 @@
+WARNING: /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/tb/tb_array.v:40: $readmemh(stim/ptb/in.hex): Not enough words in the file for the requested range [0:19999].
+VCD info: dumpfile ptb_gl.vcd opened for output.

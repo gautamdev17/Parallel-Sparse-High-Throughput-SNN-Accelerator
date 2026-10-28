@@ -1,0 +1,11 @@
+read_verilog -sv  rtl_T/tppe.v /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/rtl/loas/fast_prefix.v /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/rtl/loas/laggy_prefix.v /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/rtl/loas/accumulator_correction.v /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/rtl/loas/lif_model.v
+hierarchy -top tppe
+synth -top tppe -flatten
+delete t:$print t:$check
+opt_clean
+dfflibmap -liberty /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/lib/NangateOpenCellLibrary_typical.lib
+abc -liberty /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/lib/NangateOpenCellLibrary_typical.lib -D 1250
+opt_clean -purge
+hilomap -hicell LOGIC1_X1 Z -locell LOGIC0_X1 Z
+stat -liberty /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/lib/NangateOpenCellLibrary_typical.lib
+write_verilog -noattr -noexpr loas_netlist.v.tmp

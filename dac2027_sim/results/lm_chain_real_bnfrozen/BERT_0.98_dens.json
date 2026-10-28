@@ -1,0 +1,194 @@
+{
+ "0:qkv": {
+  "nonsilent": 0.15572916666666667,
+  "bit": 0.06719400733709335
+ },
+ "0:proj": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "0:fc1": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "0:fc2": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "1:qkv": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "1:proj": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "1:fc1": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "1:fc2": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "2:qkv": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "2:proj": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "2:fc1": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "2:fc2": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "3:qkv": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "3:proj": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "3:fc1": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "3:fc2": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "4:qkv": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "4:proj": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "4:fc1": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "4:fc2": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "5:qkv": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "5:proj": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "5:fc1": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "5:fc2": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "6:qkv": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "6:proj": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "6:fc1": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "6:fc2": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "7:qkv": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "7:proj": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "7:fc1": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "7:fc2": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "8:qkv": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "8:proj": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "8:fc1": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "8:fc2": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "9:qkv": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "9:proj": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "9:fc1": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "9:fc2": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "10:qkv": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "10:proj": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "10:fc1": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "10:fc2": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "11:qkv": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "11:proj": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "11:fc1": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ },
+ "11:fc2": {
+  "nonsilent": 0.0,
+  "bit": 0.0
+ }
+}

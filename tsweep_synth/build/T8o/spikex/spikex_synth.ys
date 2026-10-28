@@ -1,0 +1,12 @@
+read_verilog -sv -defer  /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/ptb/ptb_core.v /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikex/spikex_core.v
+
+hierarchy -top spikex_core
+synth -top spikex_core -flatten
+delete t:$print t:$check
+opt_clean
+dfflibmap -liberty /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/lib/NangateOpenCellLibrary_typical.lib
+abc -liberty /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/lib/NangateOpenCellLibrary_typical.lib -D 1250
+opt_clean -purge
+hilomap -hicell LOGIC1_X1 Z -locell LOGIC0_X1 Z
+stat -liberty /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/lib/NangateOpenCellLibrary_typical.lib
+write_verilog -noattr -noexpr spikex_netlist.v.tmp

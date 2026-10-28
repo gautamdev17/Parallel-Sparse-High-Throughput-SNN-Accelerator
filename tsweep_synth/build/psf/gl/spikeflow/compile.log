@@ -1,0 +1,2 @@
+compile spikeflow exit=0
+build/psf/compile_gl.sh spikeflow  78.25s user 1.63s system 96% cpu 1:22.75 total

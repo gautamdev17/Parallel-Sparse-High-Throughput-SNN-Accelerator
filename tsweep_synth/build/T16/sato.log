@@ -1,0 +1,47 @@
+/Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/tb/tb_sato.v:25: warning: Port 17 (vth) of module sato_core expects 21 bit(s), given 32.
+/Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/tb/tb_sato.v:25:        : Pruning (signed) 11 high bits of the expression.
+Warning: Replacing memory \load with list of registers. See rtl_T/sato_core.v:64
+Warning: Replacing memory \pre with list of registers. See rtl_T/sato_core.v:89
+Warning: Drivers conflicting with a constant 1'0 driver:
+    port Q[0] of cell $procdff$10775 ($dff)
+    port Q[1] of cell $procdff$10775 ($dff)
+    port Q[2] of cell $procdff$10775 ($dff)
+    port Q[3] of cell $procdff$10775 ($dff)
+    port Q[4] of cell $procdff$10775 ($dff)
+    port Q[5] of cell $procdff$10775 ($dff)
+    port Q[6] of cell $procdff$10775 ($dff)
+    port Q[8] of cell $procdff$10775 ($dff)
+    port Q[9] of cell $procdff$10775 ($dff)
+    port Q[10] of cell $procdff$10775 ($dff)
+    port Q[11] of cell $procdff$10775 ($dff)
+    port Q[12] of cell $procdff$10775 ($dff)
+    port Q[13] of cell $procdff$10775 ($dff)
+    port Q[14] of cell $procdff$10775 ($dff)
+    port Q[15] of cell $procdff$10775 ($dff)
+    port Q[16] of cell $procdff$10775 ($dff)
+    port Q[17] of cell $procdff$10775 ($dff)
+    port Q[18] of cell $procdff$10775 ($dff)
+    port Q[19] of cell $procdff$10775 ($dff)
+    port Q[20] of cell $procdff$10775 ($dff)
+    port Q[21] of cell $procdff$10775 ($dff)
+    port Q[22] of cell $procdff$10775 ($dff)
+    port Q[23] of cell $procdff$10775 ($dff)
+    port Q[24] of cell $procdff$10775 ($dff)
+    port Q[25] of cell $procdff$10775 ($dff)
+    port Q[26] of cell $procdff$10775 ($dff)
+    port Q[27] of cell $procdff$10775 ($dff)
+    port Q[28] of cell $procdff$10775 ($dff)
+    port Q[29] of cell $procdff$10775 ($dff)
+    port Q[30] of cell $procdff$10775 ($dff)
+    port Q[31] of cell $procdff$10775 ($dff)
+Warning: Drivers conflicting with a constant 1'1 driver:
+    port Q[7] of cell $procdff$10775 ($dff)
+   Chip area for module '\sato_core': 77726.530000
+     of which used for sequential elements: 35133.280000 (45.20%)
+/Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/tb/tb_sato.v:23: warning: Port 17 (vth) of module sato_core expects 21 bit(s), given 32.
+/Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/tb/tb_sato.v:23:        : Pruning (signed) 11 high bits of the expression.
+Total                3.0007e-02 4.0220e-03 1.5650e-03 3.5594e-02 100.0%
+unannotated     0
+sato: 32768 row integrations (8 channels) checked, mismatches = 0, missing/extra = 0
+sato_T16_DONE
+bash scripts/run_base.sh sato 16 build/T16 rtl  190.11s user 5.32s system 89% cpu 3:38.59 total

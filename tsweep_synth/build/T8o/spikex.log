@@ -1,0 +1,20 @@
+Warning: Replacing memory \tskew[7].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikex/spikex_core.v:83
+Warning: Replacing memory \tskew[6].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikex/spikex_core.v:83
+Warning: Replacing memory \tskew[5].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikex/spikex_core.v:83
+Warning: Replacing memory \tskew[4].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikex/spikex_core.v:83
+Warning: Replacing memory \tskew[3].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikex/spikex_core.v:83
+Warning: Replacing memory \tskew[2].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikex/spikex_core.v:83
+Warning: Replacing memory \tskew[1].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikex/spikex_core.v:83
+Warning: Replacing memory \lskew[7].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikex/spikex_core.v:70
+Warning: Replacing memory \lskew[6].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikex/spikex_core.v:70
+Warning: Replacing memory \lskew[5].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikex/spikex_core.v:70
+Warning: Replacing memory \lskew[4].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikex/spikex_core.v:70
+Warning: Replacing memory \lskew[3].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikex/spikex_core.v:70
+Warning: Replacing memory \lskew[2].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikex/spikex_core.v:70
+Warning: Replacing memory \lskew[1].d.sk with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikex/spikex_core.v:70
+Warning: Replacing memory \sp with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/orig_rtl/spikex/spikex_core.v:34
+   Chip area for module '\spikex_core': 468000.134000
+     of which used for sequential elements: 275512.160000 (58.87%)
+Total                2.8620e-01 1.5499e-03 7.9378e-03 2.9568e-01 100.0%
+unannotated     0
+scripts/run_base.sh: line 114: l_run.log: command not found

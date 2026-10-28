@@ -1,0 +1,3 @@
+   Chip area for module '\prosperity_core': 369073.936000
+     of which used for sequential elements: 146199.984000 (39.61%)
+scripts/run_base.sh: line 67: 29824 Terminated: 15          iverilog -g2012 -DNT=16 -DVCDFILE='"prosperity_ss_raw.vcd"' -o gl.vvp $TS/tb/tb_prosperity_ss.v prosperity_netlist.v $CELLS

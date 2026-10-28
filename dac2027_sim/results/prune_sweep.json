@@ -1,0 +1,797 @@
+{
+ "CifarNet": {
+  "dataset": "CIFAR-10",
+  "T": 8,
+  "levels": [
+   {
+    "label": "dense",
+    "density": 100,
+    "firing_rate": 5.09,
+    "cycles_b1": {
+     "ptb": 45219758,
+     "spikex": 68891692,
+     "loas": 50448363,
+     "sato": 10800064,
+     "spikeflow": 28874788,
+     "prosperity": 3959806,
+     "ours": 22816428
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 45219758,
+     "spikex": 68891692,
+     "loas": 50448363,
+     "sato": 10800064,
+     "spikeflow": 28874788,
+     "prosperity": 4439038,
+     "ours": 22816428
+    }
+   },
+   {
+    "label": "2e-7",
+    "density": 72.52,
+    "firing_rate": 4.73,
+    "cycles_b1": {
+     "ptb": 43731538,
+     "spikex": 64854319,
+     "loas": 42328502,
+     "sato": 10310992,
+     "spikeflow": 27478269,
+     "prosperity": 3773378,
+     "ours": 19797484
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 43731538,
+     "spikex": 64854319,
+     "loas": 42328502,
+     "sato": 10310992,
+     "spikeflow": 27478269,
+     "prosperity": 4252610,
+     "ours": 19797484
+    }
+   },
+   {
+    "label": "5e-7",
+    "density": 45.92,
+    "firing_rate": 3.61,
+    "cycles_b1": {
+     "ptb": 38250994,
+     "spikex": 51204871,
+     "loas": 28919751,
+     "sato": 8786684,
+     "spikeflow": 22497189,
+     "prosperity": 3112764,
+     "ours": 11523849
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 38250994,
+     "spikex": 51204871,
+     "loas": 28919751,
+     "sato": 8786684,
+     "spikeflow": 22497189,
+     "prosperity": 3591996,
+     "ours": 11523849
+    }
+   },
+   {
+    "label": "1e-6",
+    "density": 19.15,
+    "firing_rate": 2.66,
+    "cycles_b1": {
+     "ptb": 32048346,
+     "spikex": 39114197,
+     "loas": 17761341,
+     "sato": 7554192,
+     "spikeflow": 17763775,
+     "prosperity": 2493768,
+     "ours": 4481505
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 32048346,
+     "spikex": 39114197,
+     "loas": 17761341,
+     "sato": 7554192,
+     "spikeflow": 17763775,
+     "prosperity": 2973000,
+     "ours": 4481505
+    }
+   },
+   {
+    "label": "1.5e-6",
+    "density": 8.84,
+    "firing_rate": 2.14,
+    "cycles_b1": {
+     "ptb": 27874850,
+     "spikex": 32168347,
+     "loas": 13563165,
+     "sato": 6855980,
+     "spikeflow": 14855505,
+     "prosperity": 2122912,
+     "ours": 2135145
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 27874850,
+     "spikex": 32168347,
+     "loas": 13563165,
+     "sato": 6855980,
+     "spikeflow": 14855505,
+     "prosperity": 2602144,
+     "ours": 2135145
+    }
+   },
+   {
+    "label": "2e-6",
+    "density": 5.24,
+    "firing_rate": 1.74,
+    "cycles_b1": {
+     "ptb": 24079414,
+     "spikex": 26431730,
+     "loas": 12197268,
+     "sato": 6333888,
+     "spikeflow": 12400822,
+     "prosperity": 1810442,
+     "ours": 1324523
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 24079414,
+     "spikex": 26431730,
+     "loas": 12197268,
+     "sato": 6333888,
+     "spikeflow": 12400822,
+     "prosperity": 2289674,
+     "ours": 1324523
+    }
+   }
+  ]
+ },
+ "ResNet19-tdBN": {
+  "dataset": "CIFAR-10",
+  "T": 8,
+  "levels": [
+   {
+    "label": "dense",
+    "density": 100,
+    "firing_rate": 6.83,
+    "cycles_b1": {
+     "ptb": 63234304,
+     "spikex": 113657124,
+     "loas": 78207470,
+     "sato": 15576166,
+     "spikeflow": 45064317,
+     "prosperity": 6088386,
+     "ours": 32145233
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 63234304,
+     "spikex": 113657124,
+     "loas": 78207470,
+     "sato": 15576166,
+     "spikeflow": 45064317,
+     "prosperity": 6756034,
+     "ours": 32145233
+    }
+   },
+   {
+    "label": "5e-7",
+    "density": 7.29,
+    "firing_rate": 5.52,
+    "cycles_b1": {
+     "ptb": 59088500,
+     "spikex": 96032174,
+     "loas": 19980337,
+     "sato": 13788204,
+     "spikeflow": 39635322,
+     "prosperity": 5271224,
+     "ours": 4573995
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 59088500,
+     "spikex": 96032174,
+     "loas": 19980337,
+     "sato": 13788204,
+     "spikeflow": 39635322,
+     "prosperity": 5938872,
+     "ours": 4573995
+    }
+   },
+   {
+    "label": "1e-6",
+    "density": 3.41,
+    "firing_rate": 3.91,
+    "cycles_b1": {
+     "ptb": 50841960,
+     "spikex": 71688728,
+     "loas": 16399786,
+     "sato": 11576352,
+     "spikeflow": 31172855,
+     "prosperity": 4086503,
+     "ours": 2253920
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 50841960,
+     "spikex": 71688728,
+     "loas": 16399786,
+     "sato": 11576352,
+     "spikeflow": 31172855,
+     "prosperity": 4754151,
+     "ours": 2253920
+    }
+   },
+   {
+    "label": "2e-6",
+    "density": 1.52,
+    "firing_rate": 2.28,
+    "cycles_b1": {
+     "ptb": 37403072,
+     "spikex": 44218212,
+     "loas": 12971850,
+     "sato": 9337740,
+     "spikeflow": 20346869,
+     "prosperity": 2628363,
+     "ours": 1223566
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 37403072,
+     "spikex": 44218212,
+     "loas": 12971850,
+     "sato": 9337740,
+     "spikeflow": 20346869,
+     "prosperity": 3296011,
+     "ours": 1223566
+    }
+   },
+   {
+    "label": "2.5e-6",
+    "density": 1.15,
+    "firing_rate": 1.9,
+    "cycles_b1": {
+     "ptb": 33025084,
+     "spikex": 37284914,
+     "loas": 11507352,
+     "sato": 8801538,
+     "spikeflow": 17382068,
+     "prosperity": 2245072,
+     "ours": 1135714
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 33025084,
+     "spikex": 37284914,
+     "loas": 11507352,
+     "sato": 8801538,
+     "spikeflow": 17382068,
+     "prosperity": 2912720,
+     "ours": 1135714
+    }
+   },
+   {
+    "label": "3e-6",
+    "density": 0.91,
+    "firing_rate": 1.61,
+    "cycles_b1": {
+     "ptb": 29478996,
+     "spikex": 31961774,
+     "loas": 10110585,
+     "sato": 8406648,
+     "spikeflow": 15060442,
+     "prosperity": 1945871,
+     "ours": 1071275
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 29478996,
+     "spikex": 31961774,
+     "loas": 10110585,
+     "sato": 8406648,
+     "spikeflow": 15060442,
+     "prosperity": 2613519,
+     "ours": 1071275
+    }
+   }
+  ]
+ },
+ "ResNet18": {
+  "dataset": "CIFAR-10",
+  "T": 8,
+  "levels": [
+   {
+    "label": "dense",
+    "density": 100,
+    "firing_rate": 10.39,
+    "cycles_b1": {
+     "ptb": 16752372,
+     "spikex": 35174678,
+     "loas": 22928289,
+     "sato": 6051220,
+     "spikeflow": 12830722,
+     "prosperity": 2430030,
+     "ours": 9423390
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 16752372,
+     "spikex": 35174678,
+     "loas": 22928289,
+     "sato": 6051220,
+     "spikeflow": 12830722,
+     "prosperity": 2665550,
+     "ours": 9423390
+    }
+   },
+   {
+    "label": "5e-7",
+    "density": 32.69,
+    "firing_rate": 9.99,
+    "cycles_b1": {
+     "ptb": 16648536,
+     "spikex": 34306944,
+     "loas": 11333347,
+     "sato": 5946136,
+     "spikeflow": 12617423,
+     "prosperity": 2376779,
+     "ours": 4823421
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 16648536,
+     "spikex": 34306944,
+     "loas": 11333347,
+     "sato": 5946136,
+     "spikeflow": 12617423,
+     "prosperity": 2612299,
+     "ours": 4823421
+    }
+   },
+   {
+    "label": "1e-6",
+    "density": 15.14,
+    "firing_rate": 8.65,
+    "cycles_b1": {
+     "ptb": 16209036,
+     "spikex": 31042146,
+     "loas": 7176655,
+     "sato": 5476288,
+     "spikeflow": 11817912,
+     "prosperity": 2178841,
+     "ours": 2488682
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 16209036,
+     "spikex": 31042146,
+     "loas": 7176655,
+     "sato": 5476288,
+     "spikeflow": 11817912,
+     "prosperity": 2414361,
+     "ours": 2488682
+    }
+   },
+   {
+    "label": "2e-6",
+    "density": 6.4,
+    "firing_rate": 6.58,
+    "cycles_b1": {
+     "ptb": 15097900,
+     "spikex": 25216514,
+     "loas": 4950310,
+     "sato": 4766180,
+     "spikeflow": 10166856,
+     "prosperity": 1822461,
+     "ours": 1118153
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 15097900,
+     "spikex": 25216514,
+     "loas": 4950310,
+     "sato": 4766180,
+     "spikeflow": 10166856,
+     "prosperity": 2057981,
+     "ours": 1118153
+    }
+   },
+   {
+    "label": "3e-6",
+    "density": 3.88,
+    "firing_rate": 5.15,
+    "cycles_b1": {
+     "ptb": 13925700,
+     "spikex": 20762054,
+     "loas": 4314521,
+     "sato": 4278834,
+     "spikeflow": 8712330,
+     "prosperity": 1544912,
+     "ours": 708767
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 13925700,
+     "spikex": 20762054,
+     "loas": 4314521,
+     "sato": 4278834,
+     "spikeflow": 8712330,
+     "prosperity": 1780432,
+     "ours": 708767
+    }
+   },
+   {
+    "label": "4e-6",
+    "density": 2.67,
+    "firing_rate": 3.98,
+    "cycles_b1": {
+     "ptb": 12415540,
+     "spikex": 16677398,
+     "loas": 3925109,
+     "sato": 3863842,
+     "spikeflow": 7267294,
+     "prosperity": 1275574,
+     "ours": 498377
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 12415540,
+     "spikex": 16677398,
+     "loas": 3925109,
+     "sato": 3863842,
+     "spikeflow": 7267294,
+     "prosperity": 1511094,
+     "ours": 498377
+    }
+   }
+  ]
+ },
+ "VGGSNN-DVS": {
+  "dataset": "DVS-CIFAR10",
+  "T": 8,
+  "levels": [
+   {
+    "label": "dense",
+    "density": 100,
+    "firing_rate": 5.38,
+    "cycles_b1": {
+     "ptb": 34705600,
+     "spikex": 55189322,
+     "loas": 40485639,
+     "sato": 8072328,
+     "spikeflow": 22906272,
+     "prosperity": 3054645,
+     "ours": 17471786
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 34705600,
+     "spikex": 55189322,
+     "loas": 40485639,
+     "sato": 8072328,
+     "spikeflow": 22906272,
+     "prosperity": 3499061,
+     "ours": 17471786
+    }
+   },
+   {
+    "label": "2e-6",
+    "density": 11.44,
+    "firing_rate": 4.69,
+    "cycles_b1": {
+     "ptb": 32952532,
+     "spikex": 49588724,
+     "loas": 13490340,
+     "sato": 7538478,
+     "spikeflow": 21048873,
+     "prosperity": 2775399,
+     "ours": 3392144
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 32952532,
+     "spikex": 49588724,
+     "loas": 13490340,
+     "sato": 7538478,
+     "spikeflow": 21048873,
+     "prosperity": 3219815,
+     "ours": 3392144
+    }
+   },
+   {
+    "label": "5e-6",
+    "density": 5.91,
+    "firing_rate": 3.28,
+    "cycles_b1": {
+     "ptb": 27404960,
+     "spikex": 36109154,
+     "loas": 10696623,
+     "sato": 6377590,
+     "spikeflow": 16041588,
+     "prosperity": 2090025,
+     "ours": 1649352
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 27404960,
+     "spikex": 36109154,
+     "loas": 10696623,
+     "sato": 6377590,
+     "spikeflow": 16041588,
+     "prosperity": 2534441,
+     "ours": 1649352
+    }
+   },
+   {
+    "label": "7e-6",
+    "density": 4.49,
+    "firing_rate": 2.8,
+    "cycles_b1": {
+     "ptb": 25090064,
+     "spikex": 31377002,
+     "loas": 10064393,
+     "sato": 5981094,
+     "spikeflow": 14192616,
+     "prosperity": 1839969,
+     "ours": 1241854
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 25090064,
+     "spikex": 31377002,
+     "loas": 10064393,
+     "sato": 5981094,
+     "spikeflow": 14192616,
+     "prosperity": 2284385,
+     "ours": 1241854
+    }
+   },
+   {
+    "label": "1e-5",
+    "density": 3.2,
+    "firing_rate": 2.34,
+    "cycles_b1": {
+     "ptb": 22486772,
+     "spikex": 26804276,
+     "loas": 9416935,
+     "sato": 5629648,
+     "spikeflow": 12321057,
+     "prosperity": 1590492,
+     "ours": 899688
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 22486772,
+     "spikex": 26804276,
+     "loas": 9416935,
+     "sato": 5629648,
+     "spikeflow": 12321057,
+     "prosperity": 2034908,
+     "ours": 899688
+    }
+   },
+   {
+    "label": "1.5e-5",
+    "density": 1.96,
+    "firing_rate": 1.76,
+    "cycles_b1": {
+     "ptb": 18569260,
+     "spikex": 20448264,
+     "loas": 8299440,
+     "sato": 5139052,
+     "spikeflow": 9578755,
+     "prosperity": 1234945,
+     "ours": 709203
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 18569260,
+     "spikex": 20448264,
+     "loas": 8299440,
+     "sato": 5139052,
+     "spikeflow": 9578755,
+     "prosperity": 1679361,
+     "ours": 709203
+    }
+   }
+  ]
+ },
+ "ResNet18-ImageNet": {
+  "dataset": "ImageNet",
+  "T": 8,
+  "levels": [
+   {
+    "label": "dense",
+    "density": 100,
+    "firing_rate": 15.37,
+    "cycles_b1": {
+     "ptb": 68350437,
+     "spikex": 154673633,
+     "loas": 95178796,
+     "sato": 27085512,
+     "spikeflow": 50033543,
+     "prosperity": 10753225,
+     "ours": 43849929
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 68350437,
+     "spikex": 154673633,
+     "loas": 95178796,
+     "sato": 27085512,
+     "spikeflow": 50033543,
+     "prosperity": 11554761,
+     "ours": 43849929
+    }
+   },
+   {
+    "label": "7e-8",
+    "density": 41.67,
+    "firing_rate": 13.38,
+    "cycles_b1": {
+     "ptb": 63437925,
+     "spikex": 143551801,
+     "loas": 50413651,
+     "sato": 24864480,
+     "spikeflow": 48251147,
+     "prosperity": 9819210,
+     "ours": 22584333
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 63437925,
+     "spikex": 143551801,
+     "loas": 50413651,
+     "sato": 24864480,
+     "spikeflow": 48251147,
+     "prosperity": 10620746,
+     "ours": 22584333
+    }
+   },
+   {
+    "label": "1.5e-7",
+    "density": 29.86,
+    "firing_rate": 11.29,
+    "cycles_b1": {
+     "ptb": 60640897,
+     "spikex": 129267262,
+     "loas": 38193885,
+     "sato": 22529848,
+     "spikeflow": 45555018,
+     "prosperity": 8838606,
+     "ours": 16681113
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 60640897,
+     "spikex": 129267262,
+     "loas": 38193885,
+     "sato": 22529848,
+     "spikeflow": 45555018,
+     "prosperity": 9640142,
+     "ours": 16681113
+    }
+   },
+   {
+    "label": "2e-7",
+    "density": 25.75,
+    "firing_rate": 11.09,
+    "cycles_b1": {
+     "ptb": 60473769,
+     "spikex": 127864500,
+     "loas": 34801564,
+     "sato": 22320680,
+     "spikeflow": 45270628,
+     "prosperity": 8734905,
+     "ours": 14946473
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 60473769,
+     "spikex": 127864500,
+     "loas": 34801564,
+     "sato": 22320680,
+     "spikeflow": 45270628,
+     "prosperity": 9536441,
+     "ours": 14946473
+    }
+   },
+   {
+    "label": "3e-7",
+    "density": 20.75,
+    "firing_rate": 9.5,
+    "cycles_b1": {
+     "ptb": 58736525,
+     "spikex": 115492163,
+     "loas": 29374520,
+     "sato": 20524560,
+     "spikeflow": 42504385,
+     "prosperity": 7968236,
+     "ours": 11671235
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 58736525,
+     "spikex": 115492163,
+     "loas": 29374520,
+     "sato": 20524560,
+     "spikeflow": 42504385,
+     "prosperity": 8769772,
+     "ours": 11671235
+    }
+   }
+  ]
+ },
+ "Spikformer-8-384": {
+  "dataset": "ImageNet",
+  "T": 8,
+  "levels": [
+   {
+    "label": "dense",
+    "density": 100,
+    "firing_rate": 14.61,
+    "cycles_b1": {
+     "ptb": 180931471,
+     "spikex": 411887998,
+     "loas": 251892978,
+     "sato": 83659440,
+     "spikeflow": 132606465,
+     "prosperity": 22936655,
+     "ours": 112622274
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 180931471,
+     "spikex": 411887998,
+     "loas": 251892978,
+     "sato": 83659440,
+     "spikeflow": 132606465,
+     "prosperity": 27831119,
+     "ours": 112622274
+    }
+   },
+   {
+    "label": "1e-6",
+    "density": 52.24,
+    "firing_rate": 11.15,
+    "cycles_b1": {
+     "ptb": 162319555,
+     "spikex": 350795451,
+     "loas": 148095948,
+     "sato": 73327408,
+     "spikeflow": 122229861,
+     "prosperity": 19363708,
+     "ours": 65059879
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 162319555,
+     "spikex": 350795451,
+     "loas": 148095948,
+     "sato": 73327408,
+     "spikeflow": 122229861,
+     "prosperity": 24258172,
+     "ours": 65059879
+    }
+   },
+   {
+    "label": "2e-6",
+    "density": 39.27,
+    "firing_rate": 13.51,
+    "cycles_b1": {
+     "ptb": 172431655,
+     "spikex": 394344254,
+     "loas": 131089392,
+     "sato": 80305320,
+     "spikeflow": 129966975,
+     "prosperity": 21774252,
+     "ours": 59446011
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 172431655,
+     "spikex": 394344254,
+     "loas": 131089392,
+     "sato": 80305320,
+     "spikeflow": 129966975,
+     "prosperity": 26668716,
+     "ours": 59446011
+    }
+   },
+   {
+    "label": "3e-6",
+    "density": 33.07,
+    "firing_rate": 11.38,
+    "cycles_b1": {
+     "ptb": 162962707,
+     "spikex": 355785668,
+     "loas": 110287651,
+     "sato": 73993088,
+     "spikeflow": 123208287,
+     "prosperity": 19609841,
+     "ours": 49097378
+    },
+    "cycles_b1_prune_sweep": {
+     "ptb": 162962707,
+     "spikex": 355785668,
+     "loas": 110287651,
+     "sato": 73993088,
+     "spikeflow": 123208287,
+     "prosperity": 24504305,
+     "ours": 49097378
+    }
+   }
+  ]
+ }
+}

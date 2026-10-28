@@ -1,0 +1,269 @@
+{
+ "BERT": {
+  "bw_bits_per_cycle": 256,
+  "T": 8,
+  "points": {
+   "0.25": {
+    "cycles": {
+     "ptb": 53293536.0,
+     "spikex": 38637408.0,
+     "loas": 46068032.0,
+     "sato": 27438336.0,
+     "spikeflow": 27143362.03125,
+     "prosperity": 3721397.0,
+     "ours": 36423398.0
+    },
+    "compute_cycles": {
+     "ptb": 53293296.0,
+     "spikex": 38595936.0,
+     "loas": 45871424.0,
+     "sato": 27396864.0,
+     "spikeflow": 27129072.0,
+     "prosperity": 3453426.0,
+     "ours": 36374246.0
+    },
+    "dram_MB": {
+     "ptb": 0.0,
+     "spikex": 145.24416,
+     "loas": 76.959653,
+     "sato": 145.24416,
+     "spikeflow": 170.151844,
+     "prosperity": 0.0,
+     "ours": 253.513936
+    }
+   },
+   "0.40": {
+    "cycles": {
+     "ptb": 52712160.0,
+     "spikex": 41320128.0,
+     "loas": 40651808.0,
+     "sato": 26411520.0,
+     "spikeflow": 27281472.0,
+     "prosperity": 3721397.0,
+     "ours": 27164447.0
+    },
+    "compute_cycles": {
+     "ptb": 52711920.0,
+     "spikex": 41278656.0,
+     "loas": 40455200.0,
+     "sato": 26370048.0,
+     "spikeflow": 27267264.0,
+     "prosperity": 3440268.0,
+     "ours": 27115295.0
+    },
+    "dram_MB": {
+     "ptb": 0.0,
+     "spikex": 145.24416,
+     "loas": 64.219358,
+     "sato": 145.24416,
+     "spikeflow": 172.511042,
+     "prosperity": 0.0,
+     "ours": 202.184608
+    }
+   },
+   "0.60": {
+    "cycles": {
+     "ptb": 51662304.0,
+     "spikex": 39587520.0,
+     "loas": 32966334.0,
+     "sato": 26668800.0,
+     "spikeflow": 27299361.125,
+     "prosperity": 3721397.0,
+     "ours": 19356324.0
+    },
+    "compute_cycles": {
+     "ptb": 51662064.0,
+     "spikex": 39546048.0,
+     "loas": 32769726.0,
+     "sato": 26627328.0,
+     "spikeflow": 27284016.0,
+     "prosperity": 3413568.0,
+     "ours": 19307172.0
+    },
+    "dram_MB": {
+     "ptb": 0.0,
+     "spikex": 145.24416,
+     "loas": 47.23288,
+     "sato": 145.24416,
+     "spikeflow": 172.511497,
+     "prosperity": 0.0,
+     "ours": 135.014584
+    }
+   },
+   "0.75": {
+    "cycles": {
+     "ptb": 52236960.0,
+     "spikex": 39941376.0,
+     "loas": 25479269.0,
+     "sato": 27064320.0,
+     "spikeflow": 26661840.0,
+     "prosperity": 3721397.0,
+     "ours": 12302763.0
+    },
+    "compute_cycles": {
+     "ptb": 52236720.0,
+     "spikex": 39899904.0,
+     "loas": 25282661.0,
+     "sato": 27022848.0,
+     "spikeflow": 26647632.0,
+     "prosperity": 3378324.0,
+     "ours": 12253611.0
+    },
+    "dram_MB": {
+     "ptb": 0.0,
+     "spikex": 145.24416,
+     "loas": 34.483535,
+     "sato": 145.24416,
+     "spikeflow": 170.143054,
+     "prosperity": 0.0,
+     "ours": 90.416704
+    }
+   },
+   "0.90": {
+    "cycles": {
+     "ptb": 51852768.0,
+     "spikex": 44798496.0,
+     "loas": 19137561.0,
+     "sato": 25215744.0,
+     "spikeflow": 27618705.0,
+     "prosperity": 3738682.0,
+     "ours": 5655154.0
+    },
+    "compute_cycles": {
+     "ptb": 51852528.0,
+     "spikex": 44757024.0,
+     "loas": 18940953.0,
+     "sato": 25174272.0,
+     "spikeflow": 27603264.0,
+     "prosperity": 3452346.0,
+     "ours": 5606002.0
+    },
+    "dram_MB": {
+     "ptb": 0.0,
+     "spikex": 145.24416,
+     "loas": 21.752968,
+     "sato": 145.24416,
+     "spikeflow": 172.511973,
+     "prosperity": 0.0,
+     "ours": 43.15388
+    }
+   },
+   "0.95": {
+    "cycles": {
+     "ptb": 52415520.0,
+     "spikex": 43802592.0,
+     "loas": 15946273.9375,
+     "sato": 26025984.0,
+     "spikeflow": 27313392.0,
+     "prosperity": 3723154.0,
+     "ours": 3809974.0
+    },
+    "compute_cycles": {
+     "ptb": 52415280.0,
+     "spikex": 43761120.0,
+     "loas": 15758766.0,
+     "sato": 25984512.0,
+     "spikeflow": 27299184.0,
+     "prosperity": 3440430.0,
+     "ours": 3760822.0
+    },
+    "dram_MB": {
+     "ptb": 0.0,
+     "spikex": 145.24416,
+     "loas": 17.505129,
+     "sato": 145.24416,
+     "spikeflow": 172.510866,
+     "prosperity": 0.0,
+     "ours": 26.009296
+    }
+   },
+   "0.97": {
+    "cycles": {
+     "ptb": 51595488.0,
+     "spikex": 36913824.0,
+     "loas": 15558864.03125,
+     "sato": 27896064.0,
+     "spikeflow": 26524736.53125,
+     "prosperity": 3721397.0,
+     "ours": 3179058.0
+    },
+    "compute_cycles": {
+     "ptb": 51595248.0,
+     "spikex": 36872352.0,
+     "loas": 15375618.0,
+     "sato": 27854592.0,
+     "spikeflow": 26508432.0,
+     "prosperity": 3296856.0,
+     "ours": 3129906.0
+    },
+    "dram_MB": {
+     "ptb": 0.0,
+     "spikex": 145.24416,
+     "loas": 15.797456,
+     "sato": 145.24416,
+     "spikeflow": 163.064706,
+     "prosperity": 0.0,
+     "ours": 18.593936
+    }
+   },
+   "0.98": {
+    "cycles": {
+     "ptb": 49232928.0,
+     "spikex": 43214496.0,
+     "loas": 14585337.9375,
+     "sato": 25787136.0,
+     "spikeflow": 26202031.8125,
+     "prosperity": 3730216.0,
+     "ours": 2482114.0
+    },
+    "compute_cycles": {
+     "ptb": 49232688.0,
+     "spikex": 43173024.0,
+     "loas": 14404486.0,
+     "sato": 25745664.0,
+     "spikeflow": 26184624.0,
+     "prosperity": 3336222.0,
+     "ours": 2432962.0
+    },
+    "dram_MB": {
+     "ptb": 0.0,
+     "spikex": 145.24416,
+     "loas": 14.938834,
+     "sato": 145.24416,
+     "spikeflow": 148.899669,
+     "prosperity": 0.0,
+     "ours": 14.614768
+    }
+   },
+   "0.99": {
+    "cycles": {
+     "ptb": 48930336.0,
+     "spikex": 53556288.0,
+     "loas": 12911263.78125,
+     "sato": 22589184.0,
+     "spikeflow": 26198288.875,
+     "prosperity": 3868933.0,
+     "ours": 1853738.0
+    },
+    "compute_cycles": {
+     "ptb": 48930096.0,
+     "spikex": 53514816.0,
+     "loas": 12732768.0,
+     "sato": 22547712.0,
+     "spikeflow": 26182656.0,
+     "prosperity": 3668712.0,
+     "ours": 1804586.0
+    },
+    "dram_MB": {
+     "ptb": 0.0,
+     "spikex": 145.24416,
+     "loas": 14.096732,
+     "sato": 145.24416,
+     "spikeflow": 170.140563,
+     "prosperity": 0.0,
+     "ours": 10.236608
+    }
+   }
+  }
+ }
+}

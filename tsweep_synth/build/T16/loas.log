@@ -1,0 +1,13 @@
+Warning: Replacing memory \adder_results with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/rtl/loas/laggy_prefix.v:133
+Warning: Replacing memory \memory with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/rtl/loas/laggy_prefix.v:235
+Warning: Replacing memory \corr with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/rtl/loas/accumulator_correction.v:148
+Warning: Replacing memory \in_vec with list of registers. See /Users/gautamdevaraj/Parallel-Sparse-High-Throughput-SNN-Accelerator/tsweep_synth/rtl/loas/lif_model.v:57
+Warning: Deep recursion in AST simplifier.
+Does this design contain overly long or deeply nested expressions, or excessive recursion?
+   Chip area for module '\tppe': 26695.494000
+     of which used for sequential elements: 6325.480000 (23.69%)
+LOAS_RESULT chunks=576 matches=633 cycles=18505 cycles_per_chunk=32.1 cycles_per_match=29.23 errors=0
+Total                6.1418e-03 4.5053e-04 5.7085e-04 7.1632e-03 100.0%
+unannotated     0
+LOAS_RESULT chunks=576 matches=633 cycles=18505 cycles_per_chunk=32.1 cycles_per_match=29.23 errors=0
+loas_T16_DONE

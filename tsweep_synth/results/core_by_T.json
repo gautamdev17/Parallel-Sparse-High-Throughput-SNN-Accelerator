@@ -1,0 +1,50 @@
+{
+ "ptb": {
+  "4": null,
+  "8": null,
+  "16": null,
+  "32": null
+ },
+ "spikex": {
+  "4": null,
+  "8": null,
+  "16": null,
+  "32": null
+ },
+ "loas_zip": {
+  "4": null,
+  "8": null,
+  "16": null,
+  "32": null
+ },
+ "sato": {
+  "4": null,
+  "8": null,
+  "16": null,
+  "32": null
+ },
+ "spikeflow": {
+  "4": null,
+  "8": null,
+  "16": null,
+  "32": null
+ },
+ "prosperity": {
+  "4": null,
+  "8": null,
+  "16": null,
+  "32": null
+ },
+ "ours": {
+  "4": {
+   "area_mm2": 0.529361014,
+   "power_W": 0.16485892671599997
+  },
+  "8": {
+   "area_mm2": 0.950115026,
+   "power_W": 0.296282969132
+  },
+  "16": null,
+  "32": null
+ }
+}

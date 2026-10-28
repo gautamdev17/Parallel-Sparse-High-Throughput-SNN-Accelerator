@@ -1,0 +1,4 @@
+Total                2.8620e-01 1.5499e-03 7.9378e-03 2.9568e-01 100.0%
+unannotated     0
+spikex_T8_DONE
+build/psf/power_t.sh spikex $T  90.42s user 3.81s system 92% cpu 1:42.26 total
