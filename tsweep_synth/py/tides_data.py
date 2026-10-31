@@ -75,7 +75,7 @@ def lif_int(sums, theta):
     V = np.zeros(sums.shape[:-1], dtype=np.int64)
     out = np.zeros(sums.shape[:-1], dtype=object)
     for t in range(sums.shape[-1]):
-        V = (V >> 1) + sums[..., t]
+        V = V + sums[..., t]
         f = V >= theta
         out = out + np.where(f, 1 << t, 0).astype(object)
         V = np.where(f, V - theta, V)

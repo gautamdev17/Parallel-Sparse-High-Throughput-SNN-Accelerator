@@ -4,7 +4,7 @@
 //   label per weight), G = 4 pixels per group (2-bit pixel label per spike bit), double-buffered (shadow)
 //   weights, running sums of SW = 10 bits per (filter, pixel, timestep) inside the array (R * 127 < 2^9),
 //   edge unit with an 80-entry FIFO per column (16 writes, E = 4 read-modify-writes per cycle, 24-bit sums),
-//   16 leaky LIF units (pipelined, 2 timesteps per stage), and the run-time packer: 8 lanes x 1 pixel slice per
+//   16 IF units (pipelined, 2 timesteps per stage), and the run-time packer: 8 lanes x 1 pixel slice per
 //   cycle (each lane packs its own K-tile; first-fit, 4 open groups).
 // Not inside the core (SRAM, the same exclusion as for LoAS/PTB/SpikeX): weight memory, spike memory, group
 // buffer, output buffer. The output buffer is accessed through the obuf_* read-modify-write ports.
@@ -142,22 +142,22 @@ module ours_edge_fifo #(parameter EW = 93, NS = 16, BANKS = 16, ROWS = 5, E = 4)
 endmodule
 
 
-// one leaky integrate-and-fire neuron over T timesteps in one cycle (doc Sec. 8: V = V/2 + x; fire if
-// V >= theta, then V -= theta), registered output.
+// one integrate-and-fire neuron over T timesteps (V = V + x; fire if V >= theta, then V -= theta), registered
+// output. V has clog2(T) + 1 bits above PSW: |V| <= T * 2^(PSW-1) + theta.
 module ours_lif #(parameter T = 8, PSW = 24, TPS = 2) (
     input  wire clk, rst, v,
     input  wire [T*PSW-1:0] x,
     input  wire signed [PSW-1:0] theta,
     output wire [T-1:0] spk
 );
-    // pipelined over the timesteps: stage k handles timesteps k*TPS .. k*TPS+TPS-1 (V = V/2 + x; fire if
+    // pipelined over the timesteps: stage k handles timesteps k*TPS .. k*TPS+TPS-1 (V = V + x; fire if
     // V >= theta, then V -= theta); spk is valid T/TPS cycles after v
-    localparam NST = T / TPS;
+    localparam NST = T / TPS, VW = PSW + $clog2(T) + 1;
     reg [NST-1:0] sv;
-    reg signed [PSW+1:0] sV [0:NST-1];
+    reg signed [VW-1:0] sV [0:NST-1];
     reg [T-1:0] sS [0:NST-1];
     reg [T*PSW-1:0] sX [0:NST-1];
-    reg signed [PSW+1:0] Vt;
+    reg signed [VW-1:0] Vt;
     reg [T-1:0] St;
     reg [T*PSW-1:0] src;
     reg [PSW-1:0] xt;
@@ -173,7 +173,7 @@ module ours_lif #(parameter T = 8, PSW = 24, TPS = 2) (
                 src = (k == 0) ? x : sX[k-1];
                 for (t = 0; t < TPS; t = t + 1) begin
                     xt = src[(k * TPS + t) * PSW +: PSW];
-                    Vt = (Vt >>> 1) + $signed(xt);
+                    Vt = Vt + $signed(xt);
                     St[k * TPS + t] = (Vt >= theta);
                     if (St[k * TPS + t]) Vt = Vt - theta;
                 end

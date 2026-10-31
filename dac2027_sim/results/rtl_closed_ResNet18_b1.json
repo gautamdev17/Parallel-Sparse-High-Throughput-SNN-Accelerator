@@ -18,7 +18,7 @@
   "stalls_rtl": 0,
   "stalls_model": 0,
   "pred_err": 0,
-  "sim_s": 0.3,
+  "sim_s": 0.2,
   "ok": true
  },
  {
@@ -40,7 +40,7 @@
   "stalls_rtl": 0,
   "stalls_model": 0,
   "pred_err": 0,
-  "sim_s": 0.9,
+  "sim_s": 0.8,
   "ok": true
  },
  {
@@ -62,7 +62,7 @@
   "stalls_rtl": 0,
   "stalls_model": 0,
   "pred_err": 0,
-  "sim_s": 1.2,
+  "sim_s": 0.7,
   "ok": true
  },
  {
@@ -84,7 +84,7 @@
   "stalls_rtl": 0,
   "stalls_model": 0,
   "pred_err": 0,
-  "sim_s": 0.9,
+  "sim_s": 0.7,
   "ok": true
  },
  {
@@ -106,7 +106,7 @@
   "stalls_rtl": 0,
   "stalls_model": 0,
   "pred_err": 0,
-  "sim_s": 0.9,
+  "sim_s": 0.7,
   "ok": true
  },
  {
@@ -128,7 +128,7 @@
   "stalls_rtl": 0,
   "stalls_model": 0,
   "pred_err": 0,
-  "sim_s": 0.5,
+  "sim_s": 0.4,
   "ok": true
  },
  {
@@ -150,7 +150,7 @@
   "stalls_rtl": 0,
   "stalls_model": 0,
   "pred_err": 0,
-  "sim_s": 0.8,
+  "sim_s": 0.6,
   "ok": true
  },
  {
@@ -172,7 +172,7 @@
   "stalls_rtl": 0,
   "stalls_model": 0,
   "pred_err": 0,
-  "sim_s": 0.3,
+  "sim_s": 0.2,
   "ok": true
  },
  {
@@ -194,7 +194,7 @@
   "stalls_rtl": 0,
   "stalls_model": 0,
   "pred_err": 0,
-  "sim_s": 0.8,
+  "sim_s": 0.5,
   "ok": true
  },
  {
@@ -216,7 +216,7 @@
   "stalls_rtl": 3,
   "stalls_model": 3,
   "pred_err": 0,
-  "sim_s": 0.8,
+  "sim_s": 0.5,
   "ok": true
  },
  {
@@ -238,7 +238,7 @@
   "stalls_rtl": 0,
   "stalls_model": 0,
   "pred_err": 0,
-  "sim_s": 0.5,
+  "sim_s": 0.4,
   "ok": true
  },
  {
@@ -260,7 +260,7 @@
   "stalls_rtl": 0,
   "stalls_model": 0,
   "pred_err": 0,
-  "sim_s": 0.8,
+  "sim_s": 0.7,
   "ok": true
  },
  {
@@ -304,7 +304,7 @@
   "stalls_rtl": 0,
   "stalls_model": 0,
   "pred_err": 0,
-  "sim_s": 0.8,
+  "sim_s": 0.6,
   "ok": true
  },
  {
@@ -326,7 +326,7 @@
   "stalls_rtl": 0,
   "stalls_model": 0,
   "pred_err": 0,
-  "sim_s": 0.8,
+  "sim_s": 0.6,
   "ok": true
  },
  {
@@ -348,7 +348,7 @@
   "stalls_rtl": 0,
   "stalls_model": 0,
   "pred_err": 0,
-  "sim_s": 1.0,
+  "sim_s": 0.7,
   "ok": true
  },
  {
@@ -370,7 +370,7 @@
   "stalls_rtl": 0,
   "stalls_model": 0,
   "pred_err": 0,
-  "sim_s": 1.8,
+  "sim_s": 1.1,
   "ok": true
  },
  {
@@ -392,7 +392,7 @@
   "stalls_rtl": 0,
   "stalls_model": 0,
   "pred_err": 0,
-  "sim_s": 0.3,
+  "sim_s": 0.2,
   "ok": true
  },
  {
@@ -414,7 +414,7 @@
   "stalls_rtl": 0,
   "stalls_model": 0,
   "pred_err": 0,
-  "sim_s": 1.8,
+  "sim_s": 1.2,
   "ok": true
  },
  {
@@ -436,7 +436,7 @@
   "stalls_rtl": 0,
   "stalls_model": 0,
   "pred_err": 0,
-  "sim_s": 2.3,
+  "sim_s": 1.2,
   "ok": true
  },
  {
@@ -458,7 +458,7 @@
   "stalls_rtl": 0,
   "stalls_model": 0,
   "pred_err": 0,
-  "sim_s": 0.3,
+  "sim_s": 0.1,
   "ok": true
  }
 ]

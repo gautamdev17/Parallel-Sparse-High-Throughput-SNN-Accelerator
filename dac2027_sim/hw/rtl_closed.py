@@ -5,7 +5,7 @@ makes the groups and the testbench controller schedules from RTL signals (packer
 
 Checks per layer:
   values : every output (filter, pixel) of every output tile -- 8 partial sums (24 bit) == dense W @ bit_t(S),
-           and the 8 LIF output spikes from the RTL LIF units == integer LIF reference (V = (V >> 1) + x)
+           and the 8 LIF output spikes from the RTL LIF units == integer IF reference (V = V + x)
   cycles : total RTL cycles of the layer == ours.run_layer_fast(W, S, Cfg())["cycles"]
   hazards: no output-buffer RMW conflict, no edge-FIFO overflow
   backpressure: feeder stall cycles and peak FIFO occupancy RTL == model; every predicted per-column entry count
@@ -44,7 +44,7 @@ def lif_int(sums, theta):
     V = np.zeros(sums.shape[:-1], dtype=np.int64)
     out = np.zeros(sums.shape[:-1], dtype=np.int64)
     for t in range(sums.shape[-1]):
-        V = (V >> 1) + sums[..., t]
+        V = V + sums[..., t]
         f = V >= theta
         out |= f.astype(np.int64) << t
         V = np.where(f, V - theta, V)
